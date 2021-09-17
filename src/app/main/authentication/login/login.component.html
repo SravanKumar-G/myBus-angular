@@ -1,0 +1,37 @@
+  <div class="d-flex h-100 justify-content-center pt-5">
+    <div class="mx-auto app-login-box col-md-6">
+      <!-- <div class="app-logo-inverse mx-auto mb-3"></div> -->
+      <!-- <img src="assets/images/whizzard.png" width="175px" height="46px" class="mx-auto d-block"> -->
+<!--      <h1 class="text-center  mb-5" style="color: #DB2B30;">Login</h1>-->
+      <div class="col-md-6 mx-auto">
+        <div class="card shadow-lg" style="zoom: 0.85;">
+          <div class="card-body">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="form1">
+              <div class="h5 modal-title text-center mb-4">
+                <h4 class="mt-2">Login</h4>
+              </div>
+              <div class="form-group mb-4">
+                <input type="text" class="form-control" minlength=3 placeholder="Username" formControlName="userName"  [ngClass]="{ 'is-invalid': submitted && f.userName.errors }"  >
+                <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                  <!-- <div *ngIf="f.number.errors.required">Number is required</div> -->
+                  <!-- <div *ngIf="f.number.errors.pattern">Number must be a valid Number</div>
+                  <div *ngIf="f.number.errors.minlength">Number must be 10 digits</div> -->
+                </div>
+              </div>
+              <div class="form-group mb-4">
+                <input type="password" class="form-control" minlength=6 placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <!-- <div *ngIf="f.password.errors.required">Password is required</div> -->
+                  <!-- <div *ngIf="f.password.errors.minlength">Please Enter at least 6 characters</div> -->
+                </div>
+              </div>
+              <div  class="text-center mt-2 mb-4" id="error" style="font-size: 14px; color: red;">
+                {{error}}
+              </div>
+              <button  class="btn btn-success text-center text-white form-control mb-4">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
