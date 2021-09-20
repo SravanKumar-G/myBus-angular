@@ -1,37 +1,111 @@
-  <div class="d-flex h-100 justify-content-center pt-5">
-    <div class="mx-auto app-login-box col-md-6">
-      <!-- <div class="app-logo-inverse mx-auto mb-3"></div> -->
-      <!-- <img src="assets/images/whizzard.png" width="175px" height="46px" class="mx-auto d-block"> -->
-<!--      <h1 class="text-center  mb-5" style="color: #DB2B30;">Login</h1>-->
-      <div class="col-md-6 mx-auto">
-        <div class="card shadow-lg" style="zoom: 0.85;">
-          <div class="card-body">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="form1">
-              <div class="h5 modal-title text-center mb-4">
-                <h4 class="mt-2">Login</h4>
-              </div>
-              <div class="form-group mb-4">
-                <input type="text" class="form-control" minlength=3 placeholder="Username" formControlName="userName"  [ngClass]="{ 'is-invalid': submitted && f.userName.errors }"  >
-                <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
-                  <!-- <div *ngIf="f.number.errors.required">Number is required</div> -->
-                  <!-- <div *ngIf="f.number.errors.pattern">Number must be a valid Number</div>
-                  <div *ngIf="f.number.errors.minlength">Number must be 10 digits</div> -->
+<!--<div class="d-flex h-100 justify-content-center pt-5">-->
+<!--    <div class="mx-auto app-login-box col-md-6">-->
+<!--        &lt;!&ndash; <div class="app-logo-inverse mx-auto mb-3"></div> &ndash;&gt;-->
+<!--        &lt;!&ndash; <img src="assets/images/whizzard.png" width="175px" height="46px" class="mx-auto d-block"> &ndash;&gt;-->
+<!--        &lt;!&ndash;      <h1 class="text-center  mb-5" style="color: #DB2B30;">Login</h1>&ndash;&gt;-->
+<!--        <div class="col-md-6 mx-auto">-->
+<!--            <div class="card shadow-lg" style="zoom: 0.85;">-->
+<!--                <div class="card-body">-->
+<!--                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="form1">-->
+<!--                        <div class="h5 modal-title text-center mb-4">-->
+<!--                            <h4 class="mt-2">Login</h4>-->
+<!--                        </div>-->
+<!--                        <div class="form-group mb-4">-->
+<!--                            <input type="text" class="form-control" minlength=3 placeholder="Username"-->
+<!--                                   formControlName="userName"-->
+<!--                                   [ngClass]="{ 'is-invalid': submitted && f.userName.errors }">-->
+<!--                            <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">-->
+<!--                                &lt;!&ndash; <div *ngIf="f.number.errors.required">Number is required</div> &ndash;&gt;-->
+<!--                                &lt;!&ndash; <div *ngIf="f.number.errors.pattern">Number must be a valid Number</div>-->
+<!--                                <div *ngIf="f.number.errors.minlength">Number must be 10 digits</div> &ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-group mb-4">-->
+<!--                            <input type="password" class="form-control" minlength=6 placeholder="Password"-->
+<!--                                   formControlName="password"-->
+<!--                                   [ngClass]="{ 'is-invalid': submitted && f.password.errors }">-->
+<!--                            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">-->
+<!--                                &lt;!&ndash; <div *ngIf="f.password.errors.required">Password is required</div> &ndash;&gt;-->
+<!--                                &lt;!&ndash; <div *ngIf="f.password.errors.minlength">Please Enter at least 6 characters</div> &ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="text-center mt-2 mb-4" id="error" style="font-size: 14px; color: red;">-->
+<!--                            {{error}}-->
+<!--                        </div>-->
+<!--                        <button class="btn btn-success text-center text-white form-control mb-4">Login</button>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form class="login100-form validate-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()" id="form1">
+                <span class="login100-form-title p-b-43">Login to continue</span>
+                <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                    <input class="input100" type="text" name="email" autocomplete="false" placeholder="Username"
+                           formControlName="userName"
+                           [ngClass]="{ 'is-invalid': submitted && f.userName.errors }">
+                    <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                        <!-- <div *ngIf="f.number.errors.required">Number is required</div> -->
+                        <!-- <div *ngIf="f.number.errors.pattern">Number must be a valid Number</div>
+                        <div *ngIf="f.number.errors.minlength">Number must be 10 digits</div> -->
+                    </div>
+                    <span class="focus-input100"></span>
+                    <span class="label-input100">Email</span>
                 </div>
-              </div>
-              <div class="form-group mb-4">
-                <input type="password" class="form-control" minlength=6 placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                  <!-- <div *ngIf="f.password.errors.required">Password is required</div> -->
-                  <!-- <div *ngIf="f.password.errors.minlength">Please Enter at least 6 characters</div> -->
+                <div class="wrap-input100 validate-input" data-validate="Password is required">
+                    <input class="input100" type="password" name="pass" autocomplete="false" placeholder="Password"
+                           formControlName="password"
+                           [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <!-- <div *ngIf="f.password.errors.required">Password is required</div> -->
+                        <!-- <div *ngIf="f.password.errors.minlength">Please Enter at least 6 characters</div> -->
+                    </div>
+                    <span class="focus-input100"></span>
+                    <span class="label-input100">Password</span>
                 </div>
-              </div>
-              <div  class="text-center mt-2 mb-4" id="error" style="font-size: 14px; color: red;">
-                {{error}}
-              </div>
-              <button  class="btn btn-success text-center text-white form-control mb-4">Login</button>
+<!--                <div class="flex-sb-m w-full p-t-3 p-b-32">-->
+<!--                    <div class="contact100-form-checkbox">-->
+<!--                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">-->
+<!--                        <label class="label-checkbox100" for="ckb1">-->
+<!--                            Remember me-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <a href="https://colorlib.com/etc/lf/Login_v18/index.html#" class="txt1">-->
+<!--                            Forgot Password?-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn">
+                        Login
+                    </button>
+                </div>
+<!--                <div class="text-center p-t-46 p-b-20">-->
+<!--                    <span class="txt2">or sign up using</span>-->
+<!--                </div>-->
+                <div class="login100-form-social flex-c-m pt-lg-5">
+                    <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
+                        <i class="fa fa-facebook-f" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
+                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="login100-form-social-item flex-c-m bg4 m-r-5">
+                        <i class="fa fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="login100-form-social-item flex-c-m bg3 m-r-5">
+                        <i class="fa fa-google-plus" aria-hidden="true"></i>
+                    </a>
+                </div>
             </form>
-          </div>
+            <div class="login100-more" style="background-image: url('./assets/images/banner5.jpg');"></div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
