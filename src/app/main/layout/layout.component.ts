@@ -12,6 +12,8 @@ declare var jQuery: any;
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent implements OnInit {
+  currentUser: any;
+  public currentUserDetails: any;
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
@@ -21,9 +23,6 @@ export class LayoutComponent implements OnInit {
       this.currentUser = x;
     });
   }
-
-  currentUser: any;
-
 
   // @ts-ignore
   getUserRoleValue(key: string | number): string | undefined {
@@ -80,6 +79,22 @@ export class LayoutComponent implements OnInit {
   }
 
   getLoggedInUserDetails(): void{
-    console.log('dev', this.currentUser);
+    if (this.currentUser.accessToken) {
+      this.apiServiceService.get(this.apiUrls.getCurrentUser).subscribe((res: any) => {
+       this.currentUserDetails = res;
+      });
+    }
   }
+
+    // @ts-ignore
+  canAccessModule(moduleName: any): boolean {
+      if (this.currentUserDetails && this.currentUserDetails.superAdmin){
+        return true;
+      } else {
+        if (this.currentUserDetails){
+          const accessibleModules = this.currentUserDetails.accessibleModules;
+          return accessibleModules.indexOf(moduleName) !== -1;
+        }
+      }
+    }
 }

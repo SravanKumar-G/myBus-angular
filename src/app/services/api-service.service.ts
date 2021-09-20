@@ -26,7 +26,6 @@ export class ApiServiceService {
   }
 
   getUserRoleValue(key: string | number): string {
-    console.log(key);
     if (key === 0) {
       return 'Admin';
     } else if (key === 5) {
