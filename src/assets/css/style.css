@@ -756,8 +756,8 @@ label {
 }
 
 .app-sidebar__toggle:hover {
-    color: #FFF;
-    background-color: #63390f;
+    color: #626262;
+    background-color: #fae6d2;
     border-radius: 12px;
 }
 
@@ -771,12 +771,12 @@ label {
     justify-content: flex-end;
 }
 
-.list-unstyled, .app-nav, .app-menu, .treeview-menu {
+.list-unstyled, .app-nav, .app-menu, .treeView-menu {
     padding-left: 0;
     list-style: none;
 }
 
-.list-unstyled, .app-nav, .app-menu-child, .treeview-menu-child {
+.list-unstyled, .app-nav, .app-menu-child, .treeView-menu-child {
     padding-left: 0;
     list-style: none;
 }
@@ -831,8 +831,8 @@ label {
 }
 
 .app-nav__item:hover {
-    color: #FFF;
-    background-color: #63390f;
+    color: #575757;
+    background-color: #fae6d2;
     border-radius: 12px;
 }
 
@@ -862,6 +862,10 @@ label {
     line-height: 14px;
     border-right: 1px solid #fae6d2;
     padding-right: 10px !important;
+}
+
+.app-nav__item:hover .user-logOut-title {
+    border-right: 1px solid #e68221;
 }
 
 .dropdown-menu-header {
@@ -1074,7 +1078,7 @@ li.tab.active a {
     border-top: 1px solid #6a6a6a;
 }
 
-/*.list-unstyled, .app-nav, .app-menu, .treeview-menu {*/
+/*.list-unstyled, .app-nav, .app-menu, .treeView-menu {*/
 /*padding-left: 0;*/
 /*list-style: none;*/
 /*}*/
@@ -1170,7 +1174,7 @@ li.tab.active a {
     /*padding-left: 10px;*/
 }
 
-.treeview-indicator, .treeview-indicator-child {
+.treeView-indicator, .treeView-indicator-child {
     -webkit-transform-origin: center;
     -ms-transform-origin: center;
     transform-origin: center;
@@ -1181,15 +1185,15 @@ li.tab.active a {
     transition: transform 0.3s ease, -webkit-transform 0.3s ease;
 }
 
-.treeview.is-expanded .treeview-menu {
+.treeView.is-expanded .treeView-menu {
     max-height: 100vh;
 }
 
-.treeview-child.is-expanded .treeview-menu-child {
+.treeView-child.is-expanded .treeView-menu-child {
     max-height: 100vh;
 }
 
-.treeview-menu {
+.treeView-menu {
     max-height: 0;
     overflow: hidden;
     -webkit-transition: max-height 0.3s ease;
@@ -1198,11 +1202,11 @@ li.tab.active a {
     background: #2a383e;
 }
 
-.treeview-menu li {
+.treeView-menu li {
     border-bottom: 1px solid #4f5659;
 }
 
-.treeview-menu-child {
+.treeView-menu-child {
     max-height: 0;
     overflow: hidden;
     -webkit-transition: max-height 0.3s ease;
@@ -1211,15 +1215,15 @@ li.tab.active a {
     background: #2a383e;
 }
 
-.treeview.is-expanded .treeview-menu {
+.treeView.is-expanded .treeView-menu {
     max-height: 100vh;
 }
 
-.treeview-child.is-expanded .treeview-menu-child {
+.treeView-child.is-expanded .treeView-menu-child {
     max-height: 100vh;
 }
 
-.treeview-item {
+.treeView-item {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1232,7 +1236,7 @@ li.tab.active a {
     cursor: pointer;
 }
 
-.treeview-item-child {
+.treeView-item-child {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1245,23 +1249,23 @@ li.tab.active a {
     cursor: pointer;
 }
 
-.treeview-item:hover {
+.treeView-item:hover {
     color: #db2b30 !important;
     text-decoration: none !important;
 }
 
-.treeview-item-child:hover {
+.treeView-item-child:hover {
     color: #db2b30 !important;
     text-decoration: none !important;
 }
 
-.treeview-item .icon {
+.treeView-item .icon {
     margin-right: 15px;
     /*padding-right: 10px;*/
     /*border-right: 1px solid;*/
 }
 
-.treeview-item-child .icon {
+.treeView-item-child .icon {
     margin-right: 10px;
     /*padding-right: 10px;*/
     /*border-right: 1px solid;*/
@@ -1280,43 +1284,43 @@ li.tab.active a {
     transition: all .1s;
 }
 
-.treeview.is-expanded [data-toggle='treeview'] {
+.treeView.is-expanded [data-toggle='treeView'] {
     border-left-color: #db2b30 !important;
     background: #0d1214 !important;
 }
 
-.treeview-child.is-expanded [data-toggle='treeview-child'] {
+.treeView-child.is-expanded [data-toggle='treeView-child'] {
     border-left-color: #db2b30;
     /*background: #0d1214;*/
 }
 
-.treeview.is-expanded .treeview-menu {
+.treeView.is-expanded .treeView-menu {
     max-height: 100vh;
 }
 
-.treeview-child.is-expanded .treeview-menu-child {
+.treeView-child.is-expanded .treeView-menu-child {
     max-height: 100vh;
 }
 
-.treeview.is-expanded .treeview-indicator {
+.treeView.is-expanded .treeView-indicator {
     -webkit-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
 }
 
-.treeview-child.is-expanded .treeview-indicator-child {
+.treeView-child.is-expanded .treeView-indicator-child {
     -webkit-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
 }
 
-.treeview-item.active, .treeview-item:hover, .treeview-item:focus {
+.treeView-item.active, .treeView-item:hover, .treeView-item:focus {
     background: #0d1214;
     text-decoration: none;
     color: #db2b30 !important;
 }
 
-.treeview-item-child.active, .treeview-item-child:hover, .treeview-item-child:focus {
+.treeView-item-child.active, .treeView-item-child:hover, .treeView-item-child:focus {
     background: #0d1214;
     text-decoration: none;
     color: #fff;
@@ -3331,7 +3335,7 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
         flex: 0 0 auto;
         display: block;
         width: 240px;
-        background-color: #63390f;
+        background-color: #fae6d2;
         margin-right: 4px;
     }
 
@@ -3367,8 +3371,8 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
 @media (min-width: 768px) {
     .sidebar-mini.sidenav-toggled .app-sidebar__user-name,
     .sidebar-mini.sidenav-toggled .app-sidebar__user-designation,
-    .sidebar-mini.sidenav-toggled .treeview-indicator,
-    .sidebar-mini.sidenav-toggled .treeview-indicator-child {
+    .sidebar-mini.sidenav-toggled .treeView-indicator,
+    .sidebar-mini.sidenav-toggled .treeView-indicator-child {
         display: none;
     }
 
@@ -3430,11 +3434,11 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
         opacity: 1;
     }
 
-    .sidebar-mini.sidenav-toggled .app-menu__item:hover + .treeview-menu {
+    .sidebar-mini.sidenav-toggled .app-menu__item:hover + .treeView-menu {
         visibility: visible;
     }
 
-    .sidebar-mini.sidenav-toggled .app-menu__item-child:hover + .treeview-menu {
+    .sidebar-mini.sidenav-toggled .app-menu__item-child:hover + .treeView-menu {
         visibility: visible;
     }
 
@@ -3454,29 +3458,29 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
         border-bottom: 1px solid #0d1214;
     }
 
-    .sidebar-mini.sidenav-toggled .treeview:hover .app-menu__item, .sidebar-mini.sidenav-toggled .treeview-child:hover .app-menu__item-child {
+    .sidebar-mini.sidenav-toggled .treeView:hover .app-menu__item, .sidebar-mini.sidenav-toggled .treeView-child:hover .app-menu__item-child {
         overflow: visible;
         background: #0d1214;
         border-left-color: #db2b30;
         color: #fff;
     }
 
-    .sidebar-mini.sidenav-toggled .treeview:hover .app-menu__label, .sidebar-mini.sidenav-toggled .treeview-child:hover .app-menu__label {
+    .sidebar-mini.sidenav-toggled .treeView:hover .app-menu__label, .sidebar-mini.sidenav-toggled .treeView-child:hover .app-menu__label {
         opacity: 1;
     }
 
-    .sidebar-mini.sidenav-toggled .treeview:hover .treeview-menu, .sidebar-mini.sidenav-toggled .treeview-child:hover .treeview-menu-child {
+    .sidebar-mini.sidenav-toggled .treeView:hover .treeView-menu, .sidebar-mini.sidenav-toggled .treeView-child:hover .treeView-menu-child {
         max-height: 100vh;
         opacity: 1;
         visibility: visible;
         z-index: 11;
     }
 
-    .sidebar-mini.sidenav-toggled .treeview .app-menu__label, .sidebar-mini.sidenav-toggled .treeview-child .app-menu__label {
+    .sidebar-mini.sidenav-toggled .treeView .app-menu__label, .sidebar-mini.sidenav-toggled .treeView-child .app-menu__label {
         border-bottom-right-radius: 0;
     }
 
-    .sidebar-mini.sidenav-toggled .treeview-menu {
+    .sidebar-mini.sidenav-toggled .treeView-menu {
         position: absolute;
         left: 50px;
         min-width: 225px;
@@ -3490,7 +3494,7 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
         transition: visibility 0.3s ease;
     }
 
-    .sidebar-mini.sidenav-toggled .treeview-menu-child {
+    .sidebar-mini.sidenav-toggled .treeView-menu-child {
         /*position: absolute;*/
         position: fixed;
         /*left: 78px;*/
