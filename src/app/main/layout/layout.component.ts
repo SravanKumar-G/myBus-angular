@@ -39,8 +39,8 @@ export class LayoutComponent implements OnInit {
         (($) => {
             // tslint:disable-next-line:typedef
             $(document).ready(() => {
-                const treeviewMenu = $('.app-menu');
-                const treeviewMenuChild = $('.app-menu-child');
+                const treeViewMenu = $('.app-menu');
+                const treeViewMenuChild = $('.app-menu-child');
                 // Toggle Sidebar
                 // tslint:disable-next-line:only-arrow-functions typedef
                 $('[data-toggle="sidebar"]').click(function(event: { preventDefault: () => void; }) {
@@ -48,27 +48,27 @@ export class LayoutComponent implements OnInit {
                     $('.app').toggleClass('sidenav-toggled');
                 });
 
-                // Activate sidebar treeview toggle
-                $('[data-toggle=\'treeview\']').click((event: { preventDefault: () => void; }) => {
+                // Activate sidebar treeView toggle
+                $('[data-toggle=\'treeView\']').click((event: { preventDefault: () => void; }) => {
                     event.preventDefault();
                     if (!$(this).parent().hasClass('is-expanded')) {
-                        treeviewMenu.find('[data-toggle=\'treeview\']').parent().removeClass('is-expanded');
+                        treeViewMenu.find('[data-toggle=\'treeView\']').parent().removeClass('is-expanded');
                     }
                     $(this).parent().toggleClass('is-expanded');
                 });
 
-                $('[data-toggle=\'treeview-child\']').click((event: { preventDefault: () => void; }) => {
+                $('[data-toggle=\'treeView-child\']').click((event: { preventDefault: () => void; }) => {
                     event.preventDefault();
                     if (!$(this).parent().hasClass('is-expanded')) {
-                        treeviewMenuChild.find('[data-toggle=\'treeview-child\']').parent().removeClass('is-expanded');
+                        treeViewMenuChild.find('[data-toggle=\'treeView-child\']').parent().removeClass('is-expanded');
                     }
                     $(this).parent().toggleClass('is-expanded');
                 });
 
                 // Set initial active toggle
-                $('[data-toggle=\'treeview.\'].is-expanded').parent().toggleClass('is-expanded');
+                $('[data-toggle=\'treeView.\'].is-expanded').parent().toggleClass('is-expanded');
 
-                $('[data-toggle=\'treeview-child.\'].is-expanded').parent().toggleClass('is-expanded');
+                $('[data-toggle=\'treeView-child.\'].is-expanded').parent().toggleClass('is-expanded');
 
                 $('[data-toggle=\'tooltip\']').tooltip();
 
