@@ -7,10 +7,12 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ErrorInterceptor} from '../../interceptors/error.interceptor';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import {LayoutComponent} from './layout.component';
+import { CargoDashboardComponent } from './features/cargo-dashboard/cargo-dashboard.component';
 
 @NgModule({
   declarations: [
-    LayoutComponent
+    LayoutComponent,
+    // CargoDashboardComponent
   ],
   imports: [
     CommonModule,
