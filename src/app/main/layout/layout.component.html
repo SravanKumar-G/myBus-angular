@@ -12,7 +12,10 @@
         <button class="app-search__button"><i class="fa fa-search"></i></button>
       </li>
       <li class="app-search">
-        <label class="cash-balance">Cash Balances: {{currentUserDetails.amountToBePaid || 0}}</label>
+        <label class="cash-balance">Cash Balances: {{currentUserDetails.amountToBePaid | numberFormatter}}</label>
+      </li>
+      <li class="app-search">
+        <label class="cash-balance"><i class="fa fa-calendar"></i> {{currentDate | date}}</label>
       </li>
       <!--Notification Menu-->
       <li class="dropdown">
@@ -454,5 +457,18 @@
     </ul>
   </aside>
 </div>
+
+<ng-template #reminderModal let-c="close" let-d="dismiss">
+  <div class="modal-header" style="align-items: baseline;">
+    <h4 class="modal-title" style="font-size: 15px;">Unassigned Orders</h4>
+    <button type="button" class="btn btn-primary btn-sm">
+      Assign Route
+    </button>
+  </div>
+  <div class="modal-body">
+
+  </div>
+
+</ng-template>
 
 <router-outlet></router-outlet>
