@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './layout.component';
-import {DashboardComponent} from './features/dashboard/dashboard.component';
+import {CargoDashboardComponent} from './features/cargo-dashboard/cargo-dashboard.component';
 
 const layOutRoutes: Routes = [
   {
@@ -9,10 +9,10 @@ const layOutRoutes: Routes = [
     component: LayoutComponent,
     children: [{
       path: '',
-      loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule)
+      loadChildren: () => import('./features/cargo-dashboard/cargo-dashboard.module').then(m => m.CargoDashboardModule)
     }, ]
   },
-  {path: '', pathMatch: 'full', component: DashboardComponent}];
+  {path: '', pathMatch: 'full', component: CargoDashboardComponent}];
 
 @NgModule({
   imports: [RouterModule.forChild(layOutRoutes)],
