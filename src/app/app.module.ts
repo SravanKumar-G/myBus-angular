@@ -15,27 +15,28 @@ import {SpinnerService} from './spinner/spinner.service';
 import {SpinnerInterceptor} from './interceptors/spinner.interceptor';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ModalModule,
-    HttpClientModule,
-  ],
-  providers: [
-    CookieService,
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    SpinnerService,
-    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ModalModule,
+        HttpClientModule,
+    ],
+    providers: [
+        CookieService,
+        {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+        {provide: LocationStrategy, useClass: HashLocationStrategy},
+        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+        SpinnerService,
+        {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
+    ],
+    exports: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

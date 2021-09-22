@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication.service';
-import {ApiUrls} from '../../_helpers/apiUrls';
 import {ApiServiceService} from '../../services/api-service.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 declare var jQuery: any;
 
@@ -14,11 +14,12 @@ declare var jQuery: any;
 export class LayoutComponent implements OnInit {
     currentUser: any;
     public currentUserDetails: any = {};
+    public currentDate = new Date();
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
-                private apiServiceService: ApiServiceService,
-                private apiUrls: ApiUrls) {
+                private apiService: ApiServiceService,
+                private modalService: NgbModal) {
         this.authenticationService.currentUser.subscribe(x => {
             this.currentUser = x;
         });
@@ -26,7 +27,7 @@ export class LayoutComponent implements OnInit {
 
     // @ts-ignore
     getUserRoleValue(key: string | number): string | undefined {
-        return this.apiServiceService.getUserRoleValue(key);
+        return this.apiService.getUserRoleValue(key);
     }
 
     logOutUser(): void {
@@ -42,8 +43,7 @@ export class LayoutComponent implements OnInit {
                 const treeViewMenu = $('.app-menu');
                 const treeViewMenuChild = $('.app-menu-child');
                 // Toggle Sidebar
-                // tslint:disable-next-line:only-arrow-functions typedef
-                $('[data-toggle="sidebar"]').click(function(event: { preventDefault: () => void; }) {
+                $('[data-toggle="sidebar"]').click((event: any) => {
                     event.preventDefault();
                     $('.app').toggleClass('sidenav-toggled');
                 });
@@ -51,6 +51,7 @@ export class LayoutComponent implements OnInit {
                 // Activate sidebar treeView toggle
                 $('[data-toggle=\'treeView\']').click((event: { preventDefault: () => void; }) => {
                     event.preventDefault();
+                    console.log(event, '==>');
                     if (!$(this).parent().hasClass('is-expanded')) {
                         treeViewMenu.find('[data-toggle=\'treeView\']').parent().removeClass('is-expanded');
                     }
@@ -63,6 +64,7 @@ export class LayoutComponent implements OnInit {
                         treeViewMenuChild.find('[data-toggle=\'treeView-child\']').parent().removeClass('is-expanded');
                     }
                     $(this).parent().toggleClass('is-expanded');
+                    console.log( $(this).parent().toggleClass('is-expanded'));
                 });
 
                 // Set initial active toggle
@@ -76,6 +78,14 @@ export class LayoutComponent implements OnInit {
 
             });
         })(jQuery);
+
+        // setTimeout(() => {
+        //    this.modalService.open('reminderModal');
+        // }, 3000);
+
+        // setTimeout(() => {
+        //     this.modalService.dismissAll();
+        // }, 35000);
     }
 
     // @ts-ignore
@@ -85,7 +95,7 @@ export class LayoutComponent implements OnInit {
         } else {
             if (this.currentUserDetails) {
                 const accessibleModules = this.currentUserDetails.accessibleModules;
-                console.log(accessibleModules, accessibleModules.indexOf(moduleName));
+                // console.log(accessibleModules, accessibleModules.indexOf(moduleName));
                 return accessibleModules.indexOf(moduleName) !== -1;
             }
         }
