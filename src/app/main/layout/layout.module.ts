@@ -9,11 +9,13 @@ import {DashboardComponent} from './features/dashboard/dashboard.component';
 import {LayoutComponent} from './layout.component';
 import { CargoDashboardComponent } from './features/cargo-dashboard/cargo-dashboard.component';
 import {NumberFormatterPipe} from '../../customDirectives/number-formatter.pipe';
+import { NewBookingComponent } from './features/new-booking/new-booking.component';
 
 @NgModule({
     declarations: [
         LayoutComponent,
-        NumberFormatterPipe
+        NumberFormatterPipe,
+        NewBookingComponent
     ],
     imports: [
         CommonModule,
