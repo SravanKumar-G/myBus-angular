@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './layout.component';
 import {CargoDashboardComponent} from './features/cargo-dashboard/cargo-dashboard.component';
 import {NewBookingComponent} from './features/new-booking/new-booking.component';
+import {CargoCancellationsComponent} from './features/cargo-cancellations/cargo-cancellations.component';
 
 const layOutRoutes: Routes = [
   {
@@ -15,8 +16,12 @@ const layOutRoutes: Routes = [
       {
       path: 'newBooking',
       component: NewBookingComponent
-      }, ]
-  },
+      },
+      {
+        path: 'cancellations',
+        component: CargoCancellationsComponent,
+      }]
+      },
   {path: '', pathMatch: 'full', component: CargoDashboardComponent}];
 
 @NgModule({

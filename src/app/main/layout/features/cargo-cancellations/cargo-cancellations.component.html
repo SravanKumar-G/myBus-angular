@@ -1,0 +1,66 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-dashboard" aria-hidden="true"></i>
+                Cancellations
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Cancellations</span></li>
+        </ul>
+    </div>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item pending-users-tab" (click)="changeInvoiceTab(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeInvoiceTab(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Cancelled</a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile" *ngIf="tab === 1">
+                <div class="tile-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>S No</th>
+                            <th>LR#</th>
+                            <th>Date</th>
+                            <th>From-To</th>
+                            <th>Amount</th>
+                            <th>Booked By</th>
+                            <th>Booked On</th>
+                            <th>CancelledBy</th>
+                            <th>CancelledOn</th>
+                            <th>Cancellation Remarks</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let data of pendingData; let i = index;">
+                            <td>{{i + 1}}</td>
+                            <td>{{data.shipmentNumber}}</td>
+                            <td>{{data.dispatchDate | date}}</td>
+                            <td>({{data.attrs.fromBranch}}) - ({{data.attrs.toBranch}})</td>
+                            <td>{{data.totalCharge}}</td>
+                            <td>{{data.attrs.bookedBy}}</td>
+                            <td>{{data.attrs.createdAt | date}}</td>
+                            <td>{{data.attrs.canceldBy}}</td>
+                            <td>{{data.attrs.canceledOn | date}}</td>
+                            <td> {{data.cancellationReason}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tile" *ngIf="tab === 2">
+                <div class="tile-body">
+                    <span>Cancelled</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
