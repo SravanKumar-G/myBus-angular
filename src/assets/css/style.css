@@ -322,7 +322,7 @@ body {
     /*margin: 30px 0px;*/
     /*background-image: url("../img/Gif_Illustration.jpg");*/
     /*background-repeat: no-repeat;*/
-    /*background: linear-gradient(305deg, #db2b30, #000000);*/
+    /*background: linear-gradient(305deg, #e68220, #000000);*/
     background-size: 400% 400%;
 
     -webkit-animation: AnimationName 30s ease infinite;
@@ -419,7 +419,7 @@ body {
     /*-webkit-transition: all 0.5s ease-in-out;*/
     /*-o-transition: all 0.5s ease-in-out;*/
     /*transition: all 0.5s ease-in-out;*/
-    background: linear-gradient(305deg, #000000, #db2b30);
+    background: linear-gradient(305deg, #000000, #e68220);
     background-size: 400% 400%;
     -webkit-animation: AnimationName 30s ease infinite;
     -moz-animation: AnimationName 30s ease infinite;
@@ -595,7 +595,7 @@ body {
     /*border-bottom: 1px solid #ddd;*/
     text-align: center;
     font-weight: bolder;
-    color: #db2b30;
+    color: #e68220;
 }
 
 .login-content .login-box label {
@@ -636,14 +636,14 @@ label {
 
 .btn-cus {
     color: #FFF !important;
-    background-color: #db2b30 !important;
-    border-color: #db2b30 !important;
+    background-color: #e68220 !important;
+    border-color: #e68220 !important;
 }
 
 .btn-cus:hover {
     color: #FFF !important;
-    background-color: #db2b30 !important;
-    border-color: #db2b30 !important;
+    background-color: #e68220 !important;
+    border-color: #e68220 !important;
 }
 
 .refresh-qrcode {
@@ -1017,24 +1017,24 @@ img {
 /*}*/
 
 .nav-tabs {
-    border-bottom: 1px solid #db2b30 !important;
+    border-bottom: 1px solid #e68220 !important;
     padding-left: 18px !important;
 }
 
 li.tab.active a {
     background-color: #fff;
-    color: #db2b30;
+    color: #e68220;
     text-decoration: none;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-    border-bottom: 2px solid #db2b30;
+    border-bottom: 2px solid #e68220;
     padding: 6px 40px 4px 40px;
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    color: #db2b30 !important;
+    color: #e68220 !important;
     background-color: #fff;
-    border-color: #db2b30 #db2b30 #fff !important;
+    border-color: #e68220 #e68220 #fff !important;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
@@ -1085,16 +1085,16 @@ li.tab.active a {
 
 .app-menu__item.active, .app-menu__item:hover, .app-menu__item:focus {
     background: #0d1214;
-    border-left-color: #db2b30;
+    border-left-color: #e68220;
     text-decoration: none;
     color: #fff;
 }
 
 .app-menu__item-child.active, .app-menu__item-child:hover, .app-menu__item-child:focus {
     background: #0d1214;
-    /*border-left-color: #db2b30;*/
+    /*border-left-color: #e68220;*/
     text-decoration: none;
-    color: #db2b30;
+    color: #e68220;
 }
 
 .app-menu__item {
@@ -1250,12 +1250,12 @@ li.tab.active a {
 }
 
 .treeView-item:hover {
-    color: #db2b30 !important;
+    color: #e68220 !important;
     text-decoration: none !important;
 }
 
 .treeView-item-child:hover {
-    color: #db2b30 !important;
+    color: #e68220 !important;
     text-decoration: none !important;
 }
 
@@ -1285,12 +1285,12 @@ li.tab.active a {
 }
 
 .treeView.is-expanded [data-toggle='treeView'] {
-    border-left-color: #db2b30 !important;
+    border-left-color: #e68220 !important;
     background: #0d1214 !important;
 }
 
 .treeView-child.is-expanded [data-toggle='treeView-child'] {
-    border-left-color: #db2b30;
+    border-left-color: #e68220;
     /*background: #0d1214;*/
 }
 
@@ -1317,7 +1317,7 @@ li.tab.active a {
 .treeView-item.active, .treeView-item:hover, .treeView-item:focus {
     background: #0d1214;
     text-decoration: none;
-    color: #db2b30 !important;
+    color: #e68220 !important;
 }
 
 .treeView-item-child.active, .treeView-item-child:hover, .treeView-item-child:focus {
@@ -1675,7 +1675,7 @@ li.tab.active a {
 .shift-map-box {
     background: #ffffff;
     border-radius: 3px;
-    border: 6px double #db2b30;
+    border: 6px double #e68220;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
@@ -1742,11 +1742,11 @@ table.dataTable {
 }
 
 .table thead th > .fa-sort-asc {
-    color: #db2b30;
+    color: #e68220;
 }
 
 .table thead th > .fa-sort-desc {
-    color: #db2b30;
+    color: #e68220;
 }
 
 .table thead th > .fa-sort {
@@ -1903,8 +1903,8 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 .page-item.active .page-link {
     z-index: 1;
     color: #FFF !important;
-    background-color: #db2b30 !important;
-    border-color: #db2b30 !important;
+    background-color: #e68220 !important;
+    border-color: #e68220 !important;
 }
 
 /*.page-link:not(:disabled):not(.disabled) {*/
@@ -1912,7 +1912,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 /*}*/
 
 .page-link {
-    color: #db2b30 !important;
+    color: #e68220 !important;
 }
 
 .ng-table-counts button {
@@ -2113,7 +2113,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
     /*background: url("../img/icons/twoWee.png");*/
     margin: auto;
     padding: 10px;
-    border: 2px solid #db2b30;
+    border: 2px solid #e68220;
     border-radius: 6px;
 }
 
@@ -2314,11 +2314,11 @@ fa-product-hunt {
 }
 
 .alert-success, .alert-warning, .alert-danger {
-    border: 1px solid #db2b30 !important;
+    border: 1px solid #e68220 !important;
 }
 
 .nav-pills .nav-link.active {
-    color: #db2b30 !important;
+    color: #e68220 !important;
     background-color: #ffffff !important;
     -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 0px 0px 0 rgba(0, 0, 0, 0.12), 0 0px 0px 0px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 0px 0px 0 rgba(0, 0, 0, 0.12), 0 0px 0px 0px rgba(0, 0, 0, 0.2);
@@ -2336,7 +2336,7 @@ fa-product-hunt {
 .weekDays-selector input[type=checkbox] + label {
     display: inline-block;
     background-color: #f1f5f4 !important;
-    border: 1px solid #db2b30 !important;
+    border: 1px solid #e68220 !important;
     margin-right: 5px;
     text-align: center;
 }
@@ -2721,7 +2721,7 @@ button:focus {
 }
 
 .btn-register {
-    background: linear-gradient(305deg, #db2b30, #000000);
+    background: linear-gradient(305deg, #e68220, #000000);
     background-size: 400% 400%;
     -webkit-animation: AnimationName 30s ease infinite;
     -moz-animation: AnimationName 30s ease infinite;
@@ -3461,7 +3461,7 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
     .sidebar-mini.sidenav-toggled .treeView:hover .app-menu__item, .sidebar-mini.sidenav-toggled .treeView-child:hover .app-menu__item-child {
         overflow: visible;
         background: #0d1214;
-        border-left-color: #db2b30;
+        border-left-color: #e68220;
         color: #fff;
     }
 
@@ -4080,13 +4080,13 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
 }
 
 .payout-user:hover {
-    color: #db2b30;
-    border-left: 4px solid #db2b30;
+    color: #e68220;
+    border-left: 4px solid #e68220;
 }
 
 .payout-user-active {
-    color: #db2b30;
-    border-left: 4px solid #db2b30;
+    color: #e68220;
+    border-left: 4px solid #e68220;
 }
 
 .colGreen, .colGreen:hover, .colGreen:active {
