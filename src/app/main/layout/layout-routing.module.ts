@@ -27,6 +27,16 @@ const layOutRoutes: Routes = [
                 path: 'cancellations',
                 loadChildren: () => import('./features/cargo-cancellations/cargo-cancellations.module').
                 then(m => m.CargoCancellationsModule)
+            },
+            {
+                path: 'cities',
+                loadChildren: () => import('./features/cities/cities.module').
+                then(m => m.CitiesModule)
+            },
+            {
+                path: 'branchOffices',
+                loadChildren: () => import('./features/branch-offices/branch-offices.module').
+                then(m => m.BranchOfficesModule)
             }
         ]
     },

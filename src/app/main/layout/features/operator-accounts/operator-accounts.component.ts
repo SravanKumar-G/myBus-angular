@@ -37,7 +37,6 @@ export class OperatorAccountsComponent implements OnInit {
   }
 
   addOperatorAccounts(): void {
-    console.log(this.router);
     this.router.navigate(['addOperatorAccount']);
   }
 }

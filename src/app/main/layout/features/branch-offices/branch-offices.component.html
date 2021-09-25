@@ -1,0 +1,121 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-building" aria-hidden="true"></i>
+                Branch Offices
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Branch Offices</span></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="col-sm-12 text-right mb-3">
+                        <a class="btn btn-sm btn-success" [routerLink]="['addBranchOffice']">Add Branch Office</a>
+                    </div>
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table table-hover text-center dataTable">
+                            <thead>
+                            <tr>
+                                <th>S No</th>
+                                <th [ngClass]="branchOfficeQuery.sortOrder == 'name'?'headActive' : ''"
+                                    accessKey="name" (click)="clickSorting($event)">Name
+                                    <i *ngIf="sortOrder != 'name'" class="fa fa-sort"></i>
+                                    <i *ngIf="sortOrder == 'name'" class="fa"
+                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="branchOfficeQuery.sortOrder == 'cityName'?'headActive' : ''"
+                                    accessKey="cityName" (click)="clickSorting($event)">City
+                                    <i *ngIf="sortOrder != 'cityName'" class="fa fa-sort"></i>
+                                    <i *ngIf="sortOrder == 'cityName'" class="fa"
+                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                </th>
+                                <th>Manager</th>
+                                <th [ngClass]="branchOfficeQuery.sortOrder == 'contact'?'headActive' : ''"
+                                    accessKey="contact" (click)="clickSorting($event)">Contact
+                                    <i *ngIf="sortOrder != 'contact'" class="fa fa-sort"></i>
+                                    <i *ngIf="sortOrder == 'contact'" class="fa"
+                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="branchOfficeQuery.sortOrder == 'email'?'headActive' : ''"
+                                    accessKey="email" (click)="clickSorting($event)">Email
+                                    <i *ngIf="sortOrder != 'email'" class="fa fa-sort"></i>
+                                    <i *ngIf="sortOrder == 'email'" class="fa"
+                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="branchOfficeQuery.sortOrder == 'address'?'headActive' : ''"
+                                    accessKey="address" (click)="clickSorting($event)">Address
+                                    <i *ngIf="sortOrder != 'address'" class="fa fa-sort"></i>
+                                    <i *ngIf="sortOrder == 'address'" class="fa"
+                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let office of branchOffices; let i =index;">
+                                <td>{{i + 1}}</td>
+                                <td>{{office.name}}</td>
+                                <td>{{office.attrs.cityName || '--'}}</td>
+                                <td>{{office.attrs.managerName || '--'}}</td>
+                                <td>{{office.contact || '--'}}</td>
+                                <td>{{office.email || '--'}}</td>
+                                <td>{{office.address || '--'}}</td>
+                                <td class="td-active">
+                                    <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                            title="Edit City" [routerLink]="['editBranchOffice/' + office.id]">
+                                        <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                            title="Delete City" (click)="deleteBranchOffice(office.id)">
+                                        <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="branchOffices.length === 0 || !branchOffices">
+                                <td colspan="8" style="text-align: center">No Records exist.</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr *ngIf="branchOffices.length > 0">
+                                <th colspan="8">
+                                    <div class="pull-right">
+                                        Total Count : {{branchOfficesCount || 0}}
+                                    </div>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <div class="form-group">
+                            <div class="list-row" style="display: inline-block">
+                                <ngb-pagination *ngIf="branchOfficesCount || branchOfficesCount !== 0"
+                                                [(page)]="branchOfficeQuery.page"
+                                                [pageSize]="branchOfficeQuery.size"
+                                                [collectionSize]="branchOfficesCount"
+                                                [boundaryLinks]="true"
+                                                (pageChange)="handlePageChange($event)"
+                                                [maxSize]="5">
+                                </ngb-pagination>
+                            </div>
+                            <ul class="pagination pull-right" *ngIf="branchOfficeQuery || branchOfficeQuery !== 0">
+                                <li class="page-item" [ngClass]="size == branchOfficeQuery.size ? 'active' : ''"
+                                    *ngFor="let size of branchOfficeQuery.pageSizes" (click)="handlePageSizeChange(size)">
+                                    <button class="page-link"> {{ size }}
+                                        <span class="sr-only">(current)</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

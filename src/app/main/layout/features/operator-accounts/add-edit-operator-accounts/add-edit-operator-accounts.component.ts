@@ -40,14 +40,13 @@ export class AddEditOperatorAccountsComponent implements OnInit {
             this.apiService.create(this.apiUrls.saveOrUpdateOperatorAccount, this.operatorAccount).subscribe((res: any) => {
                 if (res) {
                     if (!this.operatorId) {
-                        Swal.fire('Great', 'Your account has been sucessfully added', 'success');
+                        Swal.fire('Great', 'Your account has been successfully added', 'success');
                     } else {
-                        Swal.fire('Great', 'Your account has been updated sucessfully', 'success');
+                        Swal.fire('Great', 'Your account has been updated successfully', 'success');
                     }
                     this.router.navigate(['operatorAccounts']);
                 }
             }, error => {
-                console.log(error);
                 this.errorMessage = error.message;
             });
         }

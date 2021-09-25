@@ -13,11 +13,13 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {ErrorInterceptor} from './interceptors/error.interceptor';
 import {SpinnerService} from './spinner/spinner.service';
 import {SpinnerInterceptor} from './interceptors/spinner.interceptor';
+import {SpinnerComponent} from './spinner/spinner.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
+        SpinnerComponent
     ],
     imports: [
         BrowserModule,
@@ -35,7 +37,9 @@ import {SpinnerInterceptor} from './interceptors/spinner.interceptor';
         SpinnerService,
         {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true},
     ],
-    exports: [],
+    exports: [
+        SpinnerComponent
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
