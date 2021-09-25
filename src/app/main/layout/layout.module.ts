@@ -5,7 +5,6 @@ import {FormsModule} from '@angular/forms';
 import {AppModule} from '../../app.module';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ErrorInterceptor} from '../../interceptors/error.interceptor';
-import {DashboardComponent} from './features/dashboard/dashboard.component';
 import {LayoutComponent} from './layout.component';
 import { CargoDashboardComponent } from './features/cargo-dashboard/cargo-dashboard.component';
 import {NumberFormatterPipe} from '../../customDirectives/number-formatter.pipe';
@@ -18,7 +17,7 @@ import { CargoCancellationsComponent } from './features/cargo-cancellations/carg
         LayoutComponent,
         NumberFormatterPipe,
         NewBookingComponent,
-        CargoCancellationsComponent
+        CargoCancellationsComponent,
     ],
     imports: [
         CommonModule,

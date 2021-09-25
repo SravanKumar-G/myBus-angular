@@ -15,4 +15,8 @@ export class ApiUrls {
   cancelledShipmentsCount = 'api/v1/shipment/count/cancelled';
   getAllCancelledShipments = 'api/v1/shipment/search/cancelled';
 
+  getAllOperatorAccounts = 'api/v1/operatorAccount/all';
+  saveOrUpdateOperatorAccount = 'api/v1/operatorAccount/';
+  getOperatorAccount = 'api/v1/operatorAccount/';
+
 }
