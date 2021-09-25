@@ -2,22 +2,18 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {LayoutRoutingModule} from './layout-routing.module';
 import {FormsModule} from '@angular/forms';
-import {AppModule} from '../../app.module';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ErrorInterceptor} from '../../interceptors/error.interceptor';
 import {LayoutComponent} from './layout.component';
-import { CargoDashboardComponent } from './features/cargo-dashboard/cargo-dashboard.component';
 import {NumberFormatterPipe} from '../../customDirectives/number-formatter.pipe';
-
-import { NewBookingComponent } from './features/new-booking/new-booking.component';
-import { CargoCancellationsComponent } from './features/cargo-cancellations/cargo-cancellations.component';
+import {OnlynumberDirective} from '../../_helpers/onlynumber.directive';
+import { BranchOfficesComponent } from './features/branch-offices/branch-offices.component';
 
 @NgModule({
     declarations: [
         LayoutComponent,
         NumberFormatterPipe,
-        NewBookingComponent,
-        CargoCancellationsComponent,
+        OnlynumberDirective,
     ],
     imports: [
         CommonModule,
@@ -29,6 +25,9 @@ import { CargoCancellationsComponent } from './features/cargo-cancellations/carg
     bootstrap: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
+    exports: [
+        OnlynumberDirective
+    ]
 })
 export class LayoutModule {
 }

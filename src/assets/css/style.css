@@ -4268,3 +4268,9 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
     font-family: auto;
     padding-left: 25px;
 }
+.modal-content {
+    font-family: auto;
+}
+.swal2-container.swal2-center>.swal2-popup {
+    font-family: auto;
+}
