@@ -38,4 +38,12 @@ export class ApiUrls {
     updateBranchOffice = 'api/v1/branchOffice/';
     getBranchOffice = 'api/v1/branchOffice/';
 
+    // Roles API's
+    getRolesCount = 'api/v1/roles/count';
+    getAllRoles = 'api/v1/roles';
+    saveRole = 'api/v1/createRole';
+    getRole = 'api/v1/role/';
+    updateRole = 'api/v1/role/';
+    deleteRole = 'api/v1/role/';
+
 }

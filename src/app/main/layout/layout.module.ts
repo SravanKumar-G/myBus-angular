@@ -7,7 +7,6 @@ import {ErrorInterceptor} from '../../interceptors/error.interceptor';
 import {LayoutComponent} from './layout.component';
 import {NumberFormatterPipe} from '../../customDirectives/number-formatter.pipe';
 import {OnlynumberDirective} from '../../_helpers/onlynumber.directive';
-import { BranchOfficesComponent } from './features/branch-offices/branch-offices.component';
 
 @NgModule({
     declarations: [

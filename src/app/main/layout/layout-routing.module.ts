@@ -37,6 +37,11 @@ const layOutRoutes: Routes = [
                 path: 'branchOffices',
                 loadChildren: () => import('./features/branch-offices/branch-offices.module').
                 then(m => m.BranchOfficesModule)
+            },
+            {
+                path: 'roles',
+                loadChildren: () => import('./features/roles/roles.module').
+                then(m => m.RolesModule)
             }
         ]
     },

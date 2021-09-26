@@ -1,0 +1,123 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                Roles
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Roles</span></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="col-sm-12 text-right mb-3">
+                        <a class="btn btn-sm btn-success" (click)="addRole(addEditRoleModal)">Add New Role</a>
+                    </div>
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table table-hover text-center dataTable">
+                            <thead>
+                            <tr>
+                                <th>S No</th>
+                                <th [ngClass]="rolesQuery.sortOrder == 'name'?'headActive' : ''"
+                                    accessKey="name" (click)="clickSorting($event)">Role Name
+                                    <i *ngIf="sortOrder != 'name'" class="fa fa-sort"></i>
+                                    <i *ngIf="sortOrder == 'name'" class="fa"
+                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let role of roles; let i =index;">
+                                <td>{{i + 1}}</td>
+                                <td>{{role.name}}</td>
+                                <td class="td-active">
+                                    <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                            title="Edit City" (click)="updateRole(addEditRoleModal, role.id)">
+                                        <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                            title="Delete City" (click)="deleteRole(role.id)">
+                                        <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="roles.length === 0 || !roles">
+                                <td colspan="4" style="text-align: center">No Records exist.</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr *ngIf="roles.length > 0">
+                                <th colspan="6">
+                                    <div class="pull-right">
+                                        Total Count : {{rolesCount || 0}}
+                                    </div>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <div class="form-group">
+                            <div class="list-row" style="display: inline-block">
+                                <ngb-pagination *ngIf="rolesCount || rolesCount !== 0"
+                                                [(page)]="rolesQuery.page"
+                                                [pageSize]="rolesQuery.size"
+                                                [collectionSize]="rolesCount"
+                                                [boundaryLinks]="true"
+                                                (pageChange)="handlePageChange($event)"
+                                                [maxSize]="5">
+                                </ngb-pagination>
+                            </div>
+                            <ul class="pagination pull-right" *ngIf="rolesCount || rolesCount !== 0">
+                                <li class="page-item" [ngClass]="size == rolesQuery.size ? 'active' : ''"
+                                    *ngFor="let size of rolesQuery.pageSizes" (click)="handlePageSizeChange(size)">
+                                    <button class="page-link"> {{ size }}
+                                        <span class="sr-only">(current)</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add or Edit City Modal-->
+<ng-template #addEditRoleModal>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">{{titleHeader}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form name="cityStateUpdateForm" class="form-horizontal" role="form">
+            <div class="col-sm-8 col-12 offset-2 form-group">
+                <label>Role Name:<span class="mandatory-field">*</span></label>
+                <input type="text" class="form-control-sm form-control"
+                       [(ngModel)]="role.name" [ngModelOptions]="{standalone: true}"
+                       placeholder="Enter Role Name">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-12 text-center">
+            <p class="error-field">{{errorMessage}}</p>
+        </div>
+        <div class="col-sm-12 text-right p-0">
+            <button type="button" class="btn btn-success btn-sm mr-2" (click)="save()">
+                <i class="fa fa-fw fa-check-circle"></i> {{roleId ? 'Update' : 'Save'}}
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">
+                <i class="fa fa-fw fa-times-circle"></i> Close
+            </button>
+        </div>
+    </div>
+</ng-template>
