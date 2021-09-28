@@ -1,0 +1,157 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                {{headerTitle}}
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">{{headerTitle}}</span></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-12 mx-auto">
+            <div class="tile">
+                <div class="tile-body">
+                    <form [formGroup]="addUserForm">
+                        <div class="row">
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>User Name:<span class="mandatory-field">*</span></label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="enter user name"
+                                       formControlName="userName"
+                                       [(ngModel)]="user.userName"
+                                />
+                                <span class="error-field">{{ getErrMsg("userName", "User Name", "input") }}</span>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Contact:<span class="mandatory-field">*</span></label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="enter contact number"
+                                       [(ngModel)]="user.contact"
+                                       formControlName="contact"
+                                       numbersOnly/>
+                                <span class="error-field">{{ getErrMsg("contact", "Contact Number", "input") }}</span>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>First Name:<span class="mandatory-field">*</span></label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="enter first name"
+                                       [(ngModel)]="user.firstName"
+                                       formControlName="firstName"/>
+                                <span class="error-field">{{ getErrMsg("firstName", "First Name", "input") }}</span>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Last Name:<span class="mandatory-field">*</span></label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="enter last name"
+                                       [(ngModel)]="user.lastName"
+                                       formControlName="lastName"/>
+                                <span class="error-field">{{ getErrMsg("lastName", "Last Name", "input") }}</span>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Password:<span class="mandatory-field">*</span></label>
+                                <div class="input-group mb-3">
+                                <input type="password" class="form-control form-control-sm"
+                                       placeholder="enter password"
+                                       [(ngModel)]="user.password"
+                                       formControlName="password"/>
+                                </div>
+                                <span class="error-field">{{ getErrMsg("password", "Password", "input") }}</span>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Confirm Password:<span class="mandatory-field">*</span></label>
+                                <input type="password" class="form-control form-control-sm"
+                                       placeholder="Re-enter Password"
+                                       [(ngModel)]="confirmPassword"
+                                       formControlName="confirmPassword"/>
+                                <span class="error-field">{{ getErrMsg("confirmPassword", "Confirm Password", "input") }}</span>
+                                <span class="error-field" *ngIf="user.password !== confirmPassword">Passwords don't match.</span>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Email:<span class="mandatory-field">*</span></label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="enter email"
+                                       [(ngModel)]="user.email"
+                                       formControlName="email"/>
+                                <span class="error-field">{{ getErrMsg("email", "Email", "input") }}</span>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Secondary Contact:</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="enter secondary contact"
+                                       [(ngModel)]="user.secondaryContact"
+                                       numbersOnly
+                                       formControlName="secondaryContact"/>
+                            </div>
+                            <div class="col-sm-8 col-12 form-group">
+                                <label>Address:</label>
+                                <textarea class="form-control form-control-sm"
+                                          cols="40"
+                                          placeholder="enter address"
+                                          [(ngModel)]="user.address1"
+                                          formControlName="address1"></textarea>
+                            </div>
+
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>User Type:<span class="mandatory-field">*</span></label>
+                                <select [(ngModel)]="user.role"
+                                        formControlName="role" class="form-control form-control-sm">
+                                    <option value="" selected>--Select--</option>
+                                    <option *ngFor="let user of userRoles"
+                                            value="{{user.id}}">{{user.name}}</option>
+                                </select>
+                                <small><a class="cus-a" (click)="routeToRole()">Add Role</a></small>
+                                <span class="error-field">{{ getErrMsg("role", "Role", "select") }}</span>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Branch Office:<span class="mandatory-field">*</span></label>
+                                <select [(ngModel)]="user.branchOfficeId"
+                                        formControlName="branchOfficeId" class="form-control form-control-sm">
+                                    <option value="" selected>--Select--</option>
+                                    <option *ngFor="let office of branchOffices"
+                                            value="{{office.id}}">{{office.name}}</option>
+                                </select>
+                                <small><a class="cus-a" (click)="routeToBranchOffices()">Add Branch Office</a></small>
+                                <span class="error-field">{{ getErrMsg("branchOfficeId", "Branch Office", "select") }}</span>
+                            </div>
+                            <div class="col-sm-3 col-12 form-group">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="skipAgentValidity"
+                                           [(ngModel)]="user.active"
+                                           formControlName="active">
+                                    <label class="form-check-label" for="skipAgentValidity">Active</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="sendInvoiceEmail"
+                                           [(ngModel)]="user.cancelCargoBookings"
+                                           formControlName="cancelCargoBookings">
+                                    <label class="form-check-label" for="sendInvoiceEmail">Cancel Cargo Bookings</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tile-footer">
+                    <div class="col-12 text-center">
+                        <p class="error-field">{{errorMessage}}</p>
+                    </div>
+                    <div class="col-sm-12 text-right p-0">
+                        <button type="submit" class="btn btn-success btn-sm mr-2" (click)="save()">
+                            <i class="fa fa-fw fa-check-circle"></i> {{userId ? 'Update' : 'Save'}}
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="close()">
+                            <i class="fa fa-fw fa-times-circle"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

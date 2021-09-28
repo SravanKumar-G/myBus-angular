@@ -42,6 +42,11 @@ const layOutRoutes: Routes = [
                 path: 'roles',
                 loadChildren: () => import('./features/roles/roles.module').
                 then(m => m.RolesModule)
+            },
+            {
+                path: 'users',
+                loadChildren: () => import('./features/users/users.module').
+                then(m => m.UsersModule)
             }
         ]
     },

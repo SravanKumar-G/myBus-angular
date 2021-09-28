@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {OnlynumberDirective} from '../../../../_helpers/onlynumber.directive';
+import {OnlynumberDirective} from '../../../../customDirectives/directives/onlynumber.directive';
 import {Router} from '@angular/router';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';

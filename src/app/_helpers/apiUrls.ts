@@ -37,6 +37,7 @@ export class ApiUrls {
     saveBranchOffice = 'api/v1/branchOffice';
     updateBranchOffice = 'api/v1/branchOffice/';
     getBranchOffice = 'api/v1/branchOffice/';
+    loadBranchNames = 'api/v1/branchOffice/names';
 
     // Roles API's
     getRolesCount = 'api/v1/roles/count';
@@ -46,4 +47,10 @@ export class ApiUrls {
     updateRole = 'api/v1/role/';
     deleteRole = 'api/v1/role/';
 
+    // Users API's
+    getUsers = 'api/v1/users';
+    saveUser = 'api/v1/user';
+    getUserByUserId = 'api/v1/userId/';
+    updateUser = 'api/v1/userEdit/';
+    deleteUser = 'api/v1/user/';
 }

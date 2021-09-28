@@ -19,7 +19,7 @@ import {SpinnerComponent} from './spinner/spinner.component';
     declarations: [
         AppComponent,
         LoginComponent,
-        SpinnerComponent
+        SpinnerComponent,
     ],
     imports: [
         BrowserModule,
