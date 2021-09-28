@@ -1,0 +1,136 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-wifi" aria-hidden="true"></i>
+                Amenities
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Amenities</span></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="col-sm-12 text-right mb-3">
+                        <a class="btn btn-sm btn-success" (click)="addAmenity(addEditAmenityModal)">Add Amenity</a>
+                    </div>
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table table-hover text-center dataTable">
+                            <thead>
+                            <tr>
+                                <th>S No</th>
+                                <th [ngClass]="amenitiesQuery.sortOrder == 'name'?'headActive' : ''"
+                                    accessKey="name" (click)="clickSorting($event)">Amenity
+                                    <i *ngIf="sortOrder != 'name'" class="fa fa-sort"></i>
+                                    <i *ngIf="sortOrder == 'name'" class="fa"
+                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="amenitiesQuery.sortOrder == 'active'?'headActive' : ''"
+                                    accessKey="active" (click)="clickSorting($event)">Status
+                                    <i *ngIf="sortOrder != 'active'" class="fa fa-sort"></i>
+                                    <i *ngIf="sortOrder == 'active'" class="fa"
+                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i></th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let amenity of amenities; let i =index;">
+                                <td>{{i + 1}}</td>
+                                <td>{{amenity.name}}</td>
+                                <td>{{amenity.active === true ? 'Active' : 'In Active'}}</td>
+                                <td class="td-active">
+                                    <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                            title="Edit City" (click)="updateAmenity(addEditAmenityModal, amenity.id)">
+                                        <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                            title="Delete City" (click)="deleteAmenity(amenity.id)">
+                                        <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="amenities.length === 0 || !amenities">
+                                <td colspan="4" style="text-align: center">No Records exist.</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr *ngIf="amenities.length > 0">
+                                <th colspan="4">
+                                    <div class="pull-right">
+                                        Total Count : {{amenitiesCount || 0}}
+                                    </div>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <div class="form-group">
+                            <div class="list-row" style="display: inline-block">
+                                <ngb-pagination *ngIf="amenitiesCount || amenitiesCount !== 0"
+                                                [(page)]="amenitiesQuery.page"
+                                                [pageSize]="amenitiesQuery.size"
+                                                [collectionSize]="amenitiesCount"
+                                                [boundaryLinks]="true"
+                                                (pageChange)="handlePageChange($event)"
+                                                [maxSize]="5">
+                                </ngb-pagination>
+                            </div>
+                            <ul class="pagination pull-right" *ngIf="amenitiesCount || amenitiesCount !== 0">
+                                <li class="page-item" [ngClass]="size == amenitiesQuery.size ? 'active' : ''"
+                                    *ngFor="let size of amenitiesQuery.pageSizes" (click)="handlePageSizeChange(size)">
+                                    <button class="page-link"> {{ size }}
+                                        <span class="sr-only">(current)</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add or Edit City Modal-->
+<ng-template #addEditAmenityModal>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">{{titleHeader}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form name="cityStateUpdateForm" class="form-horizontal" role="form">
+            <div class="col-sm-8 col-12 offset-2 form-group">
+                <label>Amenity Name:<span class="mandatory-field">*</span></label>
+                <input type="text" class="form-control-sm form-control"
+                       [(ngModel)]="amenity.name" [ngModelOptions]="{standalone: true}"
+                       placeholder="Enter Amenity Name">
+            </div>
+            <div class="col-sm-8 col-12 offset-2 form-group">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="active"
+                           [(ngModel)]="amenity.active" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="active">Active</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-12 text-center">
+            <p class="error-field">{{errorMessage}}</p>
+        </div>
+        <div class="col-sm-12 text-right p-0">
+            <button type="button" class="btn btn-success btn-sm mr-2" (click)="save()">
+                <i class="fa fa-fw fa-check-circle"></i> {{amenityId ? 'Update' : 'Save'}}
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">
+                <i class="fa fa-fw fa-times-circle"></i> Close
+            </button>
+        </div>
+    </div>
+</ng-template>

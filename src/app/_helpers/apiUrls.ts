@@ -53,4 +53,12 @@ export class ApiUrls {
     getUserByUserId = 'api/v1/userId/';
     updateUser = 'api/v1/userEdit/';
     deleteUser = 'api/v1/user/';
+
+    // Amenities API's
+    getAmenitiesCount = 'api/v1/amenities/count';
+    getAllAmenities = 'api/v1/amenities';
+    getAmenityById = 'api/v1/amenity/';
+    updateAmenity = 'api/v1/amenity/';
+    saveAmenity = 'api/v1/amenity';
+    deleteAmenity = 'api/v1/amenity/';
 }
