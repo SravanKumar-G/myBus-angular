@@ -5,14 +5,18 @@ import {FormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {ErrorInterceptor} from '../../interceptors/error.interceptor';
 import {LayoutComponent} from './layout.component';
-import {NumberFormatterPipe} from '../../customDirectives/number-formatter.pipe';
-import {OnlynumberDirective} from '../../_helpers/onlynumber.directive';
+import {NumberFormatterPipe} from '../../customDirectives/pipes/number-formatter.pipe';
+import {OnlynumberDirective} from '../../customDirectives/directives/onlynumber.directive';
+import {FrentendSortDirective} from '../../customDirectives/directives/frentend-sort.directive';
+import {SearchFilterPipe} from '../../customDirectives/pipes/search-filter.pipe';
 
 @NgModule({
     declarations: [
         LayoutComponent,
         NumberFormatterPipe,
         OnlynumberDirective,
+        FrentendSortDirective,
+        SearchFilterPipe
     ],
     imports: [
         CommonModule,
@@ -25,7 +29,10 @@ import {OnlynumberDirective} from '../../_helpers/onlynumber.directive';
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
     exports: [
-        OnlynumberDirective
+        OnlynumberDirective,
+        NumberFormatterPipe,
+        FrentendSortDirective,
+        SearchFilterPipe
     ]
 })
 export class LayoutModule {

@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import Swal from 'sweetalert2';
-import {OnlynumberDirective} from '../../../../_helpers/onlynumber.directive';
+import {OnlynumberDirective} from '../../../../customDirectives/directives/onlynumber.directive';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
