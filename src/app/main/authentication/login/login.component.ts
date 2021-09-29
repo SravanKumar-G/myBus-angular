@@ -64,10 +64,8 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.authenticationService.logIn(this.f.userName.value, this.f.password.value)
             .pipe(first()).subscribe(data => {
-            console.log(data, '==>');
             if (data.accessToken) {
                 this.apiService.get(this.apiUrls.getCurrentUser).subscribe((res: any) => {
-                    console.log(res, '==>', '--');
                     this.currentUserDetails = res;
                     localStorage.setItem('currentUserDetails', JSON.stringify(this.currentUserDetails));
                     this.router.navigate([this.returnUrl]);

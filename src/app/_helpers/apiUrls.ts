@@ -61,4 +61,12 @@ export class ApiUrls {
     updateAmenity = 'api/v1/amenity/';
     saveAmenity = 'api/v1/amenity';
     deleteAmenity = 'api/v1/amenity/';
+
+    // Vehicles API's
+    getVehiclesCount = 'api/v1/vehicle/count';
+    getAllVehicles = 'api/v1/vehicles';
+    saveVehicle = 'api/v1/vehicle';
+    updateVehicle = 'api/v1/vehicle/';
+    getVehicleById = 'api/v1/vehicle/';
+    deleteVehicle = 'api/v1/vehicle/';
 }

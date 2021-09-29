@@ -10,6 +10,7 @@ import {OnlynumberDirective} from '../../customDirectives/directives/onlynumber.
 import {FrentendSortDirective} from '../../customDirectives/directives/frentend-sort.directive';
 import {SearchFilterPipe} from '../../customDirectives/pipes/search-filter.pipe';
 
+
 @NgModule({
     declarations: [
         LayoutComponent,
@@ -21,7 +22,7 @@ import {SearchFilterPipe} from '../../customDirectives/pipes/search-filter.pipe'
     imports: [
         CommonModule,
         LayoutRoutingModule,
-        FormsModule,
+        FormsModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],

@@ -1,0 +1,278 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i> {{headerTitle}}
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">{{headerTitle}}</span></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-12 mx-auto">
+            <div class="tile">
+                <div class="tile-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Registration No:<span class="mandatory-field">*</span></label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Registration Number XX XX XX XXXX"
+                                       [(ngModel)]="vehicle.regNo"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Vehicle Type:<span class="mandatory-field">*</span></label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Vehicle Type"
+                                       [(ngModel)]="vehicle.vehicleType"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Permit Number:</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Permit Number"
+                                       [(ngModel)]="vehicle.permitNumber"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Permit Expiry:</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Permit Expiry"
+                                           name="permit"
+                                           [minDate]="newDate"
+                                           [(ngModel)]="vehicle.permitExpiry"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #permit="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="permit.show()"
+                                                [attr.aria-expanded]="permit.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Insurance Expiry:</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Insurance Expiry"
+                                           name="insurance"
+                                           [minDate]="newDate"
+                                           [(ngModel)]="vehicle.insuranceExpiry"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #insurance="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true }">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="insurance.show()"
+                                                [attr.aria-expanded]="insurance.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Fitness Expiry:</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Fitness Expiry"
+                                           name="fitness"
+                                           [(ngModel)]="vehicle.fitnessExpiry"
+                                           [minDate]="newDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #fitness="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true }">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="fitness.show()"
+                                                [attr.aria-expanded]="fitness.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Pollution Expiry:</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Pollution Expiry"
+                                           name="pollution"
+                                           [(ngModel)]="vehicle.pollutionExpiry"
+                                           [minDate]="newDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #pollution="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true }">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="pollution.show()"
+                                                [attr.aria-expanded]="pollution.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Authorization Expiry:</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Authorization Expiry"
+                                           name="auth"
+                                           [(ngModel)]="vehicle.authExpiry"
+                                           [minDate]="newDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #auth="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true }">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="auth.show()"
+                                                [attr.aria-expanded]="auth.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Chasis Number:</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Chasis Number"
+                                       [(ngModel)]="vehicle.chasisNumber"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Engine Number:</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Engine Number"
+                                       [(ngModel)]="vehicle.engineNumber"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Number of Seats:</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Number of Seats"
+                                       [(ngModel)]="vehicle.noOfSeats"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Number of Berths:</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Number of Berths"
+                                       [(ngModel)]="vehicle.noOfBerths"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Owner Name:</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Owner Name"
+                                       [(ngModel)]="vehicle.ownerName"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Owner Address:</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Owner Address"
+                                       [(ngModel)]="vehicle.ownerAddress"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Year of Manufacture:</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Year of Manufacture"
+                                       [(ngModel)]="vehicle.yearOfManufacture"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Number of Tyres:</label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Number of Tyres"
+                                       [(ngModel)]="vehicle.numberOfTyres"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+
+                            <div class="state-tax">
+                                <div class="row" *ngFor="let vehicle of vehicle.taxPayments; let i = index; let l = last;">
+                                    <div class="col-sm-5 col-12 form-group">
+                                        <label>State:</label>
+                                        <input type="text" class="form-control form-control-sm"
+                                               placeholder="Enter State"
+                                               [(ngModel)]="vehicle.state"
+                                               [ngModelOptions]="{standalone: true}"
+                                        />
+                                    </div>
+                                    <div class="col-sm-5 col-12 form-group">
+                                        <label>Tax Expiry Date:</label>
+                                        <div class="input-group">
+                                            <input class="form-control form-control-sm"
+                                                   placeholder="Authorization Expiry"
+                                                   name="taxExpiry"
+                                                   [minDate]="newDate"
+                                                   [(ngModel)]="vehicle.paymentDate"
+                                                   [ngModelOptions]="{standalone: true}"
+                                                   bsDatepicker
+                                                   #taxExpiry="bsDatepicker"
+                                                   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true }">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                        (click)="taxExpiry.show()"
+                                                        [attr.aria-expanded]="taxExpiry.isOpen" type="button">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 form-group m-auto" *ngIf="l">
+                                        <div class="cus-a" (click)="addNewState()">
+                                            <i class="fa fa-plus-square fa-2x" style="color: #e68220"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 form-group m-auto" *ngIf="!l">
+                                        <div class="cus-a" (click)="removeState(i)">
+                                            <i class="fa fa-minus-square fa-2x" style="color: #e68220"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tile-footer">
+                    <div class="col-12 text-center">
+                        <p class="error-field">{{errorMessage}}</p>
+                    </div>
+                    <div class="col-sm-12 text-right p-0">
+                        <button type="submit" class="btn btn-success btn-sm mr-2" (click)="save()">
+                            <i class="fa fa-fw fa-check-circle"></i> {{vehicleId ? 'Update' : 'Save'}}
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="close()">
+                            <i class="fa fa-fw fa-times-circle"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
