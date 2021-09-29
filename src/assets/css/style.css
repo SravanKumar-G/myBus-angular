@@ -4274,3 +4274,10 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
 .swal2-container.swal2-center>.swal2-popup {
     font-family: auto;
 }
+.state-tax{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 10px 20px;
+    width: 100%;
+}

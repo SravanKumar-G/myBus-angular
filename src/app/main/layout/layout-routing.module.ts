@@ -52,6 +52,11 @@ const layOutRoutes: Routes = [
                 path: 'amenities',
                 loadChildren: () => import('./features/amenities/amenities.module').
                 then(m => m.AmenitiesModule)
+            },
+            {
+                path: 'vehicles',
+                loadChildren: () => import('./features/vehicles/vehicles.module').
+                then(m => m.VehiclesModule)
             }
         ]
     },

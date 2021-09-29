@@ -14,6 +14,8 @@ import {ErrorInterceptor} from './interceptors/error.interceptor';
 import {SpinnerService} from './spinner/spinner.service';
 import {SpinnerInterceptor} from './interceptors/spinner.interceptor';
 import {SpinnerComponent} from './spinner/spinner.component';
+import {BsDatepickerModule, DatepickerModule} from 'ngx-bootstrap/datepicker';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -23,11 +25,15 @@ import {SpinnerComponent} from './spinner/spinner.component';
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         AppRoutingModule,
         FormsModule,
         ReactiveFormsModule,
         ModalModule,
         HttpClientModule,
+        // NoopAnimationsModule,
+        BsDatepickerModule.forRoot(),
+        DatepickerModule.forRoot(),
     ],
     providers: [
         CookieService,
