@@ -69,4 +69,11 @@ export class ApiUrls {
     updateVehicle = 'api/v1/vehicle/';
     getVehicleById = 'api/v1/vehicle/';
     deleteVehicle = 'api/v1/vehicle/';
+
+    // transactions
+
+    search = 'api/v1/transactions/search';
+    count = 'api/v1/transactions/count';
+
+
 }
