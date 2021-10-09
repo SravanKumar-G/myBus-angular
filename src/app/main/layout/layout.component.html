@@ -297,8 +297,8 @@
               <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Payments
             </a>
           </li>
-          <li class="waves-effect waves-light">
-            <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+          <li class="waves-effect waves-light" *ngIf="canAccessModule('transactions')">
+            <a class="treeView-item" [routerLink]="['transactions']" [routerLinkActive]="['active']">
               <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Transactions
             </a>
           </li>

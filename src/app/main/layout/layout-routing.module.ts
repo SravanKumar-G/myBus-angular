@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './layout.component';
 import {CargoDashboardComponent} from './features/cargo-dashboard/cargo-dashboard.component';
+import {TransactionsModule} from './features/transactions/transactions.module';
 
 const layOutRoutes: Routes = [
     {
@@ -57,6 +58,11 @@ const layOutRoutes: Routes = [
                 path: 'vehicles',
                 loadChildren: () => import('./features/vehicles/vehicles.module').
                 then(m => m.VehiclesModule)
+            },
+            {
+                path: 'transactions',
+                loadChildren: () => import('./features/transactions/transactions.module').
+                then(m => m.TransactionsModule)
             }
         ]
     },
