@@ -76,4 +76,11 @@ export class ApiUrls {
     count = 'api/v1/transactions/count';
 
 
+
+    // Agents API's
+    getAllAgents = 'api/v1/agents';
+    getAgentsCount = 'api/v1/agent/count';
+    addAgent = 'api/v1/agent/addAgent';
+    editAgent = 'api/v1/agent/';
+    updateAgent = 'api/v1/agent/update';
 }

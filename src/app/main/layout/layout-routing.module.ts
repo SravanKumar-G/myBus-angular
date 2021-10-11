@@ -61,8 +61,12 @@ const layOutRoutes: Routes = [
             },
             {
                 path: 'transactions',
-                loadChildren: () => import('./features/transactions/transactions.module').
-                then(m => m.TransactionsModule)
+                loadChildren: () => import('./features/transactions/transactions.module').then(m => m.TransactionsModule)
+            },
+            {
+                path: 'agents',
+                loadChildren: () => import('./features/agents/agents.module').
+                then(m => m.AgentsModule)
             }
         ]
     },
