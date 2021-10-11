@@ -120,6 +120,11 @@ const layOutRoutes: Routes = [
                 path: 'serviceReportByService/:id',
                 loadChildren: () => import('./reports/service-report-by-service/service-report-by-service.module').
                 then(m => m.ServiceReportByServiceModule)
+            },
+            {
+                path: 'agents',
+                loadChildren: () => import('./features/agents/agents.module').
+                then(m => m.AgentsModule)
             }
         ]
     },

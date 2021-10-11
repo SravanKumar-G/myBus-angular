@@ -150,8 +150,16 @@ export class ApiUrls {
     // Service Form API's
      getDetailsByFormId = 'api/v1/serviceForm/';
 
+
      // Service Report API's
      getServiceReportDetails = 'api/v1/serviceReport/';
      updateVehicleRegNo = 'api/v1/vehicle/odometerReading/';
      submitReport = 'api/v1/serviceReport/';
+
+    // Agents API's
+    getAllAgents = 'api/v1/agents';
+    getAgentsCount = 'api/v1/agent/count';
+    addAgent = 'api/v1/agent/addAgent';
+    editAgent = 'api/v1/agent/';
+    updateAgent = 'api/v1/agent/update';
 }

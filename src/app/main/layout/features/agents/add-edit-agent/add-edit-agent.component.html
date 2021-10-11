@@ -1,0 +1,92 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="div">
+            <h1>
+                <i class="fa fa-user" aria-hidden="true"></i>
+                Agent
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><a class="fa fa-home fa-lg breadcrumb-home-link" (click)="goToDashboard()"></a>
+            </li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Add Agent</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 col-sm-12">
+            <div class="tile">
+                <h3 class="tile-title form-head-line-style">{{agentTitle}}
+                </h3>
+                <hr>
+                <div class="tile-body">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">User Name</label>
+                            <input class="form-control" type="text" placeholder="Enter Name"
+                                   [(ngModel)]="agent.username"/>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Mobile Number</label>
+                            <input class="form-control" numbersOnly minlength="10" maxlength="10"
+                                   placeholder=" Enter Mobile Number" type="text" [(ngModel)]="agent.mobile">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Landline Number</label>
+                            <input class="form-control" numbersOnly minlength="8" maxlength="12"
+                                   placeholder=" Enter Landline Number" type="text" [(ngModel)]="agent.landline">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Branch Office</label>
+                            <ng-select
+                                    [(ngModel)]="agent.branchOfficeId"
+                                    [ngModelOptions]="{standalone: true}"
+                                    bindValue="id"
+                                    bindLabel="name"
+                                    placeholder="Enter Branch Office"
+                                    [clearable]="false">
+                                <ng-option value="">Select Branch Office</ng-option>
+                                <ng-option *ngFor="let office of branchOffices"
+                                           [value]="office.id">{{office.name}}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label"> Commission</label>
+                            <input class="form-control " placeholder=" Enter Commission" type="text"
+                                   [(ngModel)]="agent.commission">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tile-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger col-md-12" role="alert" *ngIf="errorMessage">
+                                <ul>
+                                    <li>{{errorMessage}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-3">
+                            <div class="pull-right">
+                                <button class="btn btn-sm btn-all-shadow waves-effect waves-light btn-info save-city-button"
+                                        (click)="saveAgent()">
+                                    <i class="fa fa-fw fa-check-circle"></i>{{agentId ? 'Update' : 'Save'}}
+                                </button>
+                                &nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-sm btn-all-shadow waves-effect waves-light btn-dark cancel-city-button"
+                                        (click)="cancel()">
+                                    <i class="fa fa-fw fa-times-circle"></i>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
