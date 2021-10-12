@@ -1,0 +1,534 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="div">
+            <h1>
+                <i class="fa fa-book fa-lg" aria-hidden="true"></i> Payments
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><a class="fa fa-home fa-lg breadcrumb-home-link" (click)="goToDashboard()"></a>
+            </li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Payments</span></li>
+        </ul>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item pending-users-tab" (click)="changePaymentsTab(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changePaymentsTab(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Approved/Rejected</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changePaymentsTab(3)">
+            <a class="nav-link" [ngClass]="{active:tab==3}">Search</a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 1">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row form-group">
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-6 p-0">
+                                <div class="pull-right">
+                                    <div class="upload-btn-wrapper" style="margin-left: 5px;margin-right: 5px">
+                                        <button type="button" class="btn btn-sm btn-success pull-right " (click)="approveOrRejectPayment(true)" *ngIf="selectedPayments.length > 0 ">Approve Payments </button>
+                                        <button type="button" class="btn btn-sm btn-danger pull-right " (click)="approveOrRejectPayment(false)" *ngIf="selectedPayments.length > 0">Reject Payments </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button class="btn btn-info btn-sm btn-all-shadow waves-effect waves-light"
+                                                (click)="addPayment(addEditPaymentModal)">
+                                            <i class="fa fa-book fa-lg" aria-hidden="true"></i>
+                                            Add Payment
+                                        </button>&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                             <table class="table table-hover dataTable text-center">
+                                 <thead>
+                                    <tr class="table-bordered" (click)="clickSorting($event)">
+                                        <th>S.No</th>
+                                        <th [ngClass]="paymentsQuery.sortOrder == 'date'? 'headActive' : ''"
+                                            accessKey="date">Date
+                                            <i *ngIf="paymentsQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                            <i *ngIf="paymentsQuery.sortOrder == 'date'" class="fa"
+                                               [ngClass]="paymentsQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="paymentsQuery.sortOrder == 'createdAt'? 'headActive' : ''"
+                                            accessKey="createdAt">CreatedOn
+                                            <i *ngIf="paymentsQuery.sortOrder != 'createdAt'" class="fa fa-sort"></i>
+                                            <i *ngIf="paymentsQuery.sortOrder == 'createdAt'" class="fa"
+                                               [ngClass]="paymentsQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="paymentsQuery.sortOrder == 'description'? 'headActive' : ''"
+                                            accessKey="description">Description
+                                            <i *ngIf="paymentsQuery.sortOrder != 'description'" class="fa fa-sort"></i>
+                                            <i *ngIf="paymentsQuery.sortOrder == 'description'" class="fa"
+                                               [ngClass]="paymentsQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="paymentsQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                            accessKey="amount">Income
+                                            <i *ngIf="paymentsQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="paymentsQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="paymentsQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="paymentsQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                            accessKey="amount">Expense
+                                            <i *ngIf="paymentsQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="paymentsQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="paymentsQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>CreatedBy</th>
+                                        <th [ngClass]="paymentsQuery.sortOrder == 'status'? 'headActive' : ''"
+                                            accessKey="status">Status
+                                            <i *ngIf="paymentsQuery.sortOrder != 'status'" class="fa fa-sort"></i>
+                                            <i *ngIf="paymentsQuery.sortOrder == 'status'" class="fa"
+                                               [ngClass]="paymentsQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Actions</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                   <tr *ngFor="let payments of pendingPayments; let i = index">
+                                       <td>{{(paymentsQuery.page-1) * paymentsQuery.size + i + 1}}</td>
+                                       <td>{{payments.date | date}}</td>
+                                       <td>{{payments.createdAt| date}}</td>
+                                       <td>{{payments.description}}</td>
+                                       <td><span *ngIf="payments.type=='INCOME'">{{payments.amount || 'NA'}}</span></td>
+                                       <td><span *ngIf="payments.type=='EXPENSE'">{{payments.amount || 'NA'}}</span></td>
+                                       <td>{{payments.attrs.createdBy}}</td>
+                                       <td class="clickable-item">
+                                           <span>
+                                           <span *ngIf="!payments.status">
+                                               <button type="button" class="btn btn-success btn-sm" (click)="verifyPayment(payments.id)">Verify</button>
+                                            </span>
+                                                <span *ngIf="payments.status ==='Verified'">
+                                                    <input
+                                                         type="checkbox"
+                                                         name="selectedPayments[]"
+                                                         value="{{payments.id}}"
+                                                          ng-checked="selection.indexOf(payment.id) > -1"
+                                                          (click)="togglePaymentSelection(payments.id)">
+                                                    </span>
+                                            </span>
+                                       </td>
+                                       <td class="td-active">
+                                          <div style="display: flex;justify-content: center;">
+                                              <button class="action-icon-style waves-effect waves-light"
+                                                      title="Edit Invoice" (click)="UpdatePayment(addEditPaymentModal, payments.id)"
+                                                      style="padding: 0; height: 35px;width: 35px;">
+                                                  <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                              </button>
+                                              <button class="action-icon-style waves-effect waves-light"
+                                                      (click)="delete(payments.id)">
+                                                  <i class="fa fa-trash fa-1x"></i>
+                                              </button>
+                                          </div>
+                                       </td>
+                                   </tr>
+                                   <tr *ngIf="pendingPaymentsCount === 0 || !pendingPaymentsCount">
+                                       <td colspan="9">No Payments</td>
+                                   </tr>
+                                 </tbody>
+                                 <tfoot>
+                                 <tr *ngIf="pendingPaymentsCount != 0 || pendingPaymentsCount">
+                                     <th colspan="9">
+                                         <div class="pull-right">
+                                             Total Count : {{pendingPaymentsCount || 0}}
+                                         </div>
+                                     </th>
+                                 </tr>
+                                 </tfoot>
+                             </table>
+                               <div class="form-group">
+                                   <div class="list-row">
+                                       <ngb-pagination *ngIf="pendingPaymentsCount|| pendingPaymentsCount != 0"
+                                                       [(page)]="paymentsQuery.page"
+                                                       [pageSize]="paymentsQuery.size"
+                                                       [collectionSize]="pendingPaymentsCount"
+                                                       [boundaryLinks]="true"
+                                                       (pageChange)="changePendingPage($event)"
+                                                       [maxSize]="5">
+                                       </ngb-pagination>
+                                       <ul class="pagination pull-right" style="margin-top: -37px !important;"
+                                           *ngIf="pendingPaymentsCount || pendingPaymentsCount !== 0">
+                                           <li class="page-item" [ngClass]="size == paymentsQuery.size ? 'active' : ''"
+                                               *ngFor="let size of paymentsQuery.pageSizes" (click)="handlePendingPageSizeChange(size)">
+                                               <button class="page-link"> {{ size }}
+                                                   <span class="sr-only">(current)</span>
+                                               </button>
+                                           </li>
+                                       </ul>
+                                   </div>
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 2">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                                <table class="table table-hover dataTable text-center">
+                                    <thead>
+                                    <tr class="table-bordered">
+                                        <th>S.No</th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'date'? 'headActive' : ''"
+                                            accessKey="date">Date
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'date'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'description'? 'headActive' : ''"
+                                            accessKey="description">Description
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'description'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'description'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                            accessKey="amount">Income
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                            accessKey="amount">Expense
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'createdBy'? 'headActive' : ''"
+                                            accessKey="createdBy">CreatedBy
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'createdBy'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'createdBy'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'updatedBy'? 'headActive' : ''"
+                                            accessKey="updatedBy">Approved By
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'updatedBy'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'updatedBy'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'status'? 'headActive' : ''"
+                                            accessKey="status">Status
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'status'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'status'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let payments of approvedPayments; let i = index">
+                                        <td>{{(approvedPaymentQuery.page-1) * approvedPaymentQuery.size + i + 1}}</td>
+                                        <td>{{payments.date | date}}</td>
+                                        <td>{{payments.description}}</td>
+                                        <td><span *ngIf="payments.type=='INCOME'">{{payments.amount}}</span></td>
+                                        <td><span *ngIf="payments.type=='EXPENSE'">{{payments.amount}}</span></td>
+                                        <td>{{payments.attrs.createdBy}}</td>
+                                        <td>{{payments.attrs.updatedBy}}</td>
+                                        <td>
+
+                                           <span *ngIf="payments.status">{{payments.status}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="approvedPaymentsCount === 0 || !approvedPaymentsCount">
+                                        <td colspan="9">No Payments</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr *ngIf="approvedPaymentsCount != 0 || approvedPaymentsCount">
+                                        <th colspan="9">
+                                            <div class="pull-right">
+                                                Total Count : {{approvedPaymentsCount || 0}}
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row">
+                                        <ngb-pagination *ngIf="approvedPaymentsCount|| approvedPaymentsCount != 0"
+                                                        [(page)]="approvedPaymentQuery.page"
+                                                        [pageSize]="approvedPaymentQuery.size"
+                                                        [collectionSize]="approvedPaymentsCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="changeApprovedPage($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                        <ul class="pagination pull-right" style="margin-top: -37px !important;"
+                                            *ngIf="approvedPaymentsCount || approvedPaymentsCount !== 0">
+                                            <li class="page-item" [ngClass]="size == approvedPaymentQuery.size ? 'active' : ''"
+                                                *ngFor="let size of approvedPaymentQuery.pageSizes" (click)="handleApprovedPageSizeChange(size)">
+                                                <button class="page-link"> {{ size }}
+                                                    <span class="sr-only">(current)</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 3">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label class="control-label">Start Date</label>
+                                <div class="input-group">
+                                    <input name="startDate" class="form-control form-control-sm"
+                                           [(ngModel)]="startDate"
+                                           placeholder="Enter Date"
+                                           readonly type="text"
+                                           #date1="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                                           bsDatepicker/>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" type="button"
+                                                style="border: 1px solid #ced4da;"
+                                                (click)="date1.show()"
+                                                [attr.aria-expanded]="date1.isOpen">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="control-label">End Date</label>
+                                <div class="input-group">
+                                    <input name="endDate" class="form-control form-control-sm"
+                                           [(ngModel)]="endDate"
+                                           placeholder="Enter Date"
+                                           readonly type="text"
+                                           #date2="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                                           bsDatepicker/>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" type="button"
+                                                style="border: 1px solid #ced4da;"
+                                                (click)="date2.show()"
+                                                [attr.aria-expanded]="date2.isOpen">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="col-sm-3 form-group">
+                                <label>Branch</label>
+                                <ng-select [(ngModel)]="addPaymentQuery.branchOfficeId"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bindValue="id"
+                                           bindLabel="name"
+                                           [clearable]="false">
+                                    <ng-option value="" selected>Select Branch (Optional) </ng-option>
+                                    <ng-option *ngFor="let users of names"
+                                               [value]="users.id">{{users.name}}</ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label class="control-label">Select User<b class="mandatory-field">*</b></label>
+                                <ng-select [(ngModel)]="searchPaymentQuery.userId"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bindValue="id"
+                                           bindLabel="fullName"
+                                           [clearable]="false">
+                                    <ng-option value="" selected>Select User(Optional)</ng-option>
+                                    <ng-option *ngFor="let users of usersNames"
+                                               [value]="users.id">{{users.fullName}}</ng-option>
+                                </ng-select>
+                            </div>&nbsp;
+                            <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="search()"> Search Transactions </button> &nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="exportToExcel()"> Export to Excel </button>
+                        </div>
+                        <div class="row" *ngIf="SearchError"  style="text-align: center">
+                            <div class="col-md-12" role="alert">
+                                <span style="color: red">{{SearchError}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                                <table class="table table-hover dataTable text-center" id="paymentExcel">
+                                    <thead>
+                                    <tr class="table-bordered">
+                                        <th>S.No</th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'date'? 'headActive' : ''"
+                                            accessKey="date">Date
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'date'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'description'? 'headActive' : ''"
+                                            accessKey="description">Description
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'description'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'description'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                            accessKey="amount">Income
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                            accessKey="amount">Expense
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'createdBy'? 'headActive' : ''"
+                                            accessKey="createdBy">CreatedBy
+                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'createdBy'" class="fa fa-sort"></i>
+                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'createdBy'" class="fa"
+                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let payments of searchPaymentsList; let i = index">
+                                        <td>{{(approvedPaymentQuery.page-1) * approvedPaymentQuery.size + i + 1}}</td>
+                                        <td>{{payments.date | date}}</td>
+                                        <td>{{payments.description}}</td>
+                                        <td><span *ngIf="payments.type=='INCOME'">{{payments.amount}}</span></td>
+                                        <td><span *ngIf="payments.type=='EXPENSE'">{{payments.amount}}</span></td>
+                                        <td>{{payments.attrs.createdBy}}</td>
+                                    </tr>
+                                    <tr *ngIf="this.searchPaymentQuery.count === 0 || !this.searchPaymentQuery.count">
+                                        <td colspan="9">No Payments</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr *ngIf="this.searchPaymentQuery.count > 0">
+                                        <th colspan="9">
+                                            <div class="pull-right">
+                                                Total Count : {{this.searchPaymentQuery.count || 0}}
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row">
+                                        <ngb-pagination *ngIf="this.searchPaymentQuery.count|| this.searchPaymentQuery.count != 0"
+                                                        [(page)]="approvedPaymentQuery.page"
+                                                        [pageSize]="approvedPaymentQuery.size"
+                                                        [collectionSize]="this.searchPaymentQuery.count"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="changeApprovedPage($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                        <ul class="pagination pull-right" style="margin-top: -37px !important;"
+                                            *ngIf="this.searchPaymentQuery.count || this.searchPaymentQuery.count !== 0">
+                                            <li class="page-item" [ngClass]="size == approvedPaymentQuery.size ? 'active' : ''"
+                                                *ngFor="let size of approvedPaymentQuery.pageSizes" (click)="handleApprovedPageSizeChange(size)">
+                                                <button class="page-link"> {{ size }}
+                                                    <span class="sr-only">(current)</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #addEditPaymentModal>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">{{titleHeader}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form name="addNewExpenseForm" class="form-horizontal" role="form">
+            <div class="form-group">
+                <div class="col-sm-8 col-12 offset-2 form-group">
+                    <label>Date</label>
+                    <div class="input-group">
+                        <input name="startDate" class="form-control form-control-sm"
+                               [(ngModel)]="addPaymentQuery.date"
+                               placeholder="Enter Date"
+                               readonly type="text"
+                               #date1="bsDatepicker"
+                               [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-green', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                               bsDatepicker/>
+                        <div class="input-group-append">
+                            <button class="btn btn-light btn-sm" type="button"
+                                    style="border: 1px solid #ced4da;"
+                                    (click)="date1.show()"
+                                    [attr.aria-expanded]="date1.isOpen">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-12 offset-2 form-group">
+                    <label>Description</label>
+                    <div>
+                        <input type="text" id="description" class="form-control" [(ngModel)]="addPaymentQuery.description" [ngModelOptions]="{standalone: true}" placeholder="Description">
+                    </div>
+                </div>
+
+                <div class="col-sm-8 col-12 offset-2 form-group">
+                    <label>Amount</label>
+                    <div>
+                        <input type="number" id="expenseAmount" class="form-control"  [(ngModel)]="addPaymentQuery.amount" [ngModelOptions]="{standalone: true}" placeholder="Amount" required>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-12 offset-2 form-group">
+                    <label class="control-label">Type</label>
+                    &nbsp;
+                    <div class="col-sm-6">
+                        <div  class="form-check form-check-inline">
+                            <input type="radio" [(ngModel)]="addPaymentQuery.type" [ngModelOptions]="{standalone: true}" value="EXPENSE">
+                            <label class="form-check-label">Expense</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio"[(ngModel)]="addPaymentQuery.type"  [ngModelOptions]="{standalone: true}" value="INCOME">
+                            <label class="form-check-label">Income</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-12 offset-2 form-group">
+                    <label>Branch</label>
+                    <ng-select [(ngModel)]="addPaymentQuery.branchOfficeId"
+                               [ngModelOptions]="{standalone: true}"
+                               bindValue="id"
+                               bindLabel="name"
+                               [clearable]="false">
+                        <ng-option value="" selected>Select Branchr</ng-option>
+                        <ng-option *ngFor="let users of names"
+                                   [value]="users.id">{{users.name}}</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-12 text-center">
+            <p class="error-field">{{errorMessage}}</p>
+        </div>
+        <div class="col-sm-12 text-right p-0">
+            <button type="button" class="btn btn-success btn-sm mr-2" (click)="save()">
+                <i class="fa fa-fw fa-check-circle"></i> {{paymentId ? 'Update' : 'Save'}}
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">
+                <i class="fa fa-fw fa-times-circle"></i> Close
+            </button>
+        </div>
+    </div>
+</ng-template>

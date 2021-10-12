@@ -75,5 +75,18 @@ export class ApiUrls {
     search = 'api/v1/transactions/search';
     count = 'api/v1/transactions/count';
 
+    // Payments
+
+    pendingPayments = 'api/v1/payments/pending';
+    approvedPayments = 'api/v1/payments/approved';
+    countPendingPayments = 'api/v1/payments/count?pending=true';
+    countApprovedPayments = 'api/v1/payments/count?pending=false';
+    delete = 'api/v1/payment';
+    branchOfficeNames = 'api/v1/branchOffice/names';
+    savePayment = 'api/v1/payment';
+    updatePayment = 'api/v1/payment/';
+    searchPayments = 'api/v1/payment/search';
+    verifyPayment = 'api/v1/payment/verifyPayment/';
+    approveOrReject = 'api/v1/payment/approveOrReject/';
 
 }

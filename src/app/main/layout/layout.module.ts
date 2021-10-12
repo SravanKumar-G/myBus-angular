@@ -9,7 +9,7 @@ import {NumberFormatterPipe} from '../../customDirectives/pipes/number-formatter
 import {OnlynumberDirective} from '../../customDirectives/directives/onlynumber.directive';
 import {FrentendSortDirective} from '../../customDirectives/directives/frentend-sort.directive';
 import {SearchFilterPipe} from '../../customDirectives/pipes/search-filter.pipe';
-
+import { PaymentsComponent } from './features/payments/payments.component';
 
 @NgModule({
     declarations: [
@@ -17,12 +17,13 @@ import {SearchFilterPipe} from '../../customDirectives/pipes/search-filter.pipe'
         NumberFormatterPipe,
         OnlynumberDirective,
         FrentendSortDirective,
-        SearchFilterPipe
+        SearchFilterPipe,
+        // PaymentsComponent
     ],
     imports: [
         CommonModule,
         LayoutRoutingModule,
-        FormsModule
+        FormsModule,
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],
