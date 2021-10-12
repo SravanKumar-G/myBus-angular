@@ -63,6 +63,11 @@ const layOutRoutes: Routes = [
                 path: 'transactions',
                 loadChildren: () => import('./features/transactions/transactions.module').
                 then(m => m.TransactionsModule)
+            },
+            {
+                path: 'manageRoles',
+                loadChildren: () => import('./features/manage-roles/manage-roles.module').
+                then(m => m.ManageRolesModule)
             }
         ]
     },
