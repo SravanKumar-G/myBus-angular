@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './layout.component';
 import {CargoDashboardComponent} from './features/cargo-dashboard/cargo-dashboard.component';
 import {TransactionsModule} from './features/transactions/transactions.module';
+import {PaymentsModule} from './features/payments/payments.module';
 
 const layOutRoutes: Routes = [
     {
@@ -63,6 +64,11 @@ const layOutRoutes: Routes = [
                 path: 'transactions',
                 loadChildren: () => import('./features/transactions/transactions.module').
                 then(m => m.TransactionsModule)
+            },
+            {
+                path: 'payments',
+                loadChildren: () => import('./features/payments/payments.module').
+                then(m => m.PaymentsModule)
             },
             {
                 path: 'manageRoles',
