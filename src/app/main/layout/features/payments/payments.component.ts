@@ -59,6 +59,7 @@ export class PaymentsComponent implements OnInit {
   public paymentsVerify: any;
   public selectedPayments: any = [];
   public approvedAndRejected: any;
+  public bookingIddetails: any = {};
 
   constructor(private router: Router,
               public apiService: ApiServiceService,
@@ -375,5 +376,25 @@ export class PaymentsComponent implements OnInit {
         this.changePaymentsTab(2);
       }
     });
+  }
+
+    BookingDuePopUpPayments(serviceFormId: any, bookingId: any): void{
+      this.apiService.get(this.apiUrls.booking + bookingId).subscribe((res: any) => {
+          if (res){
+            this.bookingIddetails = res;
+            this.modalService.open(serviceFormId, {size: 'lg', backdrop: 'static'});
+
+          }
+        }, error => {
+        Swal.fire('Oops...', 'Error finding approvedPayments data!', 'error');
+      });
+    }
+
+  popUp(serviceFormId: any, s: any): void{
+    this.modalService.open(serviceFormId, {size: 'lg', backdrop: 'static'});
+  }
+
+  cancel(): void {
+    this.modalService.dismissAll();
   }
 }

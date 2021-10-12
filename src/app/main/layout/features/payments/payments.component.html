@@ -226,7 +226,11 @@
                                     <tr *ngFor="let payments of approvedPayments; let i = index">
                                         <td>{{(approvedPaymentQuery.page-1) * approvedPaymentQuery.size + i + 1}}</td>
                                         <td>{{payments.date | date}}</td>
-                                        <td>{{payments.description}}</td>
+                                        <td>
+                                            <a class="cus-a" *ngIf="payments.serviceFormId" (click)="popUp( serviceFormId, payments.serviceFormId)" ><u>{{payments.description}}</u></a>
+                                            <a class="cus-a" *ngIf="payments.bookingId" (click)="BookingDuePopUpPayments(serviceFormId, payments.bookingId)"><u>{{payments.description}}</u></a>
+                                            <span *ngIf="!(payments.serviceFormId || payments.bookingId)">{{payments.description}}</span>
+                                        </td>
                                         <td><span *ngIf="payments.type=='INCOME'">{{payments.amount}}</span></td>
                                         <td><span *ngIf="payments.type=='EXPENSE'">{{payments.amount}}</span></td>
                                         <td>{{payments.attrs.createdBy}}</td>
@@ -530,5 +534,34 @@
                 <i class="fa fa-fw fa-times-circle"></i> Close
             </button>
         </div>
+    </div>
+</ng-template>
+
+<ng-template #serviceFormId>
+    <div class="modal-header">
+        <h3 class="modal-title">{{bookingIddetails.serviceName || 'NA'}}</h3>
+    </div><br/>
+    <form class="form-horizontal col-xs-offset-1">
+        <div class="form-group"><label class="col-sm-3 col-sm-offset-1">Booked By: </label>
+            <div class="col-sm-6">{{bookingIddetails.bookedBy || 'NA'}}</div>
+        </div>
+        <div class="form-group"><label class="col-sm-3 col-sm-offset-1">Booked Date: </label>
+            <div class="col-sm-6">{{bookingIddetails.bookedDate || 'NA' }}</div>
+        </div>
+        <div class="form-group"><label class="col-sm-3 col-sm-offset-1">Passenger :</label>
+            <div class="col-sm-6">{{bookingIddetails.name || 'NA'}}</div>
+        </div>
+        <div class="form-group"><label class="col-sm-3 col-sm-offset-1">Service No :</label>
+            <div class="col-sm-6">{{bookingIddetails.serviceNumber || 'NA'}}</div>
+        </div>
+        <div class="form-group"><label class="col-sm-3 col-sm-offset-1">Journey Date:</label>
+            <div class="col-sm-6">{{bookingIddetails.jdate || 'NA'}}</div>
+        </div>
+        <div class="form-group"><label class="col-sm-3 col-sm-offset-1">Cleared Amount:</label>
+            <div class="col-sm-6">{{bookingIddetails.netAmt || 'NA'}} ({{bookingIddetails.paymentType || 'NA'}})</div>
+        </div>
+    </form>
+    <div class="modal-footer">
+        <button class="btn btn-warning" (click)="cancel()">Ok</button>
     </div>
 </ng-template>

@@ -88,5 +88,6 @@ export class ApiUrls {
     searchPayments = 'api/v1/payment/search';
     verifyPayment = 'api/v1/payment/verifyPayment/';
     approveOrReject = 'api/v1/payment/approveOrReject/';
+    booking = 'api/v1/serviceReport/booking/';
 
 }
