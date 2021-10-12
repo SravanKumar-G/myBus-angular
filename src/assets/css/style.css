@@ -43,7 +43,8 @@ table.tree-grid {
 body {
     /*font-size: 0.872rem !important;*/
     font-size: 0.8rem !important;
-    font-family: 'Roboto', sans-serif !important;
+    /*font-family: 'Roboto', sans-serif !important;*/
+    font-family: 'Lato', sans-serif !important;
     background-color: #e8eff9 !important;
 }
 

@@ -5,7 +5,6 @@ import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import {OnlynumberDirective} from '../../../../customDirectives/directives/onlynumber.directive';
-import {event} from 'jquery';
 
 @Component({
   selector: 'app-payments',
@@ -107,7 +106,7 @@ export class PaymentsComponent implements OnInit {
         OnlynumberDirective.pagination(res, this.paymentsQuery);
         this.getAllPendingPayments();
       }else {
-        Swal.fire('Oops...', 'Error finding pendingPayments data!', 'error');
+        Swal.fire('Oops...', 'Error finding Pending Payments data!', 'error');
       }
     }, error => {
       this.errorMessage = error.message;
@@ -120,7 +119,7 @@ export class PaymentsComponent implements OnInit {
       if (res){
           this.pendingPayments = res.content;
       } else {
-        Swal.fire('Oops...', 'Error finding pendingPayments data!', 'error');
+        Swal.fire('Oops...', 'Error finding Pending Payments data!', 'error');
       }
     }, error => {
       this.errorMessage = error.message;
@@ -134,7 +133,7 @@ export class PaymentsComponent implements OnInit {
         OnlynumberDirective.pagination(res, this.approvedPaymentQuery);
         this.getAllApprovedPayments();
       }else {
-        Swal.fire('Oops...', 'Error finding approvedPayments data!', 'error');
+        Swal.fire('Oops...', 'Error finding Approved Payments data!', 'error');
       }
     }, error => {
       this.errorMessage = error.message;
@@ -147,7 +146,7 @@ export class PaymentsComponent implements OnInit {
       if (res){
         this.approvedPayments = res.content;
       } else {
-        Swal.fire('Oops...', 'Error finding approvedPayments data!', 'error');
+        Swal.fire('Oops...', 'Error finding Approved Payments data!', 'error');
       }
     }, error => {
       this.errorMessage = error.message;

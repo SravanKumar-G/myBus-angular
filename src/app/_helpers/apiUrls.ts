@@ -71,12 +71,10 @@ export class ApiUrls {
     deleteVehicle = 'api/v1/vehicle/';
 
     // transactions
-
     search = 'api/v1/transactions/search';
     count = 'api/v1/transactions/count';
 
     // Payments
-
     pendingPayments = 'api/v1/payments/pending';
     approvedPayments = 'api/v1/payments/approved';
     countPendingPayments = 'api/v1/payments/count?pending=true';
@@ -90,4 +88,7 @@ export class ApiUrls {
     approveOrReject = 'api/v1/payment/approveOrReject/';
     booking = 'api/v1/serviceReport/booking/';
 
+    // New Cargo Booking API's
+    getShipmentTypes = 'api/v1/shipment/types';
+    saveNewCargoBooking = 'api/v1/shipment';
 }
