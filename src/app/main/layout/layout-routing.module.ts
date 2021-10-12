@@ -21,11 +21,6 @@ const layOutRoutes: Routes = [
                 then(m => m.OperatorAccountsModule)
             },
             {
-                path: 'newBooking',
-                loadChildren: () => import('./features/new-booking/new-booking.module').
-                then(m => m.NewBookingModule)
-            },
-            {
                 path: 'cancellations',
                 loadChildren: () => import('./features/cargo-cancellations/cargo-cancellations.module').
                 then(m => m.CargoCancellationsModule)
@@ -74,6 +69,11 @@ const layOutRoutes: Routes = [
                 path: 'manageRoles',
                 loadChildren: () => import('./features/manage-roles/manage-roles.module').
                 then(m => m.ManageRolesModule)
+            },
+            {
+                path: 'newBooking',
+                loadChildren: () => import('./cargo/new-booking/new-booking.module').
+                then(m => m.NewBookingModule)
             }
         ]
     },

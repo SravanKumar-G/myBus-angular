@@ -1,0 +1,335 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+                New Booking
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">New Booking</span></li>
+        </ul>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-12 mx-auto">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row">
+                        <div class="col-sm-4 col-12 form-group">
+                            <label class="control-label">From Branch Office <span
+                                    class="mandatory-field">*</span></label>
+                            <select class="form-control form-control-sm"
+                                    [(ngModel)]="newBooking.fromBranchId"
+                                    [ngModelOptions]="{standalone: true}" *ngIf="currentUser.admin">
+                                <option value="" selected>--Select Branch Office--</option>
+                                <option *ngFor="let fromBranch of branchOffices" value="{{fromBranch.id}}">
+                                    {{fromBranch.name}}
+                                </option>
+                            </select>
+
+                            <select class="form-control form-control-sm"
+                                    [(ngModel)]="newBooking.fromBranchId"
+                                    [ngModelOptions]="{standalone: true}" readonly="true"
+                                    *ngIf="!currentUser.admin">
+                                <option value="" selected>--Select Branch Office--</option>
+                                <option *ngFor="let fromBranch of branchOffices" value="{{fromBranch.id}}">
+                                    {{fromBranch.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 col-12 form-group">
+                            <label>To Branch Office <span class="mandatory-field">*</span></label>
+                            <select class="form-control form-control-sm" [(ngModel)]="newBooking.toBranchId"
+                                    [ngModelOptions]="{standalone: true}">
+                                <option value="" selected>--Select Branch Office--</option>
+                                <option *ngFor="let toBranch of branchOffices"
+                                        value="{{toBranch.id}}">{{toBranch.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 col-12 form-group">
+                            <label>LR Type<span class="mandatory-field">*</span></label>
+                            <select class="form-control form-control-sm"
+                                    [(ngModel)]="newBooking.paymentType"
+                                    [ngModelOptions]="{standalone: true}">
+                                <option value="" selected>--Select LR Type--</option>
+                                <option *ngFor="let type of shipmentTypes"
+                                        value="{{type.id}}">{{type.shipmentType}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 col-12 form-group">
+                            <span *ngIf="currentUser.admin">
+                            <label>For User</label>
+                            <select class="form-control form-control-sm"
+                                    [(ngModel)]="newBooking.forUser"
+                                    [ngModelOptions]="{standalone: true}">
+                                <option value="" selected>--Select User--</option>
+                                <option *ngFor="let user of users"
+                                        value="{{user.id}}">{{user.fullName}}</option>
+                            </select>
+                            </span>
+                        </div>
+                        <div class="col-sm-4 col-12 form-group">
+                            <label>Way Bill No</label>
+                            <input type="text" class="form-control form-control-sm"
+                                   placeholder="Enter Way Bill Number"
+                                   [(ngModel)]="newBooking.wayBillNo"
+                                   [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                        <div class="col-sm-4 col-12 form-group">
+                            <label>Dispatch Date</label>
+                            <div class="input-group">
+                                <input class="form-control form-control-sm"
+                                       placeholder="Dispatch Date"
+                                       name="permit"
+                                       [(ngModel)]="newBooking.dispatchDate"
+                                       [ngModelOptions]="{standalone: true}"
+                                       bsDatepicker
+                                       #permit="bsDatepicker"
+                                       [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                            (click)="permit.show()"
+                                            [attr.aria-expanded]="permit.isOpen" type="button">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-12 form-group">
+                            <label>Remarks</label>
+                            <textarea class="form-control form-control-sm"
+                                      [(ngModel)]="newBooking.remarks"
+                                      [ngModelOptions]="{standalone: true}"
+                                      rows="3" placeholder="Enter Remarks">
+
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-12 form-group">
+                            <div class="card">
+                                <div class="card-header">
+                                    Sender Details
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 form-group col-sm-6">
+                                            <label>Mobile Number<span class="mandatory-field">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-earphone small"></span>
+                                                </span>
+                                                <input type="text"
+                                                       class="form-control form-control-sm"
+                                                       placeholder="10 Digit Number"
+                                                       numbersOnly
+                                                       maxlength="10" [(ngModel)]="newBooking.fromContact"
+                                                       [ngModelOptions]="{standalone: true}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 form-group col-sm-6">
+                                            <label>Sender Name<span class="mandatory-field">*</span></label>
+                                            <input type="text"
+                                                   class="form-control form-control-sm"
+                                                   placeholder="Company/Person Name"
+                                                  [(ngModel)]="newBooking.fromName"
+                                                   [ngModelOptions]="{standalone: true}"/>
+                                        </div>
+                                        <div class="col-12 form-group col-sm-6">
+                                            <label>Sender Email</label>
+                                            <input type="text"
+                                                   class="form-control form-control-sm"
+                                                   placeholder="Enter Email"
+                                                   [(ngModel)]="newBooking.fromEmail"
+                                                   [ngModelOptions]="{standalone: true}"/>
+                                        </div>
+                                        <div class="col-12 form-group col-sm-6">
+                                            <label>Service Tax Number</label>
+                                            <input type="text"
+                                                   class="form-control form-control-sm"
+                                                   placeholder="Service Tax Number"
+                                                   [(ngModel)]="newBooking.tinNumber"
+                                                   [ngModelOptions]="{standalone: true}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-12 form-group">
+                            <div class="card">
+                                <div class="card-header" style="display: flex;justify-content: space-between;">
+                                    <div> Receiver Details</div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                               id="copySenderDetails"
+                                               [(ngModel)]="newBooking.copySenderDetails"
+                                               [ngModelOptions]="{standalone: true}"
+                                               style="margin-top: 0.2rem !important;"
+                                               (click)="copySenderDetails(!newBooking.copySenderDetails)">
+                                        <label class="form-check-label" for="copySenderDetails">
+                                            Copy Sender details
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 form-group col-sm-6">
+                                            <label>Mobile Number<span class="mandatory-field">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-earphone small"></span>
+                                                </span>
+                                                <input type="text"
+                                                       class="form-control form-control-sm"
+                                                       placeholder="10 Digit Number"
+                                                       numbersOnly
+                                                       [disabled]="isDisabled"
+                                                       maxlength="10" [(ngModel)]="newBooking.toContact"
+                                                       [ngModelOptions]="{standalone: true}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 form-group col-sm-6">
+                                            <label>Receiver Name<span class="mandatory-field">*</span></label>
+                                            <input type="text"
+                                                   [disabled]="isDisabled"
+                                                   class="form-control form-control-sm"
+                                                   placeholder="Company/Person Name"
+                                                   [(ngModel)]="newBooking.toName"
+                                                   [ngModelOptions]="{standalone: true}"/>
+                                        </div>
+                                        <div class="col-12 form-group col-sm-6">
+                                            <label>Sender Email</label>
+                                            <input type="text"
+                                                   [disabled]="isDisabled"
+                                                   class="form-control form-control-sm"
+                                                   placeholder="Enter Email"
+                                                   [(ngModel)]="newBooking.toEmail"
+                                                   [ngModelOptions]="{standalone: true}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th>Item Description</th>
+                                    <th>Value of Goods</th>
+                                    <th>Quantity</th>
+                                    <th>Kg's</th>
+                                    <th>Freight Charge</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let item of newBooking.items; let i = index; let l = last;">
+                                    <td>{{i + 1}}</td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm"
+                                               [(ngModel)]="item.description"
+                                               placeholder="Item Description"
+                                               [ngModelOptions]="{standalone: true}"/>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm"
+                                               [(ngModel)]="item.value"
+                                               placeholder="Enter Value"
+                                               [ngModelOptions]="{standalone: true}"/>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm"
+                                               [(ngModel)]="item.quantity"
+                                               placeholder="Enter Quantity"
+                                               [ngModelOptions]="{standalone: true}"
+                                               (ngModelChange)="getTotalPrice()"/>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm"
+                                               [(ngModel)]="item.weight"
+                                               placeholder="Enter Weight"
+                                               [ngModelOptions]="{standalone: true}"/>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm"
+                                               [(ngModel)]="item.charge"
+                                               placeholder="Enter Amount"
+                                               [ngModelOptions]="{standalone: true}"
+                                               (ngModelChange)="getTotalPrice()"/>
+                                    </td>
+                                    <td class="td-active">
+                                        <span *ngIf="l" (click)="addItems(item)" title="Add Item"
+                                              style="padding-right: 5px; color: green; font-size: 18px;">
+                                            <i class="fa fa-plus-circle"></i>
+                                        </span>
+                                        <span *ngIf="newBooking.items.length != 1" title="Delete Item"
+                                              style="color: red;font-size: 18px;"
+                                              (click)="deleteItem(i)">
+                                             <i class="fa fa-minus-circle"></i>
+                                         </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="5" class="text-right">Loading Charges</td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm"
+                                               [(ngModel)]="newBooking.loadingCharge"
+                                               placeholder="Enter Loading Charge"
+                                               [ngModelOptions]="{standalone: true}"
+                                               (ngModelChange)="getTotalPrice()"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-right">Unloading Charges</td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm"
+                                               [(ngModel)]="newBooking.unloadingCharge"
+                                               placeholder="Enter Unloading Charge"
+                                               [ngModelOptions]="{standalone: true}"
+                                               (ngModelChange)="getTotalPrice()"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-right">Other Charges</td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm"
+                                               [(ngModel)]="newBooking.otherCharge"
+                                               placeholder="Enter Other Charges"
+                                               [ngModelOptions]="{standalone: true}"
+                                               (ngModelChange)="calculateTotal()"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="text-right">TOTALS</td>
+                                    <td>{{getTotalPrice()}}</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tile-footer">
+                    <div class="col-12 text-center">
+                        <p class="error-field">{{errorMessage}}</p>
+                    </div>
+                    <div class="col-sm-12 text-right p-0">
+                        <button type="submit" class="btn btn-success btn-sm mr-2" (click)="save()">
+                            <i class="fa fa-fw fa-check-circle"></i> Submit
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="close()">
+                            <i class="fa fa-fw fa-times-circle"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
