@@ -69,6 +69,11 @@ const layOutRoutes: Routes = [
                 path: 'payments',
                 loadChildren: () => import('./features/payments/payments.module').
                 then(m => m.PaymentsModule)
+            },
+            {
+                path: 'manageRoles',
+                loadChildren: () => import('./features/manage-roles/manage-roles.module').
+                then(m => m.ManageRolesModule)
             }
         ]
     },
