@@ -17,7 +17,8 @@
         <div class="col-lg-10 col-md-10 col-12 mx-auto">
             <div class="tile">
                 <div class="tile-body">
-                    <div class="row">
+                    <app-cargo-look-up></app-cargo-look-up>
+                    <div class="row mt-4">
                         <div class="col-sm-4 col-12 form-group">
                             <label class="control-label">From Branch Office <span
                                     class="mandatory-field">*</span></label>
@@ -56,7 +57,7 @@
                                     [ngModelOptions]="{standalone: true}">
                                 <option value="" selected>--Select LR Type--</option>
                                 <option *ngFor="let type of shipmentTypes"
-                                        value="{{type.id}}">{{type.shipmentType}}</option>
+                                        value="{{type.shipmentType}}">{{type.shipmentType}}</option>
                             </select>
                         </div>
                         <div class="col-sm-4 col-12 form-group">
@@ -127,7 +128,8 @@
                                                        placeholder="10 Digit Number"
                                                        numbersOnly
                                                        maxlength="10" [(ngModel)]="newBooking.fromContact"
-                                                       [ngModelOptions]="{standalone: true}"/>
+                                                       [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="getDetailsForContact('from')"/>
                                             </div>
                                         </div>
                                         <div class="col-12 form-group col-sm-6">
@@ -135,7 +137,7 @@
                                             <input type="text"
                                                    class="form-control form-control-sm"
                                                    placeholder="Company/Person Name"
-                                                  [(ngModel)]="newBooking.fromName"
+                                                   [(ngModel)]="newBooking.fromName"
                                                    [ngModelOptions]="{standalone: true}"/>
                                         </div>
                                         <div class="col-12 form-group col-sm-6">
@@ -188,7 +190,8 @@
                                                        numbersOnly
                                                        [disabled]="isDisabled"
                                                        maxlength="10" [(ngModel)]="newBooking.toContact"
-                                                       [ngModelOptions]="{standalone: true}"/>
+                                                       [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="getDetailsForContact('to')"/>
                                             </div>
                                         </div>
                                         <div class="col-12 form-group col-sm-6">
@@ -304,7 +307,7 @@
                                                [(ngModel)]="newBooking.otherCharge"
                                                placeholder="Enter Other Charges"
                                                [ngModelOptions]="{standalone: true}"
-                                               (ngModelChange)="calculateTotal()"/>
+                                               (ngModelChange)="getTotalPrice()"/>
                                     </td>
                                 </tr>
                                 <tr>

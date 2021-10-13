@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -33,12 +32,16 @@ export class NewBookingComponent implements OnInit {
     public currentUser: any;
     public errorMessage: any;
     public isDisabled = false;
+    public bookingId: any;
+    public searchData: any;
 
     constructor(
         private router: Router,
         public apiService: ApiServiceService,
         private apiUrls: ApiUrls,
+        private actRoute: ActivatedRoute
     ) {
+        this.searchData = this.actRoute.snapshot.params.data || '';
     }
 
     ngOnInit(): void {
@@ -46,6 +49,7 @@ export class NewBookingComponent implements OnInit {
         this.loadBranchOffice();
         this.getShipmentTypes();
         this.loadUsers();
+        console.log(this.searchData);
     }
 
     loadBranchOffice(): void {
@@ -141,6 +145,7 @@ export class NewBookingComponent implements OnInit {
             this.apiService.create(this.apiUrls.saveNewCargoBooking, this.newBooking).subscribe((res: any) => {
                 if (res) {
                     Swal.fire('success', 'Cargo booking added Succesfully..!', 'success');
+                    this.router.navigate(['cargoBookings']);
                 }
             }, error => {
                 this.errorMessage = error.message;
@@ -149,16 +154,57 @@ export class NewBookingComponent implements OnInit {
     }
 
     close(): void {
+        this.router.navigate(['cargoBookings']);
     }
 
-  copySenderDetails(booleanValue: any): any {
-    if (booleanValue) {
-      this.isDisabled = true;
-      this.newBooking.toContact = this.newBooking.fromContact;
-      this.newBooking.toName = this.newBooking.fromName;
-      this.newBooking.toEmail = this.newBooking.fromEmail;
-    }else{
-      this.isDisabled = false;
+    copySenderDetails(booleanValue: any): any {
+        if (booleanValue) {
+            this.isDisabled = true;
+            this.newBooking.toContact = this.newBooking.fromContact;
+            this.newBooking.toName = this.newBooking.fromName;
+            this.newBooking.toEmail = this.newBooking.fromEmail;
+        } else {
+            this.isDisabled = false;
+        }
     }
-  }
+
+    getDetailsForContact(type: any): void {
+        if (type === 'from' && this.newBooking.fromContact.length === 10) {
+            this.apiService.get(this.apiUrls.findContactInfoFromPreviousBookings
+                + '?contactType=' + type
+                + '&contact=' + this.newBooking.fromContact)
+                .subscribe((res: any) => {
+                    if (res) {
+                        this.newBooking.fromName = res.name;
+                        this.newBooking.fromEmail = res.email;
+                    }
+                }, error => {
+                    Swal.fire('error', error.message, 'error');
+                });
+        } else if (type === 'to' && this.newBooking.toContact.length === 10) {
+            this.apiService.get(this.apiUrls.findContactInfoFromPreviousBookings
+                + '?contactType=' + type
+                + '&contact=' + this.newBooking.toContact)
+                .subscribe((res: any) => {
+                    if (res) {
+                        this.newBooking.toName = res.name;
+                        this.newBooking.toEmail = res.email;
+                    }
+                }, error => {
+                    Swal.fire('error', error.message, 'error');
+                });
+        }
+    }
+
+    cargoSearchById(id: any): void {
+        if (!id) {
+            Swal.fire('error', 'Enter the bookingId for search', 'error');
+        }else{
+            this.router.navigate(['viewCargoBooking', id]);
+        }
+    }
+
+    callingData($event: any): void {
+        console.log($event);
+    }
 }

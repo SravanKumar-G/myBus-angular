@@ -1,0 +1,49 @@
+<div class="cargo-search">
+    <div class="row form-group align-items-center">
+        <div class="col-sm-4 text-right offset-4">
+            <h5>Cargo Booking Search</h5>
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group">
+                <input type="text" class="form-control form-control-sm" placeholder="Search by LR Number"
+                       [(ngModel)]="bookingId">
+                <div class="input-group-append">
+                    <button class="btn btn-info btn-sm" type="submit"
+                            (click)="cargoSearchById(bookingId)">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #showCargoDataModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Cargo Bookings!</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" style="height: 400px; overflow-x: scroll">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>From Contact</th>
+                <th>To Contact</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of cargoSearchData">
+                <td style="white-space: nowrap;"><a class="cus-a" style="color: #007bff" (click)="routingToView(data.shipmentNumber)">{{data.shipmentNumber}}</a></td>
+                <td style="text-transform: capitalize">{{data.fromName}} ({{data.fromContact}})</td>
+                <td style="text-transform: capitalize">{{data.toName}} ({{data.toContact}})</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Close</button>
+    </div>
+</ng-template>

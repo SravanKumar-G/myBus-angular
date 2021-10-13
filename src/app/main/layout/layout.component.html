@@ -7,10 +7,10 @@
       <i class="fa fa-bars" aria-hidden="true" style="padding-top: 14px"></i>
     </a>
     <ul class="app-nav">
-      <li class="app-search">
-        <input class="app-search__input" type="search" placeholder="Search"/>
-        <button class="app-search__button"><i class="fa fa-search"></i></button>
-      </li>
+<!--      <li class="app-search">-->
+<!--        <input class="app-search__input" type="search" placeholder="Search"/>-->
+<!--        <button class="app-search__button"><i class="fa fa-search"></i></button>-->
+<!--      </li>-->
       <li class="app-search">
         <label class="cash-balance">Cash Balances: {{currentUserDetails.amountToBePaid | numberFormatter}}</label>
       </li>
@@ -75,7 +75,7 @@
                 </a>
               </li>
               <li class="waves-effect waves-light" *ngIf="canAccessModule('cargobookings')">
-                <a class="treeView-item" [routerLink]="['cargoBooking']" [routerLinkActive]="['active']">
+                <a class="treeView-item" [routerLink]="['cargoBookings']" [routerLinkActive]="['active']">
                   <i class="icon fa fa-file-pdf-o" aria-hidden="true"></i>Cargo Bookings
                 </a>
               </li>
