@@ -3480,7 +3480,8 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
     }
 
     .sidebar-mini.sidenav-toggled .treeView:hover .treeView-menu, .sidebar-mini.sidenav-toggled .treeView-child:hover .treeView-menu-child {
-        max-height: 100vh;
+        max-height: 50vh;
+        overflow: auto;
         opacity: 1;
         visibility: visible;
         z-index: 11;
@@ -3525,7 +3526,7 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
 
 @media (max-width: 767px) {
     .app.sidenav-toggled .app-sidebar {
-        left: -240px;
+        left: -254px;
     }
 
     .app .app-sidebar {
