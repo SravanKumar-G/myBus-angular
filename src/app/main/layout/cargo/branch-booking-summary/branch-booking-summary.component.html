@@ -1,0 +1,187 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-indent" aria-hidden="true"></i>
+                Branch Booking Summary
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Branch Booking Summary</span></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <app-cargo-look-up></app-cargo-look-up>
+                    <div class="col-sm-12 mb-3 mt-3">
+                        <div class="row">
+                            <div class="col-sm-3 col-12">
+                                <label>From Office</label>
+                                <div>
+                                    <select class="form-control form-control-sm"
+                                            [(ngModel)]="filterObj.fromBranchId"
+                                            [ngModelOptions]="{standalone: true}">
+                                        <option value="" selected>--Select From office--</option>
+                                        <option *ngFor="let fromBranch of branchOffices" value="{{fromBranch.id}}">
+                                            {{fromBranch.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-12 form-group">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Start Date"
+                                           name="permit"
+                                           [(ngModel)]="filterObj.startDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #startDate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="startDate.show()"
+                                                [attr.aria-expanded]="startDate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-12 form-group">
+                                <label>End Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="End Date"
+                                           name="permit"
+                                           [(ngModel)]="filterObj.endDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #endDate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="endDate.show()"
+                                                [attr.aria-expanded]="endDate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-12 form-group m-auto">
+                                <button type="button" class="btn btn-success btn-sm mr-2"
+                                        (click)="loadBranchBookingsSummary()">Search Bookings
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm"
+                                        (click)="exportToExcel()">Export Excel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"
+                         *ngIf="!summaryData || !summaryData.branchCargoBookings || summaryData.branchCargoBookings.length ===0 ">
+                        <div class="col-sm-12">
+                            <table class="table table-condensed table-hover text-center table-sm fs--1">
+                                <tr>
+                                    <td>
+                                        No Bookings found for the selected date range. Please adjust the search filter
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div *ngIf="summaryData.branchCargoBookings.length > 0">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered" id="branchBookingSummary">
+                                <thead>
+                                <tr>
+                                    <th>Branch name</th>
+                                    <th>Total No of Bookings</th>
+                                    <th>Paid Booking (A)</th>
+                                    <th>To-Pay Booking (B)</th>
+                                    <th>To-Pay Delivered (C)</th>
+                                    <th>On-Account Booking (D)</th>
+                                    <th>Cancelled Amount (E)</th>
+                                    <th>Total Bookings(A +B )</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let branch of summaryData.branchCargoBookings">
+                                    <td>{{branch.branchOfficeName}}</td>
+                                    <td>{{branch.onAccountBookingsCount + branch.paidBookingsCount +
+                                    branch.topayBookingsCount}}
+                                    </td>
+                                    <td>{{branch.paidBookingsTotal}}</td>
+                                    <td>{{branch.topayBookingsTotal}}</td>
+                                    <td>{{branch.topayBookingsDeliveredTotal}}</td>
+                                    <td>{{branch.onAccountBookingsTotal}}</td>
+                                    <td>{{branch.canceledBookingsTotal}}</td>
+                                    <td>{{branch.paidBookingsTotal + branch.topayBookingsTotal}}</td>
+                                </tr>
+                                <tr class="font-weight-bold">
+                                    <td colspan="2" class="text-right">Totals</td>
+                                    <td>{{summaryData.paidBookingsTotal}}</td>
+                                    <td>{{summaryData.toPayBookingsTotal}}</td>
+                                    <td>{{summaryData.toPayDeliveryTotal}}</td>
+                                    <td>{{summaryData.onAccountBookingsTotal}}</td>
+                                    <td>{{summaryData.cancelledTotal}}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="text-right">(A + B + D - E) : {{summaryData.paidBookingsTotal +
+                                    summaryData.toPayBookingsTotal + summaryData.onAccountBookingsTotal -
+                                    summaryData.cancelledTotal}}
+                                    </td>
+                                    <td colspan="4" class="text-right">(A + C - E) : {{summaryData.paidBookingsTotal +
+                                    summaryData.toPayDeliveryTotal - summaryData.cancelledTotal}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="summaryData.userCargoBookingsSummaries.length > 0">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Paid Booking</th>
+                                    <th>To-Pay Booking</th>
+                                    <th>To-Pay Delivered</th>
+                                    <th>On-Account Booking</th>
+                                    <th>Cancelled Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let user of summaryData.userCargoBookingsSummaries" class="ng-scope">
+                                    <td>{{user.userName}}</td>
+                                    <td>{{user.paidBookingsTotal}}</td>
+                                    <td>{{user.topayBookingsTotal}}</td>
+                                    <td>{{user.topayBookingsDeliveredTotal}}</td>
+                                    <td>{{user.onAccountBookingsTotal}}</td>
+                                    <td>{{user.canceledBookingsTotal}}</td>
+                                </tr>
+                                <tr class="font-weight-bold">
+                                    <td class="text-right">Totals</td>
+                                    <td>{{summaryData.paidBookingsTotal}}</td>
+                                    <td>{{summaryData.toPayBookingsTotal}}</td>
+                                    <td>{{summaryData.toPayDeliveryTotal}}</td>
+                                    <td>{{summaryData.onAccountBookingsTotal}}</td>
+                                    <td>{{summaryData.cancelledTotal}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

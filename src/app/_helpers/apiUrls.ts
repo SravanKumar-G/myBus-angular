@@ -12,7 +12,6 @@ export class ApiUrls {
     // mainUrl = environment.testPath;
 
 
-
     getCurrentUser = 'api/v1/user/me';
     getAllUsers = 'api/v1/userNames';
 
@@ -113,4 +112,7 @@ export class ApiUrls {
     updateSupplier = 'api/v1/suppliers/';
     addSupplier = 'api/v1/suppliers/';
     deleteSupplier = 'api/v1/suppliers/';
+
+    // Branch Booking Summary
+    branchBookingSummary = 'api/v1/shipment/branchSummary';
 }
