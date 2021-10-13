@@ -95,8 +95,8 @@
                                        <td>{{payments.date | date}}</td>
                                        <td>{{payments.createdAt| date}}</td>
                                        <td>{{payments.description}}</td>
-                                       <td><span *ngIf="payments.type=='INCOME'">{{payments.amount || 'NA'}}</span></td>
-                                       <td><span *ngIf="payments.type=='EXPENSE'">{{payments.amount || 'NA'}}</span></td>
+                                       <td><span>{{payments.type =='INCOME' ? payments.amount : 'NA'}}</span></td>
+                                       <td><span>{{payments.type =='EXPENSE' ? payments.amount : 'NA'}}</span></td>
                                        <td>{{payments.attrs.createdBy}}</td>
                                        <td class="clickable-item">
                                            <span>
@@ -120,7 +120,7 @@
                                                       style="padding: 0; height: 35px;width: 35px;">
                                                   <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
                                               </button>
-                                              <button class="action-icon-style waves-effect waves-light"
+                                              <button class="action-icon-style waves-effect waves-light"  style="padding: 0; height: 35px;width: 35px;"
                                                       (click)="delete(payments.id)">
                                                   <i class="fa fa-trash fa-1x"></i>
                                               </button>
@@ -231,8 +231,8 @@
                                             <a class="cus-a" *ngIf="payments.bookingId" (click)="BookingDuePopUpPayments(serviceFormId, payments.bookingId)"><u>{{payments.description}}</u></a>
                                             <span *ngIf="!(payments.serviceFormId || payments.bookingId)">{{payments.description}}</span>
                                         </td>
-                                        <td><span *ngIf="payments.type=='INCOME'">{{payments.amount}}</span></td>
-                                        <td><span *ngIf="payments.type=='EXPENSE'">{{payments.amount}}</span></td>
+                                        <td><span>{{payments.type =='INCOME' ? payments.amount : 'NA'}}</span></td>
+                                        <td><span>{{payments.type =='EXPENSE' ? payments.amount : 'NA'}}</span></td>
                                         <td>{{payments.attrs.createdBy}}</td>
                                         <td>{{payments.attrs.updatedBy}}</td>
                                         <td>
@@ -402,8 +402,8 @@
                                         <td>{{(approvedPaymentQuery.page-1) * approvedPaymentQuery.size + i + 1}}</td>
                                         <td>{{payments.date | date}}</td>
                                         <td>{{payments.description}}</td>
-                                        <td><span *ngIf="payments.type=='INCOME'">{{payments.amount}}</span></td>
-                                        <td><span *ngIf="payments.type=='EXPENSE'">{{payments.amount}}</span></td>
+                                        <td><span>{{payments.type =='INCOME' ? payments.amount : 'NA'}}</span></td>
+                                        <td><span>{{payments.type =='EXPENSE' ? payments.amount : 'NA'}}</span></td>
                                         <td>{{payments.attrs.createdBy}}</td>
                                     </tr>
                                     <tr *ngIf="this.searchPaymentQuery.count === 0 || !this.searchPaymentQuery.count">
