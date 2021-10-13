@@ -1,0 +1,174 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="div">
+            <h1>
+                <i class="fa fa-book fa-lg" aria-hidden="true"></i> Suppliers
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><a class="fa fa-home fa-lg breadcrumb-home-link" (click)="goToDashboard()"></a>
+            </li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Transactions</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-6 p-0">
+                                <div class="pull-right mb-3">
+                                    <button class="btn btn-info btn-sm btn-all-shadow waves-effect waves-light"
+                                            (click)= "addSupplier(addEditSupplierModal)">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        Add Supplier
+                                    </button>&nbsp;&nbsp;
+                                    <div class="upload-btn-wrapper">
+                                        <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="exportingToExcelInSuppliers()"> Export to Excel </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                                <table class="table table-hover dataTable text-center" >
+                                  <thead>
+                                     <tr role="row" class="table-bordered" (click)="clickSorting($event)">
+                                         <th>S.No</th>
+                                         <th [ngClass]="supplierObj.sortOrder == 'name'? 'headActive' : ''"
+                                             accessKey="name">Name
+                                             <i *ngIf="supplierObj.sortOrder != 'name'" class="fa fa-sort"></i>
+                                             <i *ngIf="supplierObj.sortOrder == 'name'" class="fa"
+                                                [ngClass]="supplierObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th [ngClass]="supplierObj.sortOrder == 'partyType'? 'headActive' : ''"
+                                             accessKey="partyType">Party Type
+                                             <i *ngIf="supplierObj.sortOrder != 'partyType'" class="fa fa-sort"></i>
+                                             <i *ngIf="supplierObj.sortOrder == 'partyType'" class="fa"
+                                                [ngClass]="supplierObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th [ngClass]="supplierObj.sortOrder == 'contact'? 'headActive' : ''"
+                                             accessKey="contact">Contact
+                                             <i *ngIf="supplierObj.sortOrder != 'contact'" class="fa fa-sort"></i>
+                                             <i *ngIf="supplierObj.sortOrder == 'contact'" class="fa"
+                                                [ngClass]="supplierObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th [ngClass]="supplierObj.sortOrder == 'toBePaid'? 'headActive' : ''"
+                                             accessKey="toBePaid">Amount To Be Paid
+                                             <i *ngIf="supplierObj.sortOrder != 'toBePaid'" class="fa fa-sort"></i>
+                                             <i *ngIf="supplierObj.sortOrder == 'toBePaid'" class="fa"
+                                                [ngClass]="supplierObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th [ngClass]="supplierObj.sortOrder == 'toBeCollected'? 'headActive' : ''"
+                                             accessKey="toBeCollected">Amount To Be Collected
+                                             <i *ngIf="supplierObj.sortOrder != 'toBeCollected'" class="fa fa-sort"></i>
+                                             <i *ngIf="supplierObj.sortOrder == 'toBeCollected'" class="fa"
+                                                [ngClass]="supplierObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th>Action</th>
+                                     </tr>
+                                  </thead>
+                                  <tbody>
+                                     <tr *ngFor="let suppliers of suppliersList; let i = index">
+                                         <td>{{(supplierObj.page - 1) * supplierObj.size + i + 1 }}</td>
+                                         <td>{{suppliers.name || 'NA'}}</td>
+                                         <td>{{suppliers.partyType || 'NA'}}</td>
+                                         <td>{{suppliers.contact || 'NA'}}</td>
+                                         <td>{{suppliers.toBePaid || 'NA'}}</td>
+                                         <td>{{suppliers.toBeCollected || 'NA'}}</td>
+                                         <td class="td-active">
+                                             <div style="display: flex;justify-content: center;">
+                                                 <button class="action-icon-style waves-effect waves-light"
+                                                         title="Edit Invoice" (click)="UpdateSupplier(addEditSupplierModal, suppliers.id)"
+                                                         style="padding: 0; height: 35px;width: 35px;">
+                                                     <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                                 </button>
+                                                 <button class="action-icon-style waves-effect waves-light"
+                                                         (click)="delete(suppliers.id)">
+                                                     <i class="fa fa-trash fa-1x"></i>
+                                                 </button>
+                                             </div>
+                                         </td>
+                                     </tr>
+                                  </tbody>
+                                </table>
+                                <table style="text-align: center; display: none" id="suppliersExcel">
+                                    <thead>
+                                    <tr role="row" class="table-bordered" (click)="clickSorting($event)">
+                                        <th>S.No</th>
+                                        <th>Name</th>
+                                        <th>Party Type</th>
+                                        <th>Contact</th>
+                                        <th>Amount To Be Paid</th>
+                                        <th>Amount To Be Collected</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let suppliers of suppliersList; let i = index">
+                                        <td>{{(supplierObj.page - 1) * supplierObj.size + i + 1 }}</td>
+                                        <td>{{suppliers.name || 'NA'}}</td>
+                                        <td>{{suppliers.partyType || 'NA'}}</td>
+                                        <td>{{suppliers.contact || 'NA'}}</td>
+                                        <td>{{suppliers.toBePaid || 'NA'}}</td>
+                                        <td>{{suppliers.toBeCollected || 'NA'}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template  #addEditSupplierModal>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">{{titleHeader}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form name="fillingStationForm" class="form-horizontal" role="form">
+            <div class="offset-1 form-group">
+                <label class="col-sm-3 control-label checkbox ls text-uppercase text-600 font-weight-semi-bold" for="fname">Name</label>
+                <label class="col-sm-8">
+                    <input type="text" id="fname" class="form-control" [(ngModel)]="addSupplierQuery.name" [ngModelOptions]="{standalone: true}" placeholder="Name">
+                </label>
+            </div>
+            <div class="offset-1 form-group">
+                <label class="col-sm-3 control-label checkbox ls text-uppercase text-600 font-weight-semi-bold" for="fcontact">Contact</label>
+                <label class="col-sm-8">
+                    <input type="text" id="fcontact" class="form-control" [(ngModel)]="addSupplierQuery.contact" [ngModelOptions]="{standalone: true}" placeholder="Contact">
+                </label>
+            </div>
+            <div class="offset-1 form-group">
+                <label class="col-sm-3 control-label checkbox ls text-uppercase text-600 font-weight-semi-bold" for="activeInactive" style="padding-top:0; ">Active</label>
+                <label class="col-sm-1">
+                    <input type="checkbox" id="activeInactive" [(ngModel)]="addSupplierQuery.active" [ngModelOptions]="{standalone: true}">
+                </label>
+            </div>
+            <div class="offset-1 form-group">
+                <label class="col-sm-4 control-label checkbox ls text-uppercase text-600 font-weight-semi-bold" for="activeInactive">Party Type</label>
+                <label class="radio-inline control-label checkbox ls">
+                    <input type="radio" name="CREDITORS" value="CREDITORS" [(ngModel)]="addSupplierQuery.partyType" [ngModelOptions]="{standalone: true}"> Creditors
+                </label> &nbsp;&nbsp;
+                <label class="radio-inline control-label checkbox ls">
+                    <input type="radio" name="DEBTORS" value="DEBTORS" [(ngModel)]="addSupplierQuery.partyType" [ngModelOptions]="{standalone: true}"> Debitors
+                </label>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-12 text-center">
+            <p class="error-field">{{errorMessage}}</p>
+        </div>
+        <button class="btn btn-success btn-sm mr-2" (click)="save()">{{supplierId ? 'Update' : 'Save'}}</button>
+        <button class="btn btn-danger btn-sm" (click)="cancel()">Cancel</button>
+    </div>
+</ng-template>

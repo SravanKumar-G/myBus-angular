@@ -88,7 +88,16 @@ export class ApiUrls {
     approveOrReject = 'api/v1/payment/approveOrReject/';
     booking = 'api/v1/serviceReport/booking/';
 
+
     // New Cargo Booking API's
     getShipmentTypes = 'api/v1/shipment/types';
     saveNewCargoBooking = 'api/v1/shipment';
+
+    // Suppliers
+    getAllSuppliers = 'api/v1/suppliers/';
+    getSupplier = 'api/v1/suppliers/';
+    updateSupplier = 'api/v1/suppliers/';
+    addSupplier = 'api/v1/suppliers/';
+    deleteSupplier = 'api/v1/suppliers/';
+
 }

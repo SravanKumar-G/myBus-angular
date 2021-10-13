@@ -4,6 +4,7 @@ import {LayoutComponent} from './layout.component';
 import {CargoDashboardComponent} from './features/cargo-dashboard/cargo-dashboard.component';
 import {TransactionsModule} from './features/transactions/transactions.module';
 import {PaymentsModule} from './features/payments/payments.module';
+import {SuppliersModule} from './features/suppliers/suppliers.module';
 
 const layOutRoutes: Routes = [
     {
@@ -72,8 +73,12 @@ const layOutRoutes: Routes = [
             },
             {
                 path: 'newBooking',
-                loadChildren: () => import('./cargo/new-booking/new-booking.module').
-                then(m => m.NewBookingModule)
+                loadChildren: () => import('./cargo/new-booking/new-booking.module').then(m => m.NewBookingModule)
+            },
+            {
+                path: 'suppliers',
+                loadChildren: () => import('./features/suppliers/suppliers.module').
+                then(m => m.SuppliersModule)
             }
         ]
     },
