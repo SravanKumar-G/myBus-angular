@@ -1,10 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './layout.component';
-import {CargoDashboardComponent} from './features/cargo-dashboard/cargo-dashboard.component';
-import {TransactionsModule} from './features/transactions/transactions.module';
-import {PaymentsModule} from './features/payments/payments.module';
-import {SuppliersModule} from './features/suppliers/suppliers.module';
+import {CargoDashboardComponent} from './cargo/cargo-dashboard/cargo-dashboard.component';
 
 const layOutRoutes: Routes = [
     {
@@ -13,62 +10,62 @@ const layOutRoutes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./features/cargo-dashboard/cargo-dashboard.module').
+                loadChildren: () => import('./cargo/cargo-dashboard/cargo-dashboard.module').
                 then(m => m.CargoDashboardModule)
             },
             {
                 path: 'operatorAccounts',
-                loadChildren: () => import('./features/operator-accounts/operator-accounts.module').
+                loadChildren: () => import('./master/operator-accounts/operator-accounts.module').
                 then(m => m.OperatorAccountsModule)
             },
             {
                 path: 'cancellations',
-                loadChildren: () => import('./features/cargo-cancellations/cargo-cancellations.module').
+                loadChildren: () => import('./cargo/cargo-cancellations/cargo-cancellations.module').
                 then(m => m.CargoCancellationsModule)
             },
             {
                 path: 'cities',
-                loadChildren: () => import('./features/cities/cities.module').
+                loadChildren: () => import('./master/cities/cities.module').
                 then(m => m.CitiesModule)
             },
             {
                 path: 'branchOffices',
-                loadChildren: () => import('./features/branch-offices/branch-offices.module').
+                loadChildren: () => import('./master/branch-offices/branch-offices.module').
                 then(m => m.BranchOfficesModule)
             },
             {
                 path: 'roles',
-                loadChildren: () => import('./features/roles/roles.module').
+                loadChildren: () => import('./master/roles/roles.module').
                 then(m => m.RolesModule)
             },
             {
                 path: 'users',
-                loadChildren: () => import('./features/users/users.module').
+                loadChildren: () => import('./master/users/users.module').
                 then(m => m.UsersModule)
             },
             {
                 path: 'amenities',
-                loadChildren: () => import('./features/amenities/amenities.module').
+                loadChildren: () => import('./master/amenities/amenities.module').
                 then(m => m.AmenitiesModule)
             },
             {
                 path: 'vehicles',
-                loadChildren: () => import('./features/vehicles/vehicles.module').
+                loadChildren: () => import('./master/vehicles/vehicles.module').
                 then(m => m.VehiclesModule)
             },
             {
                 path: 'transactions',
-                loadChildren: () => import('./features/transactions/transactions.module').
+                loadChildren: () => import('./master/transactions/transactions.module').
                 then(m => m.TransactionsModule)
             },
             {
                 path: 'payments',
-                loadChildren: () => import('./features/payments/payments.module').
+                loadChildren: () => import('./master/payments/payments.module').
                 then(m => m.PaymentsModule)
             },
             {
                 path: 'manageRoles',
-                loadChildren: () => import('./features/manage-roles/manage-roles.module').
+                loadChildren: () => import('./master/manage-roles/manage-roles.module').
                 then(m => m.ManageRolesModule)
             },
             {
@@ -77,7 +74,7 @@ const layOutRoutes: Routes = [
             },
             {
                 path: 'suppliers',
-                loadChildren: () => import('./features/suppliers/suppliers.module').then(m => m.SuppliersModule)
+                loadChildren: () => import('./master/suppliers/suppliers.module').then(m => m.SuppliersModule)
             },
             {
                 path: 'cargoBookings',
@@ -88,6 +85,11 @@ const layOutRoutes: Routes = [
                 path: 'viewCargoBooking/:id',
                 loadChildren: () => import('./cargo/view-cargo-booking/view-cargo-booking.module').
                 then(m => m.ViewCargoBookingModule)
+            },
+            {
+                path: 'branchBookingSummary',
+                loadChildren: () => import('./cargo/branch-booking-summary/branch-booking-summary.module').
+                then(m => m.BranchBookingSummaryModule)
             }
         ]
     },
