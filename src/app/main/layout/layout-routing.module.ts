@@ -80,10 +80,6 @@ const layOutRoutes: Routes = [
                 loadChildren: () => import('./features/suppliers/suppliers.module').then(m => m.SuppliersModule)
             },
             {
-                loadChildren: () => import('./cargo/new-booking/new-booking.module').
-                then(m => m.NewBookingModule)
-            },
-            {
                 path: 'cargoBookings',
                 loadChildren: () => import('./cargo/cargo-bookings/cargo-bookings.module').
                 then(m => m.CargoBookingsModule)
