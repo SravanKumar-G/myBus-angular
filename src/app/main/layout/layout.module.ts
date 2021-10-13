@@ -9,6 +9,8 @@ import {NumberFormatterPipe} from '../../customDirectives/pipes/number-formatter
 import {OnlynumberDirective} from '../../customDirectives/directives/onlynumber.directive';
 import {FrentendSortDirective} from '../../customDirectives/directives/frentend-sort.directive';
 import {SearchFilterPipe} from '../../customDirectives/pipes/search-filter.pipe';
+import { CargoLookUpComponent } from './cargo/cargo-look-up/cargo-look-up.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -16,12 +18,14 @@ import {SearchFilterPipe} from '../../customDirectives/pipes/search-filter.pipe'
         NumberFormatterPipe,
         OnlynumberDirective,
         FrentendSortDirective,
-        SearchFilterPipe
+        SearchFilterPipe,
+        CargoLookUpComponent
     ],
     imports: [
         CommonModule,
         LayoutRoutingModule,
         FormsModule,
+        NgbModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],
@@ -32,7 +36,8 @@ import {SearchFilterPipe} from '../../customDirectives/pipes/search-filter.pipe'
         OnlynumberDirective,
         NumberFormatterPipe,
         FrentendSortDirective,
-        SearchFilterPipe
+        SearchFilterPipe,
+        CargoLookUpComponent
     ]
 })
 export class LayoutModule {

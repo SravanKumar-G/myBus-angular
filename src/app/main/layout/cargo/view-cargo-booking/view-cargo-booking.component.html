@@ -1,0 +1,573 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i>
+                View Cargo Booking
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span
+                    class="breadcrumb-item-router">View Cargo Booking/ {{cargoBookingId}}</span></li>
+        </ul>
+    </div>
+
+    <div class="row" *ngIf="cargoDetails">
+        <div class="col-lg-9 col-md-12 mx-auto">
+            <div class="tile">
+                <div class="tile-body cargoDetails">
+                    <div class="col-sm-12 mb-3">
+                        <div class="row">
+                            <div class="col-sm-1 m-auto pl-0">
+                                <a class="cus-a" (click)="goToBackPage()"><i class="fa fa-arrow-left"></i>&nbsp;back</a>
+                            </div>
+                            <div class="col-sm-11 p-0 text-right">
+                                <button type="button" class="btn btn-sm btn-primary mr-1" (click)="printCargo()"
+                                        title="Print">
+                                    <i class="fa fa-print"></i> Print
+                                </button>
+                                <button type="button" class="btn btn-sm btn-success mr-1"
+                                        (click)="initiateDeliverCargoBooking(cargoDetails.id)"
+                                        *ngIf="cargoDetails.cargoTransitStatus !== 'DELIVERED' && !cargoDetails.canceled"
+                                        title="Deliver">
+                                    <i class="fa fa-check-circle"></i> Deliver
+                                </button>
+                                <button type="button" class="btn btn-sm btn-warning mr-1"
+                                        (click)="cancelCargoBooking(cargoDetails.id)" title="Cancel Booking"
+                                        *ngIf="!cargoDetails.canceled && cargoDetails.cargoTransitStatus !== 'DELIVERED'">
+                                    <i class="fa fa-ban"></i> Cancel Booking
+                                </button>
+                                <button type="button" class="btn btn-sm btn-success mr-1"
+                                        (click)="sendSMS(cargoDetails.id)" title="Send SMS"
+                                        *ngIf="!cargoDetails.canceled && cargoDetails.cargoTransitStatus !== 'DELIVERED'">
+                                    <i class="fa fa-share"></i> Send SMS
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary mr-1"
+                                        (click)="addCommentToBooking(cargoDetails.id)" title="Add Comment"
+                                        *ngIf="!cargoDetails.reviewComment">
+                                    <i class="fa fa-comment-o"></i> Comment
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            Cargo Details
+                        </div>
+                        <div class="row mt-2 col-sm-12">
+                            <div class="col-sm-4 col-12 form-group">
+                                <label>LR Number:</label>
+                                <div>{{cargoDetails.shipmentNumber}}</div>
+                            </div>
+                            <div class="col-sm-4 col-12 form-group">
+                                <label>From:</label>
+                                <div>{{cargoDetails.attrs.fromBranchOfficeName}}</div>
+                            </div>
+                            <div class="col-sm-4 col-12 form-group">
+                                <label>To:</label>
+                                <div>{{cargoDetails.attrs.toBranchOfficeName}}</div>
+                            </div>
+                            <div class="col-sm-4 col-12 form-group">
+                                <label>LR Type:</label>
+                                <div>{{cargoDetails.paymentType}}</div>
+                            </div>
+                            <div class="col-sm-4 col-12 form-group">
+                                <label>WayBill No:</label>
+                                <div>{{cargoDetails.wayBillNo}}</div>
+                            </div>
+                            <div class="col-sm-4 col-12 form-group">
+                                <label>Status:</label>
+                                <div>{{cargoDetails.cargoTransitStatus}}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-header">Sender Details</div>
+                                    <div class="col-sm-12 col-12 form-group mt-2">
+                                        <label>Mobile Number:</label>
+                                        <div>{{cargoDetails.fromContact}}</div>
+                                    </div>
+                                    <div class="col-sm-12 col-12 form-group">
+                                        <label>Sender Name:</label>
+                                        <div>{{cargoDetails.fromName}}</div>
+                                    </div>
+                                    <div class="col-sm-12 col-12 form-group">
+                                        <label>Sender Email:</label>
+                                        <div>{{cargoDetails.fromEmail}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-header">Receiver Details</div>
+                                    <div class="col-sm-12 col-12 form-group mt-2">
+                                        <label>Mobile Number:</label>
+                                        <div>{{cargoDetails.toContact}}</div>
+                                    </div>
+                                    <div class="col-sm-12 col-12 form-group">
+                                        <label>Sender Name:</label>
+                                        <div>{{cargoDetails.toName}}</div>
+                                    </div>
+                                    <div class="col-sm-12 col-12 form-group">
+                                        <label>Sender Email:</label>
+                                        <div>{{cargoDetails.toEmail}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th>Item Description</th>
+                                        <th>Value of Goods (<i class="fa fa-inr"></i>)</th>
+                                        <th>Quantity</th>
+                                        <th>Kg's</th>
+                                        <th>Frieght Charge (<i class="fa fa-inr"></i>)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let item of cargoDetails.items; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{item.description || '---'}}</td>
+                                        <td class="text-right">{{item.value || 0}}</td>
+                                        <td class="text-right">{{item.quantity || 0}}</td>
+                                        <td class="text-right">{{item.weight || 0}}</td>
+                                        <td class="text-right">{{item.charge}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right">Loading Charge (<i class="fa fa-inr"></i>)
+                                        </td>
+                                        <td class="text-right">{{cargoDetails.loadingCharge}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right">Unloading Charge (<i class="fa fa-inr"></i>)
+                                        </td>
+                                        <td class="text-right">{{cargoDetails.unloadingCharge}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right">Other Charge (<i class="fa fa-inr"></i>)</td>
+                                        <td class="text-right">{{cargoDetails.otherCharge}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right">Total Charge (<i class="fa fa-inr"></i>)</td>
+                                        <td class="text-right">{{cargoDetails.totalCharge}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" *ngIf="cargoDetails.remarks">
+                            <label>Remarks:</label>
+                            <div>{{cargoDetails.remarks || '--'}}</div>
+                        </div>
+                        <div class="col-sm-12 text-left">
+                            <label>Booked By:</label>
+                            <div>{{cargoDetails.attrs.bookedBy || '--'}}</div>
+                        </div>
+                        <div class="col-sm-12 text-left" *ngIf="cargoDetails.attrs.forUser">
+                            <label>For User:</label>
+                            <div>{{cargoDetails.attrs.forUser || '--'}}</div>
+                        </div>
+                        <div class="col-sm-12 text-left" *ngIf="cargoDetails.attrs.SMS">
+                            <label>SMS:</label>
+                            <div>{{cargoDetails.attrs.SMS || '--'}}</div>
+                        </div>
+                        <div class="col-sm-12 mt-3 mb-3">
+                            <div class="pull-left">
+                                <strong class="ng-binding">Terms &amp; Conditions &nbsp;:&nbsp;</strong></div>
+                            <br>
+                            <div>
+                <span>
+                <p>1.<em> Parcel, Luggage are carried at owner's risk.</em></p>
+
+                <p><em>2. Incase the Parcels are lost or damaged in transit the company will not be liable Though every care shall be taken by the company for safe Transportation of Parcels.</em></p>
+
+                <p><em>3. Contraband articles are not permitted to carry in the vehicle. The parcels owner will bear soleon checkup by Octrol, Excise and other authorities.</em></p>
+
+                <p><em>4. We do not hold any other responsibility on the late arrival of Parcel/Luggage.</em></p>
+
+                <p><em>5. Luggage/Parcel should be collected within 24 hours of its arrival, falling which the Management is not responsible for the delivery.</em></p>
+
+                <p><strong><em>6. Dema Charge per day Rs.5/­ per parcel after 7&nbsp;days of receipt of the parcel. &nbsp;Consignment are not taken delivery within 30 days it will be auctioned without any intimation to the Consignor or Consignee.</em></strong></p>
+
+                <p><em>8. Don't Book Cash, Glass Liquor, Jewels, Lottery, Explosive materials and other restricted items. If booked we are not responsible. Company is not responsible for any breakable items. It will be booked only on the Owner's risk.</em></p>
+
+                <p><em>5. All Disputes are subject to the jurisdiction of Ongole courts only. &nbsp;&nbsp;the consignor has the right to file a suit against the Company.&nbsp;</em></p>
+                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    Print Cargo-->
+    <div id="report_left_inner" style="display: none;">
+        <div>
+            <p style="font-size: 16px;color:#218cff;">{{cargoDetails.attrs.fromBranchOfficeAddress}}</p>
+        </div>
+        <div class="panel-body no-padding">
+            <table style="border: 2px solid #000; border-bottom: none !important;  font-family: arial, sans-serif; border-collapse: collapse;width: 800px;font-size: 10px;">
+                <tbody>
+                <tr>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">LR
+                        Number:</label>&nbsp;
+                        <b>{{cargoDetails.shipmentNumber}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">From:</label>&nbsp;
+                        <b>{{cargoDetails.attrs.fromBranchOfficeAddress}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">To:</label>&nbsp;
+                        <b>{{cargoDetails.attrs.toBranchOfficeAddress}}</b>
+                    </td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">Date:</label>&nbsp;
+                        <b>{{cargoDetails.dispatchDate | date}}</b></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">LR Type:</label>&nbsp;
+                        <b>{{cargoDetails.paymentType}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">From
+                        Branch:</label>&nbsp;
+                        <b>{{cargoDetails.attrs.fromBranchOfficeName}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">To
+                        Branch:</label>&nbsp;
+                        <b>{{cargoDetails.attrs.toBranchOfficeName}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">WayBill
+                        No.:</label>&nbsp;
+                        <b>{{cargoDetails.wayBillNo}}</b></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">Sender
+                        Name:</label>&nbsp;
+                        <b>{{cargoDetails.fromName}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">Mobile
+                        Num:</label>&nbsp;
+                        <b>{{cargoDetails.fromContact}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">Receiver
+                        Name:</label>&nbsp; <b>{{cargoDetails.toName}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">Mobile
+                        Num:</label>&nbsp;
+                        <b>{{cargoDetails.toContact}}</b></td>
+                </tr>
+                </tbody>
+            </table>
+            <table style="border: 2px solid #000; border-top: none !important; font-family: arial, sans-serif; border-collapse: collapse;width: 800px;font-size: 10px;">
+                <tbody>
+                <tr style="text-align: center;">
+                    <th style="border: 1px solid #000;">Item Description</th>
+                    <th style="border: 1px solid #000;">Value Of Goods</th>
+                    <th style="border: 1px solid #000;">Quantity</th>
+                    <th style="border: 1px solid #000;">Weight(Kg's)</th>
+                    <th style="border: 1px solid #000;">Freight Charge (₹)</th>
+                </tr>
+                <tr *ngFor="let item of cargoDetails.items">
+                    <td style="border: 1px solid #000;padding-left: 5px;text-align: center">{{item.description}}</td>
+                    <td style="border: 1px solid #000;padding-left: 5px;text-align: right;padding-right: 5px;">
+                        {{item.value}}
+                    </td>
+                    <td style="border: 1px solid #000;padding-left: 5px;text-align: right;padding-right: 5px;">
+                        {{item.quantity}}
+                    </td>
+                    <td style="border: 1px solid #000;padding-left: 5px;text-align: right;padding-right: 5px;">
+                        {{item.weight}}
+                    </td>
+                    <td style="border: 1px solid #000;padding-left: 5px;text-align: right;padding-right: 5px;">
+                        {{item.charge}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;"></td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;" colspan="3">Loading Charges
+                        (₹)
+                    </td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;">
+                        {{cargoDetails.loadingCharge}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;"></td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;" colspan="3">Unloading
+                        Charges (₹)
+                    </td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;">
+                        {{cargoDetails.unloadingCharge}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;"></td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;" colspan="3"> Other Charges
+                        (₹)
+                    </td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;">{{cargoDetails.otherCharge}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;">Condition Of the Goods</td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;"></td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;" colspan="2"><b>Net Amt
+                        Payable
+                        (₹)</b></td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;">
+                        <b>{{cargoDetails.totalCharge}}</b></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;text-align: right;color: red;padding-right: 5px;" colspan="4"><b>Invoice
+                        Number</b></td>
+                    <td style="border: 1px solid #000;padding-left: 5px;"><b>{{cargoDetails.invoiceNo || '--'}}</b></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;padding-left: 5px;">Mode of Transport</td>
+                    <td style="border: 1px solid #000;padding-left: 5px;"><b>Road</b></td>
+                    <td style="border: 1px solid #000;text-align:right;padding-right: 5px;" colspan="2">Vehicle Number
+                    </td>
+                    <td style="border: 1px solid #000;padding-left: 5px;"><b>{{cargoDetails.vehicleNo || '--'}}</b></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;padding-left: 5px;" colspan="6">
+                        Remarks: {{cargoDetails.remarks}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;padding-left: 5px;height: 50px;font-size: 13px;color: red;">
+                        Receivers Copy
+                    </td>
+                    <td style="border: 1px solid #000;padding-left: 5px;height: 50px;color: #ccc;text-align: center;"
+                        colspan="2">Signature
+                    </td>
+                    <td style="border: 1px solid #000;text-align:right;padding-right: 5px;height: 50px;" colspan="2">
+                        Booked
+                        by {{cargoDetails.attrs.bookedBy}} at {{cargoDetails.createdAt | date: 'medium'}}
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <div style="width:800px;">
+                <p style="padding: 0;margin: 0;"><b>Terms and Conditions:</b></p>
+                <ul style="list-style-type: decimal;font-size: 11px;margin-left: 0;padding-left: 10px;">
+                    <li class="terms">Parcel, Luggage are carried at owner's risk.</li>
+                    <li class="terms"> Incase the Parcels are lost or damaged in transit the company will not
+                        be liable Though every care shall be taken by the company for safe Transportation of Parcels.
+                    </li>
+                    <li class="terms">Contraband articles are not permitted to carry in the vehicle. The
+                        parcels owner will bear soleon checkup by Octrol, Excise and other authorities.
+                    </li>
+                    <li class="terms">We do not hold any other responsibility on the late arrival of
+                        Parcel/Luggage.
+                    </li>
+                    <li class="terms"> Transporter is not responsible for any charges imposed by Govt agencies(Sales
+                        tax, GST),
+                        Consignor or Consinee should pay for such expenses or fines.
+                    </li>
+                    <li class="terms">Consignor or Consinee should request the Transporter for the vehicle number for
+                        updating Part-B of the eway bill.
+                    </li>
+                    <li class="terms"> Luggage/Parcel should be collected within 24 hours of its arrival,
+                        falling which the Management is not responsible for the delivery.
+                    </li>
+                    <li class="terms"><b> Dema Charge per day Rs.5/­ per parcel after 7 days of receipt
+                        of the parcel. Consignment are not taken delivery within 30 days it will be auctioned without
+                        any
+                        intimation to the Consignor or Consignee.</b></li>
+                    <li class="terms"> Don't Book Cash, Glass Liquor, Jewels, Lottery, Explosive
+                        materials
+                        and other restricted items. If booked we are not responsible. Company is not responsible for any
+                        breakable items. It will be booked only on the Owner's risk.
+                    </li>
+                    <li class="terms">All Disputes are subject to the jurisdiction of Ongole courts only.
+                        the
+                        consignor has the right to file a suit against the Company.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="width:800px;padding-left: 15px;"><span style="font-size: 35px;">✂</span>
+            <small style="position:relative;top: -2px;font-size: 35px;left:-10px;">
+                -------------------------------------------------------------
+            </small>
+        </div>
+        <!--line panel body -->
+        <div>
+            <p style="font-size: 16px;color:#218cff;">{{cargoDetails.attrs.toBranchOfficeAddress}}</p>
+        </div>
+        <div class="panel-body no-padding">
+            <table style="border: 2px solid #000; border-bottom: none !important;  font-family: arial, sans-serif; border-collapse: collapse;width: 800px;font-size: 10px;">
+                <tbody>
+                <tr>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">LR
+                        Number:</label>&nbsp;
+                        <b>{{cargoDetails.shipmentNumber}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">From:</label>&nbsp;
+                        <b>{{cargoDetails.attrs.fromBranchOfficeAddress}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">To:</label>&nbsp;
+                        <b>{{cargoDetails.attrs.toBranchOfficeAddress}}</b>
+                    </td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">Date:</label>&nbsp;
+                        <b>{{cargoDetails.dispatchDate | date}}</b></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">LR Type:</label>&nbsp;
+                        <b>{{cargoDetails.paymentType}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">From
+                        Branch:</label>&nbsp;
+                        <b>{{cargoDetails.attrs.fromBranchOfficeName}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">To
+                        Branch:</label>&nbsp;
+                        <b>{{cargoDetails.attrs.toBranchOfficeName}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">WayBill
+                        No.:</label>&nbsp;
+                        <b>{{cargoDetails.wayBillNo}}</b></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">Sender
+                        Name:</label>&nbsp;
+                        <b>{{cargoDetails.fromName}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">Mobile
+                        Num:</label>&nbsp;
+                        <b>{{cargoDetails.fromContact}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">Receiver
+                        Name:</label>&nbsp; <b>{{cargoDetails.toName}}</b></td>
+                    <td style="border: 1px solid #ccc;padding-left: 5px;"><label class="control-label">Mobile
+                        Num:</label>&nbsp;
+                        <b>{{cargoDetails.toContact}}</b></td>
+                </tr>
+                </tbody>
+            </table>
+            <table style="border: 2px solid #000; border-top: none !important; font-family: arial, sans-serif; border-collapse: collapse;width: 800px;font-size: 10px;">
+                <tbody>
+                <tr style="text-align: center;">
+                    <td style="border: 1px solid #000;">Item Description</td>
+                    <td style="border: 1px solid #000;">Value Of Goods</td>
+                    <td style="border: 1px solid #000;">Quantity</td>
+                    <td style="border: 1px solid #000;">Weight(Kg's)</td>
+                    <td style="border: 1px solid #000;">Freight Charge (₹)</td>
+                </tr>
+                <tr *ngFor="let item of cargoDetails.items">
+                    <td style="border: 1px solid #000;padding-left: 5px;text-align: center">{{item.description}}</td>
+                    <td style="border: 1px solid #000;padding-left: 5px;text-align: right;padding-right: 5px;">
+                        {{item.value}}
+                    </td>
+                    <td style="border: 1px solid #000;padding-left: 5px;text-align: right;padding-right: 5px;">
+                        {{item.quantity}}
+                    </td>
+                    <td style="border: 1px solid #000;padding-left: 5px;text-align: right;padding-right: 5px;">
+                        {{item.weight}}
+                    </td>
+                    <td style="border: 1px solid #000;padding-left: 5px;text-align: right;padding-right: 5px;">
+                        {{item.charge}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;"></td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;" colspan="3">Loading Charges
+                        (₹)
+                    </td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;">
+                        {{cargoDetails.loadingCharge}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;"></td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;" colspan="3">Unloading
+                        Charges (₹)
+                    </td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;">
+                        {{cargoDetails.unloadingCharge}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;"></td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;" colspan="3"> Other Charges
+                        (₹)
+                    </td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;">{{cargoDetails.otherCharge}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;">Condition Of the Goods</td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;"></td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;" colspan="2"><b>Net Amt
+                        Payable
+                        (₹)</b></td>
+                    <td style="border: 1px solid #000;text-align: right;padding-right: 5px;">
+                        <b>{{cargoDetails.totalCharge}}</b></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;text-align: right;color: red;padding-right: 5px;" colspan="4"><b>Invoice
+                        Number</b></td>
+                    <td style="border: 1px solid #000;padding-left: 5px;"><b>{{cargoDetails.invoiceNo || '--'}}</b></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;padding-left: 5px;">Mode of Transport</td>
+                    <td style="border: 1px solid #000;padding-left: 5px;"><b>Road</b></td>
+                    <td style="border: 1px solid #000;text-align:right;padding-right: 5px;" colspan="2">Vehicle Number
+                    </td>
+                    <td style="border: 1px solid #000;padding-left: 5px;"><b>{{cargoDetails.vehicleNo || '--'}}</b></td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;padding-left: 5px;" colspan="6">
+                        Remarks: {{cargoDetails.remarks}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000;padding-left: 5px;height: 50px;font-size: 13px;color: red;">Sender
+                        Copy
+                    </td>
+                    <td style="border: 1px solid #000;padding-left: 5px;height: 50px;color: #ccc;text-align: center;"
+                        colspan="2">Signature
+                    </td>
+                    <td style="border: 1px solid #000;text-align:right;padding-right: 5px;height: 50px;" colspan="2">
+                        Booked
+                        by {{cargoDetails.attrs.bookedBy}} at {{cargoDetails.createdAt | date: 'medium'}}
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <div style="width:800px;">
+                <p style="padding: 0;margin: 0;"><b>Terms and Conditions:</b></p>
+                <ul style="list-style-type: decimal;font-size: 12px;margin-left: 0;padding-left: 10px;">
+                    <li class="terms">Parcel, Luggage are carried at owner's risk.</li>
+                    <li class="terms"> Incase the Parcels are lost or damaged in transit the company will
+                        not
+                        be liable Though every care shall be taken by the company for safe Transportation of Parcels.
+                    </li>
+                    <li class="terms">Contraband articles are not permitted to carry in the vehicle. The
+                        parcels owner will bear soleon checkup by Octrol, Excise and other authorities.
+                    </li>
+                    <li class="terms">We do not hold any other responsibility on the late arrival of
+                        Parcel/Luggage.
+                    </li>
+                    <li class="terms"> Luggage/Parcel should be collected within 24 hours of its arrival,
+                        falling which the Management is not responsible for the delivery.
+                    </li>
+                    <li class="terms"> Transporter is not responsible for any charges imposed by Govt agencies(Sales
+                        tax, GST),
+                        Consignor or Consinee should pay for such expenses or fines.
+                    </li>
+                    <li class="terms">Consignor or Consinee should request the Transporter for the vehicle number for
+                        updating Part-B of the eway bill.
+                    </li>
+
+                    <li class="terms"><b> Dema Charge per day Rs.5/­ per parcel after 7 days of receipt
+                        of
+                        the parcel. Consignment are not taken delivery within 30 days it will be auctioned without any
+                        intimation to the Consignor or Consignee.</b></li>
+                    <li class="terms"> Don't Book Cash, Glass Liquor, Jewels, Lottery, Explosive
+                        materials
+                        and other restricted items. If booked we are not responsible. Company is not responsible for any
+                        breakable items. It will be booked only on the Owner's risk.
+                    </li>
+                    <li class="terms">All Disputes are subject to the jurisdiction of Ongole courts only.
+                        the consignor has the right to file a suit against the Company.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

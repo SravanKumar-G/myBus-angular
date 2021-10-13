@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {environment} from 'src/environments/environment';
+
 
 @Injectable({
     providedIn: 'root'
@@ -7,6 +9,9 @@ import {Injectable} from '@angular/core';
 export class ApiUrls {
     mainUrl = 'http://localhost:8091/';
     // mainUrl = 'http://cargo.srikrishnatravels.in/';
+    // mainUrl = environment.testPath;
+
+
 
     getCurrentUser = 'api/v1/user/me';
     getAllUsers = 'api/v1/userNames';
@@ -92,6 +97,15 @@ export class ApiUrls {
     // New Cargo Booking API's
     getShipmentTypes = 'api/v1/shipment/types';
     saveNewCargoBooking = 'api/v1/shipment';
+    findContactInfoFromPreviousBookings = 'api/v1/shipment/findContactInfo';
+    cargoDetailsByLR = 'api/v1/shipment/search/byLR';
+    cargoBookingsCount = 'api/v1/shipments/count';
+    cargoBookings = 'api/v1/shipments';
+    initiateDeliverCargoBooking = 'api/v1/shipment/deliver/';
+    cancelCargoBooking = 'api/v1/shipment/cancel/';
+    sendSMSForCargoBooking = 'api/v1/shipment/sendSMS/';
+    getCargoBooking = 'api/v1/shipment/';
+    saveCommentCargoBooking = 'api/v1/shipment/addCommentToBooking/';
 
     // Suppliers
     getAllSuppliers = 'api/v1/suppliers/';
@@ -99,5 +113,4 @@ export class ApiUrls {
     updateSupplier = 'api/v1/suppliers/';
     addSupplier = 'api/v1/suppliers/';
     deleteSupplier = 'api/v1/suppliers/';
-
 }

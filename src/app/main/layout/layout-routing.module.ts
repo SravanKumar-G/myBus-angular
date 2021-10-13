@@ -77,8 +77,17 @@ const layOutRoutes: Routes = [
             },
             {
                 path: 'suppliers',
-                loadChildren: () => import('./features/suppliers/suppliers.module').
-                then(m => m.SuppliersModule)
+                loadChildren: () => import('./features/suppliers/suppliers.module').then(m => m.SuppliersModule)
+            },
+            {
+                path: 'cargoBookings',
+                loadChildren: () => import('./cargo/cargo-bookings/cargo-bookings.module').
+                then(m => m.CargoBookingsModule)
+            },
+            {
+                path: 'viewCargoBooking/:id',
+                loadChildren: () => import('./cargo/view-cargo-booking/view-cargo-booking.module').
+                then(m => m.ViewCargoBookingModule)
             }
         ]
     },
