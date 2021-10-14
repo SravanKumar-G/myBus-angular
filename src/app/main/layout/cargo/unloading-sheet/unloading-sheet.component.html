@@ -1,0 +1,165 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i>
+                Unloading Sheet
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Unloading Sheet</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <app-cargo-look-up></app-cargo-look-up>
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row">
+                            <div class="col-sm-2 pl-0 form-group col-12">
+                                <label>Unload Branch Office</label>
+                                <div>
+                                    <ng-select
+                                            [items]="branchOffices"
+                                            [multiple]="false"
+                                            bindLabel="name"
+                                            [closeOnSelect]="true"
+                                            bindValue="id"
+                                            placeholder="Select Office"
+                                            [(ngModel)]="filterObj.toBranchId"
+                                            (ngModelChange)="getCargoUnloadingSheetData()"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-xs-5 col-12  form-group mb-auto mt-auto" style="display: inherit">
+                                <div class="form-check mr-2">
+                                    <input class="form-check-input" type="radio" value="paidToPay"
+                                           id="paidTopay" name="status" [(ngModel)]="filterString"
+                                           [ngModelOptions]="{standalone: true}"
+                                           style="margin-top: 0.2rem !important;">
+                                    <label class="form-check-label" for="paidTopay">
+                                        All: <i class="fa fa-inr"></i> {{total | numberFormatter}}
+                                    </label>
+                                </div>
+
+                                <div class="form-check mr-2">
+                                    <input class="form-check-input" type="radio" value="Paid"
+                                           id="paid" name="status" [(ngModel)]="filterString"
+                                           [ngModelOptions]="{standalone: true}"
+                                           style="margin-top: 0.2rem !important;">
+                                    <label class="form-check-label" for="paid">
+                                        Paid: <i class="fa fa-inr"></i> {{paidCargoBooking | numberFormatter}}
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="ToPay"
+                                           id="toPay" name="status" [(ngModel)]="filterString"
+                                           [ngModelOptions]="{standalone: true}"
+                                           style="margin-top: 0.2rem !important;">
+                                    <label class="form-check-label" for="toPay">
+                                        To Pay: <i class="fa fa-inr"></i> {{toPayCargoBooking | numberFormatter}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 text-right">
+                                <span class="mr-2"><b>Total Count: {{cargoBookings.length}}</b></span>
+                                <a class="btn btn-sm btn-primary" (click)="exportToExcel()">Export to Excel</a>
+                                <button type="button" class="btn btn-success btn-sm ml-2"
+                                        *ngIf="selectedBookings.length >= 1" (click)="unload()">Unload</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover text-center tableFixHead">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th>LR#</th>
+                                    <th>DispatchDate</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>To Contact</th>
+                                    <th>Remarks</th>
+                                    <th>Transit Status</th>
+                                    <th>No of Items</th>
+                                    <th>Message</th>
+                                    <th>Unload</th>
+                                </tr>
+                                </thead>
+                                <tr *ngFor="let cargoBooking of cargoBookings | pipeFilter: filterString; let i = index;">
+                                    <td>{{i + 1}}</td>
+                                    <td style="white-space: nowrap">
+                                        <a class="cus-a" style="color: #007bff;"
+                                           (click)="gotoBooking(cargoBooking.shipmentNumber)">
+                                            {{cargoBooking.shipmentNumber}}</a>
+                                    </td>
+                                    <td>{{cargoBooking.dispatchDate|date}}</td>
+                                    <td>{{cargoBooking.attrs.fromBranchOfficeName}}</td>
+                                    <td>{{cargoBooking.attrs.toBranchOfficeName}}</td>
+                                    <td>
+                                        {{cargoBooking.toName}}<br>{{cargoBooking.toContact}}</td>
+                                    <td>
+                                        {{cargoBooking.remarks || '--'}}</td>
+                                    <td data-title="'Transit Status'" class="clickable-item">{{cargoBooking.cargoTransitStatus}}
+                                    </td>
+                                    <td data-title="'No of items'" class="clickable-item">{{cargoBooking.totalArticles}}</td>
+                                    <td>{{cargoBooking.messages.toString() || '--'}}</td>
+                                    <td>
+                                        <input
+                                                type="checkbox"
+                                                name="selectedBookings[]"
+                                                value="{{cargoBooking.id}}"
+                                                (click)="toggleBookingSelection(cargoBooking.id)">
+                                    </td>
+                                </tr>
+                                <tr *ngIf="!cargoBookings || cargoBookings.length === 0" class="text-center">
+                                    <td colspan="12">No Cargo Bookings found</td>
+                                </tr>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-hover text-center tableFixHead" id="cargoBookings" style="display: none">
+                        <thead>
+                        <tr>
+                            <th>S No</th>
+                            <th>LR#</th>
+                            <th>Dispatch Date</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>To Contact</th>
+                            <th>Remarks</th>
+                            <th>Transit Status</th>
+                            <th>No of Items</th>
+                            <th>Message</th>
+                        </tr>
+                        </thead>
+                        <tr *ngFor="let cargoBooking of cargoBookings | pipeFilter: filterString; let i = index;">
+                            <td>{{i + 1}}</td>
+                            <td>{{cargoBooking.shipmentNumber}}</td>
+                            <td>{{cargoBooking.dispatchDate|date}}</td>
+                            <td>{{cargoBooking.attrs.fromBranchOfficeName}}</td>
+                            <td>{{cargoBooking.attrs.toBranchOfficeName}}</td>
+                            <td>{{cargoBooking.toName}}<br>{{cargoBooking.toContact}}</td>
+                            <td>{{cargoBooking.remarks || '--'}}</td>
+                            <td>{{cargoBooking.cargoTransitStatus}}</td>
+                            <td>{{cargoBooking.totalArticles}}</td>
+                            <td>{{cargoBooking.messages}}</td>
+                        </tr>
+                        <tr *ngIf="!cargoBookings || cargoBookings.length === 0" class="text-center">
+                            <td colspan="12">No Cargo Bookings found</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
