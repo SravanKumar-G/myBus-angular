@@ -16,10 +16,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <app-cargo-look-up></app-cargo-look-up>
-                    <div class="col-sm-12 mb-3 mt-3">
-                        <div class="col-sm-12 text-right">
-                            <a class="btn btn-sm btn-primary" (click)="exportToExcel()">Export to Excel</a>
-                        </div>
+                    <div class="col-sm-12 mb-2 mt-2">
                         <div class="row">
                             <div class="col-sm-2 pl-0 form-group col-12">
                                 <label>From Office</label>
@@ -28,10 +25,11 @@
                                             [items]="branchOffices"
                                             [multiple]="false"
                                             bindLabel="name"
-                                            [closeOnSelect]="false"
+                                            [closeOnSelect]="true"
                                             bindValue="id"
                                             placeholder="Select Office"
                                             [(ngModel)]="filterObj.fromBranchId"
+                                            (ngModelChange)="getLoadingSheetData()"
                                             [ngModelOptions]="{standalone: true}">
                                     </ng-select>
                                 </div>
@@ -101,94 +99,110 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-12 form-group">
-                                <label>Select Vehicle</label>
-                                <ng-select
-                                        [items]="vehicles"
-                                        [multiple]="false"
-                                        bindLabel="regNo"
-                                        [closeOnSelect]="false"
-                                        bindValue="id"
-                                        placeholder="Select Vehicle"
-                                        [(ngModel)]="truckId"
-                                        [ngModelOptions]="{standalone: true}">
-                                </ng-select>
-                            </div>
-                            <div class="col-sm-2 col-12 form-group mt-auto">
-                                <button type="button" class="btn btn-sm btn-success mr-2"
-                                        (click)="loadVehicle(truckId)">Load to Vehicle
-                                </button>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 offset-sm-6 col-12">
+                                <div class="row">
+                                    <div class="col-sm-12 row p-0">
+                                        <div class="m-auto">
+                                            <span><b>Total Count: {{cargoBookings.length}}</b></span>
+                                        </div>
+                                        <div class="col-sm-5 col-12 form-group">
+                                            <label>Select Vehicle</label>
+                                            <ng-select
+                                                    [items]="vehicles"
+                                                    [multiple]="false"
+                                                    bindLabel="regNo"
+                                                    [closeOnSelect]="true"
+                                                    bindValue="id"
+                                                    placeholder="Select Vehicle"
+                                                    [(ngModel)]="truckId"
+                                                    [ngModelOptions]="{standalone: true}">
+                                            </ng-select>
+                                        </div>
+                                        <div class="form-group mt-auto text-right p-0">
+                                            <button type="button" class="btn btn-sm btn-success mr-2"
+                                                    (click)="loadVehicle(truckId)">Load to Vehicle
+                                            </button>
+                                            <a class="btn btn-sm btn-primary" (click)="exportToExcel()">Export to
+                                                Excel</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover text-center tableFixHead">
-                                <thead>
-                                <tr>
-                                    <th>S No</th>
-                                    <th>LR#</th>
-                                    <th>DispatchDate</th>
-                                    <th>From</th>
-                                    <th>To</th>
-                                    <th>To Contact</th>
-                                    <th>Remarks</th>
-                                    <th>No of Items</th>
-                                    <th>Amount</th>
-                                    <th>Payment Type</th>
-                                    <th>Loaded Vehicle</th>
-                                    <th>Comment</th>
-                                    <th>Select</th>
-                                </tr>
-                                </thead>
-                                <tr *ngFor="let cargoBooking of cargoBookings | pipeFilter: filterString; let i = index;">
-                                    <td>{{i + 1}}</td>
-                                    <td style="white-space: nowrap">
-                                        <a class="cus-a" style="color: #007bff;"
-                                           (click)="gotoBooking(cargoBooking.shipmentNumber)">
-                                            {{cargoBooking.shipmentNumber}}</a>
-                                    </td>
-                                    <td>{{cargoBooking.dispatchDate|date}}</td>
-                                    <td>{{cargoBooking.attrs.fromBranchOfficeName}}</td>
-                                    <td>{{cargoBooking.attrs.toBranchOfficeName}}</td>
-                                    <td>
-                                        {{cargoBooking.toName}}<br>{{cargoBooking.toContact}}</td>
-                                    <td>
-                                        {{cargoBooking.remarks || '--'}}</td>
-                                    <td>{{cargoBooking.totalArticles}}</td>
-                                    <td>
-                                        {{cargoBooking.totalCharge}}
-                                    </td>
-                                    <!-- <td data-title="'Status'" class="clickable-item">
-                                         {{cargoBooking.cargoTransitStatus}}
-                                     </td>-->
-                                    <td>
-                                        {{cargoBooking.paymentType}}
-                                    </td>
-                                    <td>
-                                        {{cargoBooking.messages[cargoBooking.messages.length - 1]}}
-                                    </td>
-                                    <td>
-                                        <a class="cus-a" style="color: #007bff;" *ngIf="!cargoBooking.reviewComment"
-                                           (click)="addComment(cargoBooking.id)">Add Comment</a>
-                                        <a class="cus-a" style="color: #007bff;"
-                                           (click)="addComment(cargoBooking.id)">{{cargoBooking.reviewComment}}</a>
-                                    </td>
-                                    <td>
-                                        <input
-                                                type="checkbox"
-                                                name="selectedBookings[]"
-                                                value="{{cargoBooking.id}}"
-                                                (click)="toggleBookingSelection(cargoBooking.id)">
-                                    </td>
-                                </tr>
-                                <tr *ngIf="!cargoBookings || cargoBookings.length === 0" class="text-center">
-                                    <td colspan="12">No Cargo Bookings found</td>
-                                </tr>
-                            </table>
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover text-center tableFixHead">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th>LR#</th>
+                                        <th>DispatchDate</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>To Contact</th>
+                                        <th>Remarks</th>
+                                        <th>No of Items</th>
+                                        <th>Amount</th>
+                                        <th>Payment Type</th>
+                                        <th>Loaded Vehicle</th>
+                                        <th>Comment</th>
+                                        <th>Select</th>
+                                    </tr>
+                                    </thead>
+                                    <tr *ngFor="let cargoBooking of cargoBookings | pipeFilter: filterString; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td style="white-space: nowrap">
+                                            <a class="cus-a" style="color: #007bff;"
+                                               (click)="gotoBooking(cargoBooking.shipmentNumber)">
+                                                {{cargoBooking.shipmentNumber}}</a>
+                                        </td>
+                                        <td>{{cargoBooking.dispatchDate|date}}</td>
+                                        <td>{{cargoBooking.attrs.fromBranchOfficeName}}</td>
+                                        <td>{{cargoBooking.attrs.toBranchOfficeName}}</td>
+                                        <td>
+                                            {{cargoBooking.toName}}<br>{{cargoBooking.toContact}}</td>
+                                        <td>
+                                            {{cargoBooking.remarks || '--'}}</td>
+                                        <td>{{cargoBooking.totalArticles}}</td>
+                                        <td>
+                                            {{cargoBooking.totalCharge}}
+                                        </td>
+                                        <!-- <td data-title="'Status'" class="clickable-item">
+                                             {{cargoBooking.cargoTransitStatus}}
+                                         </td>-->
+                                        <td>
+                                            {{cargoBooking.paymentType}}
+                                        </td>
+                                        <td>
+                                            {{cargoBooking.messages[cargoBooking.messages.length - 1]}}
+                                        </td>
+                                        <td>
+                                            <a class="cus-a" style="color: #007bff;" *ngIf="!cargoBooking.reviewComment"
+                                               (click)="addComment(cargoBooking.id)">Add Comment</a>
+                                            <a class="cus-a" style="color: #007bff;"
+                                               (click)="addComment(cargoBooking.id)">{{cargoBooking.reviewComment}}</a>
+                                        </td>
+                                        <td>
+                                            <input
+                                                    type="checkbox"
+                                                    name="selectedBookings[]"
+                                                    value="{{cargoBooking.id}}"
+                                                    (click)="toggleBookingSelection(cargoBooking.id)">
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!cargoBookings || cargoBookings.length === 0" class="text-center">
+                                        <td colspan="12">No Cargo Bookings found</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                    <table class="table table-bordered table-hover text-center tableFixHead" id="cargoBookings" style="display: none">
+                    <table class="table table-bordered table-hover text-center tableFixHead" id="cargoBookings"
+                           style="display: none">
                         <thead>
                         <tr>
                             <th>S No</th>
@@ -208,7 +222,7 @@
                         <tr *ngFor="let cargoBooking of cargoBookings | pipeFilter: filterString; let i = index;">
                             <td>{{i + 1}}</td>
                             <td>
-                                    {{cargoBooking.shipmentNumber}}
+                                {{cargoBooking.shipmentNumber}}
                             </td>
                             <td>{{cargoBooking.dispatchDate|date}}</td>
                             <td>{{cargoBooking.attrs.fromBranchOfficeName}}</td>
@@ -231,7 +245,7 @@
                                 {{cargoBooking.messages[cargoBooking.messages.length - 1]}}
                             </td>
                             <td>
-                                <a >{{cargoBooking.reviewComment || '--'}}</a>
+                                <a>{{cargoBooking.reviewComment || '--'}}</a>
                             </td>
                         </tr>
                         <tr *ngIf="!cargoBookings || cargoBookings.length === 0" class="text-center">
