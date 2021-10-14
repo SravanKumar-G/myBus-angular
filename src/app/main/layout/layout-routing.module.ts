@@ -90,6 +90,11 @@ const layOutRoutes: Routes = [
                 path: 'branchBookingSummary',
                 loadChildren: () => import('./cargo/branch-booking-summary/branch-booking-summary.module').
                 then(m => m.BranchBookingSummaryModule)
+            },
+            {
+                path: 'loadingSheet',
+                loadChildren: () => import('./cargo/loading-sheet/loading-sheet.module').
+                then(m => m.LoadingSheetModule)
             }
         ]
     },

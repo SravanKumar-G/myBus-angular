@@ -11,6 +11,7 @@ import {FrentendSortDirective} from '../../customDirectives/directives/frentend-
 import {SearchFilterPipe} from '../../customDirectives/pipes/search-filter.pipe';
 import { CargoLookUpComponent } from './cargo/cargo-look-up/cargo-look-up.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {PipeFilterPipe} from '../../customDirectives/pipes/pipe-filter.pipe';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         OnlynumberDirective,
         FrentendSortDirective,
         SearchFilterPipe,
-        CargoLookUpComponent
+        CargoLookUpComponent,
+        PipeFilterPipe
     ],
     imports: [
         CommonModule,
@@ -37,7 +39,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         NumberFormatterPipe,
         FrentendSortDirective,
         SearchFilterPipe,
-        CargoLookUpComponent
+        CargoLookUpComponent,
+        PipeFilterPipe
     ]
 })
 export class LayoutModule {

@@ -115,4 +115,8 @@ export class ApiUrls {
 
     // Branch Booking Summary
     branchBookingSummary = 'api/v1/shipment/branchSummary';
+
+    //Cargo Loading Sheet
+    getBookingsForLoading = 'api/v1/shipment/search/loading';
+    loadToVehicle = 'api/v1/shipment/assignVehicle/';
 }
