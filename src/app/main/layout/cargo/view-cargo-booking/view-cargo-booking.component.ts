@@ -1,9 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {ActivatedRoute, Router} from '@angular/router';
 import Swal from 'sweetalert2';
 import {Location} from '@angular/common';
+
+@Injectable({
+    providedIn: 'root'
+})
 
 @Component({
     selector: 'app-view-cargo-booking',
@@ -167,7 +171,8 @@ export class ViewCargoBookingComponent implements OnInit {
                                 .subscribe((response: any) => {
                                     if (response) {
                                         Swal.fire('Great!', 'Comment added Successfully..!', 'success');
-                                        this.router.navigate(['cargoBookings']);
+                                        // this.router.navigate(['cargoBookings']);
+                                        window.location.reload();
                                     }
                                 }, (error) => {
                                     Swal.showValidationMessage(
