@@ -82,7 +82,8 @@ export class ViewCargoBookingComponent implements OnInit {
                         .subscribe((response: any) => {
                             if (response) {
                                 Swal.fire('Great!', response.shipmentNumber + ' has been delivered', 'success');
-                                this.router.navigate(['cargoBookings']);
+                                // this.router.navigate(['cargoBookings']);
+                                window.location.reload();
                             }
                         }, (error) => {
                             Swal.showValidationMessage(
@@ -109,11 +110,12 @@ export class ViewCargoBookingComponent implements OnInit {
                 this.apiService.update(this.apiUrls.cancelCargoBooking + bookingId, {}).subscribe((res: any) => {
                     if (res) {
                         Swal.fire(
-                            'Deleted!',
-                            'Your booking has been deleted.',
+                            'Cancelled!',
+                            'Your booking has been Cancelled.',
                             'success'
                         );
-                        this.router.navigate(['cargoBookings']);
+                        window.location.reload();
+                        // this.router.navigate(['cargoBookings']);
                     }
                 }, error => {
                     Swal.fire(

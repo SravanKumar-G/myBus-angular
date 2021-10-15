@@ -1,0 +1,406 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i>
+                Delivery Sheet
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Delivery Sheet</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <app-cargo-look-up></app-cargo-look-up>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item active-tab-nav" (click)="tabChange(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Undelivered</a>
+        </li>
+        <li class="nav-item deleted-tab-nav" (click)="tabChange(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Delivered</a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile" *ngIf="tab === 1">
+                <div class="tile-body">
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row form-group">
+                            <div class="col-sm-3" *ngFor="let balance of branchCashBalances">
+                                <div class="cus-card card">
+                                    <span class="buname">{{balance.fullName}}:</span>
+                                    <span class="bcamount">{{balance.balance | numberFormatter}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 form-group col-12">
+                                <label>Undelivered at Branch Office</label>
+                                <div>
+                                    <ng-select
+                                            [items]="branchOffices"
+                                            [multiple]="false"
+                                            bindLabel="name"
+                                            [closeOnSelect]="true"
+                                            bindValue="id"
+                                            placeholder="Select Office"
+                                            [(ngModel)]="filterObj.toBranchId"
+                                            (ngModelChange)="loadUndeliveredBookings()"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-xs-5 col-12  form-group mb-auto mt-auto" style="display: inherit">
+                                <div class="form-check mr-2">
+                                    <input class="form-check-input" type="radio" value="paidToPay"
+                                           id="paidTopay" name="status" [(ngModel)]="filterString"
+                                           [ngModelOptions]="{standalone: true}"
+                                           style="margin-top: 0.2rem !important;">
+                                    <label class="form-check-label" for="paidTopay">
+                                        All: <i class="fa fa-inr"></i> {{total | numberFormatter}}
+                                    </label>
+                                </div>
+
+                                <div class="form-check mr-2">
+                                    <input class="form-check-input" type="radio" value="Paid"
+                                           id="paid" name="status" [(ngModel)]="filterString"
+                                           [ngModelOptions]="{standalone: true}"
+                                           style="margin-top: 0.2rem !important;">
+                                    <label class="form-check-label" for="paid">
+                                        Paid: <i class="fa fa-inr"></i> {{paidCargoBooking | numberFormatter}}
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="ToPay"
+                                           id="toPay" name="status" [(ngModel)]="filterString"
+                                           [ngModelOptions]="{standalone: true}"
+                                           style="margin-top: 0.2rem !important;">
+                                    <label class="form-check-label" for="toPay">
+                                        To Pay: <i class="fa fa-inr"></i> {{toPayCargoBooking | numberFormatter}}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-right m-auto">
+                                <span class="mr-2"><b>Total Count: &nbsp;{{cargoBookings.length}}</b></span>
+                                <button type="button" class="btn btn-sm btn-primary mr-3"
+                                        (click)="exportToExcel()">
+                                    Export to Excel
+                                </button>
+                                <!--                                <button type="button" class="btn btn-sm btn-danger" *ngIf="selectedBookings.length >= 1"-->
+                                <!--                                        (click)="cancelBookings()">-->
+                                <!--                                    Cancel Bookings-->
+                                <!--                                </button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-hover text-center table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th>LR#</th>
+                                    <th>Date</th>
+                                    <th>Items</th>
+                                    <th>From - To</th>
+                                    <th>Contact</th>
+                                    <th>Remarks</th>
+                                    <th>Amount</th>
+                                    <th>BookedBy</th>
+                                    <th>Message</th>
+                                    <th>Deliver</th>
+                                    <th>Comment</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let cargoBooking of cargoBookings | pipeFilter: filterString; let i = index;">
+                                    <td>{{i + 1}}</td>
+                                    <td><a class="cus-a"
+                                           (click)="gotoBooking(cargoBooking.shipmentNumber)">{{cargoBooking.shipmentNumber}}</a>
+                                    </td>
+                                    <td>{{cargoBooking.dispatchDate | date}}</td>
+                                    <td>{{cargoBooking.totalArticles}}</td>
+                                    <td>
+                                        ({{cargoBooking.attrs.fromBranchOfficeName}}) -
+                                        ({{cargoBooking.attrs.toBranchOfficeName}})
+                                    </td>
+                                    <td>
+                                        {{cargoBooking.toName}}<br>{{cargoBooking.toContact}}
+                                    </td>
+                                    <td>{{cargoBooking.remarks || '--'}}</td>
+                                    <td>{{cargoBooking.totalCharge}}</td>
+                                    <td>{{cargoBooking.attrs.bookedBy || '--'}}</td>
+                                    <td>{{cargoBooking.messages || '--'}}</td>
+
+                                    <td><a class="cus-a"
+                                           *ngIf="!cargoBooking.canceled && cargoBooking.cargoTransitStatus !== 'DELIVERED'"
+                                           (click)="initiateDeliverCargoBooking(cargoBooking.id)">Deliver</a>
+                                        <span *ngIf="cargoBooking.canceled"> Cancelled</span>
+                                        <span *ngIf="cargoBooking.cargoTransitStatus === 'DELIVERED'"> Delivered</span>
+                                    </td>
+                                    <td>
+                                        <a class="cus-a" *ngIf="!cargoBooking.reviewComment"
+                                           (click)="addComment(cargoBooking.id)">Add Comment</a>
+                                        <a class="cus-a"
+                                           (click)="addComment(cargoBooking.id)">{{cargoBooking.reviewComment}}</a>
+                                    </td>
+                                    <td>
+                                        <!--                                        <input-->
+                                        <!--                                                type="checkbox"-->
+                                        <!--                                                name="selectedBookings[]"-->
+                                        <!--                                                value="{{cargoBooking.id}}"-->
+                                        <!--                                                (click)="togglelBookingSelection(cargoBooking.id)">-->
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                (click)="cancelBookings(cargoBooking.id)">
+                                            Cancel
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="!cargoBookings || cargoBookings.length === 0">
+                                    <td colspan="12">No Cargo Bookings found</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="display: none">
+                        <table class="table table-condensed table-hover text-center table-bordered"
+                               id="cargoBookings">
+                            <thead>
+                            <tr>
+                                <th>S No</th>
+                                <th>LR#</th>
+                                <th>Date</th>
+                                <th>Items</th>
+                                <th>From - To</th>
+                                <th>Contact</th>
+                                <th>Remarks</th>
+                                <th>Amount</th>
+                                <th>BookedBy</th>
+                                <th>Message</th>
+                                <th>Deliver</th>
+                                <th>Comment</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let cargoBooking of cargoBookings | pipeFilter: filterString; let i = index;">
+                                <td>{{i + 1}}</td>
+                                <td>{{cargoBooking.shipmentNumber}}</td>
+                                <td>{{cargoBooking.dispatchDate | date}}</td>
+                                <td>{{cargoBooking.totalArticles}}</td>
+                                <td>
+                                    ({{cargoBooking.attrs.fromBranchOfficeName}}) -
+                                    ({{cargoBooking.attrs.toBranchOfficeName}})
+                                </td>
+                                <td>
+                                    {{cargoBooking.toName}}<br>{{cargoBooking.toContact}}
+                                </td>
+                                <td>{{cargoBooking.remarks || '--'}}</td>
+                                <td>{{cargoBooking.totalCharge}}</td>
+                                <td>{{cargoBooking.attrs.bookedBy || '--'}}</td>
+                                <td>{{cargoBooking.messages || '--'}}</td>
+
+                                <td><a class="cus-a"
+                                       *ngIf="!cargoBooking.canceled && cargoBooking.cargoTransitStatus !== 'DELIVERED'">Deliver</a>
+                                    <span *ngIf="cargoBooking.canceled"> Cancelled</span>
+                                    <span *ngIf="cargoBooking.cargoTransitStatus === 'DELIVERED'"> Delivered</span>
+                                </td>
+                                <td>
+                                    {{cargoBooking.reviewComment || '--'}}
+                                </td>
+                            </tr>
+                            <tr *ngIf="!cargoBookings || cargoBookings.length === 0">
+                                <td colspan="12">No Cargo Bookings found</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tile" *ngIf="tab === 2">
+                <div class="tile-body">
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row">
+                            <div class="col-sm-2 form-group col-12">
+                                <label>Select Start Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Start Date"
+                                           name="startDate"
+                                           [(ngModel)]="deliveredObj.startDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #startdate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="startdate.show()"
+                                                [attr.aria-expanded]="startdate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 form-group col-12">
+                                <label>Select End Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="End Date"
+                                           name="endDate"
+                                           [(ngModel)]="deliveredObj.endDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #endDate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="endDate.show()"
+                                                [attr.aria-expanded]="endDate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 form-group col-12">
+                                <label>Select Vehicle</label>
+                                <ng-select
+                                        [items]="vehicles"
+                                        [multiple]="false"
+                                        bindLabel="regNo"
+                                        [closeOnSelect]="true"
+                                        bindValue="id"
+                                        placeholder="Select Vehicle"
+                                        [(ngModel)]="deliveredObj.vehicleId"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2 form-group col-12">
+                                <label>To Branch</label>
+                                <div>
+                                    <ng-select
+                                            [items]="branchOffices"
+                                            [multiple]="false"
+                                            bindLabel="name"
+                                            [closeOnSelect]="true"
+                                            bindValue="id"
+                                            placeholder="Select Office"
+                                            [(ngModel)]="deliveredObj.branchOffice"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 form-group col-12">
+                                <label>Delivered By</label>
+                                <div>
+                                    <ng-select
+                                            [items]="users"
+                                            [multiple]="false"
+                                            bindLabel="fullName"
+                                            [closeOnSelect]="true"
+                                            bindValue="fullName"
+                                            placeholder="Select User"
+                                            [(ngModel)]="deliveredObj.deliveredBy"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 mt-auto mb-auto">
+                                <button type="button" class="btn btn-sm btn-success" (click)="searchDeliveredData()">
+                                    Search
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary ml-2"
+                                        (click)="exportDeliveredDataToExcel()">
+                                    Export to Excel
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 text-right m-auto">
+                                <span class="mr-2"><b>Total Count: &nbsp;{{deliveredBookingsCount}}</b></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover text-center" id="deliveredCargoBookings">
+                                        <thead>
+                                        <tr>
+                                            <th>S No</th>
+                                            <th [ngClass]="filterObj.sortOrder == 'shipmentNumber'? 'headActive' : ''"
+                                                accessKey="shipmentNumber" (click)="clickSorting($event)">LR#
+                                                <i *ngIf="filterObj.sortOrder != 'shipmentNumber'" class="fa fa-sort"></i>
+                                                <i *ngIf="filterObj.sortOrder == 'shipmentNumber'" class="fa"
+                                                   [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                            </th>
+                                            <th [ngClass]="filterObj.sortOrder == 'deliveredOn'? 'headActive' : ''"
+                                                accessKey="deliveredOn" (click)="clickSorting($event)">DeliveredOn
+                                                <i *ngIf="filterObj.sortOrder != 'deliveredOn'" class="fa fa-sort"></i>
+                                                <i *ngIf="filterObj.sortOrder == 'deliveredOn'" class="fa"
+                                                   [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                            </th>
+                                            <th [ngClass]="filterObj.sortOrder == 'RegNo'? 'headActive' : ''"
+                                                accessKey="RegNo" (click)="clickSorting($event)">Vehicle
+                                                <i *ngIf="filterObj.sortOrder != 'RegNo'" class="fa fa-sort"></i>
+                                                <i *ngIf="filterObj.sortOrder == 'RegNo'" class="fa"
+                                                   [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                            </th>
+                                            <th>From/To Office</th>
+                                            <th>To Contact</th>
+                                            <th>Amount</th>
+                                            <th>DeliveredBy</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let cargoBooking of cargoBookings; let i =index;">
+                                            <td>{{(deliveredObj.page-1) * deliveredObj.size + i + 1}}</td>
+                                            <td><a class="cus-a"
+                                                   (click)="gotoBooking(cargoBooking.shipmentNumber)">{{cargoBooking.shipmentNumber || '--'}}</a></td>
+                                            <td>{{cargoBooking.deliveredOn| date}}</td>
+                                            <td>{{cargoBooking.attrs.RegNo || '--'}}</td>
+                                            <td>{{cargoBooking.attrs.fromBranch}} / {{cargoBooking.attrs.toBranch}}</td>
+                                            <td>{{cargoBooking.toName}}<br>{{cargoBooking.toContact}}</td>
+                                            <td>{{cargoBooking.totalCharge || '--'}}</td>
+                                            <td>{{cargoBooking.deliveredBy}} - <br />{{cargoBooking.deliveryNotes}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="form-group">
+                                        <div class="list-row" style="display: inline-block">
+                                            <ngb-pagination *ngIf="deliveredBookingsCount || deliveredBookingsCount !== 0"
+                                                            [(page)]="deliveredObj.page"
+                                                            [pageSize]="deliveredObj.size"
+                                                            [collectionSize]="deliveredBookingsCount"
+                                                            [boundaryLinks]="true"
+                                                            (pageChange)="handlePageChange($event)"
+                                                            [maxSize]="5">
+                                            </ngb-pagination>
+                                        </div>
+                                        <ul class="pagination pull-right" *ngIf="deliveredBookingsCount || deliveredBookingsCount !== 0">
+                                            <li class="page-item" [ngClass]="size == deliveredObj.size ? 'active' : ''"
+                                                *ngFor="let size of deliveredObj.pageSizes" (click)="handlePageSizeChange(size)">
+                                                <button class="page-link"> {{ size }}
+                                                    <span class="sr-only">(current)</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
