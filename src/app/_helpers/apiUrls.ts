@@ -123,4 +123,10 @@ export class ApiUrls {
     // Unloading Sheet
     getBookingsForUnloading = 'api/v1/shipment/search/unloading';
     unloadVehicle = 'api/v1/shipment/unload';
+
+    // Delivery Sheet API's
+    getBookingsForDelivery = 'api/v1/shipment/search/undelivered';
+    branchCashBalances = 'api/v1/user/branchCashBalances/';
+    countDeliveredBookings = 'api/v1/shipment/countDeliveredBookings';
+    deliveredBookings = 'api/v1/shipment/deliveredBookings';
 }

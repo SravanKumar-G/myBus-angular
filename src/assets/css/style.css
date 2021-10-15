@@ -4209,6 +4209,9 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
 .cus-modal .modal {
     background-color: #0000008a;
 }
+.cus-a{
+    color: #007bff !important;
+}
 
 .cus-a:hover{
     cursor: pointer;
@@ -4285,10 +4288,26 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
     width: 100%;
 }
 .cargo-search {
-    padding: 15px;
-    border-bottom: 1px solid #ccc;
+    /*padding: 15px;*/
+    /*border-bottom: 1px solid #ccc;*/
 }
 .cargoDetails label{
     color: #000000;
     font-weight: 300;
+}
+.cus-card{
+    padding: 10px;
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 8px 0 !important;
+    background: #e682200d;
+}
+.bcamount{
+    padding-left: 10px;
+}
+.buname {
+    text-transform: capitalize;
+    font-weight: 400;
+    font-size: 13px;
 }

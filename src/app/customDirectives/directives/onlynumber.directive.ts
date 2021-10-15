@@ -54,6 +54,7 @@ export class OnlynumberDirective {
 
     // @ts-ignore
     static clickSorting(event, data): void {
+        console.log(event.target.accessKey);
         if (event.target.accessKey) {
             this.sortOrder = event.target.accessKey;
             if (this.orderBy === 'desc') {
