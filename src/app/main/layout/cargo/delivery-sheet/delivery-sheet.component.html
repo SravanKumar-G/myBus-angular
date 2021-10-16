@@ -373,6 +373,9 @@
                                             <td>{{cargoBooking.totalCharge || '--'}}</td>
                                             <td>{{cargoBooking.deliveredBy}} - <br />{{cargoBooking.deliveryNotes}}</td>
                                         </tr>
+                                        <tr *ngIf="!cargoBookings || cargoBookings.length === 0" class="text-center">
+                                            <td colspan="12">No Cargo Bookings found</td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                     <div class="form-group">

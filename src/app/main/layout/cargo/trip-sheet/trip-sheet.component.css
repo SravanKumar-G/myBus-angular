@@ -1,0 +1,23 @@
+.staffChip{
+    display: inline-block;
+    padding: 5px 15px;
+    font-size: 12px;
+    border-radius: 25px;
+    text-transform: capitalize;
+    margin: 3px;
+    background-color: #cccc;
+    position: relative;
+}
+.staffChip span{
+    font-size: 14px;
+    position: absolute;
+    top: -6px;
+    right: 0;
+    color: red;
+}
+.sheet-card{
+    margin: 5px 5px;
+    padding: 8px;
+    display: inline-block;
+    font-size: 12px;
+}

@@ -1,0 +1,433 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i>
+                Cargo Trip Sheet
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Cargo Trip Sheet</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <app-cargo-look-up></app-cargo-look-up>
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row">
+                            <div class="col-sm-2 col-12 form-group">
+                                <label>Select Vehicle</label>
+                                <ng-select
+                                        [items]="vehicles"
+                                        [multiple]="false"
+                                        bindLabel="regNo"
+                                        [closeOnSelect]="true"
+                                        bindValue="id"
+                                        placeholder="Select Vehicle"
+                                        [(ngModel)]="filterObj.vehicleId"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2 form-group col-12">
+                                <label>Select Start Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Start Date"
+                                           name="startDate"
+                                           [(ngModel)]="filterObj.startDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #startdate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="startdate.show()"
+                                                [attr.aria-expanded]="startdate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 form-group col-12">
+                                <label>Select End Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="End Date"
+                                           name="endDate"
+                                           [(ngModel)]="filterObj.endDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #endDate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="endDate.show()"
+                                                [attr.aria-expanded]="endDate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 mt-auto mb-auto">
+                                <button type="button" class="btn btn-sm btn-success" (click)="searchTripSheet()">
+                                    Search
+                                </button>
+                            </div>
+                            <div class="col-sm-4 mt-auto mb-auto text-right pr-0">
+                                <button type="button" class="btn btn-sm btn-primary" (click)="exportToExcel()">
+                                    Export to Excel
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th>Trip No#</th>
+                                        <th>Date</th>
+                                        <th>Total</th>
+                                        <th>Vehicle Number</th>
+                                        <th>Staff</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let sheet of tripSheetData; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{sheet.tripNumber || '--'}}</td>
+                                        <td>{{sheet.dispatchDateStr || '--'}}</td>
+                                        <td>{{sheet.totalShipmemntCost || '--'}}</td>
+                                        <td>{{sheet.attrs.vehicleNumber || '--'}}</td>
+                                        <td *ngIf="sheet.staff !== null" class="text-left"><span
+                                                *ngFor="let staff of sheet.staff; let s = index;"
+                                                class="dis-block">{{s + 1}} - {{ staff.displayName || '--'}}
+                                        </span></td>
+                                        <td *ngIf="sheet.staff === null"> ---</td>
+                                        <td>
+                                            <button class="btn btn-success btn-sm mr-2" *ngIf="!sheet.status"
+                                                    (click)="editCargoTripSheet(sheet, 'edit', cargoTripSheetViewEdit)">
+                                                Edit
+                                            </button>
+                                            <button class="btn btn-danger btn-sm mr-2" *ngIf="!sheet.status"
+                                                    (click)="closeCargoTripSheet(sheet)">Close TripSheet
+                                            </button>
+                                            <span class="mr-2 font-weight-bold" *ngIf="sheet.status"> {{ sheet.status }}</span>
+                                            <button class="btn btn-primary btn-sm mr-2" *ngIf="sheet.status"
+                                                    (click)="editCargoTripSheet(sheet, 'view', cargoTripSheetViewEdit)">
+                                                Details
+                                            </button>
+                                            <button class="btn btn-default btn-sm"
+                                                    (click)="viewCargoTripSheetSummary(sheet, cargoTripSheetSummary)">
+                                                Summary
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!tripSheetData || tripSheetData.length === 0" class="text-center">
+                                        <td colspan="12">No Cargo Trips found</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: none;">
+                        <table class="table table-hover table-bordered text-center" id="tripSheet">
+                            <thead>
+                            <tr>
+                                <th>S No</th>
+                                <th>Trip No#</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                                <th>Vehicle Number</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let sheet of tripSheetData; let i = index;">
+                                <td>{{i + 1}}</td>
+                                <td>{{sheet.tripNumber || '--'}}</td>
+                                <td>{{sheet.dispatchDateStr || '--'}}</td>
+                                <td>{{sheet.totalShipmemntCost || '--'}}</td>
+                                <td>{{sheet.attrs.vehicleNumber || '--'}}</td>
+                                <td *ngIf="sheet.staff !== null" class="text-left"><span
+                                        *ngFor="let staff of sheet.staff; let s = index;">
+                                    {{s + 1}} - {{ staff.displayName || '--'}}</span></td>
+                                <td *ngIf="sheet.staff === null"> ---</td>
+                                <td>
+                                    <span class="mr-2 font-weight-bold"> {{ sheet.status || null }}</span>
+                                </td>
+                            </tr>
+                            <tr *ngIf="!tripSheetData || tripSheetData.length === 0" class="text-center">
+                                <td colspan="12">No Cargo Trips found</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Cargo Trip Sheet Edit and View Modal-->
+<ng-template #cargoTripSheetViewEdit>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">{{titleHeader}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form name="tripEdit" class="form-horizontal" role="form" *ngIf="!isEditable">
+            <div class="row form-group">
+                <div class="col-sm-5">
+                    <label>Advance</label>
+                    <input type="number" class="form-control form-control-sm"
+                           placeholder="Enter Advance"
+                           numbersOnly
+                           [(ngModel)]="tripSheet.advance" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5 form-group">
+                    <label class="control-label">Select Staff</label>
+                    <ng-select
+                            [multiple]="true"
+                            bindLabel="displayName"
+                            [closeOnSelect]="false"
+                            placeholder="Select Staff"
+                            [(ngModel)]="staffData"
+                            [ngModelOptions]="{standalone: true}"
+                            [items]="listOfStaff"
+                            (ngModelChange)="onStaffSelectData(staffData)">
+                        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                            <div class="ng-value" *ngFor="let item of items | slice:0:1"
+                                 [hidden]="items.length > 1">
+                                <span class="ng-value-label">{{$any(item).displayName}}</span>
+                                <span class="ng-value-icon right" (click)="clear(item)"
+                                      aria-hidden="true">×</span>
+                            </div>
+                            <div class="ng-value" *ngIf="items.length > 1">
+                                <span class="ng-value-label">{{items.length}} Options Selected...</span>
+                            </div>
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                            <input id="item-{{index}}-query-regionIds-2" type="checkbox"
+                                   [ngModel]="item$.selected"
+                                   [ngModelOptions]="{standalone: true}"/> {{item.displayName}}
+                        </ng-template>
+                        <ng-template ng-footer-tmp>
+                            <small class="p-1 flex-fill text-center">Selections
+                                Made: {{staffData.length}}</small>
+                            <small class="p-1 flex-fill text-center">Options: {{listOfStaff.length - staffData.length}}</small>
+                        </ng-template>
+                    </ng-select>
+                </div>
+                <div class="col-sm-12 form-group" *ngIf="staffData">
+                    <div class="staffChip" *ngFor="let staff of staffData; let s = index;">
+                        {{staff.displayName}}
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group col-sm-12 p-0">
+                <div class="col-sm-5">
+                    <label>Description</label>
+                    <input type="text" class="form-control form-control-sm" placeholder="Enter description"
+                           [(ngModel)]="description" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="col-sm-5">
+                    <label>Amount</label>
+                    <input type="number" class="form-control form-control-sm"
+                           placeholder="Enter amount"
+                           numbersOnly
+                           [(ngModel)]="amount" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="col-sm-2 mt-auto">
+                    <button type="button" class="btn btn-success btn-sm"
+                            (click)="addExpenseItem(description, amount)">Add
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table" style="width: 100%; text-align: center">
+                    <tr>
+                        <th style="text-align: center">Description</th>
+                        <th style="text-align: center">Amount</th>
+                        <th style="text-align: center">Action</th>
+                    </tr>
+                    <tr *ngFor="let exItem of tripSheet.expenses; let i = index;">
+                        <td>{{exItem.description}}</td>
+                        <td>{{exItem.amount}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" (click)="removeExpenseItem(i)">Remove</button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!tripSheet.expenses.length">
+                        <td colspan="3">No-Data</td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+        <form name="tripView" class="form-horizontal" role="form" *ngIf="isEditable">
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label>Trip Number</label>
+                    <input class="form-control-sm form-control" disabled
+                           [(ngModel)]="tripSheet.tripNumber"
+                           [ngModelOptions]="{standalone: true}"/>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label>Dispatch Date</label>
+                    <input class="form-control-sm form-control" disabled
+                           [(ngModel)]="tripSheet.dispatchDateStr"
+                           [ngModelOptions]="{standalone: true}"/>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label>Vehicle Number</label>
+                    <input class="form-control-sm form-control" disabled
+                           [(ngModel)]="tripSheet.attrs.vehicleNumber"
+                           [ngModelOptions]="{standalone: true}"/>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label>Advance</label>
+                    <input class="form-control-sm form-control" disabled
+                           [(ngModel)]="tripSheet.advance"
+                           [ngModelOptions]="{standalone: true}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 form-group" *ngIf="staffData">
+                    <label style="display: block !important;">Staff List</label>
+                    <div class="staffChip" *ngFor="let staff of staffData; let s = index;">
+                        {{staff.displayName}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table" style="width: 100%; text-align: center">
+                    <tr>
+                        <th style="text-align: center">Description</th>
+                        <th style="text-align: center">Amount</th>
+                    </tr>
+                    <tr *ngFor="let exItem of tripSheet.expenses; let i = index;">
+                        <td>{{exItem.description}}</td>
+                        <td>{{exItem.amount}}</td>
+                    </tr>
+                    <tr *ngIf="!tripSheet.expenses.length">
+                        <td colspan="3">No-Data</td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-12 text-center">
+            <p class="error-field">{{errorMessage}}</p>
+        </div>
+        <div class="col-sm-12 text-right p-0">
+            <button type="button" class="btn btn-success btn-sm mr-2" *ngIf="!isEditable" (click)="updateTripSheet()">
+                <i class="fa fa-fw fa-check-circle"></i>Update
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">
+                <i class="fa fa-fw fa-times-circle"></i> Close
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<!--Cargo Trip Sheet Summary-->
+<ng-template #cargoTripSheetSummary>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">{{titleHeader}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form name="cityStateUpdateForm" class="form-horizontal" role="form">
+            <div class="row form-group">
+                <div class="col-sm-4">
+                    <div class="cus-card card">
+                        <span class="mr-2"><b>Pay:</b></span> <i class="fa fa-inr"></i> {{ tripSheetSummary.paidTotal | numberFormatter }}
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="cus-card card">
+                        <span class="mr-2"><b>To Pay:</b></span><i class="fa fa-inr"></i> {{ tripSheetSummary.toPayTotal | numberFormatter }}
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="cus-card card">
+                        <span class="mr-2"><b>Total:</b></span><i class="fa fa-inr"></i> {{ tripSheetSummary.totalShipmemntCost | numberFormatter }}
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-12">
+                    <label>Booking Info:</label>
+                    <ul>
+                        <li class="card sheet-card"
+                            *ngFor="let bookedBy of tripSheetSummary.bookedByInfo">{{bookedBy}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-12">
+                    <label>To Office:</label>
+                    <ul>
+                        <li class="card sheet-card"
+                            *ngFor="let toOffice of tripSheetSummary.toOfficeInfo">{{toOffice}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="table-responsive col-sm-12" style="height: 230px; overflow-x: scroll;">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead>
+                        <tr>
+                            <th>S No</th>
+                            <th>LR#</th>
+                            <th>BookedBy</th>
+                            <th>From - To</th>
+                            <th>To Contact</th>
+                            <th>Remarks</th>
+                            <th>No of Items</th>
+                            <th>Amount(<i class="fa fa-inr"></i>)</th>
+                        </tr>
+                        </thead>
+                        <tr *ngFor="let cargoBooking of tripSheetSummary.cargoBookings; let i = index;">
+                            <td data-title="'S No'">{{i + 1}}</td>
+                            <td data-title="'LR#'" class="clickable-item">
+                                {{cargoBooking.shipmentNumber}}
+                            </td>
+                            <td >{{cargoBooking.attrs.bookedBy}}</td>
+                            <td>{{cargoBooking.attrs.fromBranchOfficeName}} - {{cargoBooking.attrs.toBranchOfficeName}}</td>
+                            <td>
+                                {{cargoBooking.toName}}<br>{{cargoBooking.toContact}}</td>
+                            <td>
+                                {{cargoBooking.remarks || '--'}}</td>
+                            <td>{{cargoBooking.totalArticles}}</td>
+                            <td>
+                                {{cargoBooking.totalCharge}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12 text-right p-0">
+            <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">
+                <i class="fa fa-fw fa-times-circle"></i> Close
+            </button>
+        </div>
+    </div>
+</ng-template>
