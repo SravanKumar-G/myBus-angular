@@ -14,6 +14,7 @@ export class ApiUrls {
 
     getCurrentUser = 'api/v1/user/me';
     getAllUsers = 'api/v1/userNames';
+    getAllStaffList = 'api/v1/staff';
 
     // Cancellations API's
     pendingShipmentsCount = 'api/v1/shipment/count/cancellationPendingShipments';
@@ -129,4 +130,11 @@ export class ApiUrls {
     branchCashBalances = 'api/v1/user/branchCashBalances/';
     countDeliveredBookings = 'api/v1/shipment/countDeliveredBookings';
     deliveredBookings = 'api/v1/shipment/deliveredBookings';
+
+    // Cargo Trip Sheet API's
+    searchCargoTripSheet = 'api/v1/cargoTripSheet/search';
+    getCargoTripSheet = 'api/v1/cargoTripSheet/get/';
+    updateTripSheet = 'api/v1/cargoTripSheet/update';
+    closeTripSheet = 'api/v1/cargoTripSheet/closeTripSheet/';
+    getTripSheetSummary = 'api/v1/cargoTripSheet/getSummary/';
 }

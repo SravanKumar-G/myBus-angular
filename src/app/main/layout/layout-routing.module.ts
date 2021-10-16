@@ -105,6 +105,11 @@ const layOutRoutes: Routes = [
                 path: 'deliverySheet',
                 loadChildren: () => import('./cargo/delivery-sheet/delivery-sheet.module').
                 then(m => m.DeliverySheetModule)
+            },
+            {
+                path: 'cargoTripSheet',
+                loadChildren: () => import('./cargo/trip-sheet/trip-sheet.module').
+                then(m => m.TripSheetModule)
             }
         ]
     },
