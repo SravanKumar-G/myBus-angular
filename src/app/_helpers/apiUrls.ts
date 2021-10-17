@@ -139,4 +139,9 @@ export class ApiUrls {
     closeTripSheet = 'api/v1/cargoTripSheet/closeTripSheet/';
     getTripSheetSummary = 'api/v1/cargoTripSheet/getSummary/';
     approveCancellation = 'api/v1/shipment/approveCancellation';
+
+    // Service Income Reports API's
+    getDistinctSource = 'api/v1/serviceReport/getCities';
+    searchServiceReport = 'api/v1/serviceReport/incomeReport';
+    serviceReportByServiceId = 'api/v1/serviceReport/serviceIncomeReportDaily';
 }

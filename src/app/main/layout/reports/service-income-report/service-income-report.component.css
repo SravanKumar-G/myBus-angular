@@ -1,0 +1,12 @@
+.exchange{
+    border: 1px solid #ccc;
+    padding: 8px 8px;
+    border-radius: 100px;
+    margin: 0;
+}
+.exchange:hover{
+    color: white !important;
+    background: #00bbff !important;
+    border: none;
+    transition: 0.5s;
+}
