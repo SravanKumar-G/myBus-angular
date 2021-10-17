@@ -12,6 +12,16 @@
         </ul>
     </div>
 
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <app-cargo-look-up></app-cargo-look-up>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <ul class="nav nav-tabs">
         <li class="nav-item pending-users-tab" (click)="changeInvoiceTab(1)">
             <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
@@ -24,41 +34,203 @@
         <div class="col-lg-12 col-md-12">
             <div class="tile" *ngIf="tab === 1">
                 <div class="tile-body">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>S No</th>
-                            <th>LR#</th>
-                            <th>Date</th>
-                            <th>From-To</th>
-                            <th>Amount</th>
-                            <th>Booked By</th>
-                            <th>Booked On</th>
-                            <th>CancelledBy</th>
-                            <th>CancelledOn</th>
-                            <th>Cancellation Remarks</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let data of pendingData; let i = index;">
-                            <td>{{i + 1}}</td>
-                            <td>{{data.shipmentNumber}}</td>
-                            <td>{{data.dispatchDate | date}}</td>
-                            <td>({{data.attrs.fromBranch}}) - ({{data.attrs.toBranch}})</td>
-                            <td>{{data.totalCharge}}</td>
-                            <td>{{data.attrs.bookedBy}}</td>
-                            <td>{{data.attrs.createdAt | date}}</td>
-                            <td>{{data.attrs.canceldBy}}</td>
-                            <td>{{data.attrs.canceledOn | date}}</td>
-                            <td> {{data.cancellationReason}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label>Search</label>
+                            <input type="text" class="form-control form-control-sm" [(ngModel)]="searchString"
+                                   [ngModelOptions]="{standalone: true}"
+                            placeholder="Search By LR number">
+                        </div>
+                        <div class="col-sm-3 offset-5 text-right mt-auto mb-auto">
+                            <button type="button" class="btn btn-sm btn-primary" (click)="pendingDataExport()">
+                                Export to Excel
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="table-responsive col-sm-12">
+                            <table class="table table-hover table-bordered text-center">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th>LR#</th>
+                                    <th>Date</th>
+                                    <th>From-To</th>
+                                    <th>Amount</th>
+                                    <th>Booked By - Booked On</th>
+                                    <th>CancelledBy-CancelledOn</th>
+                                    <th>Status/Reason</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let data of pendingData | searchFilter: searchString; let i = index;">
+                                    <td>{{(filter.page - 1) * filter.size + i + 1}}</td>
+                                    <td><a class="cus-a"
+                                           (click)="goToBooking(data.id)">{{data.shipmentNumber}}</a></td>
+                                    <td>{{data.dispatchDate | date}}</td>
+                                    <td>({{data.attrs.fromBranch}}) - ({{data.attrs.toBranch}})</td>
+                                    <td>{{data.totalCharge}}</td>
+                                    <td>{{data.attrs.bookedBy}} - {{data.createdAt | date}}</td>
+                                    <td>{{data.attrs.cancelledBy}} - {{data.canceledOn | date}}</td>
+                                    <!--                            <td> {{data.cancellationReason || '&#45;&#45;'}}</td>-->
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                                (click)="saveShipmentId(data.id)"
+                                                *ngIf="currentUser.cancelCargoBookings">Approve
+                                        </button>
+                                        <span *ngIf="!currentUser.cancelCargoBookings">--</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="form-group">
+                                <div class="list-row" style="display: inline-block">
+                                    <ngb-pagination *ngIf="pendingCargoCount || pendingCargoCount !== 0"
+                                                    [(page)]="filter.page"
+                                                    [pageSize]="filter.size"
+                                                    [collectionSize]="pendingCargoCount"
+                                                    [boundaryLinks]="true"
+                                                    (pageChange)="handlePageChange($event)"
+                                                    [maxSize]="5">
+                                    </ngb-pagination>
+                                </div>
+                                <ul class="pagination pull-right" *ngIf="pendingCargoCount || pendingCargoCount !== 0">
+                                    <li class="page-item" [ngClass]="size == filter.size ? 'active' : ''"
+                                        *ngFor="let size of filter.pageSizes" (click)="handlePageSizeChange(size)">
+                                        <button class="page-link"> {{ size }}
+                                            <span class="sr-only">(current)</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dis-none">
+                        <table class="table table-hover table-bordered text-center" id="pendingCancellations">
+                            <thead>
+                            <tr>
+                                <th>S No</th>
+                                <th>LR#</th>
+                                <th>Date</th>
+                                <th>From-To</th>
+                                <th>Amount</th>
+                                <th>Booked By - Booked On</th>
+                                <th>CancelledBy-CancelledOn</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let data of pendingData | searchFilter: searchString; let i = index;">
+                                <td>{{(filter.page - 1) * filter.size + i + 1}}</td>
+                                <td><a class="cus-a">{{data.shipmentNumber}}</a></td>
+                                <td>{{data.dispatchDate | date}}</td>
+                                <td>({{data.attrs.fromBranch}}) - ({{data.attrs.toBranch}})</td>
+                                <td>{{data.totalCharge}}</td>
+                                <td>{{data.attrs.bookedBy}} - {{data.createdAt | date}}</td>
+                                <td>{{data.attrs.cancelledBy}} - {{data.canceledOn | date}}</td>
+                                <!--                            <td> {{data.cancellationReason || '&#45;&#45;'}}</td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="tile" *ngIf="tab === 2">
                 <div class="tile-body">
-                    <span>Cancelled</span>
+                    <div class="tile-body">
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label>Search</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="canceledSearchString"
+                                       [ngModelOptions]="{standalone: true}"
+                                       placeholder="Search By LR number">
+                            </div>
+                            <div class="col-sm-3 offset-5 text-right mt-auto mb-auto">
+                                <button type="button" class="btn btn-sm btn-primary" (click)="canceledDataExport()">
+                                    Export to Excel
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table table-hover table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th>LR#</th>
+                                        <th>Date</th>
+                                        <th>From-To</th>
+                                        <th>Amount</th>
+                                        <th>Booked By - Booked On</th>
+                                        <th>CancelledBy-CancelledOn</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let data of cancelledData | searchFilter: canceledSearchString; let i = index;">
+                                        <td>{{(cancelledFilter.page - 1) * cancelledFilter.size + i + 1}}</td>
+                                        <td><a class="cus-a"
+                                               (click)="goToBooking(data.id)">{{data.shipmentNumber}}</a></td>
+                                        <td>{{data.dispatchDate | date}}</td>
+                                        <td>({{data.attrs.fromBranch}}) - ({{data.attrs.toBranch}})</td>
+                                        <td>{{data.totalCharge}}</td>
+                                        <td>{{data.attrs.bookedBy}} - {{data.createdAt | date}}</td>
+                                        <td>{{data.attrs.canceldBy}} - {{data.canceledOn | date}}</td>
+                                        <td> {{data.cancellationReason || '--'}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row" style="display: inline-block">
+                                        <ngb-pagination *ngIf="cancelledCargoCount || cancelledCargoCount !== 0"
+                                                        [(page)]="cancelledFilter.page"
+                                                        [pageSize]="cancelledFilter.size"
+                                                        [collectionSize]="cancelledCargoCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="cancelledHandlePageChange($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                    </div>
+                                    <ul class="pagination pull-right" *ngIf="cancelledCargoCount || cancelledCargoCount !== 0">
+                                        <li class="page-item" [ngClass]="size == cancelledFilter.size ? 'active' : ''"
+                                            *ngFor="let size of cancelledFilter.pageSizes"
+                                            (click)="cancelledHandlePageSizeChange(size)">
+                                            <button class="page-link"> {{ size }}
+                                                <span class="sr-only">(current)</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dis-none">
+                            <table class="table table-hover table-bordered text-center" id="cancelledCargo">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th>LR#</th>
+                                    <th>Date</th>
+                                    <th>From-To</th>
+                                    <th>Amount</th>
+                                    <th>Booked By - Booked On</th>
+                                    <th>CancelledBy-CancelledOn</th>
+                                    <th>Reason</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let data of cancelledData | searchFilter: canceledSearchString; let i = index;">
+                                    <td>{{(cancelledFilter.page - 1) * cancelledFilter.size + i + 1}}</td>
+                                    <td>{{data.shipmentNumber}}</td>
+                                    <td>{{data.dispatchDate | date}}</td>
+                                    <td>({{data.attrs.fromBranch}}) - ({{data.attrs.toBranch}})</td>
+                                    <td>{{data.totalCharge}}</td>
+                                    <td>{{data.attrs.bookedBy}} - {{data.createdAt | date}}</td>
+                                    <td>{{data.attrs.canceldBy}} - {{data.canceledOn | date}}</td>
+                                    <td> {{data.cancellationReason || '--'}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

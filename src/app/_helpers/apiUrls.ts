@@ -97,6 +97,7 @@ export class ApiUrls {
     // New Cargo Booking API's
     getShipmentTypes = 'api/v1/shipment/types';
     saveNewCargoBooking = 'api/v1/shipment';
+    getCargoDetailsById = 'api/v1/shipment/';
     findContactInfoFromPreviousBookings = 'api/v1/shipment/findContactInfo';
     cargoDetailsByLR = 'api/v1/shipment/search/byLR';
     cargoBookingsCount = 'api/v1/shipments/count';
@@ -137,4 +138,5 @@ export class ApiUrls {
     updateTripSheet = 'api/v1/cargoTripSheet/update';
     closeTripSheet = 'api/v1/cargoTripSheet/closeTripSheet/';
     getTripSheetSummary = 'api/v1/cargoTripSheet/getSummary/';
+    approveCancellation = 'api/v1/shipment/approveCancellation';
 }

@@ -192,7 +192,7 @@
                             <tr *ngFor="let cargo of cargoBookings; let i =index;">
                                 <td>{{(pagination.page-1) * pagination.size + i + 1}}</td>
                                 <td style="white-space: nowrap"><a class="cus-a" style="color: #007bff;"
-                                       (click)="routing(cargo.shipmentNumber)"> {{cargo.shipmentNumber}}</a></td>
+                                       (click)="routing(cargo.id)"> {{cargo.shipmentNumber}}</a></td>
                                 <td>{{cargo.totalArticles}}</td>
                                 <td>{{cargo.dispatchDate | date}}</td>
                                 <td>({{cargo.attrs.fromBranchOfficeName}}) - ({{cargo.attrs.toBranchOfficeName}})</td>
