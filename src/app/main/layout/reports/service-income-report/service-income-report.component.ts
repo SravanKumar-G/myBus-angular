@@ -60,9 +60,10 @@ export class ServiceIncomeReportComponent implements OnInit {
     searchServiceIncomeReport(): void {
         this.apiService.getAll(this.apiUrls.searchServiceReport, this.filterObj).subscribe((data: any) => {
             if (data) {
-                console.log(data);
                 this.serviceReports = data;
             }
+        }, error => {
+            Swal.fire('error', error.message, 'error');
         });
     }
 

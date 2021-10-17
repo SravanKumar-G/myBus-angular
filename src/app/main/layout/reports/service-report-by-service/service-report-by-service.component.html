@@ -8,8 +8,10 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
-            <li class="breadcrumb-item"><span class="breadcrumb-item-router"><a class="cus-a" (click)="back()">Service Income Report</a></span></li>
-            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Service Income Report by Service- {{serviceId}}</span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router"><a class="cus-a" (click)="back()">Service Income Report</a></span>
+            </li>
+            <li class="breadcrumb-item"><span
+                    class="breadcrumb-item-router">Service Income Report by Service- {{serviceId}}</span></li>
         </ul>
     </div>
 
@@ -57,7 +59,14 @@
                                 </thead>
                                 <tbody>
                                 <tr *ngFor="let reports of serviceReportsByServiceNumber">
-                                    <td><a href="#" (click)="goToServiceReport(reports)"> {{reports.jDate}} </a></td>
+                                    <td *ngIf="reports.attrs.formId">
+                                        <a class="cus-a" [routerLink]="['serviceForm/' + reports.attrs.formId]"
+                                        target="_blank">{{reports.jDate}} </a>
+                                    </td>
+                                    <td *ngIf="!reports.attrs.formId">
+                                        <a class="cus-a" [routerLink]="['serviceReport/' + reports.id]"
+                                        target="_blank">{{reports.jDate}} </a>
+                                    </td>
                                     <td>{{reports.advance}}</td>
                                     <td>{{reports.luggageIncome | numberFormatter}}</td>
                                     <td>{{reports.netCashIncome | numberFormatter}}</td>
