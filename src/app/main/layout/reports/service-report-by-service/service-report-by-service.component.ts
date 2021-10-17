@@ -59,6 +59,10 @@ export class ServiceReportByServiceComponent implements OnInit {
     }
 
     goToServiceReport(reports: any): void {
-
+        if (reports.attrs.formId) {
+            this.router.navigate(['serviceForm', reports.attrs.id]);
+        }else{
+            this.router.navigate(['serviceReport', reports.id]);
+        }
     }
 }
