@@ -110,6 +110,16 @@ const layOutRoutes: Routes = [
                 path: 'cargoTripSheet',
                 loadChildren: () => import('./cargo/trip-sheet/trip-sheet.module').
                 then(m => m.TripSheetModule)
+            },
+            {
+                path: 'serviceIncomeReport',
+                loadChildren: () => import('./reports/service-income-report/service-income-report.module').
+                then(m => m.ServiceIncomeReportModule)
+            },
+            {
+                path: 'serviceReportByService/:id',
+                loadChildren: () => import('./reports/service-report-by-service/service-report-by-service.module').
+                then(m => m.ServiceReportByServiceModule)
             }
         ]
     },
