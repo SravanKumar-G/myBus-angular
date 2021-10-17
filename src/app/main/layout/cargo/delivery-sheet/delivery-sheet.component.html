@@ -126,7 +126,7 @@
                                 <tr *ngFor="let cargoBooking of cargoBookings | pipeFilter: filterString; let i = index;">
                                     <td>{{i + 1}}</td>
                                     <td><a class="cus-a"
-                                           (click)="gotoBooking(cargoBooking.shipmentNumber)">{{cargoBooking.shipmentNumber}}</a>
+                                           (click)="gotoBooking(cargoBooking.id)">{{cargoBooking.shipmentNumber}}</a>
                                     </td>
                                     <td>{{cargoBooking.dispatchDate | date}}</td>
                                     <td>{{cargoBooking.totalArticles}}</td>
@@ -365,7 +365,7 @@
                                         <tr *ngFor="let cargoBooking of cargoBookings; let i =index;">
                                             <td>{{(deliveredObj.page-1) * deliveredObj.size + i + 1}}</td>
                                             <td><a class="cus-a"
-                                                   (click)="gotoBooking(cargoBooking.shipmentNumber)">{{cargoBooking.shipmentNumber || '--'}}</a></td>
+                                                   (click)="gotoBooking(cargoBooking.id)">{{cargoBooking.shipmentNumber || '--'}}</a></td>
                                             <td>{{cargoBooking.deliveredOn| date}}</td>
                                             <td>{{cargoBooking.attrs.RegNo || '--'}}</td>
                                             <td>{{cargoBooking.attrs.fromBranch}} / {{cargoBooking.attrs.toBranch}}</td>

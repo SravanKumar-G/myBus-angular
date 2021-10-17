@@ -27,8 +27,11 @@ export class ViewCargoBookingComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.cargoBookingId) {
+        console.log(this.cargoBookingId, this.cargoBookingId.length);
+        if (this.cargoBookingId.length !== 24) {
             this.getCargoDetailsByBookingId();
+        }else{
+            this.getCargoDetailsById();
         }
     }
 
@@ -45,6 +48,14 @@ export class ViewCargoBookingComponent implements OnInit {
                 }
             } else {
 
+            }
+        });
+    }
+
+    getCargoDetailsById(): void {
+        this.apiService.get(this.apiUrls.getCargoDetailsById + this.cargoBookingId).subscribe((res: any) => {
+            if (res) {
+                this.cargoDetails = res;
             }
         });
     }
