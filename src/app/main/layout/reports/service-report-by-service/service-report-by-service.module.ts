@@ -6,6 +6,10 @@ import {ServiceReportByServiceComponent} from './service-report-by-service.compo
 import {LayoutModule} from '../../layout.module';
 import {ServiceReportsComponent} from './service-reports/service-reports.component';
 import {ServiceFormComponent} from './service-form/service-form.component';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {FormsModule} from '@angular/forms';
+import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 
 
 @NgModule({
@@ -17,7 +21,11 @@ import {ServiceFormComponent} from './service-form/service-form.component';
     imports: [
         CommonModule,
         ServiceReportByServiceRoutingModule,
-        LayoutModule
+        LayoutModule,
+        NgSelectModule,
+        FormsModule,
+        NgbPopoverModule,
+        BsDatepickerModule
     ]
 })
 export class ServiceReportByServiceModule {

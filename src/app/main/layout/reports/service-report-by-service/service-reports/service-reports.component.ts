@@ -1,15 +1,343 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ApiServiceService} from '../../../../../services/api-service.service';
+import {ApiUrls} from '../../../../../_helpers/apiUrls';
+import {ActivatedRoute} from '@angular/router';
+import Swal from 'sweetalert2';
+// @ts-ignore
+import * as _ from 'underscore';
 
 @Component({
-  selector: 'app-service-reports',
-  templateUrl: './service-reports.component.html',
-  styleUrls: ['./service-reports.component.css']
+    selector: 'app-service-reports',
+    templateUrl: './service-reports.component.html',
+    styleUrls: ['./service-reports.component.css']
 })
 export class ServiceReportsComponent implements OnInit {
+    private readonly serviceId: any;
+    public serviceReportDetails: any = {
+        fuelExpenses: [],
+        expenses: [],
+        staffDetails: []
+    };
+    public currentUser: any;
+    public vehicles: Array<any> = [];
+    public agents: Array<any> = [];
+    private differenceAmountRatio = 99;
+    suppliers: Array<any> = [];
+    public allStaff: Array<any> = [];
+    public allStaffDuplicate: Array<any> = [];
+    newStaffId: any;
+    selectedStaffId: any;
 
-  constructor() { }
+    constructor(
+        private apiService: ApiServiceService,
+        private apiUrls: ApiUrls,
+        private actRoute: ActivatedRoute
+    ) {
+        this.serviceId = this.actRoute.snapshot.params.id || '';
+    }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+        this.currentUser = JSON.parse(localStorage.getItem('currentUserDetails') as string);
+        if (this.serviceId) {
+            this.getServiceReport();
+        } else {
+            Swal.fire('error', 'Did not find any Service Id', 'error');
+        }
+        this.getAllVehicles();
+        this.getAgentNames();
+        this.getSuppliers();
+        this.getStaffList();
+    }
 
+    getServiceReport(): void {
+        this.apiService.get(this.apiUrls.getServiceReportDetails + this.serviceId).subscribe((res: any) => {
+            if (res) {
+                this.serviceReportDetails = res;
+                this.countSeats();
+            }
+        }, error => {
+            Swal.fire('error', error.message, 'error');
+        });
+    }
+
+    getAllVehicles(): void {
+        this.apiService.getAll(this.apiUrls.getAllVehicles, {}).subscribe((res: any) => {
+            if (res) {
+                this.vehicles = res.content;
+            }
+        });
+    }
+
+    getAgentNames(): void {
+        this.apiService.get(this.apiUrls.getAgentNames).subscribe((res: any) => {
+            if (res) {
+                this.agents = res;
+            }
+        });
+    }
+
+    getSuppliers(): void {
+        this.apiService.get(this.apiUrls.getSuppliers).subscribe((res: any) => {
+            if (res) {
+                this.suppliers = res;
+            }
+        });
+    }
+
+    getStaffList(): void {
+        this.apiService.get(this.apiUrls.getAllStaffList).subscribe((res: any) => {
+            if (res) {
+                this.allStaff = res.content;
+                this.allStaffDuplicate = res.content;
+            }
+        });
+    }
+
+    updateOdometerReading(): void {
+        this.apiService.get(this.apiUrls.updateVehicleRegNo + this.serviceReportDetails.vehicleRegNumber).subscribe((res: any) => {
+            if (res) {
+                this.serviceReportDetails.oldOdometerReading = res;
+            }
+        });
+    }
+
+    rateToBeVerified(booking: any): any {
+        return booking.requireVerification || (booking.netAmt < (booking.originalCost * this.differenceAmountRatio / 100));
+    }
+
+    isCashBooking(booking: any): any {
+        return booking.paymentType === 'CASH';
+    }
+
+    editAgent(bookedBy: any): void {
+        console.log(bookedBy);
+    }
+
+    countSeats(): void {
+        let seatsCount = 0;
+        let i;
+        for (i = 0; i < this.serviceReportDetails.bookings.length; i++) {
+            if (this.serviceReportDetails.bookings[i].seats) {
+                seatsCount += this.serviceReportDetails.bookings[i].seats.split(',').length;
+            }
+        }
+        this.serviceReportDetails.totalSeats = seatsCount;
+    }
+
+    isOnlineBooking(booking: any): any {
+        return booking.bookingType === '4' || booking.bookedOnline;
+    }
+
+    calculateNet(changedBooking: any): any {
+        if (changedBooking) {
+            const bookedBy = changedBooking.name.toLowerCase();
+            if (changedBooking.due && (bookedBy.indexOf('buspay') !== -1 || bookedBy.indexOf('bus pay') !== -1
+                || bookedBy.indexOf('buspa') !== -1)) {
+                alert('bus pay can not be set to due');
+                changedBooking.due = false;
+                return false;
+            }
+        }
+        this.serviceReportDetails.netCashIncome = 0;
+        this.serviceReportDetails.grossIncome = 0;
+        let expenseTotal = 0;
+        // if the net amount is 13% less than original cost
+        if (changedBooking) {
+            changedBooking.requireVerification = Math.abs(changedBooking.netAmt) <
+                (changedBooking.originalCost * this.differenceAmountRatio / 100);
+            const bookingsToBeVerified = _.find(this.serviceReportDetails.bookings, (booking: { requireVerification: boolean; }) => {
+                return booking.requireVerification;
+            });
+            this.serviceReportDetails.requiresVerification = bookingsToBeVerified != null;
+        }
+        let i;
+        for (i = 0; i < this.serviceReportDetails.bookings.length; i++) {
+            const booking = this.serviceReportDetails.bookings[i];
+            if (this.isCashBooking(booking) && booking.netAmt && booking.netAmt !== '') {
+                this.serviceReportDetails.netCashIncome += parseFloat(booking.netAmt);
+            }
+            this.serviceReportDetails.grossIncome += parseFloat(booking.netAmt);
+        }
+        let j;
+        for (j = 0; j < this.serviceReportDetails.expenses.length; j++) {
+            const expense = this.serviceReportDetails.expenses[j];
+            if (expense.amount && expense.amount !== '') {
+                expenseTotal += parseFloat(expense.amount);
+            }
+        }
+        if (!isNaN(this.serviceReportDetails.police)) {
+            expenseTotal += this.serviceReportDetails.police;
+        }
+        if (!isNaN(this.serviceReportDetails.tollFee)) {
+            expenseTotal += this.serviceReportDetails.tollFee;
+        }
+        if (!isNaN(this.serviceReportDetails.driverBatta)) {
+            expenseTotal += this.serviceReportDetails.driverBatta;
+        }
+        if (!isNaN(this.serviceReportDetails.pooja)) {
+            expenseTotal += this.serviceReportDetails.pooja;
+        }
+        if (!isNaN(this.serviceReportDetails.repair)) {
+            expenseTotal += this.serviceReportDetails.repair;
+        }
+        if (!isNaN(this.serviceReportDetails.parking)) {
+            expenseTotal += this.serviceReportDetails.parking;
+        }
+        if (!isNaN(this.serviceReportDetails.luggageCommission)) {
+            expenseTotal += this.serviceReportDetails.luggageCommission;
+        }
+        this.serviceReportDetails.netCashIncome -= expenseTotal;
+
+        if (this.serviceReportDetails.luggageIncome) {
+            this.serviceReportDetails.netCashIncome += parseFloat(this.serviceReportDetails.luggageIncome);
+            this.serviceReportDetails.grossIncome += parseFloat(this.serviceReportDetails.luggageIncome);
+        }
+        if (this.serviceReportDetails.advance) {
+            this.serviceReportDetails.netCashIncome += parseFloat(this.serviceReportDetails.advance);
+        }
+        if (this.serviceReportDetails.onRoadServiceIncome) {
+            this.serviceReportDetails.netCashIncome += parseFloat(this.serviceReportDetails.onRoadServiceIncome);
+            this.serviceReportDetails.grossIncome += parseFloat(this.serviceReportDetails.onRoadServiceIncome);
+        }
+        if (this.serviceReportDetails.otherIncome) {
+            this.serviceReportDetails.netCashIncome += parseFloat(this.serviceReportDetails.otherIncome);
+            this.serviceReportDetails.grossIncome += parseFloat(this.serviceReportDetails.otherIncome);
+        }
+        this.serviceReportDetails.netCashIncome = this.serviceReportDetails.netCashIncome.toFixed(2);
+        this.serviceReportDetails.netIncome = this.serviceReportDetails.grossIncome;
+
+        if (!isNaN(this.serviceReportDetails.fuelExpense)) {
+            expenseTotal += this.serviceReportDetails.fuelExpense;
+        }
+        if (!isNaN(this.serviceReportDetails.insurance)) {
+            expenseTotal += this.serviceReportDetails.insurance;
+        }
+        if (!isNaN(this.serviceReportDetails.roadTax)) {
+            expenseTotal += this.serviceReportDetails.roadTax;
+        }
+        if (!isNaN(this.serviceReportDetails.salary)) {
+            expenseTotal += this.serviceReportDetails.salary;
+        }
+        if (!isNaN(this.serviceReportDetails.tollFasttag)) {
+            expenseTotal += this.serviceReportDetails.tollFasttag;
+        }
+
+        this.serviceReportDetails.netIncome -= expenseTotal;
+        let k;
+        for (k = 0; i < this.serviceReportDetails.bookings.length; k++) {
+            const booking = this.serviceReportDetails.bookings[k];
+            if (booking.due) {
+                this.serviceReportDetails.netCashIncome -= parseFloat(booking.netAmt);
+            }
+        }
+    }
+
+    deleteBooking(booking: any, q: any): void {
+        q.close();
+    }
+
+    openPop(popover: any): any {
+        popover.isOpen() ? popover.close() : popover.open();
+    }
+
+    addFuelExpense(): void {
+        this.serviceReportDetails.fuelExpenses.push({index: this.serviceReportDetails.fuelExpenses.length, journeyDate: new Date()});
+    }
+
+    deleteFuelExpense(index: any): void {
+        this.serviceReportDetails.fuelExpenses.splice(index, 1);
+    }
+
+    addBooking(): void {
+        this.serviceReportDetails.bookings.push({
+            index: this.serviceReportDetails.bookings.length,
+            paymentType: 'CASH',
+            ticketNo: 'SERVICE'
+        });
+    }
+
+    addExpenses(): void {
+        if (!this.serviceReportDetails.expenses) {
+            this.serviceReportDetails.expenses = [];
+        }
+        this.serviceReportDetails.expenses.push({type: 'EXPENSE', index: this.serviceReportDetails.expenses.length + 1});
+    }
+
+    deleteExpense(index: any): void {
+        this.serviceReportDetails.expenses.splice(index, 1);
+        this.calculateNet('');
+    }
+
+    addStaff(): void {
+        if (!this.serviceReportDetails.staffDetails) {
+            this.serviceReportDetails.staffDetails = [];
+        }
+        if (!this.newStaffId) {
+            Swal.fire('Error', 'Please select Staff', 'error');
+        } else {
+            this.serviceReportDetails.staffDetails.push(this.newStaffId);
+        }
+        // for (let j = 0; j < this.serviceReportDetails.staffDetails.length; j++) {
+        //     this.allStaff = _.without(this.allStaff, _.findWhere(this.allStaff, {id: this.serviceReportDetails.staffDetails[j]}));
+        // }
+    }
+
+    deleteStaff(index: any): void {
+        this.serviceReportDetails.staffDetails.splice(index, 1);
+    }
+
+    onStaffSelect(newStaffId: any): void {
+        this.selectedStaffId = newStaffId;
+    }
+
+    haltService(status: string): any {
+        this.serviceReportDetails.status = status;
+        this.submitReport(status);
+    }
+
+    submit(status: string): any {
+        this.submitReport(status);
+    }
+
+    requireVerification(): any {
+        return !this.serviceReportDetails.invalid &&
+            this.serviceReportDetails.requiresVerification &&
+            this.serviceReportDetails.status !== 'SUBMITTED';
+    }
+
+    canSubmit(): any {
+        // if (this.operatorAccount.skipAgentValidity === true) {
+        //     this.serviceReportDetails.invalid = false;
+        //     return true;
+        // }
+        if (this.serviceReportDetails.status === 'REQUIRE_VERIFICATION') {
+            if (this.currentUser.canVerifyRates) {
+                return true;
+            }
+        } else if (!this.serviceReportDetails.requiresVerification) {
+            return (!this.serviceReportDetails.invalid && !this.serviceReportDetails.status);
+        }
+        return false;
+    }
+
+    launchAgents(): any {
+
+    }
+
+    submitReport(status: any): void {
+        // console.log(this.serviceReportDetails);
+        if (!this.serviceReportDetails.vehicleRegNumber) {
+            Swal.fire('Error', 'Please select Vehicle', 'error');
+        } else {
+            this.apiService.create(this.apiUrls.submitReport + status, this.serviceReportDetails).subscribe((res: any) => {
+                if (res) {
+                    Swal.fire('Great', 'The report successfully submitted', 'success');
+                    window.history.back();
+                }
+            }, error => {
+                this.serviceReportDetails.status = null;
+                Swal.fire('Oops...', 'Error submitting the report :' + error.data.message, 'error');
+            });
+        }
+    }
 }
