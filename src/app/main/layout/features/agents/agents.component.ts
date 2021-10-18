@@ -62,7 +62,7 @@ export class AgentsComponent implements OnInit {
 
     getCount(showInvalid: any): void {
         this.showInvalid = showInvalid;
-        if (!showInvalid || showInvalid.trim().length === 0) {
+        if (!showInvalid || showInvalid.length === 0) {
             showInvalid = false;
         }
         this.apiService.get(this.apiUrls.getAgentsCount + '?query=' + this.query + '&showInvalid=' + this.showInvalid)
@@ -112,4 +112,7 @@ export class AgentsComponent implements OnInit {
         this.getCount(this.showInvalid);
     }
 
+    exportExcel(): void{
+        this.apiService.exportExcel('agentExcelData', 'Agent', '', '');
+    }
 }

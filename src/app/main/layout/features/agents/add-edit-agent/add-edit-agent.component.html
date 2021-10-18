@@ -23,18 +23,18 @@
                     <div class="row">
                         <div class="col-sm-6 form-group">
                             <label class="control-label">User Name</label>
-                            <input class="form-control" type="text" placeholder="Enter Name"
+                            <input class="form-control form-control-sm" type="text" placeholder="Enter Name"
                                    [(ngModel)]="agent.username"/>
                         </div>
 
                         <div class="col-sm-6 form-group">
                             <label class="control-label">Mobile Number</label>
-                            <input class="form-control" numbersOnly minlength="10" maxlength="10"
+                            <input class="form-control form-control-sm" numbersOnly minlength="10" maxlength="10"
                                    placeholder=" Enter Mobile Number" type="text" [(ngModel)]="agent.mobile">
                         </div>
                         <div class="col-sm-6 form-group">
                             <label class="control-label">Landline Number</label>
-                            <input class="form-control" numbersOnly minlength="8" maxlength="12"
+                            <input class="form-control form-control-sm" numbersOnly minlength="8" maxlength="12"
                                    placeholder=" Enter Landline Number" type="text" [(ngModel)]="agent.landline">
                         </div>
                         <div class="col-sm-6 form-group">
@@ -53,8 +53,12 @@
                         </div>
                         <div class="col-sm-6 form-group">
                             <label class="control-label"> Commission</label>
-                            <input class="form-control " placeholder=" Enter Commission" type="text"
+                            <input class="form-control form-control-sm " placeholder=" Enter Commission" type="text"
                                    [(ngModel)]="agent.commission">
+                        </div>
+                        <div class="col-sm-6 form-group"></div>
+                        <div class="col-sm-6 form-group">
+                            <button class="btn btn-link" [routerLink]="['addBranchOffice']">Add New Branch</button>
                         </div>
 
                     </div>

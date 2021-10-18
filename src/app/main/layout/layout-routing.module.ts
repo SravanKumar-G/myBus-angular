@@ -125,6 +125,11 @@ const layOutRoutes: Routes = [
                 path: 'agents',
                 loadChildren: () => import('./features/agents/agents.module').
                 then(m => m.AgentsModule)
+            },
+            {
+                path: 'staff',
+                loadChildren: () => import('./features/staff/staff.module').
+                then(m => m.StaffModule)
             }
         ]
     },

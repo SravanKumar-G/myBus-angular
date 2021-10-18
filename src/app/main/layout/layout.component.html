@@ -1,4 +1,3 @@
-
 <div *ngIf="currentUserDetails">
     <header class="app-header">
         <a class="app-header__logo">
@@ -144,7 +143,7 @@
                 </a>
                 <ul class="treeView-menu">
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('agents')">
-                        <a class="treeView-item" [routerLink]="['agents']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Agents
                         </a>
                     </li>
@@ -204,7 +203,7 @@
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('staff')">
-                        <a class="treeView-item" [routerLink]="['staff']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Staff
                         </a>
                     </li>

@@ -12,9 +12,7 @@ export class AddEditAgentComponent implements OnInit {
     public agentId: any;
     public agentTitle = '';
     public branchOffices: Array<any> = [];
-    public agent: any = {
-        id: ' ',
-    };
+    public agent: any = {};
     public errorMessage: any;
 
     constructor(private router: Router,
@@ -27,7 +25,6 @@ export class AddEditAgentComponent implements OnInit {
     ngOnInit(): void {
         this.loadBranchNames();
         if (this.agentId) {
-            console.log('this.vendorExpenseId', this.agentId);
             this.agentTitle = 'Edit Agent';
             this.getAgentDetails();
         } else {
@@ -56,14 +53,13 @@ export class AddEditAgentComponent implements OnInit {
                 this.errorMessage = error.message;
             });
         }else {
-            this.apiService.create(this.apiUrls.addAgent, this.agent).subscribe((res: any) => {
-                if (res || res === 0) {
+            this.apiService.update(this.apiUrls.updateAgent, this.agent).subscribe((res: any) => {
+                if (res) {
                     this.agent = res;
                 }
                 this.router.navigate(['agents']);
             }, error => {
                 this.errorMessage = error.message;
-                console.log(this.errorMessage);
             });
         }
     }

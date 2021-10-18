@@ -1,0 +1,132 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="div">
+            <h1>
+                <i class="fa fa-user" aria-hidden="true"></i>
+                Staff
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><a class="fa fa-home fa-lg breadcrumb-home-link" (click)="goToDashboard()"></a>
+            </li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Add Staff</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 col-sm-12">
+            <div class="tile">
+                <h3 class="tile-title form-head-line-style">{{staffTitle}}</h3>
+                <hr>
+                <div class="tile-body">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">User Name: <span class="mandatory-field">*</span></label>
+                            <input class="form-control form-control-sm" type="text" placeholder="Enter Name" [(ngModel)]="staff.name"/>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Contact Number <span class="mandatory-field">*</span></label>
+                            <input class="form-control form-control-sm" numbersOnly minlength="10" maxlength="10"
+                                   placeholder=" Enter Contact Number" type="text" [(ngModel)]="staff.contactNumber">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Aadhar Number: </label>
+                            <input class="form-control form-control-sm" numbersOnly minlength="10" maxlength="12"
+                                   placeholder=" Enter Aadhar Number" type="text" [(ngModel)]="staff.aadharNumber">
+                        </div>
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>License Expiry:<span class="mandatory-field">*</span></label>
+                            <div class="input-group">
+                                <input class="form-control form-control-sm"
+                                       placeholder="License Expiry"
+                                       name="License"
+                                       [minDate]="newDate"
+                                       [(ngModel)]="staff.dlExpiry"
+                                       [ngModelOptions]="{standalone: true}"
+                                       bsDatepicker
+                                       #License="bsDatepicker"
+                                       [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                            (click)="License.show()"
+                                            [attr.aria-expanded]="License.isOpen" type="button">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Code: </label>
+                            <input class="form-control form-control-sm" numbersOnly minlength="10" maxlength="10"
+                                   placeholder="Code" id="code" type="text" [(ngModel)]="staff.code">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Type: <span class="mandatory-field">*</span></label>
+                            <select id="type" class="form-control form-control-sm" [(ngModel)]="staff.type">
+                                <option value="" selected>select type</option>
+                                <option value="Driver">Conductor</option>
+                                <option value="Cleaner">Cleaner</option>
+                                <option value="Driver">Driver</option>
+                                <option value="Driver">Electrician</option>
+                                <option value="Cleaner">Mechanic</option>
+                                <option value="Cleaner">Manager</option>
+                                <option value="Cleaner">Office Staff</option>
+                                <option value="Driver">OtherStaff</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label class="control-label">Salary Per Duty: </label>
+                            <input class="form-control form-control-sm" numbersOnly minlength="8" maxlength="8"
+                                   placeholder=" Enter Sal Per Duty" id="salaryPerDuty" for="code" type="text"
+                                   [(ngModel)]="staff.salaryPerDuty">
+                        </div>
+                        <div class="col-sm-6 form-group"></div>
+                        <div class="col-sm-6 form-group">
+                            <div class="animated-checkbox" style="margin-top: 6px">
+                                <label>
+                                    <input type="checkbox" [(ngModel)]="staff.terminated" value="false">
+                                    <span class="label-text ls">Terminated</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <div class="animated-checkbox" style="margin-top: 6px">
+                                <label>
+                                    <input type="checkbox" [(ngModel)]="staff.active" value="false">
+                                    <span class="label-text ls">Active</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <div class="animated-checkbox" style="margin-top: 6px">
+                                <label>
+                                    <input type="checkbox"  [(ngModel)]="staff.vaccinated" value="false">
+                                    <span class="label-text ls">Vaccinated</span>
+                                </label>
+                            </div>
+                        </div>
+                        <!--                        <div class="col-lg-6 col-md-4 padding-bottom">-->
+                        <!--                            <label class="ls text-600 font-weight-semi-bold checkbox" for="editActiveInput" style="margin-left: 20px">-->
+                        <!--                                <input type="checkbox" id="terminated" class="form-check-input" [(ngModel)]="staff.terminated">-->
+                        <!--                                Terminated-->
+                        <!--                            </label>-->
+                        <!--                        </div>-->
+                    </div>
+                </div>
+                <div class="tile-footer">
+                    <div class="col-12 text-center">
+                        <p class="error-field">{{errorMessage}}</p>
+                    </div>
+                    <div class="col-sm-12 text-right p-0">
+                        <button type="submit" class="btn btn-success btn-sm mr-2" (click)="save()">
+                            <i class="fa fa-fw fa-check-circle"></i>{{staffId ? 'Update' : 'Save'}}
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="close()">
+                            <i class="fa fa-fw fa-times-circle"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

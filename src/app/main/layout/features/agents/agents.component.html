@@ -17,38 +17,37 @@
             <div class="tile">
                 <div class="tile-body" style="font-family: Roboto, sans-serif">
                     <div class="row p-3" style="align-items: center;">
-                        <div class="col-sm-2">
-<!--                            <div class="">-->
-                                <label class="ls text-uppercase text-600 font-weight-semi-bold">Show Invalid: </label>
-                                <input type="checkbox" [(ngModel)]="showInvalid" (change)="getCount(showInvalid)">
-                            </div>
-<!--                        <div class="col-sm-2">-->
-<!--                            <div class="animated-checkbox">-->
-<!--                                <label>-->
-<!--                                    <input type="checkbox" [(ngModel)]="showInvalid"-->
-<!--                                           [ngModelOptions]="{standalone: true}" (change)="getCount(showInvalid)">-->
-<!--                                    <span class="label-text ls">Show Invalid</span>-->
-<!--                                </label>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                            <div class="col-sm-2">
-                                <label class="ls text-uppercase text-600 font-weight-semi-bold">Invalid count: </label> {{invalidCount || '0'}}
-                            </div>
-<!--                        </div>-->
-                        <div class="col-sm-6">
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control" [(ngModel)]="query" placeholder="Search by Name" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-secondary btn-sm" aria-label="Small" type="button" (click)="getCount(showInvalid)">Search</button>
-                                </div>
+                        <div class="col-sm-2 form-group mb-0">
+                            <div class="animated-checkbox">
+                                <label class="text-uppercase text-600 font-weight-semi-bold">
+                                    <input type="checkbox" [(ngModel)]="showInvalid" value="false"
+                                           (ngModelChange)="getCount(showInvalid)"
+                                           [ngModelOptions]="{standalone:true}">
+                                    <span class="label-text ls">Show Invalid</span>
+                                </label>
                             </div>
                         </div>
                         <div class="col-sm-2">
+                            <label class="ls text-uppercase text-600 font-weight-semi-bold">Invalid
+                                count: </label> {{invalidCount || '0'}}
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" [(ngModel)]="query" placeholder="Search by Name"
+                                       aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary btn-sm" aria-label="Small" type="button"
+                                            (click)="getCount(showInvalid)">Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
                             <div class="col-sm-12 text-right">
                                 <a class="btn btn-sm btn-primary" [routerLink]="['addAgent']">
                                     <span class="fa fa-plus"></span> New Agent</a>&nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-sm btn-danger" ng-click="refreshAgents()">
-                                    <span class="fa fa-refresh"></span>
+                                <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export
+                                    Excel
                                 </button>
                             </div>
                         </div>
@@ -107,7 +106,8 @@
                                 <td>{{ agent.attrs.branchName }}</td>
                                 <td>{{ agent.commission }}</td>
                                 <td class="td-active">
-                                    <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                    <button type="button"
+                                            class="action-icon-style waves-effect waves-blue edit-user-button"
                                             title="Edit Agent" [routerLink]="['editAgent/' + agent.id]">
                                         <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
                                     </button>
@@ -121,7 +121,7 @@
                             <tr *ngIf="currentPageOfAgents.length > 0">
                                 <th colspan="8">
                                     <div class="pull-right">
-                                        Total Count : {{agentsCount|| 0}}
+                                        Total Count : {{agentsCount || 0}}
                                     </div>
                                 </th>
                             </tr>
@@ -147,10 +147,36 @@
                                 </li>
                             </ul>
                         </div>
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
-
 </div>
+
+<table class="table table-hover sticky-custom payment-sticky-custom text-center normal-table d-none"
+       id="agentExcelData">
+    <thead>
+    <tr>
+        <th>User Name</th>
+        <th>Mobile Number</th>
+        <th>Lanline Number</th>
+        <th>Created On</th>
+        <th>Branch Name</th>
+        <th>Commission</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let agent of currentPageOfAgents; let i = index;">
+        <td>{{(agentsQuery.page - 1) * agentsQuery.size + i + 1}}</td>
+        <td>{{ agent.username }}</td>
+        <td>{{ agent.mobile }}</td>
+        <td>{{ agent.landline }}</td>
+        <td>{{ agent.createdAt| date }}</td>
+        <td>{{ agent.attrs.branchName }}</td>
+        <td>{{ agent.commission }}</td>
+    </tr>
+    </tbody>
+</table>
+

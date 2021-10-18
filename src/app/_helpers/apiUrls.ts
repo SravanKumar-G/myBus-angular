@@ -162,4 +162,11 @@ export class ApiUrls {
     addAgent = 'api/v1/agent/addAgent';
     editAgent = 'api/v1/agent/';
     updateAgent = 'api/v1/agent/update';
+
+    // Staff API's
+    getStaffList = 'api/v1/staff';
+    getStaffCount = 'api/v1/staff/count';
+    getStaffDetails = 'api/v1/staff/';
+    addNewStaff = 'api/v1/staff/create';
+    editStaff = 'api/v1/staff/';
 }
