@@ -15,6 +15,8 @@ export class ApiUrls {
     getCurrentUser = 'api/v1/user/me';
     getAllUsers = 'api/v1/userNames';
     getAllStaffList = 'api/v1/staff';
+    getAgentNames = 'api/v1/agentNames';
+    getSuppliers = 'api/v1/suppliers/';
 
     // Cancellations API's
     pendingShipmentsCount = 'api/v1/shipment/count/cancellationPendingShipments';
@@ -144,4 +146,12 @@ export class ApiUrls {
     getDistinctSource = 'api/v1/serviceReport/getCities';
     searchServiceReport = 'api/v1/serviceReport/incomeReport';
     serviceReportByServiceId = 'api/v1/serviceReport/serviceIncomeReportDaily';
+
+    // Service Form API's
+     getDetailsByFormId = 'api/v1/serviceForm/';
+
+     // Service Report API's
+     getServiceReportDetails = 'api/v1/serviceReport/';
+     updateVehicleRegNo = 'api/v1/vehicle/odometerReading/';
+     submitReport = 'api/v1/serviceReport/';
 }
