@@ -94,7 +94,7 @@ export class TripSheetComponent implements OnInit {
     }
 
     getStaffList(): void {
-        this.apiService.get(this.apiUrls.getAllStaffList).subscribe((res: any) => {
+        this.apiService.getAll(this.apiUrls.getStaffList, {}).subscribe((res: any) => {
             if (res) {
                 this.listOfStaff = res.content;
             }
