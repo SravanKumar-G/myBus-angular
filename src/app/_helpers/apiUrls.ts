@@ -7,9 +7,9 @@ import {environment} from 'src/environments/environment';
 })
 
 export class ApiUrls {
-    mainUrl = 'http://localhost:8091/';
+    // mainUrl = 'http://localhost:8091/';
     // mainUrl = 'http://cargo.srikrishnatravels.in/';
-    // mainUrl = environment.testPath;
+    mainUrl = environment.testPath;
 
 
     getCurrentUser = 'api/v1/user/me';
@@ -154,4 +154,22 @@ export class ApiUrls {
      getServiceReportDetails = 'api/v1/serviceReport/';
      updateVehicleRegNo = 'api/v1/vehicle/odometerReading/';
      submitReport = 'api/v1/serviceReport/';
+
+    // OfficeExpenses
+
+    pendingCount = 'api/v1/officeExpenses/count?pending=true';
+    allPending = 'api/v1/officeExpenses/pending';
+    approvedCount = 'api/v1/officeExpenses/count?pending=false';
+    allApproves = 'api/v1/officeExpenses/approved';
+    searchExpense = 'api/v1/officeExpenses/search';
+    expensesTypes = 'api/v1/officeExpenses/types';
+    getExpense = 'api/v1/officeExpense/';
+    approveOrRejectStatus = 'api/v1/officeExpenses/approveOrReject/';
+    addExpense = 'api/v1/officeExpense/';
+    editExpense = 'api/v1/officeExpense/';
+    deleteOfficeExpense = 'api/v1/officeExpense/';
+    suppliers = 'api/v1/suppliers/';
+    vehiclesList = 'api/v1/vehicles';
+    fileUpload = 'api/v1/fileUpload';
+    getFile = 'api/v1/getUploads/';
 }
