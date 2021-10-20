@@ -60,7 +60,7 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let office of branchOffices; let i =index;">
-                                <td>{{i + 1}}</td>
+                                <td>{{(branchOfficeQuery.page - 1) * branchOfficeQuery.size + i + 1}}</td>
                                 <td>{{office.name}}</td>
                                 <td>{{office.attrs.cityName || '--'}}</td>
                                 <td>{{office.attrs.managerName || '--'}}</td>
