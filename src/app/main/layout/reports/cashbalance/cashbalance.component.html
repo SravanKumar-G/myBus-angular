@@ -1,0 +1,96 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-money" aria-hidden="true"></i>
+                Cash Balance
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Cash Balance</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row" style="align-items: center">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-4 form-group">
+                            <label class="control-label">By Branch Office:</label>
+                            <ng-select
+                                    [(ngModel)]="cashBal.branchOfficeId"
+                                    [ngModelOptions]="{standalone: true}"
+                                    bindValue="id"
+                                    bindLabel="name"
+                                    placeholder="Enter Branch Office"
+                                    [clearable]="false"
+                            (ngModelChange)="searchBranchOffice(cashBal.branchOfficeId)">
+                                <ng-option value="">Select Branch Office</ng-option>
+                                <ng-option *ngFor="let office of branchOffices"
+                                           [value]="office.id">{{office.name}}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export Excel</button>
+                        </div>
+                    </div>
+                    <table class="table table-hover text-center dataTable">
+                        <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>User Name</th>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Cash Balance</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let cash of cashBalanceArray; let i = index">
+                            <td>{{(cashQuery.page - 1) * cashQuery.size + i + 1}}</td>
+                            <td>{{cash.userName}}</td>
+                            <td>{{cash.fullName}}</td>
+                            <td>{{cash.contact}}</td>
+                            <td>{{cash.amountToBePaid | number}}</td>
+                        </tr>
+                        <tr *ngIf="cashBalanceArray.length === 0 || !cashBalanceArray">
+                            <td colspan="7" style="text-align: center">No Records exist.</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr *ngIf="currentPageOfUsers.length > 0">
+                            <th colspan="5">
+                                <div class="pull-right">
+                                    Total Count : {{cashCount || 0}}
+                                </div>
+                            </th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table table-hover sticky-custom payment-sticky-custom text-center normal-table d-none"
+       id="cashBalanceExcelData">
+    <thead>
+    <tr>
+        <th>S.No</th>
+        <th>User Name</th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Cash Balance</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let cash of cashBalanceArray; let i = index">
+        <td>{{(cashQuery.page - 1) * cashQuery.size + i + 1}}</td>
+        <td>{{cash.userName}}</td>
+        <td>{{cash.fullName}}</td>
+        <td>{{cash.contact}}</td>
+        <td>{{cash.amountToBePaid | number}}</td>
+    </tr>
+    </tbody>
+</table>

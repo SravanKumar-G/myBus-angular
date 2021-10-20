@@ -186,4 +186,7 @@ export class ApiUrls {
     vehiclesList = 'api/v1/vehicles';
     fileUpload = 'api/v1/fileUpload';
     getFile = 'api/v1/getUploads/';
+
+    // Cash Balance
+    getCashBalances = 'api/v1/user/cashBalances';
 }
