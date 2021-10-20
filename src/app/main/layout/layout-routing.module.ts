@@ -112,7 +112,13 @@ const layOutRoutes: Routes = [
             },
             {
                 path: 'officeExpenses',
-                loadChildren: () => import('./master/office-expenses/office-expenses.module').then(m => m.OfficeExpensesModule)
+                loadChildren: () => import('./master/office-expenses/office-expenses.module').
+                then(m => m.OfficeExpensesModule)
+            },
+            {
+                path: 'cashbalance',
+                loadChildren: () => import('./reports/cashbalance/cashbalance.module').
+                then(m => m.CashbalanceModule)
             },
             {
                 path: 'serviceReports/:date',
