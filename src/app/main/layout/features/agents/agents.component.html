@@ -1,0 +1,182 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-user" aria-hidden="true"></i>
+                Agents
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Agents</span></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body" style="font-family: Roboto, sans-serif">
+                    <div class="row p-3" style="align-items: center;">
+                        <div class="col-sm-2 form-group mb-0">
+                            <div class="animated-checkbox">
+                                <label class="text-uppercase text-600 font-weight-semi-bold">
+                                    <input type="checkbox" [(ngModel)]="showInvalid" value="false"
+                                           (ngModelChange)="getCount(showInvalid)"
+                                           [ngModelOptions]="{standalone:true}">
+                                    <span class="label-text ls">Show Invalid</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="ls text-uppercase text-600 font-weight-semi-bold">Invalid
+                                count: </label> {{invalidCount || '0'}}
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" [(ngModel)]="query" placeholder="Search by Name"
+                                       aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary btn-sm" aria-label="Small" type="button"
+                                            (click)="getCount(showInvalid)">Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-sm-12 text-right">
+                                <a class="btn btn-sm btn-primary" [routerLink]="['addAgent']">
+                                    <span class="fa fa-plus"></span> New Agent</a>&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export
+                                    Excel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table table-hover text-center dataTable">
+                            <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th [ngClass]="agentsQuery.sortOrder == 'username'? 'headActive' : ''"
+                                    accessKey="username" (click)="clickSorting($event)">User Name
+                                    <i *ngIf="agentsQuery.sortOrder != 'username'" class="fa fa-sort"></i>
+                                    <i *ngIf="agentsQuery.sortOrder == 'username'" class="fa"
+                                       [ngClass]="agentsQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="agentsQuery.sortOrder == 'mobile'? 'headActive' : ''"
+                                    accessKey="mobile" (click)="clickSorting($event)">Mobile
+                                    <i *ngIf="agentsQuery.sortOrder != 'mobile'" class="fa fa-sort"></i>
+                                    <i *ngIf="agentsQuery.sortOrder == 'mobile'" class="fa"
+                                       [ngClass]="agentsQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="agentsQuery.sortOrder == 'landline'? 'headActive' : ''"
+                                    accessKey="landline" (click)="clickSorting($event)">Landline
+                                    <i *ngIf="agentsQuery.sortOrder != 'landline'" class="fa fa-sort"></i>
+                                    <i *ngIf="agentsQuery.sortOrder == 'landline'" class="fa"
+                                       [ngClass]="agentsQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="agentsQuery.sortOrder == 'createdAt'?'headActive' : ''"
+                                    accessKey="createdAt" (click)="clickSorting($event)">Created On
+                                    <i *ngIf="agentsQuery.sortOrder != 'createdAt'" class="fa fa-sort"></i>
+                                    <i *ngIf="agentsQuery.sortOrder == 'createdAt'" class="fa"
+                                       [ngClass]="agentsQuery.orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="agentsQuery.sortOrder == 'agent.attrs.branchName'?'headActive' : ''"
+                                    accessKey="agent.attrs.branchName" (click)="clickSorting($event)">Branch Name
+                                    <i *ngIf="agentsQuery.sortOrder != 'agent.attrs.branchName'" class="fa fa-sort"></i>
+                                    <i *ngIf="agentsQuery.sortOrder == 'agent.attrs.branchName'" class="fa"
+                                       [ngClass]="agentsQuery.orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="agentsQuery.sortOrder == 'agent.commission'?'headActive' : ''"
+                                    accessKey="agent.commission" (click)="clickSorting($event)">Commission
+                                    <i *ngIf="agentsQuery.sortOrder != 'agent.commission'" class="fa fa-sort"></i>
+                                    <i *ngIf="agentsQuery.sortOrder == 'agent.commission'" class="fa"
+                                       [ngClass]="agentsQuery.orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let agent of currentPageOfAgents; let i = index;">
+                                <td>{{(agentsQuery.page - 1) * agentsQuery.size + i + 1}}</td>
+                                <td>{{ agent.username }}</td>
+                                <td>{{ agent.mobile }}</td>
+                                <td>{{ agent.landline }}</td>
+                                <td>{{ agent.createdAt| date }}</td>
+                                <td>{{ agent.attrs.branchName }}</td>
+                                <td>{{ agent.commission }}</td>
+                                <td class="td-active">
+                                    <button type="button"
+                                            class="action-icon-style waves-effect waves-blue edit-user-button"
+                                            title="Edit Agent" [routerLink]="['editAgent/' + agent.id]">
+                                        <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="currentPageOfAgents.length === 0 || !currentPageOfAgents">
+                                <td colspan="7" style="text-align: center">No Agent exist.</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr *ngIf="currentPageOfAgents.length > 0">
+                                <th colspan="8">
+                                    <div class="pull-right">
+                                        Total Count : {{agentsCount || 0}}
+                                    </div>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <div class="form-group">
+                            <div class="list-row" style="display: inline-block">
+                                <ngb-pagination *ngIf="agentsCount || agentsCount !== 0"
+                                                [(page)]="agentsQuery.page"
+                                                [pageSize]="agentsQuery.size"
+                                                [collectionSize]="agentsCount"
+                                                [boundaryLinks]="true"
+                                                (pageChange)="handlePageChange($event)"
+                                                [maxSize]="5">
+                                </ngb-pagination>
+                            </div>
+                            <ul class="pagination pull-right" *ngIf="agentsQuery || agentsQuery !== 0">
+                                <li class="page-item" [ngClass]="size == agentsQuery.size ? 'active' : ''"
+                                    *ngFor="let size of agentsQuery.pageSizes" (click)="handlePageSizeChange(size)">
+                                    <button class="page-link"> {{ size }}
+                                        <span class="sr-only">(current)</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-hover sticky-custom payment-sticky-custom text-center normal-table d-none"
+       id="agentExcelData">
+    <thead>
+    <tr>
+        <th>User Name</th>
+        <th>Mobile Number</th>
+        <th>Lanline Number</th>
+        <th>Created On</th>
+        <th>Branch Name</th>
+        <th>Commission</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let agent of currentPageOfAgents; let i = index;">
+        <td>{{(agentsQuery.page - 1) * agentsQuery.size + i + 1}}</td>
+        <td>{{ agent.username }}</td>
+        <td>{{ agent.mobile }}</td>
+        <td>{{ agent.landline }}</td>
+        <td>{{ agent.createdAt| date }}</td>
+        <td>{{ agent.attrs.branchName }}</td>
+        <td>{{ agent.commission }}</td>
+    </tr>
+    </tbody>
+</table>
+

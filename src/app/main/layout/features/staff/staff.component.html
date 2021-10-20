@@ -1,0 +1,158 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-user" aria-hidden="true"></i>Staff
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Staff</span></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row p-3">
+                        <div class="col-sm-4 form-group"></div>
+                        <div class="col-sm-4 form-group">
+                            <input class="form-control form-control-sm" type="text" [(ngModel)]="searchText"
+                                   placeholder="Search by Name" required
+                                   (ngModelChange)="filterStaff()"
+                                   autocomplete="false">
+                        </div>
+                        <!--                        <div class="col-sm-2 form-group">-->
+                        <!--                            <label class="ls text-600 font-weight-semi-bold checkbox" for="editVaccinatedInput"-->
+                        <!--                                   style="margin-left: 20px">-->
+                        <!--                                <input type="checkbox" id="editVaccinatedInput" class="form-check-input"-->
+                        <!--                                       [(ngModel)]="searchQuery.checkVaccinated"-->
+                        <!--                                       (click)="filterStaffDataByVaccination()">-->
+                        <!--                                Vaccinated-->
+                        <!--                            </label>-->
+                        <!--                        </div>-->
+                        <div class="col-sm-2 form-group">
+                            <div class="animated-checkbox" style="margin-top: 6px">
+                                <label>
+                                    <input type="checkbox" [(ngModel)]="searchQuery.checkVaccinated" value="false"
+                                           (ngModelChange)="filterStaffDataByVaccination()"
+                                           [ngModelOptions]="{standalone:true}">
+                                    <span class="label-text ls">Vaccinated</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="col-sm-12 text-right">
+                                <a class="btn btn-sm btn-primary" [routerLink]="['addStaff']">
+                                    <span class="fa fa-plus"></span> Add Staff</a>&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table table-hover text-center dataTable">
+                            <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th [ngClass]="staffQuery.sortOrder == 's.name'? 'headActive' : ''"
+                                    accessKey="s.name" (click)="clickSorting($event)">Name
+                                    <i *ngIf="staffQuery.sortOrder != 's.name'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 's.name'" class="fa"
+                                       [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="staffQuery.sortOrder == 's.contactNumber'? 'headActive' : ''"
+                                    accessKey="s.contactNumber" (click)="clickSorting($event)">Phone
+                                    <i *ngIf="staffQuery.sortOrder != 's.contactNumber'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 's.contactNumber'" class="fa"
+                                       [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="staffQuery.sortOrder == 's.dlExpiry'? 'headActive' : ''"
+                                    accessKey="s.dlExpiry" (click)="clickSorting($event)">License Expiry
+                                    <i *ngIf="staffQuery.sortOrder != 's.dlExpiry'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 's.dlExpiry'" class="fa"
+                                       [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="staffQuery.sortOrder == 's.type'? 'headActive' : ''"
+                                    accessKey="s.type" (click)="clickSorting($event)">Type
+                                    <i *ngIf="staffQuery.sortOrder != 's.type'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 's.type'" class="fa"
+                                       [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="staffQuery.sortOrder == 's.code'? 'headActive' : ''"
+                                    accessKey="s.code" (click)="clickSorting($event)">Code
+                                    <i *ngIf="staffQuery.sortOrder != 's.code'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 's.code'" class="fa"
+                                       [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                </th>
+                                <th [ngClass]="staffQuery.sortOrder == 's.remarks'? 'headActive' : ''"
+                                    accessKey="s.remarks" (click)="clickSorting($event)">
+                                    <i *ngIf="staffQuery.sortOrder != 's.remarks'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 's.remarks'" class="fa"
+                                       [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let st of staff; let i = index">
+                                <td>{{i + 1}}</td>
+                                <td>{{st.name}}</td>
+                                <td>{{st.contactNumber}}</td>
+                                <td>{{st.dlExpiry}}</td>
+                                <td>{{st.type}}</td>
+                                <td>{{st.code}}</td>
+                                <td>{{st.remarks}}</td>
+                                <td>
+                                    <button type="button"
+                                            class="action-icon-style waves-effect waves-blue edit-user-button"
+                                            title="Edit City" [routerLink]="['editStaff/' + st.id]">
+                                        <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button"
+                                            class="action-icon-style waves-effect waves-blue edit-user-button"
+                                            title="Delete City" (click)="deleteStaff(st.id)">
+                                        <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="staff.length === 0 || !staff">
+                                <td colspan="8" style="text-align: center">No Records Exist.</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr *ngIf="staff.length > 0">
+                                <th colspan="8">
+                                    <div class="pull-right">
+                                        Total Count : {{staffCount || 0}}
+                                    </div>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <div class="form-group">
+                            <div class="list-row" style="display: inline-block">
+                                <ngb-pagination *ngIf="staffQuery.count || staffQuery.count !== 0"
+                                                [(page)]="staffQuery.page"
+                                                [pageSize]="staffQuery.size"
+                                                [collectionSize]="staffCount"
+                                                [boundaryLinks]="true"
+                                                (pageChange)="handlePageChange($event)"
+                                                [maxSize]="5">
+                                </ngb-pagination>
+                            </div>
+                            <ul class="pagination pull-right" *ngIf="staffQuery || staffQuery !== 0">
+                                <li class="page-item" [ngClass]="size == staffQuery.size ? 'active' : ''"
+                                    *ngFor="let size of staffQuery.pageSizes" (click)="handlePageSizeChange(size)">
+                                    <button class="page-link"> {{ size }}
+                                        <span class="sr-only">(current)</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

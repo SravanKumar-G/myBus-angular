@@ -124,6 +124,16 @@ const layOutRoutes: Routes = [
                 then(m => m.ServiceReportByServiceModule)
             },
             {
+                path: 'agents',
+                loadChildren: () => import('./features/agents/agents.module').
+                then(m => m.AgentsModule)
+            },
+            {
+                path: 'staff',
+                loadChildren: () => import('./features/staff/staff.module').
+                then(m => m.StaffModule)
+            },
+          {
                 path: 'officeExpenses',
                 loadChildren: () => import('./master/office-expenses/office-expenses.module').
                 then(m => m.OfficeExpensesModule)
