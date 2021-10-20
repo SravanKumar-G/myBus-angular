@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import Swal from 'sweetalert2';
 // @ts-ignore
 import * as _ from 'underscore';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-service-reports',
@@ -27,11 +28,14 @@ export class ServiceReportsComponent implements OnInit {
     public allStaffDuplicate: Array<any> = [];
     newStaffId: any;
     selectedStaffId: any;
+    public agent: any;
+    public branchOffices: Array<any> = [];
 
     constructor(
         private apiService: ApiServiceService,
         private apiUrls: ApiUrls,
-        private actRoute: ActivatedRoute
+        private actRoute: ActivatedRoute,
+        public modalService: NgbModal
     ) {
         this.serviceId = this.actRoute.snapshot.params.id || '';
     }
@@ -47,11 +51,17 @@ export class ServiceReportsComponent implements OnInit {
         this.getAgentNames();
         this.getSuppliers();
         this.getStaffList();
+        this.loadBranchOffices();
     }
 
     getServiceReport(): void {
         this.apiService.get(this.apiUrls.getServiceReportDetails + this.serviceId).subscribe((res: any) => {
             if (res) {
+                if (res.fuelExpenses.length > 0) {
+                    for (const data of res.fuelExpenses) {
+                        data.journeyDate = new Date(data.journeyDate);
+                    }
+                }
                 this.serviceReportDetails = res;
                 this.countSeats();
             }
@@ -109,8 +119,14 @@ export class ServiceReportsComponent implements OnInit {
         return booking.paymentType === 'CASH';
     }
 
-    editAgent(bookedBy: any): void {
-        console.log(bookedBy);
+    editAgent(bookedBy: any, modal: any): void {
+        let i;
+        for (i = 0; i < this.agents.length; i++){
+            if (this.agents[i].username === bookedBy){
+                this.agent = this.agents[i];
+            }
+        }
+        this.modalService.open(modal);
     }
 
     countSeats(): void {
@@ -333,11 +349,58 @@ export class ServiceReportsComponent implements OnInit {
                 if (res) {
                     Swal.fire('Great', 'The report successfully submitted', 'success');
                     window.history.back();
+                    this.getServiceReport();
                 }
             }, error => {
                 this.serviceReportDetails.status = null;
                 Swal.fire('Oops...', 'Error submitting the report :' + error.data.message, 'error');
             });
         }
+    }
+
+    isDisabled(): any {
+        if (this.serviceReportDetails.status === 'SUBMITTED') {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    closeModal(): void {
+       this.modalService.dismissAll();
+    }
+
+    updateAgent(): void {
+        if (this.agent.id) {
+            this.apiService.update(this.apiUrls.updateAgentName, this.agent).subscribe((res: any) => {
+                if (res) {
+                    Swal.fire('success', 'Agent updated successfully..!', 'success');
+                    this.modalService.dismissAll();
+                    this.agent = {};
+                }
+            }, error => {
+                Swal.fire('error', error.message, 'error');
+            });
+        }else {
+            this.apiService.create(this.apiUrls.addAgent, this.agent).subscribe((res: any) => {
+                if (res) {
+                    Swal.fire('success', 'Agent added successfully..!', 'success');
+                    this.modalService.dismissAll();
+                    this.agent = {};
+                }
+            }, error => {
+                Swal.fire('error', error.message, 'error');
+            });
+        }
+    }
+
+    loadBranchOffices(): void {
+        this.apiService.get(this.apiUrls.loadBranchNames).subscribe((res: any) => {
+            if (res) {
+                this.branchOffices = res;
+            }
+        }, error => {
+            Swal.fire('error', error.message, 'error');
+        });
     }
 }
