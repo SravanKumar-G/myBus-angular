@@ -52,6 +52,8 @@ export class PaymentsComponent implements OnInit {
   public endDate =  new Date();
   public searchPaymentQuery: any = {
     userId: '',
+    typeSelect: '',
+    branchOfficeId: '',
   };
   public SearchError: any;
   public currentUser: any;
@@ -59,7 +61,7 @@ export class PaymentsComponent implements OnInit {
   public selectedPayments: any = [];
   public approvedAndRejected: any;
   public bookingIddetails: any = {};
-
+  expenseTypes = [{key: 'EXPENSE', name: 'Expense'}, {key: 'INCOME', name: 'Income'}];
   constructor(private router: Router,
               public apiService: ApiServiceService,
               private apiUrls: ApiUrls,
