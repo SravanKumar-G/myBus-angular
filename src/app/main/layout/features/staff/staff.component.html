@@ -16,27 +16,18 @@
             <div class="tile">
                 <div class="tile-body">
                     <div class="row p-3">
-                        <div class="col-sm-4 form-group"></div>
+                        <div class="col-sm-5 form-group"></div>
                         <div class="col-sm-4 form-group">
-                            <input class="form-control form-control-sm" type="text" [(ngModel)]="searchText"
+                            <input class="form-control form-control-sm" type="text" [(ngModel)]="staffQuery.searchText"
                                    placeholder="Search by Name" required
-                                   (ngModelChange)="filterStaff()"
+                                   (ngModelChange)="count()"
                                    autocomplete="false">
                         </div>
-                        <!--                        <div class="col-sm-2 form-group">-->
-                        <!--                            <label class="ls text-600 font-weight-semi-bold checkbox" for="editVaccinatedInput"-->
-                        <!--                                   style="margin-left: 20px">-->
-                        <!--                                <input type="checkbox" id="editVaccinatedInput" class="form-check-input"-->
-                        <!--                                       [(ngModel)]="searchQuery.checkVaccinated"-->
-                        <!--                                       (click)="filterStaffDataByVaccination()">-->
-                        <!--                                Vaccinated-->
-                        <!--                            </label>-->
-                        <!--                        </div>-->
-                        <div class="col-sm-2 form-group">
+                        <div class="col-sm-1 form-group">
                             <div class="animated-checkbox" style="margin-top: 6px">
                                 <label>
-                                    <input type="checkbox" [(ngModel)]="searchQuery.checkVaccinated" value="false"
-                                           (ngModelChange)="filterStaffDataByVaccination()"
+                                    <input type="checkbox" [(ngModel)]="staffQuery.byVaccinated"
+                                           (ngModelChange)="count()"
                                            [ngModelOptions]="{standalone:true}">
                                     <span class="label-text ls">Vaccinated</span>
                                 </label>
@@ -44,8 +35,11 @@
                         </div>
                         <div class="col-sm-2">
                             <div class="col-sm-12 text-right">
-                                <a class="btn btn-sm btn-primary" [routerLink]="['addStaff']">
-                                    <span class="fa fa-plus"></span> Add Staff</a>&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export
+                                    Excel
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-sm btn-primary" [routerLink]="['addStaff']">
+                                    <span class="fa fa-plus"></span> Add Staff</button>
                             </div>
                         </div>
                     </div>
@@ -86,7 +80,7 @@
                                        [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                 </th>
                                 <th [ngClass]="staffQuery.sortOrder == 's.remarks'? 'headActive' : ''"
-                                    accessKey="s.remarks" (click)="clickSorting($event)">
+                                    accessKey="s.remarks" (click)="clickSorting($event)">Remarks
                                     <i *ngIf="staffQuery.sortOrder != 's.remarks'" class="fa fa-sort"></i>
                                     <i *ngIf="staffQuery.sortOrder == 's.remarks'" class="fa"
                                        [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
@@ -96,7 +90,7 @@
                             </thead>
                             <tbody>
                             <tr *ngFor="let st of staff; let i = index">
-                                <td>{{i + 1}}</td>
+                                <td>{{(staffQuery.page - 1) * staffQuery.size + i + 1}}</td>
                                 <td>{{st.name}}</td>
                                 <td>{{st.contactNumber}}</td>
                                 <td>{{st.dlExpiry}}</td>
@@ -105,12 +99,12 @@
                                 <td>{{st.remarks}}</td>
                                 <td>
                                     <button type="button"
-                                            class="action-icon-style waves-effect waves-blue edit-user-button"
+                                            class="action-icon-style waves-effect waves-blue edit-user-button text-primary"
                                             title="Edit City" [routerLink]="['editStaff/' + st.id]">
                                         <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
                                     </button>
                                     <button type="button"
-                                            class="action-icon-style waves-effect waves-blue edit-user-button"
+                                            class="action-icon-style waves-effect waves-red delete-user-button text-danger"
                                             title="Delete City" (click)="deleteStaff(st.id)">
                                         <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
                                     </button>
@@ -132,7 +126,7 @@
                         </table>
                         <div class="form-group">
                             <div class="list-row" style="display: inline-block">
-                                <ngb-pagination *ngIf="staffQuery.count || staffQuery.count !== 0"
+                                <ngb-pagination *ngIf="staffCount || staffCount !== 0"
                                                 [(page)]="staffQuery.page"
                                                 [pageSize]="staffQuery.size"
                                                 [collectionSize]="staffCount"
@@ -156,3 +150,27 @@
         </div>
     </div>
 </div>
+<table class="table table-hover sticky-custom payment-sticky-custom text-center normal-table d-none"
+       id="staffExcelData">
+    <thead>
+    <tr>
+        <th>S.No</th>
+        <th>Name</th>
+        <th>Phone Number</th>
+        <th>License Expiry</th>
+        <th>Type</th>
+        <th>Code</th>
+        <th>Remarks</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let st of staff; let i = index">
+        <td>{{(staffQuery.page - 1) * staffQuery.size + i + 1}}</td>
+        <td>{{st.name || 'NA'}}</td>
+        <td>{{st.contactNumber || 'NA'}}</td>
+        <td>{{st.dlExpiry || 'NA'}}</td>
+        <td>{{st.type || 'NA'}}</td>
+        <td>{{st.code || 'NA'}}</td>
+        <td>{{st.remarks || 'NA'}}</td>
+    </tbody>
+</table>

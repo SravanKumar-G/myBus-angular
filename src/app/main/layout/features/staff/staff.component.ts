@@ -21,7 +21,7 @@ export class StaffComponent implements OnInit {
   orderBy = 'asc';
   staffQuery: any = {
     searchText: '',
-    byVaccinated: '',
+    byVaccinated: false,
     page: 1,
     size: 10,
     count: 0,
@@ -44,9 +44,10 @@ export class StaffComponent implements OnInit {
     this.router.navigate(['add-edit-staff', {id: staffId}]);
   }
   count(): void{
-    this.apiService.getAll(this.apiUrls.getStaffCount, {}).subscribe((res: any) => {
+    this.apiService.getAll(this.apiUrls.getStaffCount, this.staffQuery).subscribe((res: any) => {
       if (res || res === 0){
         this.staffCount = res;
+        OnlynumberDirective.pagination(res, this.staffQuery);
         this.getAllStaffList();
       }
 
@@ -58,20 +59,6 @@ export class StaffComponent implements OnInit {
         this.staff = res.content;
       }
     });
-  }
-  filterStaffDataByVaccination(): void{
-    if (!this.searchQuery.checkVaccinated){
-      this.filter.byVaccinated = true;
-    }else{
-      this.filter.byVaccinated = false;
-    }
-    this.count();
-  }
-  filterStaff(): void{
-    if (this.searchText) {
-      this.filter.searchText = this.searchText;
-      this.count();
-    }
   }
   deleteStaff(staffId: any): void {}
   clickSorting(event: any): void {
@@ -88,5 +75,8 @@ export class StaffComponent implements OnInit {
     this.staffQuery.size = event;
     this.staffQuery.page = 1;
     this.count();
+  }
+  exportExcel(): void{
+    this.apiService.exportExcel('staffExcelData', 'Staff', '', '');
   }
 }
