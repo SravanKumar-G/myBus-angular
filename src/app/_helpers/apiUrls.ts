@@ -7,16 +7,14 @@ import {environment} from 'src/environments/environment';
 })
 
 export class ApiUrls {
-    // mainUrl = 'http://localhost:8091/';
+    // mainUrl = 'http://localhost:8081/';
     mainUrl = environment.testPath;
 
 
     getCurrentUser = 'api/v1/user/me';
     getAllUsers = 'api/v1/userNames';
-    getAllStaffList = 'api/v1/staff';
     getAgentNames = 'api/v1/agentNames';
     getSuppliers = 'api/v1/suppliers/';
-    updateAgentName = 'api/v1/agent/update';
 
     // Cancellations API's
     pendingShipmentsCount = 'api/v1/shipment/count/cancellationPendingShipments';
@@ -186,4 +184,7 @@ export class ApiUrls {
     vehiclesList = 'api/v1/vehicles';
     fileUpload = 'api/v1/fileUpload';
     getFile = 'api/v1/getUploads/';
+
+    // Service Reports API's
+     loadServiceReports = 'api/v1/serviceReport/loadReports?travelDate=';
 }

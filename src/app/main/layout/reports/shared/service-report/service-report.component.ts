@@ -8,11 +8,11 @@ import * as _ from 'underscore';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'app-service-reports',
-    templateUrl: './service-reports.component.html',
-    styleUrls: ['./service-reports.component.css']
+    selector: 'app-service-report',
+    templateUrl: './service-report.component.html',
+    styleUrls: ['./service-report.component.css']
 })
-export class ServiceReportsComponent implements OnInit {
+export class ServiceReportComponent implements OnInit {
     private readonly serviceId: any;
     public serviceReportDetails: any = {
         fuelExpenses: [],
@@ -95,7 +95,7 @@ export class ServiceReportsComponent implements OnInit {
     }
 
     getStaffList(): void {
-        this.apiService.get(this.apiUrls.getAllStaffList).subscribe((res: any) => {
+        this.apiService.getAll(this.apiUrls.getStaffList, {}).subscribe((res: any) => {
             if (res) {
                 this.allStaff = res.content;
                 this.allStaffDuplicate = res.content;
@@ -372,7 +372,7 @@ export class ServiceReportsComponent implements OnInit {
 
     updateAgent(): void {
         if (this.agent.id) {
-            this.apiService.update(this.apiUrls.updateAgentName, this.agent).subscribe((res: any) => {
+            this.apiService.update(this.apiUrls.updateAgent, this.agent).subscribe((res: any) => {
                 if (res) {
                     Swal.fire('success', 'Agent updated successfully..!', 'success');
                     this.modalService.dismissAll();
