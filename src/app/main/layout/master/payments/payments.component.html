@@ -328,8 +328,20 @@
                                 </div>
                             </div>
                             <div  class="col-sm-3 form-group">
+                                <label>Select ExpenseType</label>
+                                <ng-select [(ngModel)]="searchPaymentQuery.typeSelect"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bindValue="key"
+                                           bindLabel="name"
+                                           [clearable]="false">
+                                    <ng-option value="" selected>Select Type </ng-option>
+                                    <ng-option *ngFor="let expense of expenseTypes"
+                                               [value]="expense.key">{{expense.name}}</ng-option>
+                                </ng-select>
+                            </div>
+                            <div  class="col-sm-3 form-group">
                                 <label>Branch</label>
-                                <ng-select [(ngModel)]="addPaymentQuery.branchOfficeId"
+                                <ng-select [(ngModel)]="searchPaymentQuery.branchOfficeId"
                                            [ngModelOptions]="{standalone: true}"
                                            bindValue="id"
                                            bindLabel="name"
@@ -365,41 +377,41 @@
                                     <thead>
                                     <tr class="table-bordered">
                                         <th>S.No</th>
-                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'date'? 'headActive' : ''"
+                                        <th [ngClass]="searchPaymentQuery.sortOrder == 'date'? 'headActive' : ''"
                                             accessKey="date">Date
-                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'date'" class="fa fa-sort"></i>
-                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'date'" class="fa"
-                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                            <i *ngIf="searchPaymentQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchPaymentQuery.sortOrder == 'date'" class="fa"
+                                               [ngClass]="searchPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                         </th>
-                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'description'? 'headActive' : ''"
+                                        <th [ngClass]="searchPaymentQuery.sortOrder == 'description'? 'headActive' : ''"
                                             accessKey="description">Description
-                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'description'" class="fa fa-sort"></i>
-                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'description'" class="fa"
-                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                            <i *ngIf="searchPaymentQuery.sortOrder != 'description'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchPaymentQuery.sortOrder == 'description'" class="fa"
+                                               [ngClass]="searchPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                         </th>
-                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                        <th [ngClass]="searchPaymentQuery.sortOrder == 'amount'? 'headActive' : ''"
                                             accessKey="amount">Income
-                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
-                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'amount'" class="fa"
-                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                            <i *ngIf="searchPaymentQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchPaymentQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="searchPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                         </th>
-                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                        <th [ngClass]="searchPaymentQuery.sortOrder == 'amount'? 'headActive' : ''"
                                             accessKey="amount">Expense
-                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
-                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'amount'" class="fa"
-                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                            <i *ngIf="searchPaymentQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchPaymentQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="searchPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                         </th>
-                                        <th [ngClass]="approvedPaymentQuery.sortOrder == 'createdBy'? 'headActive' : ''"
+                                        <th [ngClass]="searchPaymentQuery.sortOrder == 'createdBy'? 'headActive' : ''"
                                             accessKey="createdBy">CreatedBy
-                                            <i *ngIf="approvedPaymentQuery.sortOrder != 'createdBy'" class="fa fa-sort"></i>
-                                            <i *ngIf="approvedPaymentQuery.sortOrder == 'createdBy'" class="fa"
-                                               [ngClass]="approvedPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                            <i *ngIf="searchPaymentQuery.sortOrder != 'createdBy'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchPaymentQuery.sortOrder == 'createdBy'" class="fa"
+                                               [ngClass]="searchPaymentQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr *ngFor="let payments of searchPaymentsList; let i = index">
-                                        <td>{{(approvedPaymentQuery.page-1) * approvedPaymentQuery.size + i + 1}}</td>
+                                        <td>{{(searchPaymentQuery.page-1) * searchPaymentQuery.size + i + 1}}</td>
                                         <td>{{payments.date | date}}</td>
                                         <td>{{payments.description}}</td>
                                         <td><span>{{payments.type =='INCOME' ? payments.amount : 'NA'}}</span></td>

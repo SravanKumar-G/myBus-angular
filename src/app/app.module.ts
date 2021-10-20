@@ -16,6 +16,7 @@ import {SpinnerInterceptor} from './interceptors/spinner.interceptor';
 import {SpinnerComponent} from './spinner/spinner.component';
 import {BsDatepickerModule, DatepickerModule} from 'ngx-bootstrap/datepicker';
 import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {AngularFileUploaderModule} from 'angular-file-uploader';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-b
         ReactiveFormsModule,
         ModalModule,
         HttpClientModule,
+        AngularFileUploaderModule,
         // NoopAnimationsModule,
         BsDatepickerModule.forRoot(),
         DatepickerModule.forRoot(),

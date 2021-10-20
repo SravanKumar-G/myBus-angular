@@ -4,6 +4,7 @@ import {ApiUrls} from '../_helpers/apiUrls';
 import {AuthenticationService} from './authentication.service';
 import {map} from 'rxjs/operators';
 import * as XLSX from 'xlsx';
+import {any} from 'codelyzer/util/function';
 
 @Injectable({
     providedIn: 'root'
@@ -159,6 +160,14 @@ export class ApiServiceService {
         formData.append('documentType', data.documentType);
         formData.append('clientId', data.clientId);
         return this.http.post(this.Apiurls.mainUrl + subUrl, formData);
+    }
+
+    public FileUpload = (subUrl: any, data: any, id: any) => {
+        console.log('7', data[0].name);
+        // formData.append('id', id);
+        // formData.append('type', 'ExpenseType');
+        // formData.append('files[0]', data[0].name);
+        return this.http.post(this.Apiurls.mainUrl + subUrl, data);
     }
 
     public uploadDocument = (subUrl: any, data: any) => {

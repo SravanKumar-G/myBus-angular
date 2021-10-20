@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './layout.component';
 import {CargoDashboardComponent} from './cargo/cargo-dashboard/cargo-dashboard.component';
+import {OfficeExpensesRoutingModule} from './master/office-expenses/office-expenses-routing.module';
+import {OfficeExpensesModule} from './master/office-expenses/office-expenses.module';
 
 const layOutRoutes: Routes = [
     {
@@ -130,6 +132,11 @@ const layOutRoutes: Routes = [
                 path: 'staff',
                 loadChildren: () => import('./features/staff/staff.module').
                 then(m => m.StaffModule)
+            },
+          {
+                path: 'officeExpenses',
+                loadChildren: () => import('./master/office-expenses/office-expenses.module').
+                then(m => m.OfficeExpensesModule)
             }
         ]
     },
