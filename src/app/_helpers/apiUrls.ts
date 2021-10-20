@@ -8,7 +8,6 @@ import {environment} from 'src/environments/environment';
 
 export class ApiUrls {
     // mainUrl = 'http://localhost:8091/';
-    // mainUrl = 'http://cargo.srikrishnatravels.in/';
     mainUrl = environment.testPath;
 
 
@@ -17,6 +16,7 @@ export class ApiUrls {
     getAllStaffList = 'api/v1/staff';
     getAgentNames = 'api/v1/agentNames';
     getSuppliers = 'api/v1/suppliers/';
+    updateAgentName = 'api/v1/agent/update';
 
     // Cancellations API's
     pendingShipmentsCount = 'api/v1/shipment/count/cancellationPendingShipments';
@@ -169,7 +169,7 @@ export class ApiUrls {
     getStaffDetails = 'api/v1/staff/';
     addNewStaff = 'api/v1/staff/create';
     editStaff = 'api/v1/staff/';
-  
+
     // OfficeExpenses
     pendingCount = 'api/v1/officeExpenses/count?pending=true';
     allPending = 'api/v1/officeExpenses/pending';
