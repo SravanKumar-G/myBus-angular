@@ -4311,3 +4311,14 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
     font-weight: 400;
     font-size: 13px;
 }
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.flex-container>div {
+    padding: 0 10px;
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 4px;*/
+}
