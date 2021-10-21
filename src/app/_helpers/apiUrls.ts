@@ -7,8 +7,8 @@ import {environment} from 'src/environments/environment';
 })
 
 export class ApiUrls {
-    // mainUrl = 'http://localhost:8091/';
-    mainUrl = environment.testPath;
+    mainUrl = 'http://lrapi.srikrishnatravels.in/';
+    //mainUrl = environment.testPath;
 
 
     getCurrentUser = 'api/v1/user/me';
