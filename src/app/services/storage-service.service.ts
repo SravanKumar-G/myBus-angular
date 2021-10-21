@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class StorageServiceService {
 
   public static serviceIncomeFilters: any = {};
+  public static serviceReportsByDate: any = {};
   constructor() { }
 
   static setIncomeFilters(value: any): any {
@@ -14,5 +15,13 @@ export class StorageServiceService {
 
   static getIncomeFilters(): any {
     return this.serviceIncomeFilters;
+  }
+
+  static setServiceReports(value: any): any {
+    this.serviceReportsByDate = value;
+  }
+
+  static getServiceReports(): any {
+    return this.serviceReportsByDate;
   }
 }
