@@ -7,6 +7,7 @@ export class StorageServiceService {
 
   public static serviceIncomeFilters: any = {};
   public static serviceReportsByDate: any = {};
+  public static tab = 1;
   constructor() { }
 
   static setIncomeFilters(value: any): any {
@@ -21,7 +22,11 @@ export class StorageServiceService {
     this.serviceReportsByDate = value;
   }
 
-  static getServiceReports(): any {
-    return this.serviceReportsByDate;
+  static setTabValue(value: any): any {
+    this.tab = value;
+  }
+
+  static getTabValue(): any {
+    return this.tab;
   }
 }

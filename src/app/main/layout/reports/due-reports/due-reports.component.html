@@ -1,0 +1,54 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i>
+                Due Reports
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Due Reports</span></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row form-group">
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th scope="col" [appFrentendSort]="currentPageOfDues"
+                                             data-order="desc" data-name="name">Name<i class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="currentPageOfDues"
+                                            data-order="desc" data-name="cashBalance">Cash Balance<i class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="currentPageOfDues"
+                                            data-order="desc" data-name="totalDue">Total Due<i class="fa fa-sort"></i></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let dueReport of currentPageOfDues; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td><a class="cus-a" (click)="goToDueReport(dueReport.branchOfficeId)">{{ dueReport.name }}</a></td>
+                                        <td><a class="cus-a" (click)="gotoPayments()"> {{ dueReport.cashBalance | number }}</a></td>
+                                        <td><a class="cus-a" (click)="goToDueReport(dueReport.branchOfficeId)">{{ dueReport.totalDue | numberFormatter}}</a></td>
+                                    </tr>
+                                    <tr *ngIf="!currentPageOfDues || currentPageOfDues.length === 0">
+                                        <td colspan="5">No reports exist. </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
