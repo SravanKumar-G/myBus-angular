@@ -367,6 +367,7 @@ export class ServiceReportComponent implements OnInit {
                         if (res) {
                             Swal.fire('Great', 'The report successfully submitted', 'success');
                             this.getServiceReport();
+                            this.apiService.getLoggedInUserData();
                         }
                     }, error => {
                         this.serviceReportDetails.status = null;

@@ -150,6 +150,12 @@ const layOutRoutes: Routes = [
                 path: 'dueReports',
                 loadChildren: () => import('./reports/due-reports/due-reports.module')
                     .then(m => m.DueReportsModule)
+
+            },
+            {
+                path: 'update-password',
+                loadChildren: () => import('./profile/update-password/update-password.module').
+                then(m => m.UpdatePasswordModule)
             }
         ]
     },
