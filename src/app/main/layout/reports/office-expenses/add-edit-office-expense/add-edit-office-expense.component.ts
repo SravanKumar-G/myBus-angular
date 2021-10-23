@@ -131,6 +131,7 @@ export class AddEditOfficeExpenseComponent implements OnInit {
           this.apiService.update(this.apiUrls.editExpense, this.addExpenseQuery).subscribe((res: any) => {
             if (res){
                 this.addExpenseQuery = res;
+                this.apiService.getLoggedInUserData();
                 this.router.navigate(['officeExpenses']);
             }
          }, error => {
@@ -140,6 +141,7 @@ export class AddEditOfficeExpenseComponent implements OnInit {
           this.apiService.getAll(this.apiUrls.addExpense, this.addExpenseQuery).subscribe((res: any) => {
               if (res){
                   this.addExpenseQuery = res;
+                  this.apiService.getLoggedInUserData();
                   this.router.navigate(['officeExpenses']);
               }
           }, error => {

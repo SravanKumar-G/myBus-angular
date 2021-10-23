@@ -280,6 +280,7 @@ export class OfficeExpensesComponent implements OnInit {
     this.apiService.getAll(this.apiUrls.approveOrRejectStatus + status, this.selectedOfficeExpenses).subscribe((res: any) => {
       if (res){
         this.approvedAndRejected = res.data;
+        this.apiService.getLoggedInUserData();
         this.changeOfficeExpenseTab(2);
       }
     });

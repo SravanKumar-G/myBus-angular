@@ -52,6 +52,7 @@ export class ShowDuePaymentSummaryComponent implements OnInit {
                             }
                             Swal.fire('Done!', 'Payment done successfully', 'success');
                             this.modalService.open(modal, {size: 'lg', backdrop: 'static'});
+                            this.apiService.getLoggedInUserData();
                         }
                     });
                 }

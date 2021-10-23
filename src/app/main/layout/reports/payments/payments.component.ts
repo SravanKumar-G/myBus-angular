@@ -246,6 +246,7 @@ export class PaymentsComponent implements OnInit {
           Swal.fire('Great', 'Your Payment has been updated successfully', 'success');
           this.closeModal();
           this.getPendingPaymentCount();
+          this.apiService.getLoggedInUserData();
         }
       }, error => {
         this.errorMessage = error.message;
@@ -256,6 +257,7 @@ export class PaymentsComponent implements OnInit {
           Swal.fire('Great', 'Your Payment has been successfully added', 'success');
           this.closeModal();
           this.getPendingPaymentCount();
+          this.apiService.getLoggedInUserData();
         }
       }, error => {
         this.errorMessage = error.message;
@@ -355,6 +357,7 @@ export class PaymentsComponent implements OnInit {
     this.apiService.update(this.apiUrls.verifyPayment + paymentId, {}).subscribe((res: any) => {
       if (res){
           this.paymentsVerify = res.data;
+          this.apiService.getLoggedInUserData();
           this.changePaymentsTab(1);
       }
     });
@@ -374,6 +377,7 @@ export class PaymentsComponent implements OnInit {
     this.apiService.getAll(this.apiUrls.approveOrReject + status, this.selectedPayments).subscribe((res: any) => {
       if (res){
         this.approvedAndRejected = res.data;
+        this.apiService.getLoggedInUserData();
         this.changePaymentsTab(2);
       }
     });

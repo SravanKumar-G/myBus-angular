@@ -7,7 +7,7 @@ export class NumberFormatterPipe implements PipeTransform {
 
   // @ts-ignore
   transform(value: any, args?: any): string{
-    if (value) {   // value < 999999
+    if (value < 9999999) {   // value < 999999
       const formatter = new Intl.NumberFormat('en-IN', {
         minimumFractionDigits: 2,
       });

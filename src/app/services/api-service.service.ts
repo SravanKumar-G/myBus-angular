@@ -4,7 +4,7 @@ import {ApiUrls} from '../_helpers/apiUrls';
 import {AuthenticationService} from './authentication.service';
 import {map} from 'rxjs/operators';
 import * as XLSX from 'xlsx';
-import {any} from 'codelyzer/util/function';
+import {BroadcastService} from './broadcast.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,10 +14,12 @@ export class ApiServiceService {
     public fileName: any;
     public months: ['January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'] | undefined;
+    private currentUserDetails: any;
 
     constructor(private http: HttpClient,
                 public Apiurls: ApiUrls,
-                public authenticationService: AuthenticationService) {
+                public authenticationService: AuthenticationService,
+                public service: BroadcastService) {
         this.authenticationService.currentUser.subscribe((userDetails: any) => {
             if (userDetails) {
                 this.currentUser = userDetails;
@@ -109,6 +111,13 @@ export class ApiServiceService {
         } else {
             return key as string;
         }
+    }
+
+    getLoggedInUserData(): void {
+        this.http.get(this.Apiurls.mainUrl + 'api/v1/user/me').subscribe((res: any) => {
+            this.currentUserDetails = res;
+            this.service.setActiveCompany(res);
+        });
     }
 
 
