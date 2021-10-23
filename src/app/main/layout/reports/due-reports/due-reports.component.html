@@ -35,7 +35,7 @@
                                     <tr *ngFor="let dueReport of currentPageOfDues; let i = index;">
                                         <td>{{i + 1}}</td>
                                         <td><a class="cus-a" (click)="goToDueReport(dueReport.branchOfficeId)">{{ dueReport.name }}</a></td>
-                                        <td><a class="cus-a" (click)="gotoPayments()"> {{ dueReport.cashBalance | numberFormatter }}</a></td>
+                                        <td><a class="cus-a" (click)="gotoPayments()"> {{ dueReport.cashBalance | number }}</a></td>
                                         <td><a class="cus-a" (click)="goToDueReport(dueReport.branchOfficeId)">{{ dueReport.totalDue | numberFormatter}}</a></td>
                                     </tr>
                                     <tr *ngIf="!currentPageOfDues || currentPageOfDues.length === 0">

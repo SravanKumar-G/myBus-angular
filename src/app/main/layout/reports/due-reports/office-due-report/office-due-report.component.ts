@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import * as _ from 'underscore';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {StorageServiceService} from '../../../../../services/storage-service.service';
-import {isEmptyObject} from 'jquery';
 
 @Component({
     selector: 'app-office-due-report',
@@ -50,7 +49,6 @@ export class OfficeDueReportComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(StorageServiceService.getTabValue());
         this.tab = StorageServiceService.getTabValue();
         this.changeTab(this.tab);
         this.currentUser = JSON.parse(localStorage.getItem('currentUserDetails') as string);
@@ -83,6 +81,8 @@ export class OfficeDueReportComponent implements OnInit {
             if (data) {
                 this.dueReportByDate = data;
             }
+        }, error => {
+            Swal.fire('error', error.message, 'error');
         });
     }
 
@@ -91,6 +91,8 @@ export class OfficeDueReportComponent implements OnInit {
             if (data) {
                 this.dueReportByService = data;
             }
+        }, error => {
+            Swal.fire('error', error.message, 'error');
         });
     }
 
@@ -99,6 +101,8 @@ export class OfficeDueReportComponent implements OnInit {
             if (data) {
                 this.dueReportByAgents = data;
             }
+        }, error => {
+            Swal.fire('error', error.message, 'error');
         });
     }
 
@@ -108,7 +112,7 @@ export class OfficeDueReportComponent implements OnInit {
                 this.branchOffices = res;
             }
         }, error => {
-
+            Swal.fire('error', error.message, 'error');
         });
     }
 
@@ -126,20 +130,9 @@ export class OfficeDueReportComponent implements OnInit {
                     this.totalDue += data.netAmt;
                 }
             }
+        }, error => {
+            Swal.fire('error', error.message, 'error');
         });
-    }
-
-    showDueReportByDate(date: string): void {
-        console.log(date);
-        this.router.navigate(['officeDueReport/officeDueReportByDate/' + date]);
-    }
-
-    showDueReportByService(id: any): void {
-        console.log(id);
-    }
-
-    showDueReportByAgent(agentName: any): void {
-        this.router.navigate(['officeDueReportByAgent/' + agentName]);
     }
 
     searchDataExportToExcel(): void {
