@@ -144,8 +144,9 @@ export class NewBookingComponent implements OnInit {
         } else {
             this.apiService.create(this.apiUrls.saveNewCargoBooking, this.newBooking).subscribe((res: any) => {
                 if (res) {
-                    Swal.fire('success', 'Cargo booking added Succesfully..!', 'success');
+                    Swal.fire('success', 'Cargo booking added Successfully..!', 'success');
                     this.router.navigate(['cargoBookings']);
+                    this.apiService.getLoggedInUserData();
                 }
             }, error => {
                 this.errorMessage = error.message;
