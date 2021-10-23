@@ -92,9 +92,9 @@ export class ViewCargoBookingComponent implements OnInit {
                         + bookingId, data)
                         .subscribe((response: any) => {
                             if (response) {
-                                Swal.fire('Great!', response.shipmentNumber + ' has been delivered', 'success');
+                                Swal.fire('Great!', response.shipmentNumber + ' has been delivered.', 'success');
                                 // this.router.navigate(['cargoBookings']);
-                                window.location.reload();
+                                this.apiService.getLoggedInUserData();
                             }
                         }, (error) => {
                             Swal.showValidationMessage(
