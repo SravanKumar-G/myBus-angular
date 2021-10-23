@@ -16,14 +16,13 @@
             <div class="tile">
                 <div class="tile-body">
                     <div class="row p-3">
-                        <div class="col-sm-5 form-group"></div>
                         <div class="col-sm-4 form-group">
                             <input class="form-control form-control-sm" type="text" [(ngModel)]="staffQuery.searchText"
                                    placeholder="Search by Name" required
                                    (ngModelChange)="count()"
                                    autocomplete="false">
                         </div>
-                        <div class="col-sm-1 form-group">
+                        <div class="col-sm-2 form-group">
                             <div class="animated-checkbox" style="margin-top: 6px">
                                 <label>
                                     <input type="checkbox" [(ngModel)]="staffQuery.byVaccinated"
@@ -33,14 +32,12 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-sm-2">
-                            <div class="col-sm-12 text-right">
+                        <div class="col-sm-3 offset-3 text-right">
                                 <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export
                                     Excel
                                 </button>&nbsp;&nbsp;&nbsp;
-                                <button class="btn btn-sm btn-primary" [routerLink]="['addStaff']">
+                                <button class="btn btn-sm btn-success" [routerLink]="['addStaff']">
                                     <span class="fa fa-plus"></span> Add Staff</button>
-                            </div>
                         </div>
                     </div>
 
@@ -49,40 +46,40 @@
                             <thead>
                             <tr>
                                 <th>S.No</th>
-                                <th [ngClass]="staffQuery.sortOrder == 's.name'? 'headActive' : ''"
-                                    accessKey="s.name" (click)="clickSorting($event)">Name
-                                    <i *ngIf="staffQuery.sortOrder != 's.name'" class="fa fa-sort"></i>
-                                    <i *ngIf="staffQuery.sortOrder == 's.name'" class="fa"
+                                <th [ngClass]="staffQuery.sortOrder == 'name'? 'headActive' : ''"
+                                    accessKey="name" (click)="clickSorting($event)">Name
+                                    <i *ngIf="staffQuery.sortOrder != 'name'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 'name'" class="fa"
                                        [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                 </th>
-                                <th [ngClass]="staffQuery.sortOrder == 's.contactNumber'? 'headActive' : ''"
-                                    accessKey="s.contactNumber" (click)="clickSorting($event)">Phone
-                                    <i *ngIf="staffQuery.sortOrder != 's.contactNumber'" class="fa fa-sort"></i>
-                                    <i *ngIf="staffQuery.sortOrder == 's.contactNumber'" class="fa"
+                                <th [ngClass]="staffQuery.sortOrder == 'contactNumber'? 'headActive' : ''"
+                                    accessKey="contactNumber" (click)="clickSorting($event)">Phone
+                                    <i *ngIf="staffQuery.sortOrder != 'contactNumber'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 'contactNumber'" class="fa"
                                        [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                 </th>
-                                <th [ngClass]="staffQuery.sortOrder == 's.dlExpiry'? 'headActive' : ''"
-                                    accessKey="s.dlExpiry" (click)="clickSorting($event)">License Expiry
-                                    <i *ngIf="staffQuery.sortOrder != 's.dlExpiry'" class="fa fa-sort"></i>
-                                    <i *ngIf="staffQuery.sortOrder == 's.dlExpiry'" class="fa"
+                                <th [ngClass]="staffQuery.sortOrder == 'dlExpiry'? 'headActive' : ''"
+                                    accessKey="dlExpiry" (click)="clickSorting($event)">License Expiry
+                                    <i *ngIf="staffQuery.sortOrder != 'dlExpiry'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 'dlExpiry'" class="fa"
                                        [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                 </th>
-                                <th [ngClass]="staffQuery.sortOrder == 's.type'? 'headActive' : ''"
-                                    accessKey="s.type" (click)="clickSorting($event)">Type
-                                    <i *ngIf="staffQuery.sortOrder != 's.type'" class="fa fa-sort"></i>
-                                    <i *ngIf="staffQuery.sortOrder == 's.type'" class="fa"
+                                <th [ngClass]="staffQuery.sortOrder == 'type'? 'headActive' : ''"
+                                    accessKey="type" (click)="clickSorting($event)">Type
+                                    <i *ngIf="staffQuery.sortOrder != 'type'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 'type'" class="fa"
                                        [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                 </th>
-                                <th [ngClass]="staffQuery.sortOrder == 's.code'? 'headActive' : ''"
-                                    accessKey="s.code" (click)="clickSorting($event)">Code
-                                    <i *ngIf="staffQuery.sortOrder != 's.code'" class="fa fa-sort"></i>
-                                    <i *ngIf="staffQuery.sortOrder == 's.code'" class="fa"
+                                <th [ngClass]="staffQuery.sortOrder == 'code'? 'headActive' : ''"
+                                    accessKey="code" (click)="clickSorting($event)">Code
+                                    <i *ngIf="staffQuery.sortOrder != 'code'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 'code'" class="fa"
                                        [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                 </th>
-                                <th [ngClass]="staffQuery.sortOrder == 's.remarks'? 'headActive' : ''"
-                                    accessKey="s.remarks" (click)="clickSorting($event)">Remarks
-                                    <i *ngIf="staffQuery.sortOrder != 's.remarks'" class="fa fa-sort"></i>
-                                    <i *ngIf="staffQuery.sortOrder == 's.remarks'" class="fa"
+                                <th [ngClass]="staffQuery.sortOrder == 'remarks'? 'headActive' : ''"
+                                    accessKey="remarks" (click)="clickSorting($event)">Remarks
+                                    <i *ngIf="staffQuery.sortOrder != 'remarks'" class="fa fa-sort"></i>
+                                    <i *ngIf="staffQuery.sortOrder == 'remarks'" class="fa"
                                        [ngClass]="staffQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                 </th>
                                 <th>Action</th>
@@ -91,12 +88,12 @@
                             <tbody>
                             <tr *ngFor="let st of staff; let i = index">
                                 <td>{{(staffQuery.page - 1) * staffQuery.size + i + 1}}</td>
-                                <td>{{st.name}}</td>
-                                <td>{{st.contactNumber}}</td>
-                                <td>{{st.dlExpiry}}</td>
-                                <td>{{st.type}}</td>
-                                <td>{{st.code}}</td>
-                                <td>{{st.remarks}}</td>
+                                <td>{{st.name || 'NA'}}</td>
+                                <td>{{st.contactNumber || 'NA'}}</td>
+                                <td>{{st.dlExpiry || 'NA'}}</td>
+                                <td>{{st.type || 'NA'}}</td>
+                                <td>{{st.code || 'NA'}}</td>
+                                <td>{{st.remarks || 'NA'}}</td>
                                 <td>
                                     <button type="button"
                                             class="action-icon-style waves-effect waves-blue edit-user-button text-primary"

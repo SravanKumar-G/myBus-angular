@@ -206,4 +206,8 @@ export class ApiUrls {
     officeDuesByDate = 'api/v1/dueReport/office/';
     officeDuesByService = 'api/v1/dueReport/dueBookingByService/';
     officeDuesByAgent = 'api/v1/dueReport/officeDuesByAgent/';
+
+    // Update Password
+    updatePassword = 'api/v1/user/updatePassword';
+
 }

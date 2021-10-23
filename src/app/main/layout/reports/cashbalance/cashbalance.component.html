@@ -16,7 +16,6 @@
             <div class="tile">
                 <div class="tile-body">
                     <div class="row" style="align-items: center">
-                        <div class="col-sm-6"></div>
                         <div class="col-sm-4 form-group">
                             <label class="control-label">By Branch Office:</label>
                             <ng-select
@@ -32,7 +31,7 @@
                                            [value]="office.id">{{office.name}}</ng-option>
                             </ng-select>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-2 offset-6 text-right">
                             <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export Excel</button>
                         </div>
                     </div>
@@ -59,7 +58,7 @@
                         </tr>
                         </tbody>
                         <tfoot>
-                        <tr *ngIf="currentPageOfUsers.length > 0">
+                        <tr *ngIf="cashBalanceArray.length > 0">
                             <th colspan="5">
                                 <div class="pull-right">
                                     Total Count : {{cashCount || 0}}

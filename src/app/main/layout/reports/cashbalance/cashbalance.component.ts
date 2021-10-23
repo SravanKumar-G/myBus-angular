@@ -13,7 +13,7 @@ export class CashbalanceComponent implements OnInit {
   public cashBal: any = {};
   public cashBalanceArray: Array<any> = [];
   public currentPageOfUsers: Array<any> = [];
-  public cashCount: any;
+  public cashCount: any = 0;
   sortOrder = 'name';
   orderBy = 'asc';
   public cashQuery: any = {
@@ -47,6 +47,7 @@ export class CashbalanceComponent implements OnInit {
         this.cashBalanceArray = res;
         this.currentPageOfUsers = res;
         this.cashCount = res.length;
+        console.log(this.cashCount);
       }
     });
   }
