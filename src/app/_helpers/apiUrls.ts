@@ -146,13 +146,13 @@ export class ApiUrls {
     serviceReportByServiceId = 'api/v1/serviceReport/serviceIncomeReportDaily';
 
     // Service Form API's
-     getDetailsByFormId = 'api/v1/serviceForm/';
+    getDetailsByFormId = 'api/v1/serviceForm/';
 
 
-     // Service Report API's
-     getServiceReportDetails = 'api/v1/serviceReport/';
-     updateVehicleRegNo = 'api/v1/vehicle/odometerReading/';
-     submitReport = 'api/v1/serviceReport/';
+    // Service Report API's
+    getServiceReportDetails = 'api/v1/serviceReport/';
+    updateVehicleRegNo = 'api/v1/vehicle/odometerReading/';
+    submitReport = 'api/v1/serviceReport/';
 
     // Agents API's
     getAllAgents = 'api/v1/agents';
@@ -192,6 +192,18 @@ export class ApiUrls {
      loadServiceReports = 'api/v1/serviceReport/loadReports?travelDate=';
 
      // invoices
-
     searchInvoice = 'api/v1/invoice/search';
+
+    // Due Reports API's
+    loadDueReports = 'api/v1/dueReports';
+    loadOfficeDueReportByDate = 'api/v1/dueReport/office/';
+    loadOfficeDueReportByService = 'api/v1/dueReport/officeDuesByService';
+    loadOfficeDueReportByAgents = 'api/v1/dueReport/officeDuesByAgent';
+    searchDueReports = 'api/v1/dueReport/search';
+    searchByPNR = 'api/v1/dueReport/searchByPNR?';
+    payBookingDue = 'api/v1/dueReport/payBookingDue/';
+    payBookingDues = 'api/v1/dueReport/payBookingDues/';
+    officeDuesByDate = 'api/v1/dueReport/office/';
+    officeDuesByService = 'api/v1/dueReport/dueBookingByService/';
+    officeDuesByAgent = 'api/v1/dueReport/officeDuesByAgent/';
 }
