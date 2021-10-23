@@ -13,6 +13,7 @@ import { CargoLookUpComponent } from './cargo/cargo-look-up/cargo-look-up.compon
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PipeFilterPipe} from '../../customDirectives/pipes/pipe-filter.pipe';
 
+
 @NgModule({
     declarations: [
         LayoutComponent,

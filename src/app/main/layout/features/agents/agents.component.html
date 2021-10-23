@@ -17,6 +17,17 @@
             <div class="tile">
                 <div class="tile-body" style="font-family: Roboto, sans-serif">
                     <div class="row p-3" style="align-items: center;">
+                        <div class="col-sm-4">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" [(ngModel)]="query" placeholder="Search by Name"
+                                       aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary btn-sm" aria-label="Small" type="button"
+                                            (click)="getCount(showInvalid)">Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-sm-2 form-group mb-0">
                             <div class="animated-checkbox">
                                 <label class="text-uppercase text-600 font-weight-semi-bold">
@@ -31,25 +42,14 @@
                             <label class="ls text-uppercase text-600 font-weight-semi-bold">Invalid
                                 count: </label> {{invalidCount || '0'}}
                         </div>
-                        <div class="col-sm-4">
-                            <div class="input-group input-group-sm">
-                                <input type="text" class="form-control" [(ngModel)]="query" placeholder="Search by Name"
-                                       aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-secondary btn-sm" aria-label="Small" type="button"
-                                            (click)="getCount(showInvalid)">Search
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="col-sm-12 text-right">
-                                <a class="btn btn-sm btn-primary" [routerLink]="['addAgent']">
+                        <div class="col-sm-4 text-right">
+<!--                            <div class="col-sm-12 text-right">-->
+                                <a class="btn btn-sm btn-success" [routerLink]="['addAgent']">
                                     <span class="fa fa-plus"></span> New Agent</a>&nbsp;&nbsp;&nbsp;
                                 <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export
                                     Excel
                                 </button>
-                            </div>
+<!--                            </div>-->
                         </div>
                     </div>
                     <div class="col-sm-12 table-responsive">
@@ -99,12 +99,12 @@
                             <tbody>
                             <tr *ngFor="let agent of currentPageOfAgents; let i = index;">
                                 <td>{{(agentsQuery.page - 1) * agentsQuery.size + i + 1}}</td>
-                                <td>{{ agent.username }}</td>
-                                <td>{{ agent.mobile }}</td>
-                                <td>{{ agent.landline }}</td>
-                                <td>{{ agent.createdAt| date }}</td>
-                                <td>{{ agent.attrs.branchName }}</td>
-                                <td>{{ agent.commission }}</td>
+                                <td>{{ agent.username || 'NA' }}</td>
+                                <td>{{ agent.mobile || 'NA'}}</td>
+                                <td>{{ agent.landline || 'NA' }}</td>
+                                <td>{{ agent.createdAt| date}}</td>
+                                <td>{{ agent.attrs.branchName || 'NA' }}</td>
+                                <td>{{ agent.commission || 'NA'}}</td>
                                 <td class="td-active">
                                     <button type="button"
                                             class="action-icon-style waves-effect waves-blue edit-user-button"
