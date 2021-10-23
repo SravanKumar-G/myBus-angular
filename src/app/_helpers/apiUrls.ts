@@ -190,4 +190,8 @@ export class ApiUrls {
 
     // Service Reports API's
      loadServiceReports = 'api/v1/serviceReport/loadReports?travelDate=';
+
+     // invoices
+
+    searchInvoice = 'api/v1/invoice/search';
 }

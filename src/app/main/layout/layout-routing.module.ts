@@ -4,6 +4,7 @@ import {LayoutComponent} from './layout.component';
 import {CargoDashboardComponent} from './cargo/cargo-dashboard/cargo-dashboard.component';
 import {OfficeExpensesRoutingModule} from './master/office-expenses/office-expenses-routing.module';
 import {OfficeExpensesModule} from './master/office-expenses/office-expenses.module';
+import {InvoiceModule} from './reports/invoice/invoice.module';
 
 const layOutRoutes: Routes = [
     {
@@ -123,7 +124,12 @@ const layOutRoutes: Routes = [
             {
                 path: 'serviceReports/:date',
                 loadChildren: () => import('./reports/service-reports/service-reports.module').then(m => m.ServiceReportsModule)
-            }
+            },
+            {
+                path: 'invoices',
+                loadChildren: () => import('./reports/invoice/invoice.module').then(m => m.InvoiceModule)
+            },
+
         ]
     },
     {path: '', pathMatch: 'full', component: CargoDashboardComponent}];
