@@ -2,8 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './layout.component';
 import {CargoDashboardComponent} from './cargo/cargo-dashboard/cargo-dashboard.component';
-import {OfficeExpensesRoutingModule} from './master/office-expenses/office-expenses-routing.module';
-import {OfficeExpensesModule} from './master/office-expenses/office-expenses.module';
 
 const layOutRoutes: Routes = [
     {
@@ -12,15 +10,18 @@ const layOutRoutes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('./cargo/cargo-dashboard/cargo-dashboard.module').then(m => m.CargoDashboardModule)
+                loadChildren: () => import('./cargo/cargo-dashboard/cargo-dashboard.module')
+                    .then(m => m.CargoDashboardModule)
             },
             {
                 path: 'operatorAccounts',
-                loadChildren: () => import('./master/operator-accounts/operator-accounts.module').then(m => m.OperatorAccountsModule)
+                loadChildren: () => import('./master/operator-accounts/operator-accounts.module')
+                    .then(m => m.OperatorAccountsModule)
             },
             {
                 path: 'cancellations',
-                loadChildren: () => import('./cargo/cargo-cancellations/cargo-cancellations.module').then(m => m.CargoCancellationsModule)
+                loadChildren: () => import('./cargo/cargo-cancellations/cargo-cancellations.module')
+                    .then(m => m.CargoCancellationsModule)
             },
             {
                 path: 'cities',
@@ -28,7 +29,8 @@ const layOutRoutes: Routes = [
             },
             {
                 path: 'branchOffices',
-                loadChildren: () => import('./master/branch-offices/branch-offices.module').then(m => m.BranchOfficesModule)
+                loadChildren: () => import('./master/branch-offices/branch-offices.module')
+                    .then(m => m.BranchOfficesModule)
             },
             {
                 path: 'roles',
@@ -48,71 +50,87 @@ const layOutRoutes: Routes = [
             },
             {
                 path: 'transactions',
-                loadChildren: () => import('./master/transactions/transactions.module').then(m => m.TransactionsModule)
+                loadChildren: () => import('./reports/transactions/transactions.module')
+                    .then(m => m.TransactionsModule)
             },
             {
                 path: 'payments',
-                loadChildren: () => import('./master/payments/payments.module').then(m => m.PaymentsModule)
+                loadChildren: () => import('./reports/payments/payments.module')
+                    .then(m => m.PaymentsModule)
             },
             {
                 path: 'manageRoles',
-                loadChildren: () => import('./master/manage-roles/manage-roles.module').then(m => m.ManageRolesModule)
+                loadChildren: () => import('./master/manage-roles/manage-roles.module')
+                    .then(m => m.ManageRolesModule)
             },
             {
                 path: 'newBooking',
-                loadChildren: () => import('./cargo/new-booking/new-booking.module').then(m => m.NewBookingModule)
+                loadChildren: () => import('./cargo/new-booking/new-booking.module')
+                    .then(m => m.NewBookingModule)
             },
             {
                 path: 'suppliers',
-                loadChildren: () => import('./master/suppliers/suppliers.module').then(m => m.SuppliersModule)
+                loadChildren: () => import('./master/suppliers/suppliers.module')
+                    .then(m => m.SuppliersModule)
             },
             {
                 path: 'cargoBookings',
-                loadChildren: () => import('./cargo/cargo-bookings/cargo-bookings.module').then(m => m.CargoBookingsModule)
+                loadChildren: () => import('./cargo/cargo-bookings/cargo-bookings.module')
+                    .then(m => m.CargoBookingsModule)
             },
             {
                 path: 'viewCargoBooking/:id',
-                loadChildren: () => import('./cargo/view-cargo-booking/view-cargo-booking.module').then(m => m.ViewCargoBookingModule)
+                loadChildren: () => import('./cargo/view-cargo-booking/view-cargo-booking.module')
+                    .then(m => m.ViewCargoBookingModule)
             },
             {
                 path: 'branchBookingSummary',
-                loadChildren: () => import('./cargo/branch-booking-summary/branch-booking-summary.module').then(m => m.BranchBookingSummaryModule)
+                loadChildren: () => import('./cargo/branch-booking-summary/branch-booking-summary.module')
+                    .then(m => m.BranchBookingSummaryModule)
             },
             {
                 path: 'loadingSheet',
-                loadChildren: () => import('./cargo/loading-sheet/loading-sheet.module').then(m => m.LoadingSheetModule)
+                loadChildren: () => import('./cargo/loading-sheet/loading-sheet.module')
+                    .then(m => m.LoadingSheetModule)
             },
             {
                 path: 'unloadingSheet',
-                loadChildren: () => import('./cargo/unloading-sheet/unloading-sheet.module').then(m => m.UnloadingSheetModule)
+                loadChildren: () => import('./cargo/unloading-sheet/unloading-sheet.module')
+                    .then(m => m.UnloadingSheetModule)
             },
             {
                 path: 'deliverySheet',
-                loadChildren: () => import('./cargo/delivery-sheet/delivery-sheet.module').then(m => m.DeliverySheetModule)
+                loadChildren: () => import('./cargo/delivery-sheet/delivery-sheet.module')
+                    .then(m => m.DeliverySheetModule)
             },
             {
                 path: 'cargoTripSheet',
-                loadChildren: () => import('./cargo/trip-sheet/trip-sheet.module').then(m => m.TripSheetModule)
+                loadChildren: () => import('./cargo/trip-sheet/trip-sheet.module')
+                    .then(m => m.TripSheetModule)
             },
             {
                 path: 'serviceIncomeReport',
-                loadChildren: () => import('./reports/service-income-report/service-income-report.module').then(m => m.ServiceIncomeReportModule)
+                loadChildren: () => import('./reports/service-income-report/service-income-report.module')
+                    .then(m => m.ServiceIncomeReportModule)
             },
             {
                 path: 'serviceReportByService/:id',
-                loadChildren: () => import('./reports/service-report-by-service/service-report-by-service.module').then(m => m.ServiceReportByServiceModule)
+                loadChildren: () => import('./reports/service-report-by-service/service-report-by-service.module')
+                    .then(m => m.ServiceReportByServiceModule)
             },
             {
                 path: 'agents',
-                loadChildren: () => import('./features/agents/agents.module').then(m => m.AgentsModule)
+                loadChildren: () => import('./features/agents/agents.module')
+                    .then(m => m.AgentsModule)
             },
             {
                 path: 'staff',
-                loadChildren: () => import('./features/staff/staff.module').then(m => m.StaffModule)
+                loadChildren: () => import('./features/staff/staff.module')
+                    .then(m => m.StaffModule)
             },
             {
                 path: 'officeExpenses',
-                loadChildren: () => import('./master/office-expenses/office-expenses.module').
+                loadChildren: () => import('./reports/office-expenses/office-expenses.module').
                 then(m => m.OfficeExpensesModule)
             },
             {
@@ -122,7 +140,13 @@ const layOutRoutes: Routes = [
             },
             {
                 path: 'serviceReports/:date',
-                loadChildren: () => import('./reports/service-reports/service-reports.module').then(m => m.ServiceReportsModule)
+                loadChildren: () => import('./reports/service-reports/service-reports.module')
+                    .then(m => m.ServiceReportsModule)
+            },
+            {
+                path: 'dueReports',
+                loadChildren: () => import('./reports/due-reports/due-reports.module')
+                    .then(m => m.DueReportsModule)
             }
         ]
     },
