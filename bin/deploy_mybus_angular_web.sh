@@ -5,9 +5,9 @@
 set -ex
 
 # to retain all backups, set this value to a non-positive integer
-bucket=myBus-angular-builds
-projectName=myBus-angular
-deployLocation=mybus-angular-build
+bucket=mybus-angular-builds
+projectName=myBusJwt-Angular
+deployLocation=myBus-angular-build
 
 
 #get the last uploaded zip filename
