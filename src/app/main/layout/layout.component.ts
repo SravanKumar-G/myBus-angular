@@ -15,6 +15,7 @@ export class LayoutComponent implements OnInit {
     currentUser: any;
     public currentUserDetails: any = {};
     public currentDate = new Date();
+    public newDate: any;
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
@@ -36,6 +37,8 @@ export class LayoutComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.newDate = new Date().getFullYear() + '-' + ('0' + (parseInt(String(new Date().getMonth() + 1)))).slice(-2)
+            + '-' + ('0' + (new Date().getDate() - 1)).slice(-2);
         this.currentUserDetails = JSON.parse(localStorage.getItem('currentUserDetails') as string);
         (($) => {
             // tslint:disable-next-line:typedef

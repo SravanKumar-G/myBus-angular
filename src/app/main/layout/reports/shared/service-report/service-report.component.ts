@@ -8,11 +8,11 @@ import * as _ from 'underscore';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'app-service-reports',
-    templateUrl: './service-reports.component.html',
-    styleUrls: ['./service-reports.component.css']
+    selector: 'app-service-report',
+    templateUrl: './service-report.component.html',
+    styleUrls: ['./service-report.component.css']
 })
-export class ServiceReportsComponent implements OnInit {
+export class ServiceReportComponent implements OnInit {
     private readonly serviceId: any;
     public serviceReportDetails: any = {
         fuelExpenses: [],
@@ -95,7 +95,7 @@ export class ServiceReportsComponent implements OnInit {
     }
 
     getStaffList(): void {
-        this.apiService.get(this.apiUrls.getAllStaffList).subscribe((res: any) => {
+        this.apiService.getAll(this.apiUrls.getStaffList, {}).subscribe((res: any) => {
             if (res) {
                 this.allStaff = res.content;
                 this.allStaffDuplicate = res.content;
@@ -120,13 +120,17 @@ export class ServiceReportsComponent implements OnInit {
     }
 
     editAgent(bookedBy: any, modal: any): void {
-        let i;
-        for (i = 0; i < this.agents.length; i++){
-            if (this.agents[i].username === bookedBy){
-                this.agent = this.agents[i];
+        if (bookedBy) {
+            let i;
+            for (i = 0; i < this.agents.length; i++) {
+                if (this.agents[i].username === bookedBy) {
+                    this.agent = this.agents[i];
+                }
             }
+            this.modalService.open(modal);
+        }else{
+            Swal.fire('error', 'Select agent', 'error');
         }
-        this.modalService.open(modal);
     }
 
     countSeats(): void {
@@ -248,8 +252,12 @@ export class ServiceReportsComponent implements OnInit {
         }
     }
 
-    deleteBooking(booking: any, q: any): void {
-        q.close();
+    deleteBooking(booking: any): void {
+        this.serviceReportDetails.bookings = _.filter(this.serviceReportDetails.bookings, (thisBooking: any) => {
+            return thisBooking.index !== booking.index;
+        });
+        this.calculateNet('');
+        this.countSeats();
     }
 
     openPop(popover: any): any {
@@ -345,15 +353,26 @@ export class ServiceReportsComponent implements OnInit {
         if (!this.serviceReportDetails.vehicleRegNumber) {
             Swal.fire('Error', 'Please select Vehicle', 'error');
         } else {
-            this.apiService.create(this.apiUrls.submitReport + status, this.serviceReportDetails).subscribe((res: any) => {
-                if (res) {
-                    Swal.fire('Great', 'The report successfully submitted', 'success');
-                    window.history.back();
-                    this.getServiceReport();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will not be able to recover this !',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Submit it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.apiService.create(this.apiUrls.submitReport + status, this.serviceReportDetails).subscribe((res: any) => {
+                        if (res) {
+                            Swal.fire('Great', 'The report successfully submitted', 'success');
+                            this.getServiceReport();
+                        }
+                    }, error => {
+                        this.serviceReportDetails.status = null;
+                        Swal.fire('Oops...', 'Error submitting the report :' + error.data.message, 'error');
+                    });
                 }
-            }, error => {
-                this.serviceReportDetails.status = null;
-                Swal.fire('Oops...', 'Error submitting the report :' + error.data.message, 'error');
             });
         }
     }
@@ -372,7 +391,7 @@ export class ServiceReportsComponent implements OnInit {
 
     updateAgent(): void {
         if (this.agent.id) {
-            this.apiService.update(this.apiUrls.updateAgentName, this.agent).subscribe((res: any) => {
+            this.apiService.update(this.apiUrls.updateAgent, this.agent).subscribe((res: any) => {
                 if (res) {
                     Swal.fire('success', 'Agent updated successfully..!', 'success');
                     this.modalService.dismissAll();

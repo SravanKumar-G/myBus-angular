@@ -1,0 +1,10 @@
+.service-card{
+    margin: auto 5px !important;
+}
+.service-card .card-body{
+    padding: 10px;
+}
+.service-card label{
+    color: #998e8e;
+    padding-right: 6px;
+}
