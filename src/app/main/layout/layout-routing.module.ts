@@ -156,6 +156,11 @@ const layOutRoutes: Routes = [
                 path: 'update-password',
                 loadChildren: () => import('./profile/update-password/update-password.module').
                 then(m => m.UpdatePasswordModule)
+            },
+            {
+                path: 'serviceCollectionReport/:date',
+                loadChildren: () => import('./reports/service-collection-report/service-collection-report.module')
+                    .then(m => m.ServiceCollectionReportModule)
             }
         ]
     },
