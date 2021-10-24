@@ -150,7 +150,6 @@ const layOutRoutes: Routes = [
                 path: 'dueReports',
                 loadChildren: () => import('./reports/due-reports/due-reports.module')
                     .then(m => m.DueReportsModule)
-
             },
             {
                 path: 'update-password',
@@ -161,6 +160,11 @@ const layOutRoutes: Routes = [
                 path: 'serviceCollectionReport/:date',
                 loadChildren: () => import('./reports/service-collection-report/service-collection-report.module')
                     .then(m => m.ServiceCollectionReportModule)
+            },
+            {
+                path: 'expensesincomesreports/:date',
+                loadChildren: () => import('./reports/expense-income-reports/expense-income-reports.module')
+                    .then(m => m.ExpenseIncomeReportsModule)
             }
         ]
     },

@@ -213,4 +213,8 @@ export class ApiUrls {
     // Search collection
     searchCollection = 'api/v1/serviceReport/searchCollection';
 
+    // expenseIncomeReports
+
+    expenseIncomeReportsData = 'api/v1/payments/day?';
+    bookingModal = 'api/v1/serviceReport/booking/';
 }
