@@ -93,7 +93,7 @@ export class ViewCargoBookingComponent implements OnInit {
                         .subscribe((response: any) => {
                             if (response) {
                                 Swal.fire('Great!', response.shipmentNumber + ' has been delivered.', 'success');
-                                // this.router.navigate(['cargoBookings']);
+                                this.router.navigate(['cargoBookings']);
                                 this.apiService.getLoggedInUserData();
                             }
                         }, (error) => {
@@ -125,8 +125,8 @@ export class ViewCargoBookingComponent implements OnInit {
                             'Your booking has been Cancelled.',
                             'success'
                         );
-                        window.location.reload();
-                        // this.router.navigate(['cargoBookings']);
+                        // window.location.reload();
+                        this.router.navigate(['cargoBookings']);
                     }
                 }, error => {
                     Swal.fire(
@@ -184,8 +184,8 @@ export class ViewCargoBookingComponent implements OnInit {
                                 .subscribe((response: any) => {
                                     if (response) {
                                         Swal.fire('Great!', 'Comment added Successfully..!', 'success');
-                                        // this.router.navigate(['cargoBookings']);
-                                        window.location.reload();
+                                        this.router.navigate(['cargoBookings']);
+                                        // window.location.reload();
                                     }
                                 }, (error) => {
                                     Swal.showValidationMessage(
