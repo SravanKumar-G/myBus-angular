@@ -210,4 +210,7 @@ export class ApiUrls {
     // Update Password
     updatePassword = 'api/v1/user/updatePassword';
 
+    // Search collection
+    searchCollection = 'api/v1/serviceReport/searchCollection';
+
 }
