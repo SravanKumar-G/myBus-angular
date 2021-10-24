@@ -157,6 +157,7 @@ export class DeliverySheetComponent implements OnInit {
                             if (response) {
                                 Swal.fire('Great!', response.shipmentNumber + ' has been delivered', 'success');
                                 this.loadUndeliveredBookings();
+                                this.apiService.getLoggedInUserData();
                             }
                         }, (error) => {
                             Swal.showValidationMessage(
