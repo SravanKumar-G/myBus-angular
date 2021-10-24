@@ -103,15 +103,14 @@ export class PaymentsComponent implements OnInit {
 
   getPendingPaymentCount(): void{
     this.apiService.get(this.apiUrls.countPendingPayments).subscribe((res: any) => {
-      if (res !== 0){
+      if (res >= 0){
         this.pendingPaymentsCount = res;
         OnlynumberDirective.pagination(res, this.paymentsQuery);
         this.getAllPendingPayments();
-      }else {
-        Swal.fire('Oops...', 'Error finding Pending Payments data!', 'error');
       }
     }, error => {
       this.errorMessage = error.message;
+      Swal.fire('Oops...', 'Error finding Pending Payments data!', 'error');
     });
   }
 
@@ -120,11 +119,10 @@ export class PaymentsComponent implements OnInit {
         '&size=' + this.paymentsQuery.size + '&sort=' + this.paymentsQuery.sort).subscribe((res: any) => {
       if (res){
           this.pendingPayments = res.content;
-      } else {
-        Swal.fire('Oops...', 'Error finding Pending Payments data!', 'error');
       }
     }, error => {
       this.errorMessage = error.message;
+      Swal.fire('Oops...', 'Error finding Pending Payments data!', 'error');
     });
   }
 
@@ -134,11 +132,10 @@ export class PaymentsComponent implements OnInit {
         this.approvedPaymentsCount = res;
         OnlynumberDirective.pagination(res, this.approvedPaymentQuery);
         this.getAllApprovedPayments();
-      }else {
-        Swal.fire('Oops...', 'Error finding Approved Payments data!', 'error');
       }
     }, error => {
       this.errorMessage = error.message;
+      Swal.fire('Oops...', 'Error finding Approved Payments data!', 'error');
     });
   }
 
@@ -147,11 +144,10 @@ export class PaymentsComponent implements OnInit {
         '&size=' + this.approvedPaymentQuery.size + '&sort=' + this.approvedPaymentQuery.sort).subscribe((res: any) => {
       if (res){
         this.approvedPayments = res.content;
-      } else {
-        Swal.fire('Oops...', 'Error finding Approved Payments data!', 'error');
       }
     }, error => {
       this.errorMessage = error.message;
+      Swal.fire('Oops...', 'Error finding Approved Payments data!', 'error');
     });
   }
 
@@ -354,11 +350,22 @@ export class PaymentsComponent implements OnInit {
   }
 
   verifyPayment(paymentId: string): void {
-    this.apiService.update(this.apiUrls.verifyPayment + paymentId, {}).subscribe((res: any) => {
-      if (res){
-          this.paymentsVerify = res.data;
-          this.apiService.getLoggedInUserData();
-          this.changePaymentsTab(1);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'verifying this Payment',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Verify it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value){
+        this.apiService.update(this.apiUrls.verifyPayment + paymentId, {}).subscribe((res: any) => {
+          if (res){
+            this.paymentsVerify = res.data;
+            this.apiService.getLoggedInUserData();
+            this.changePaymentsTab(1);
+          }
+        });
       }
     });
   }
