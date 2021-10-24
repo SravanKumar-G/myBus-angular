@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {Router} from '@angular/router';
-import {ViewCargoBookingComponent} from '../view-cargo-booking/view-cargo-booking.component';
 import {OnlynumberDirective} from '../../../../customDirectives/directives/onlynumber.directive';
 import Swal from 'sweetalert2';
 
@@ -38,11 +37,12 @@ export class DeliverySheetComponent implements OnInit {
         sort: this.sortOrder + ',' + this.orderBy
     };
     public deliveredBookingsCount: any;
+    startDate: any =  '';
+    endDate: any = '';
 
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
-                private router: Router,
-                private viewCargo: ViewCargoBookingComponent) {
+                private router: Router) {
     }
 
     ngOnInit(): void {
@@ -133,14 +133,85 @@ export class DeliverySheetComponent implements OnInit {
     }
 
     initiateDeliverCargoBooking(id: any): void {
-        this.viewCargo.initiateDeliverCargoBooking(id);
+        Swal.fire({
+            title: '<h4>' + 'Deliver Comment?' + '</h4>',
+            html: 'Please provide delivery comment:',
+            input: 'text',
+            inputPlaceholder: 'Collecting person name or identification',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Deliver',
+            confirmButtonColor: 'green',
+            showLoaderOnConfirm: true,
+            preConfirm: (data) => {
+                if (!data) {
+                    Swal.showValidationMessage(
+                        'Enter comment'
+                    );
+                } else {
+                    this.apiService.update(this.apiUrls.initiateDeliverCargoBooking
+                        + id, data)
+                        .subscribe((response: any) => {
+                            if (response) {
+                                Swal.fire('Great!', response.shipmentNumber + ' has been delivered', 'success');
+                                this.loadUndeliveredBookings();
+                            }
+                        }, (error) => {
+                            Swal.showValidationMessage(
+                                `Enter comment :` + error
+                            );
+                        });
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        });
     }
 
-    addComment(id: any): void {
-        this.viewCargo.addCommentToBooking(id);
+    addComment(bookingId: any): void {
+        this.apiService.get(this.apiUrls.getCargoBooking + bookingId).subscribe((cargoBooking: any) => {
+            if (cargoBooking) {
+                Swal.fire({
+                    title: '<h4>' + 'Comment?' + '</h4>',
+                    html: 'Please provide comment:',
+                    input: 'text',
+                    inputPlaceholder: 'Add Comment',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    inputValue: cargoBooking.reviewComment,
+                    showCancelButton: true,
+                    confirmButtonText: 'Add Comment',
+                    confirmButtonColor: 'green',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (data) => {
+                        if (!data) {
+                            Swal.showValidationMessage(
+                                'Enter comment'
+                            );
+                        } else {
+                            this.apiService.update(this.apiUrls.saveCommentCargoBooking
+                                + bookingId, data)
+                                .subscribe((response: any) => {
+                                    if (response) {
+                                        Swal.fire('Great!', 'Comment added Successfully..!', 'success');
+                                        this.loadUndeliveredBookings();
+                                    }
+                                }, (error) => {
+                                    Swal.showValidationMessage(
+                                        `Enter comment :` + error
+                                    );
+                                });
+                        }
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                });
+            }
+        });
     }
 
-    togglelBookingSelection(bookingId: any): void {
+    toggleBookingSelection(bookingId: any): void {
         const idx = this.selectedBookings.indexOf(bookingId);
         if (idx > -1) {
             this.selectedBookings.splice(idx, 1);
@@ -150,7 +221,36 @@ export class DeliverySheetComponent implements OnInit {
     }
 
     cancelBookings(id: any): void {
-        this.viewCargo.cancelCargoBooking(id);
+        if (id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to cancel this booking now?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Cancel it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.apiService.update(this.apiUrls.cancelCargoBooking + id, {}).subscribe((res: any) => {
+                        if (res) {
+                            Swal.fire(
+                                'Cancelled!',
+                                'Your booking has been Cancelled.',
+                                'success'
+                            );
+                            this.loadUndeliveredBookings();
+                        }
+                    }, error => {
+                        Swal.fire(
+                            'Error!',
+                            error.message,
+                            'error'
+                        );
+                    });
+                }
+            });
+        }
     }
 
     exportToExcel(): void {
@@ -175,6 +275,8 @@ export class DeliverySheetComponent implements OnInit {
     }
 
     countOfDeliveredBookings(): void {
+        this.deliveredObj.startDate = this.apiService.getDate(this.startDate);
+        this.deliveredObj.endDate = this.apiService.getDate(this.endDate);
         this.apiService.getAll(this.apiUrls.countDeliveredBookings, this.deliveredObj).subscribe((count: any) => {
             if (count > 0) {
                 this.deliveredBookingsCount = count;
