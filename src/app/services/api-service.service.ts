@@ -132,11 +132,13 @@ export class ApiServiceService {
     }
 
     getDate(date: any): any {
-        const dateObj = date;
-        const month = dateObj.getMonth() + 1;
-        const day = dateObj.getDate();
-        const year = dateObj.getFullYear();
-        return year + '-' + month + '-' + day;
+        if (date) {
+            const dateObj = date;
+            const month = dateObj.getMonth() + 1;
+            const day = dateObj.getDate();
+            const year = dateObj.getFullYear();
+            return year + '-' + month + '-' + day;
+        }
     }
 
     public getAll = (subUrl: any, data: any) => {
