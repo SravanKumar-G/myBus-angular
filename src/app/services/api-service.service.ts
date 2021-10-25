@@ -85,9 +85,10 @@ export class ApiServiceService {
         return this.http.delete(this.Apiurls.mainUrl + subUrl);
     }
 
-    public upload = (subUrl: any, data: File) => {
+    public upload = (subUrl: any, file: any) => {
         const formData: FormData = new FormData();
-        formData.append('fileKey', data, data.name);
+        console.log(file);
+        formData.append('files', file[0]);
         return this.http.post(this.Apiurls.mainUrl + subUrl, formData);
     }
 

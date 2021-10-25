@@ -2,7 +2,7 @@
 <div class="input-group">
     <div class="custom-file">
         <input type="file" class="custom-file-input"
-               id="inputGroupFile02" [multiple]="multiple" (change)="handleFileInput($event)"
+               id="inputGroupFile02" (change)="handleFileInput($event)"
                aria-describedby="inputGroupFileAddon02">
         <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
     </div>
@@ -20,14 +20,7 @@
     </div>
 </div>
 <div class="table-responsive mt-3" *ngIf="listOfImages.length > 0">
-    <table class="table table-bordered table-hover">
-        <thead>
-        <tr>
-            <th>S No</th>
-            <th>File Name</th>
-            <th>Action</th>
-        </tr>
-        </thead>
+    <table class="table table-bordered table-hover" style="margin-bottom: 0 !important;">
         <tbody>
         <tr *ngFor="let image of listOfImages; let i = index;">
             <td>{{i + 1}}</td>
