@@ -23,7 +23,6 @@ export class FilesUploadComponent implements OnInit {
     // get the data from (A) component
     @Input() refId: any;
     @Input() type: any;
-    @Input() uploadType: any;
 
     // return the data to (A) component
     @Output() imageToEmitToUpload = new EventEmitter<object>();
@@ -37,7 +36,6 @@ export class FilesUploadComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.multiple = this.uploadType === 'multiple';
         if (this.refId) {
             this.getUploads(this.refId);
         }
@@ -65,7 +63,6 @@ export class FilesUploadComponent implements OnInit {
 
 
     handleFileInput(listOfFiles: any): void {
-        if (this.uploadType === 'multiple') {
             const files = listOfFiles.target.files;
             this.files = files;
             for (const file of files) {
@@ -74,11 +71,9 @@ export class FilesUploadComponent implements OnInit {
                     this.isDisabled = false;
                 } else {
                     Swal.fire('error', 'Please upload only PNG or JPEG or PDF files', 'error');
+                    this.files = [];
                 }
             }
-        }else {
-            this.files = listOfFiles.target.files;
-        }
     }
 
 

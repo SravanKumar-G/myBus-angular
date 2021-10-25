@@ -13,6 +13,7 @@ import { CargoLookUpComponent } from './cargo/cargo-look-up/cargo-look-up.compon
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PipeFilterPipe} from '../../customDirectives/pipes/pipe-filter.pipe';
 import { FilesUploadComponent } from './shared/files-upload/files-upload.component';
+import { FileUploadComponent } from './shared/file-upload/file-upload.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { FilesUploadComponent } from './shared/files-upload/files-upload.compone
         CargoLookUpComponent,
         PipeFilterPipe,
         FilesUploadComponent,
+        FileUploadComponent,
     ],
     imports: [
         CommonModule,
@@ -44,7 +46,8 @@ import { FilesUploadComponent } from './shared/files-upload/files-upload.compone
         SearchFilterPipe,
         CargoLookUpComponent,
         PipeFilterPipe,
-        FilesUploadComponent
+        FilesUploadComponent,
+        FileUploadComponent
     ]
 })
 export class LayoutModule {

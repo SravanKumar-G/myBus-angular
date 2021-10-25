@@ -213,7 +213,8 @@
                             </div>
 
                             <div class="state-tax">
-                                <div class="row" *ngFor="let vehicle of vehicle.taxPayments; let i = index; let l = last;">
+                                <div class="row"
+                                     *ngFor="let vehicle of vehicle.taxPayments; let i = index; let l = last;">
                                     <div class="col-sm-5 col-12 form-group">
                                         <label>State:</label>
                                         <input type="text" class="form-control form-control-sm"
@@ -255,8 +256,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-12">
-                                <app-files-upload [uploadType]="uploadType" [refId]="vehicleId"]></app-files-upload>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Upload RC</label>
+                                <app-file-upload [refId]="vehicleId" [url]="'api/v1/rcUpload/'"
+                                                 (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Upload FC</label>
+                                <app-file-upload [refId]="vehicleId" [url]="'api/v1/fcUpload/'"
+                                                 (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Upload Permit</label>
+                                <app-file-upload [refId]="vehicleId" [url]="'api/v1/permitUpload/'"
+                                                 (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Upload Auth</label>
+                                <app-file-upload [refId]="vehicleId" [url]="'api/v1/authUpload/'"
+                                                 (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Upload Insurance</label>
+                                <app-file-upload [refId]="vehicleId" [url]="'api/v1/insuranceUpload/'"
+                                                 (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Upload Pollution</label>
+                                <app-file-upload [refId]="vehicleId" [url]="'api/v1/pollutionUpload/'"
+                                                 (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <app-files-upload [refId]="vehicleId" [type]="'Vehicle'"></app-files-upload>
                             </div>
                         </div>
                     </form>

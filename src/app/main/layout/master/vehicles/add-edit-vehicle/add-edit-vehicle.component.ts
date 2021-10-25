@@ -115,4 +115,15 @@ export class AddEditVehicleComponent implements OnInit {
         }
     }
 
+    uploadImage(event: any): void {
+        this.apiService.upload(event.url + this.vehicleId, event.files).subscribe((res: any) => {
+            if (res) {
+                console.log(res, '===>');
+                Swal.fire('Wow!', 'File uploaded Successfully', 'success');
+                this.getVehicleDetailsById();
+            }
+        }, error => {
+            Swal.fire('error', error.message, 'error');
+        });
+    }
 }
