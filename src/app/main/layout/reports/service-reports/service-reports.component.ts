@@ -16,6 +16,9 @@ export class ServiceReportsComponent implements OnInit {
     public verified = 0;
     newDate: any = new Date();
     private currentUser: any;
+    public downloaded: any;
+    public loading = true;
+    public downloadedOn: any;
 
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
@@ -32,8 +35,9 @@ export class ServiceReportsComponent implements OnInit {
     }
 
     loadReports(): void {
+        const date = this.apiService.getYYYYMMDD(this.currentDate);
         this.submitted = 0;
-        this.apiService.get(this.apiUrls.loadServiceReports + this.currentDate).subscribe((res: any) => {
+        this.apiService.get(this.apiUrls.loadServiceReports + date).subscribe((res: any) => {
             if (res) {
                 this.allReports = res;
                 if (this.submitted === 0) {
@@ -53,23 +57,25 @@ export class ServiceReportsComponent implements OnInit {
         if (new Date(this.currentDate) > new Date()) {
             Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
         } else {
-            this.loadReports();
+            this.downloadPassengerReport();
         }
     }
 
+    // will return date in YYYY-M-D format
     getDate(date: any): any {
         const dateObj = date;
         const month = dateObj.getMonth() + 1;
         const day = dateObj.getDate();
         const year = dateObj.getFullYear();
         this.currentDate = year + '-' + month + '-' + day;
+        this.loadReports();
         return year + '-' + month + '-' + day;
     }
 
     goToServiceReport(service: any): void {
         if (service.attrs.formId) {
             this.router.navigate(['serviceReports/' + this.currentDate + '/serviceForm/' + service.attrs.formId]);
-        }else{
+        } else {
             this.router.navigate(['serviceReports/' + this.currentDate + '/serviceReport/' + service.id]);
         }
     }
@@ -77,7 +83,12 @@ export class ServiceReportsComponent implements OnInit {
     nextDate(): void {
         const currentDate = new Date(this.currentDate);
         const date = currentDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
-        this.currentDate = this.getDate(new Date(date));
+        // console.log(new Date(date));
+        if (new Date(date) <= new Date()) {
+            this.currentDate = this.getDate(new Date(date));
+        } else {
+            Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
+        }
     }
 
     previousDate(): void {
@@ -89,5 +100,20 @@ export class ServiceReportsComponent implements OnInit {
     exportToExcel(): void {
         this.apiService.exportExcel('serviceReports',
             this.currentUser.userName + '_ServiceReports', '', '');
+    }
+
+    public downloadPassengerReport(): void {
+        const date = this.apiService.getYYYYMMDD(this.currentDate);
+        this.apiService.get(this.apiUrls.downloadPassengerReport + date).subscribe((res: any) => {
+            if (res) {
+                this.allReports = res;
+                this.downloaded = res.downloaded;
+                this.loading = false;
+                this.downloadedOn = res.downloadedOn;
+
+            }
+        }, error => {
+            Swal.fire('Oops...', error.message, 'error');
+        });
     }
 }

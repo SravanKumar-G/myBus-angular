@@ -20,7 +20,7 @@ export class BroadcastService {
   }
 
 // Stores the updated current user value in local storage and pushes it to the subject
-  setActiveCompany(data: any): void {
+  setCurrentUser(data: any): void {
     localStorage.setItem('currentUserDetails', JSON.stringify(data));
     this.currentUser$.next(data);
   }

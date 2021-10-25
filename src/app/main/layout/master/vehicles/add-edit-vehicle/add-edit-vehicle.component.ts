@@ -25,6 +25,7 @@ export class AddEditVehicleComponent implements OnInit {
     public vehicleId: any;
     public headerTitle: any = 'Add a Vehicle';
     public newDate: any = new Date();
+    uploadType: any = 'single';
 
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
