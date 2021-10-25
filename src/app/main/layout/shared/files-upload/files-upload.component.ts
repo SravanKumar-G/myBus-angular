@@ -65,15 +65,19 @@ export class FilesUploadComponent implements OnInit {
 
 
     handleFileInput(listOfFiles: any): void {
-        const files = listOfFiles.target.files;
-        this.files = files;
-        for (const file of files) {
-            if (file.type === 'application/pdf' || file.type === 'image/png' || file.type === 'image/jpeg') {
-                this.filesToUpload = files;
-                this.isDisabled = false;
-            } else {
-                Swal.fire('error', 'Please upload only PNG or JPEG or PDF files', 'error');
+        if (this.uploadType === 'multiple') {
+            const files = listOfFiles.target.files;
+            this.files = files;
+            for (const file of files) {
+                if (file.type === 'application/pdf' || file.type === 'image/png' || file.type === 'image/jpeg') {
+                    this.filesToUpload = files;
+                    this.isDisabled = false;
+                } else {
+                    Swal.fire('error', 'Please upload only PNG or JPEG or PDF files', 'error');
+                }
             }
+        }else {
+            this.files = listOfFiles.target.files;
         }
     }
 

@@ -43,6 +43,11 @@
                                         *ngIf="!cargoDetails.canceled && cargoDetails.cargoTransitStatus !== 'DELIVERED'">
                                     <i class="fa fa-share"></i> Send SMS
                                 </button>
+                                <button type="button" class="btn btn-sm btn-success mr-1"
+                                        (click)="sendWhatsApp(cargoDetails)" title="Send SMS"
+                                        *ngIf="!cargoDetails.canceled && cargoDetails.cargoTransitStatus !== 'DELIVERED'">
+                                    <i class="fa fa-whatsapp"></i> Send WhatsApp
+                                </button>
                                 <button type="button" class="btn btn-sm btn-primary mr-1"
                                         (click)="addCommentToBooking(cargoDetails.id)" title="Add Comment"
                                         *ngIf="!cargoDetails.reviewComment">

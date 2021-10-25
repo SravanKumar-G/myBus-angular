@@ -27,7 +27,6 @@ export class ViewCargoBookingComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.cargoBookingId, this.cargoBookingId.length);
         if (this.cargoBookingId.length !== 24) {
             this.getCargoDetailsByBookingId();
         }else{
@@ -202,5 +201,9 @@ export class ViewCargoBookingComponent implements OnInit {
 
     goToBackPage(): void {
         this.location.back();
+    }
+
+    sendWhatsApp(cargoDetails: any): void {
+        this.apiService.sendWhatsApp(cargoDetails);
     }
 }

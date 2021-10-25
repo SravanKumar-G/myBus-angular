@@ -189,9 +189,10 @@ export class ApiUrls {
     getCashBalances = 'api/v1/user/cashBalances';
 
     // Service Reports API's
-     loadServiceReports = 'api/v1/serviceReport/loadReports?travelDate=';
+    loadServiceReports = 'api/v1/serviceReport/loadReports?travelDate=';
+    downloadPassengerReport = 'api/v1/serviceReport/download?travelDate=';
 
-     // invoices
+    // invoices
     searchInvoice = 'api/v1/invoice/search';
 
     // Due Reports API's
