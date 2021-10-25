@@ -214,7 +214,11 @@ export class ApiUrls {
     searchCollection = 'api/v1/serviceReport/searchCollection';
 
     // expenseIncomeReports
-
     expenseIncomeReportsData = 'api/v1/payments/day?';
     bookingModal = 'api/v1/serviceReport/booking/';
+
+    // Image related APIs
+    getUploads = 'api/v1/getUploads/?id=';
+    removeImage = '/api/v1/deleteUpload';
+
 }

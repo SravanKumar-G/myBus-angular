@@ -143,35 +143,35 @@ export class ApiServiceService {
 
     public getAll = (subUrl: any, data: any) => {
         return this.http.post(this.Apiurls.mainUrl + subUrl, data);
-    }
+    };
 
     public getCount = (subUrl: any, data: any) => {
         return this.http.post(this.Apiurls.mainUrl + subUrl, data);
-    }
+    };
 
     public create = (subUrl: any, data: any) => {
         return this.http.post(this.Apiurls.mainUrl + subUrl, data).pipe(map((res: any) => {
             return res;
         }));
-    }
+    };
 
-  public get = (subUrl: any) => {
-    return this.http.get(this.Apiurls.mainUrl + subUrl);
-  }
+    public get = (subUrl: any) => {
+        return this.http.get(this.Apiurls.mainUrl + subUrl);
+    };
 
     public update = (subUrl: any, data: any) => {
         return this.http.put(this.Apiurls.mainUrl + subUrl, data);
-    }
+    };
 
     public delete = (subUrl: any) => {
         return this.http.delete(this.Apiurls.mainUrl + subUrl);
-    }
+    };
 
     public upload = (subUrl: any, data: File) => {
         const formData: FormData = new FormData();
         formData.append('fileKey', data, data.name);
         return this.http.post(this.Apiurls.mainUrl + subUrl, formData);
-    }
+    };
 
     public uploadFile = (subUrl: any, data: any) => {
         const formData: FormData = new FormData();
@@ -181,12 +181,14 @@ export class ApiServiceService {
         return this.http.post(this.Apiurls.mainUrl + subUrl, formData);
     }
 
-    public FileUpload = (subUrl: any, data: any, id: any) => {
-        console.log('7', data[0].name);
-        // formData.append('id', id);
-        // formData.append('type', 'ExpenseType');
-        // formData.append('files[0]', data[0].name);
-        return this.http.post(this.Apiurls.mainUrl + subUrl, data);
+    public FileUpload = (subUrl: any, files: any, id: any, type: any) => {
+        const formData: FormData = new FormData();
+        formData.append('id', id);
+        formData.append('type', type);
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files[' + [i] + ']', files[i]);
+        }
+        return this.http.post(this.Apiurls.mainUrl + subUrl, formData);
     }
 
     public uploadDocument = (subUrl: any, data: any) => {
@@ -198,27 +200,27 @@ export class ApiServiceService {
         formData.append('expirationDate', data.expirationDate);
         formData.append('siteId', data.siteId);
         return this.http.post(this.Apiurls.mainUrl + subUrl, formData);
-    }
+    };
 
     public imageUpload = (subUrl: any, data: File) => {
         const formData: FormData = new FormData();
         formData.append('fileKey', data, data.name);
         return this.http.post(this.Apiurls.mainUrl + subUrl, formData);
-    }
+    };
 
     public downloadPdf = (url: any, fileName: any) => {
         return this.http.get(this.Apiurls.mainUrl + url + '?name=' + fileName, {responseType: 'arraybuffer'});
-    }
+    };
 
     public downloadPdfPost = (url: any, fileName: any) => {
         return this.http.post(this.Apiurls.mainUrl + url, fileName, {responseType: 'arraybuffer'});
-    }
+    };
 
     public uploadPdf = (url: any, data: any) => {
         const formData: FormData = new FormData();
         formData.append('file', data);
         return this.http.post(this.Apiurls.mainUrl + url, formData, {responseType: 'arraybuffer'});
-    }
+    };
 
     exportExcel(tableId: string, xlfileName: any, col1: any, col2: any): void {
         const element = document.getElementById(tableId);
