@@ -9,6 +9,7 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {NgSelectModule} from '@ng-select/ng-select';
 import { AddEditOfficeExpenseComponent } from './add-edit-office-expense/add-edit-office-expense.component';
 import {AngularFileUploaderModule} from 'angular-file-uploader';
+import {LayoutModule} from '../../layout.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {AngularFileUploaderModule} from 'angular-file-uploader';
         FormsModule,
         BsDatepickerModule,
         NgSelectModule,
-        AngularFileUploaderModule
+        AngularFileUploaderModule,
+        LayoutModule
     ]
 })
 export class OfficeExpensesModule { }
