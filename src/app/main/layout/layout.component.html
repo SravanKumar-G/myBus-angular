@@ -273,7 +273,7 @@
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('salaryreports')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['salaryReports']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Salary Reports
                         </a>
                     </li>
@@ -313,12 +313,12 @@
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('expensesincomesreports')">
-                        <a class="treeView-item" [routerLink]="['expensesincomesreports/' + newDate]" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['expensesIncomeReports/' + newDate]" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Expenses Income Reports
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('cashbalances')">
-                        <a class="treeView-item" [routerLink]="['cashbalance']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['cashBalance']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Cash Balances
                         </a>
                     </li>
