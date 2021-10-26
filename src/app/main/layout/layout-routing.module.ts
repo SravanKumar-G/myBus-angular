@@ -134,7 +134,7 @@ const layOutRoutes: Routes = [
                 then(m => m.OfficeExpensesModule)
             },
             {
-                path: 'cashbalance',
+                path: 'cashBalance',
                 loadChildren: () => import('./reports/cashbalance/cashbalance.module').
                 then(m => m.CashbalanceModule)
             },
@@ -152,7 +152,7 @@ const layOutRoutes: Routes = [
                     .then(m => m.DueReportsModule)
             },
             {
-                path: 'update-password',
+                path: 'updatePassword',
                 loadChildren: () => import('./profile/update-password/update-password.module').
                 then(m => m.UpdatePasswordModule)
             },
@@ -162,9 +162,14 @@ const layOutRoutes: Routes = [
                     .then(m => m.ServiceCollectionReportModule)
             },
             {
-                path: 'expensesincomesreports/:date',
+                path: 'expensesIncomeReports/:date',
                 loadChildren: () => import('./reports/expense-income-reports/expense-income-reports.module')
                     .then(m => m.ExpenseIncomeReportsModule)
+            },
+            {
+                path: 'salaryReports',
+                loadChildren: () => import('./reports/salary-reports/salary-reports.module')
+                    .then(m => m.SalaryReportsModule)
             }
         ]
     },

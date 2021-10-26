@@ -222,4 +222,9 @@ export class ApiUrls {
     getUploads = 'api/v1/getUploads/?id=';
     removeImage = '/api/v1/deleteUpload';
 
+    // Salary Reports API's
+    getSalaryReportsCount = 'api/v1/dailyTrips/getSalaryReportsCount';
+    getSalaryReports = 'api/v1/dailyTrips/getSalaryReports';
+    paySalaryForSelected = 'api/v1/dailyTrips/paySalary';
+
 }

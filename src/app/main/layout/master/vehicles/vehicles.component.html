@@ -170,67 +170,67 @@
                         <div class="row">
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Registration Number:</label>
-                                <p>{{vehicleDetails.regNo || '--'}}</p>
+                                <p>{{vehicleDetails.regNo || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Vehicle Type:</label>
-                                <p>{{vehicleDetails.vehicleType || '--'}}</p>
+                                <p>{{vehicleDetails.vehicleType || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Permit Number:</label>
-                                <p>{{vehicleDetails.permitNumber || '--'}}</p>
+                                <p>{{vehicleDetails.permitNumber || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Permit Expiry:</label>
-                                <p>{{vehicleDetails.permitExpiry || '--' | date}}</p>
+                                <p>{{(vehicleDetails.permitExpiry | date) || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Fitness Expiry:</label>
-                                <p>{{vehicleDetails.fitnessExpiry || '--' | date}}</p>
+                                <p>{{(vehicleDetails.fitnessExpiry | date) || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Insurance Expiry:</label>
-                                <p>{{vehicleDetails.insuranceExpiry || '--' | date}}</p>
+                                <p>{{(vehicleDetails.insuranceExpiry | date) || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Authorization Expiry:</label>
-                                <p>{{vehicleDetails.authExpiry || '--' | date}}</p>
+                                <p>{{(vehicleDetails.authExpiry | date) || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Pollution Expiry:</label>
-                                <p>{{vehicleDetails.pollutionExpiry || '--' | date}}</p>
+                                <p>{{(vehicleDetails.pollutionExpiry | date) || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Chasis Number:</label>
-                                <p>{{vehicleDetails.chasisNumber || '--'}}</p>
+                                <p>{{vehicleDetails.chasisNumber || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Engine Number:</label>
-                                <p>{{vehicleDetails.engineNumber || '--'}}</p>
+                                <p>{{vehicleDetails.engineNumber || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>No of Seats:</label>
-                                <p>{{vehicleDetails.noOfSeats || '--'}}</p>
+                                <p>{{vehicleDetails.noOfSeats || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Number of Berths:</label>
-                                <p>{{vehicleDetails.noOfBerths || '--'}}</p>
+                                <p>{{vehicleDetails.noOfBerths || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Owner Name:</label>
-                                <p>{{vehicleDetails.ownerName || '--'}}</p>
+                                <p>{{vehicleDetails.ownerName || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Owner Address:</label>
-                                <p>{{vehicleDetails.ownerAddress || '--'}}</p>
+                                <p>{{vehicleDetails.ownerAddress || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Year of Manufacture:</label>
-                                <p>{{vehicleDetails.yearOfManufacture || '--'}}</p>
+                                <p>{{vehicleDetails.yearOfManufacture || '---'}}</p>
                             </div>
                             <div class="col-sm-4 col-12 form-group">
                                 <label>Number Of Tyres:</label>
-                                <p>{{vehicleDetails.numberOfTyres || '--'}}</p>
+                                <p>{{vehicleDetails.numberOfTyres || '---'}}</p>
                             </div>
                         </div>
                         <div class="col-sm-12 p-0">
@@ -242,7 +242,7 @@
                                 </div>
                                 <div class="col-sm-6 col-12 form-group">
                                     <label>Tax Expiry:</label>
-                                    <p>{{vehicle.paymentDate || '--' | date}}</p>
+                                    <p>{{(vehicle.paymentDate | date) || '---'}}</p>
                                 </div>
                             </div>
                         </div>
