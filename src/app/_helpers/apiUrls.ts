@@ -227,4 +227,10 @@ export class ApiUrls {
     getSalaryReports = 'api/v1/dailyTrips/getSalaryReports';
     paySalaryForSelected = 'api/v1/dailyTrips/paySalary';
 
+    // Service Feedback API's
+    serviceFeedbackSearch = 'api/v1/serviceFeedback/search/?&travelDate=';
+    serviceFeedbackReports = 'api/v1/serviceFeedback/feedbackReport/?&reportId=';
+    serviceFeedbackStatusUpdate = 'api/v1/serviceFeedback/updateStatus/';
+    bookingFeedbackStatusUpdate = 'api/v1/serviceFeedback/bookingFeedback/';
+
 }

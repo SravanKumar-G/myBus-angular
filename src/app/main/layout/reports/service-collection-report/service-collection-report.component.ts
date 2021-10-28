@@ -3,6 +3,7 @@ import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {ActivatedRoute, Router} from '@angular/router';
 import Swal from 'sweetalert2';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-service-collection-report',
@@ -20,7 +21,8 @@ export class ServiceCollectionReportComponent implements OnInit {
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
                 private router: Router,
-                private actRoute: ActivatedRoute) {
+                private actRoute: ActivatedRoute,
+                private location: Location) {
         this.currentDate = new Date(this.actRoute.snapshot.params.date) || '';
     }
 
@@ -53,6 +55,7 @@ export class ServiceCollectionReportComponent implements OnInit {
         const year = dateObj.getFullYear();
         this.currentDate = year + '-' + month + '-' + day;
         this.serviceCollectionReport();
+        this.location.replaceState('/serviceCollectionReport/' + this.currentDate);
         return year + '-' + month + '-' + day;
     }
 
@@ -60,12 +63,14 @@ export class ServiceCollectionReportComponent implements OnInit {
         const currentDate = new Date(this.currentDate);
         const date = currentDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
         this.currentDate = this.getDate(new Date(date));
+        this.location.replaceState('/serviceCollectionReport/' + this.currentDate);
     }
 
     previousDate(): void {
         const currentDate = new Date(this.currentDate);
         const date = currentDate.setTime(currentDate.getTime() - 24 * 60 * 60 * 1000);
         this.currentDate = this.getDate(new Date(date));
+        this.location.replaceState('/serviceCollectionReport/' + this.currentDate);
     }
 
     exportToExcel(): void {

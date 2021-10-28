@@ -3,6 +3,7 @@ import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {ActivatedRoute, Router} from '@angular/router';
 import Swal from 'sweetalert2';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-service-reports',
@@ -23,7 +24,8 @@ export class ServiceReportsComponent implements OnInit {
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
                 private router: Router,
-                private actRoute: ActivatedRoute) {
+                private actRoute: ActivatedRoute,
+                private location: Location) {
         this.currentDate = this.actRoute.snapshot.params.date || '';
     }
 
@@ -69,6 +71,7 @@ export class ServiceReportsComponent implements OnInit {
         const year = dateObj.getFullYear();
         this.currentDate = year + '-' + month + '-' + day;
         this.loadReports();
+        this.location.replaceState('/serviceFeedback/' + this.currentDate);
         return year + '-' + month + '-' + day;
     }
 
@@ -86,6 +89,7 @@ export class ServiceReportsComponent implements OnInit {
         // console.log(new Date(date));
         if (new Date(date) <= new Date()) {
             this.currentDate = this.getDate(new Date(date));
+            this.location.replaceState('/serviceFeedback/' + this.currentDate);
         } else {
             Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
         }
@@ -94,6 +98,7 @@ export class ServiceReportsComponent implements OnInit {
     previousDate(): void {
         const currentDate = new Date(this.currentDate);
         const date = currentDate.setTime(currentDate.getTime() - 24 * 60 * 60 * 1000);
+        this.location.replaceState('/serviceFeedback/' + this.currentDate);
         this.currentDate = this.getDate(new Date(date));
     }
 

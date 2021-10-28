@@ -204,6 +204,6 @@ export class ViewCargoBookingComponent implements OnInit {
     }
 
     sendWhatsApp(cargoDetails: any): void {
-        this.apiService.sendWhatsApp(cargoDetails);
+        this.apiService.sendWhatsApp(cargoDetails.fromContact, cargoDetails.attrs.SMS);
     }
 }
