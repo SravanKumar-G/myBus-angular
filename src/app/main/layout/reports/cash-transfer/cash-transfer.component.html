@@ -1,0 +1,485 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-money" aria-hidden="true"></i>
+                Cash Transfer
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">cash Transfer</span></li>
+        </ul>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item pending-users-tab" (click)="changeCashTransferTab(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeCashTransferTab(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Approved/Rejected</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeCashTransferTab(3)">
+            <a class="nav-link" [ngClass]="{active:tab==3}">Search</a>
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 1">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-6 p-0 offset-6">
+                                <div class="pull-right">
+                                    <div class="upload-btn-wrapper">
+                                        <button type="button" class="btn btn-sm btn-primary" style="margin-top: 17px; margin-bottom: 17px" (click)="exportExcel()"> Export to Excel </button>
+                                    </div>&nbsp;&nbsp;&nbsp;
+                                    <button class="btn btn-sm btn-success"
+                                            (click)= "addCashTransfer(addEditCashTransferModal)">
+                                        <span class="fa fa-plus"></span>
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                                <table class="table table-hover dataTable text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th [ngClass]="pendingCashTransferQuery.sortOrder == 'date'? 'headActive' : ''"
+                                            accessKey="date" (click)="clickSorting($event)">Date
+                                            <i *ngIf="pendingCashTransferQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingCashTransferQuery.sortOrder == 'date'" class="fa"
+                                               [ngClass]="pendingCashTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="pendingCashTransferQuery.sortOrder == 'fromBranchId'? 'headActive' : ''"
+                                            accessKey="fromBranchId" (click)="clickSorting($event)">From User
+                                            <i *ngIf="pendingCashTransferQuery.sortOrder != 'fromBranchId'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingCashTransferQuery.sortOrder == 'fromBranchId'" class="fa"
+                                               [ngClass]="pendingCashTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="pendingCashTransferQuery.sortOrder == 'toBranchId'? 'headActive' : ''"
+                                            accessKey="toBranchId" (click)="clickSorting($event)">To User/Branch
+                                            <i *ngIf="pendingCashTransferQuery.sortOrder != 'toBranchId'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingCashTransferQuery.sortOrder == 'toBranchId'" class="fa"
+                                               [ngClass]="pendingCashTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Description</th>
+                                        <th [ngClass]="pendingCashTransferQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                            accessKey="amount" (click)="clickSorting($event)">Amount
+                                            <i *ngIf="pendingCashTransferQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingCashTransferQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="pendingCashTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Created By</th>
+                                        <th [ngClass]="pendingCashTransferQuery.sortOrder == 'status'? 'headActive' : ''"
+                                            accessKey="status" (click)="clickSorting($event)">Status
+                                            <i *ngIf="pendingCashTransferQuery.sortOrder != 'status'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingCashTransferQuery.sortOrder == 'status'" class="fa"
+                                               [ngClass]="pendingCashTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let cashTransfer of currentPageOfPendingCashTransfers; let i = index;">
+                                        <td>{{(pendingCashTransferQuery.page - 1) * pendingCashTransferQuery.size + i + 1}}</td>
+                                        <td>{{cashTransfer.date | date}}</td>
+                                        <td>{{cashTransfer.attrs.fromUser || 'NA'}}</td>
+                                        <td>{{cashTransfer.attrs.toUser || 'NA'}}</td>
+                                        <td><a *ngIf="cashTransfer.serviceFormId"
+                                               href="#!/serviceform/{{cashTransfer.serviceFormId}}">{{cashTransfer.description}}</a>
+                                            <span *ngIf="!cashTransfer.serviceFormId">{{cashTransfer.description || 'NA'}}</span>
+                                        </td>
+                                        <td>{{cashTransfer.amount || 'NA'}}</td>
+                                        <td>{{cashTransfer.attrs.fromUser || 'NA'}}</td>
+                                        <td><span *ngIf="!cashTransfer.status && userId !==  cashTransfer.fromUserId">
+                                            <button type="button" class="btn btn-link" (click)="approveOrRejectCashTransfer(cashTransfer,'Approve')">Approve</button>
+                                            <button type="button" class="btn btn-link" (click)="approveOrRejectCashTransfer(cashTransfer, 'Reject')">Reject</button></span>
+                                            <span *ngIf="cashTransfer.status">{{cashTransfer.status || 'NA'}}</span>
+                                        </td>
+                                        <td class="td-active">
+                                            <div style="display: flex;justify-content: center;">
+                                                <button class="action-icon-style waves-effect waves-light"
+                                                        title="Edit Cash Transfer" *ngIf="cashTransfer.status == null" (click)="Edit(addEditCashTransferModal, cashTransfer.id)"
+                                                        style="padding: 0; height: 35px;width: 35px;">
+                                                    <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                                </button>
+                                                <button class="action-icon-style waves-effect waves-light" *ngIf="cashTransfer.status == null"
+                                                        (click)="delete(cashTransfer.id)">
+                                                    <i class="fa fa-trash fa-1x"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <!--                                    <tr *ngIf="!currentPageOfPendingCashTransfers || currentPageOfPendingCashTransfers.length === 0">-->
+                                    <!--                                        <td colspan="8">No entries exist.  Please add some.</td>-->
+                                    <!--                                    </tr>-->
+                                    <tr *ngIf="!currentPageOfPendingCashTransfers || currentPageOfPendingCashTransfers.length === 0">
+                                        <td colspan="10" style="text-align: center">No Records exist.</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr *ngIf="pendingCashTransfersCount != 0 || pendingCashTransfersCount">
+                                        <th colspan="12">
+                                            <div class="pull-right">
+                                                Total Count : {{pendingCashTransfersCount || 0}}
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row">
+                                        <ngb-pagination *ngIf="pendingCashTransfersCount || pendingCashTransfersCount != 0"
+                                                        [(page)]="pendingCashTransferQuery.page"
+                                                        [pageSize]="pendingCashTransferQuery.size"
+                                                        [collectionSize]="pendingCashTransfersCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="changePendingPage($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                        <ul class="pagination pull-right" style="margin-top: -37px !important;"
+                                            *ngIf="pendingCashTransfersCount || pendingCashTransfersCount !== 0">
+                                            <li class="page-item" [ngClass]="size == pendingCashTransferQuery.size ? 'active' : ''"
+                                                *ngFor="let size of pendingCashTransferQuery.pageSizes" (click)="handlePendingPageSizeChange(size)">
+                                                <button class="page-link"> {{ size }}
+                                                    <span class="sr-only">(current)</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 2">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row form-group"></div>
+                        <div class="row">
+                            <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                                <table class="table table-hover dataTable text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th [ngClass]="cashTransferQuery.sortOrder == 'date'? 'headActive' : ''"
+                                            accessKey="date" (click)="approvedClickSorting($event)">Date
+                                            <i *ngIf="cashTransferQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                            <i *ngIf="cashTransferQuery.sortOrder == 'date'" class="fa"
+                                               [ngClass]="cashTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="cashTransferQuery.sortOrder == 'fromBranchId'? 'headActive' : ''"
+                                            accessKey="fromBranchId" (click)="approvedClickSorting($event)">From User
+                                            <i *ngIf="cashTransferQuery.sortOrder != 'fromBranchId'" class="fa fa-sort"></i>
+                                            <i *ngIf="cashTransferQuery.sortOrder == 'fromBranchId'" class="fa"
+                                               [ngClass]="cashTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="cashTransferQuery.sortOrder == 'toBranchId'? 'headActive' : ''"
+                                            accessKey="toBranchId" (click)="approvedClickSorting($event)">To User/Branch
+                                            <i *ngIf="cashTransferQuery.sortOrder != 'toBranchId'" class="fa fa-sort"></i>
+                                            <i *ngIf="cashTransferQuery.sortOrder == 'toBranchId'" class="fa"
+                                               [ngClass]="cashTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Description</th>
+                                        <th [ngClass]="cashTransferQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                            accessKey="amount" (click)="approvedClickSorting($event)">Amount
+                                            <i *ngIf="cashTransferQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="cashTransferQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="cashTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Created By</th>
+                                        <th [ngClass]="cashTransferQuery.sortOrder == 'status'? 'headActive' : ''"
+                                            accessKey="status" (click)="approvedClickSorting($event)">Status
+                                            <i *ngIf="cashTransferQuery.sortOrder != 'status'" class="fa fa-sort"></i>
+                                            <i *ngIf="cashTransferQuery.sortOrder == 'status'" class="fa"
+                                               [ngClass]="cashTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+<!--                                        <th>Actions</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let cashTransfer of currentPageOfApprovedCashTransfers; let i = index">
+                                        <td>{{(cashTransferQuery.page - 1) * cashTransferQuery.size + i + 1}}</td>
+                                        <td>{{cashTransfer.date | date}}</td>
+                                        <td>{{cashTransfer.attrs.fromUser || 'NA'}}</td>
+                                        <td>{{cashTransfer.attrs.toUser || 'NA'}}</td>
+                                        <td>
+                                            <a *ngIf="cashTransfer.serviceFormId" href="#!/serviceform/{{cashTransfer.serviceFormId}}">{{cashTransfer.description}}</a>
+                                            <span *ngIf="!cashTransfer.serviceFormId">{{cashTransfer.description || 'NA'}}</span>
+                                        </td>
+                                        <td>{{cashTransfer.amount || 'NA'}}</td>
+                                        <td>{{cashTransfer.attrs.createdBy || 'NA'}}</td>
+                                        <td><span *ngIf="cashTransfer.status">
+                                            {{cashTransfer.status || 'NA'}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!currentPageOfApprovedCashTransfers || currentPageOfApprovedCashTransfers.length === 0">
+                                        <td colspan="10" style="text-align: center">No Records exist.</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr *ngIf="approvedCashTransfersCount != 0 || approvedCashTransfersCount">
+                                        <th colspan="12">
+                                            <div class="pull-right">
+                                                Total Count : {{approvedCashTransfersCount || 0}}
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row">
+                                        <ngb-pagination *ngIf="approvedCashTransfersCount|| approvedCashTransfersCount != 0"
+                                                        [(page)]="cashTransferQuery.page"
+                                                        [pageSize]="cashTransferQuery.size"
+                                                        [collectionSize]="approvedCashTransfersCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="changeApprovedPage($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                        <ul class="pagination pull-right" style="margin-top: -37px !important;"
+                                            *ngIf="approvedCashTransfersCount || approvedCashTransfersCount !== 0">
+                                            <li class="page-item" [ngClass]="size == cashTransferQuery.size ? 'active' : ''"
+                                                *ngFor="let size of cashTransferQuery.pageSizes" (click)="handleApprovedPageSizeChange(size)">
+                                                <button class="page-link"> {{ size }}
+                                                    <span class="sr-only">(current)</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 3">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 p-0">
+                                <div class="row">
+                                    <div class="col-sm-3 col-12 form-group">
+                                        <label>Branch Office Names</label>
+                                        <div>
+                                            <select class="form-control form-control-sm"
+                                                    [(ngModel)]="filterObj.branchOfficeId"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                <option value="" selected>--Select office Name--</option>
+                                                <option *ngFor="let fromBranch of branchOffices" value="{{fromBranch.id}}">
+                                                    {{fromBranch.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-12 form-group">
+                                        <label>User Names </label>
+                                        <div>
+                                            <select class="form-control form-control-sm"
+                                                    [(ngModel)]="filterObj.toUserId"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                <option value="" selected>--Select User--</option>
+                                                <option *ngFor="let us of users" value="{{us.id}}">
+                                                    {{us.fullName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+<!--                                </div>-->
+<!--                                <div class="row">-->
+                                    <div class="col-sm-3 col-12 form-group">
+                                        <label>Start Date</label>
+                                        <div class="input-group">
+                                            <input class="form-control form-control-sm"
+                                                   placeholder="Start Date"
+                                                   name="permit"
+                                                   [(ngModel)]="startDate"
+                                                   [ngModelOptions]="{standalone: true}"
+                                                   bsDatepicker
+                                                   #stDate="bsDatepicker"
+                                                   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                        (click)="stDate.show()"
+                                                        [attr.aria-expanded]="stDate.isOpen" type="button">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-12 form-group">
+                                        <label>End Date</label>
+                                        <div class="input-group">
+                                            <input class="form-control form-control-sm"
+                                                   placeholder="Start Date"
+                                                   name="permit"
+                                                   [(ngModel)]="endDate"
+                                                   [ngModelOptions]="{standalone: true}"
+                                                   bsDatepicker
+                                                   #enDate="bsDatepicker"
+                                                   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                        (click)="enDate.show()"
+                                                        [attr.aria-expanded]="enDate.isOpen" type="button">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-12 form-group">
+                                        <button class="btn btn-success btn-sm" (click)="search()">Search Cah Transfer</button>
+                                    </div>
+<!--                                    <div class="col-sm-3 col-12 form-group">-->
+<!--                                        <button class="btn btn-primary btn-sm">Excel Export</button>-->
+<!--                                    </div>-->
+                                </div>
+                                <div class="row" *ngIf="SearchError"  style="text-align: center">
+                                    <div class="col-md-12" role="alert">
+                                        <span style="color: red">{{SearchError}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                                <table class="table table-hover dataTable text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Date</th>
+                                        <th>Description</th>
+                                        <th>Created By</th>
+                                        <th>Approved By</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let expense of searchExpenses; let i = index">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{expense.date | date}}</td>
+                                        <td>{{expense.description || 'NA'}}</td>
+                                        <td>{{expense.attrs.createdBy || 'NA'}}</td>
+                                        <td>
+                                            <span *ngIf="expense.status != 'Auto'">{{expense.attrs.updatedBy || 'NA'}}</span>
+                                        </td>
+                                        <td>{{expense.amount|number:'1.2'}}</td>
+                                        <td>
+                                            <span *ngIf="expense.status">{{expense.status || 'NA'}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!searchExpenses || searchExpenses.length === 0">
+                                        <td colspan="10" style="text-align: center">No Records exist.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #addEditCashTransferModal>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">{{titleHeader}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form name="fillingStationForm" class="form-horizontal" role="form">
+            <div class="col-sm-10 col-12 form-group">
+                <div class="row">
+                    <label class="col-sm-3 col-form-label">Date: </label>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <input class="form-control form-control-sm"
+                                   placeholder="Enter Date"
+                                   name="date"
+                                   [minDate]="newDate"
+                                   [(ngModel)]="cashTransfer.date"
+                                   [ngModelOptions]="{standalone: true}"
+                                   bsDatepicker
+                                   #date="bsDatepicker"
+                                   [bsConfig]="{ dateInputFormat: 'YYYY-MMMM-DD', isAnimated: true}">
+                            <div class="input-group-append">
+                                <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                        (click)="date.show()"
+                                        [attr.aria-expanded]="date.isOpen" type="button">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10 col-12 form-group">
+                <div class="row">
+                    <label class="col-sm-3 col-form-label">Description: </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm"
+                               placeholder="enter Description" [(ngModel)]="cashTransfer.description" [ngModelOptions]="{standalone: true}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10 col-12 form-group">
+                <div class="row">
+                    <label class="col-sm-3 col-form-label">Amount: </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm" numbersOnly
+                               placeholder="Enter Amount" [(ngModel)]="cashTransfer.amount" [ngModelOptions]="{standalone: true}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10 col-12 form-group">
+                <div class="row">
+                    <label class="col-sm-3 col-form-label">From User: </label>
+                    <div class="col-sm-9">
+                        {{currentUser.firstName}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-10 col-12 form-group">
+                <div class="row">
+                    <label class="col-sm-3 col-form-label">To User: </label>
+                    <div class="col-sm-9">
+                        <ng-select
+                                [(ngModel)]="cashTransfer.toUserId"
+                                [ngModelOptions]="{standalone: true}"
+                                bindValue="id"
+                                bindLabel="name"
+                                placeholder="Enter User Name"
+                                [clearable]="false">
+                            <ng-option value="">Select User</ng-option>
+                            <ng-option *ngFor="let us of users"
+                                       [value]="us.id">{{us.fullName}}</ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-12 text-center">
+            <p class="error-field">{{errorMessage}}</p>
+        </div>
+        <button class="btn btn-success btn-sm mr-2" (click)="save(cashTransfer)">{{cashTransferId ? 'Update' : 'Save'}}</button>
+        <button class="btn btn-danger btn-sm" (click)="cancel()">Cancel</button>
+    </div>
+</ng-template>

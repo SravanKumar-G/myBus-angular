@@ -14,6 +14,10 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PipeFilterPipe} from '../../customDirectives/pipes/pipe-filter.pipe';
 import { FilesUploadComponent } from './shared/files-upload/files-upload.component';
 import { FileUploadComponent } from './shared/file-upload/file-upload.component';
+import { CashTransferComponent } from './reports/cash-transfer/cash-transfer.component';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {NgSelectModule} from '@ng-select/ng-select';
+
 
 
 @NgModule({
@@ -27,12 +31,15 @@ import { FileUploadComponent } from './shared/file-upload/file-upload.component'
         PipeFilterPipe,
         FilesUploadComponent,
         FileUploadComponent,
+        CashTransferComponent,
     ],
     imports: [
         CommonModule,
         LayoutRoutingModule,
         FormsModule,
-        NgbModule
+        NgbModule,
+        BsDatepickerModule,
+        NgSelectModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],
