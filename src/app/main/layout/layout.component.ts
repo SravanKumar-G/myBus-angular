@@ -20,14 +20,11 @@ export class LayoutComponent implements OnInit {
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
-                private apiService: ApiServiceService,
+                public apiService: ApiServiceService,
                 private modalService: NgbModal,
                 private data: BroadcastService) {
         this.authenticationService.currentUser.subscribe(x => { this.currentUser = x; });
-        this.data.getCurrentUser$().subscribe((currentUser: any) => {
-            this.currentUserDetails = currentUser;
-        });
-
+        this.data.getCurrentUser$().subscribe((currentUser: any) => { this.currentUserDetails = currentUser; });
     }
 
     // @ts-ignore
@@ -41,8 +38,6 @@ export class LayoutComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.newDate = new Date().getFullYear() + '-' + ('0' + (parseInt(String(new Date().getMonth() + 1)))).slice(-2)
-            + '-' + ('0' + (new Date().getDate() - 1)).slice(-2);
         (($) => {
             // tslint:disable-next-line:typedef
             $(document).ready(() => {

@@ -170,6 +170,11 @@ const layOutRoutes: Routes = [
                 path: 'salaryReports',
                 loadChildren: () => import('./reports/salary-reports/salary-reports.module')
                     .then(m => m.SalaryReportsModule)
+            },
+            {
+                path: 'serviceFeedback/:date',
+                loadChildren: () => import('./customer-reports/service-feedback/service-feedback.module')
+                    .then(m => m.ServiceFeedbackModule)
             }
         ]
     },

@@ -15,17 +15,21 @@ export class ApiServiceService {
     public months: ['January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'] | undefined;
     private currentUserDetails: any;
+    newDate: any;
 
     constructor(private http: HttpClient,
                 public Apiurls: ApiUrls,
                 public authenticationService: AuthenticationService,
                 public service: BroadcastService) {
+        this.newDate = new Date().getFullYear() + '-' + ('0' + (parseInt(String(new Date().getMonth() + 1)))).slice(-2)
+            + '-' + ('0' + (new Date().getDate() - 1)).slice(-2);
         this.authenticationService.currentUser.subscribe((userDetails: any) => {
             if (userDetails) {
                 this.currentUser = userDetails;
             }
         });
     }
+
 
     getUserRoleValue(key: string | number): string {
         if (key === 0) {
@@ -134,14 +138,22 @@ export class ApiServiceService {
         }
     }
 
-    //  Send WhatsApp message
-    sendWhatsApp(data: any): void {
-        let phoneNumber = prompt('Phone Number', data.fromContact);
-        if (data.fromContact.toString().length <= 10) {
-            phoneNumber = '91' + phoneNumber;
+    // return date YYYY/MM/DD format
+    getExpenesDate(date: any): any {
+        if (date) {
+            const dateObj = new Date(date);
+            const month = dateObj.getMonth() + 1 < 10 ? '0' + (dateObj.getMonth() + 1) : dateObj.getMonth() + 1;
+            const day = dateObj.getDate() < 10 ? '0' + dateObj.getDate() : dateObj.getDate();
+            const year = dateObj.getFullYear();
+            return year + '/' + month + '/' + day;
         }
-        const textMessage = encodeURI(data.attrs.SMS);
-        console.log(phoneNumber);
+    }
+
+    //  Send WhatsApp message
+    sendWhatsApp(mobile: any, sms: any): void {
+        let phoneNumber = prompt('Phone Number', mobile);
+        if (mobile.toString().length <= 10) { phoneNumber = '91' + mobile; }
+        const textMessage = encodeURI(sms.replace('#', ':'));
         const URL = 'https://api.whatsapp.com/send/?phone=' + phoneNumber + '&text=' + textMessage + '&app_absent=0';
         window.open(URL);
     }
