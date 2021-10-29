@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './layout.component';
 import {CargoDashboardComponent} from './cargo/cargo-dashboard/cargo-dashboard.component';
+import {FuelExpenseReportsModule} from './reports/fuel-expense-reports/fuel-expense-reports.module';
 
 const layOutRoutes: Routes = [
     {
@@ -190,6 +191,11 @@ const layOutRoutes: Routes = [
                 path: 'escalations',
                 loadChildren: () => import('./customer-reports/escalations/escalations.module')
                     .then(m => m.EscalationsModule)
+            },
+            {
+                path: 'fuelExpenseReports/:date',
+                loadChildren: () => import('./reports/fuel-expense-reports/fuel-expense-reports.module')
+                    .then(m => m.FuelExpenseReportsModule)
             }
         ]
     },

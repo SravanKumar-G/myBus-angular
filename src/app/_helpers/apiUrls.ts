@@ -7,7 +7,7 @@ import {environment} from 'src/environments/environment';
 })
 
 export class ApiUrls {
-    // mainUrl = 'http://localhost:8081/';
+    // mainUrl = 'http://localhost:8091/';
     mainUrl = environment.testPath;
 
 
@@ -255,4 +255,14 @@ export class ApiUrls {
     addCommentToBooking = 'api/v1/bookingFeedback/addComment/';
     escalationResolve = 'api/v1/bookingFeedback/resolve/';
     sendEmail = 'api/v1/bookingFeedback/sendEmailWithMessage/?';
+
+    // fuelExpenseReport
+
+    getAllByDate = 'api/v1/FuelExpense/getAllByDate';
+    searchData = 'api/v1/FuelExpense/search';
+    addFuelExpense = 'api/v1/FuelExpense/addFuelExpense';
+    updateFuelExpense = 'api/v1/FuelExpense/updateFuelExpense';
+    getFuelExpense = 'api/v1/FuelExpense/getFuelExpense/';
+    deleteFuelExpense = 'api/v1/FuelExpense/deleteFuelExpense/';
+    updateServiceName = 'api/v1/FuelExpense/updateServiceName?';
 }

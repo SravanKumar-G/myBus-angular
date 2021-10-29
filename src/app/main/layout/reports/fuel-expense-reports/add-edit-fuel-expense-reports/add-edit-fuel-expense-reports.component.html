@@ -1,0 +1,138 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-user" aria-hidden="true"></i>
+                Add FuelExpense
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">{{fuelExpenseTitle}}</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 col-sm-12">
+            <div class="tile">
+                <h3 class="tile-title form-head-line-style">{{fuelExpenseTitle}}</h3>
+                <hr>
+                 <div class="tile-body">
+                     <div class="row">
+                         <div class="col-sm-6 form-group">
+                             <label class="control-label">Trip Date<span class="mandatory-field">*</span></label>
+                             <div class="input-group">
+                                 <input name="startDate" class="form-control form-control-sm"
+                                        [(ngModel)]="addFuelExpenseQuery.journeyDate"
+                                        placeholder="Enter Date"
+                                        readonly type="text"
+                                        #date1="bsDatepicker"
+                                        [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                                        bsDatepicker/>
+                                 <div class="input-group-append">
+                                     <button class="btn btn-light btn-sm" type="button"
+                                             style="border: 1px solid #ced4da;"
+                                             (click)="date1.show()"
+                                             [attr.aria-expanded]="date1.isOpen">
+                                         <i class="fa fa-calendar"></i>
+                                     </button>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="col-sm-6 form-group">
+                             <label class="control-label">Service Station<span class="mandatory-field">*</span></label>
+                             <ng-select
+                                        [items]="suppliers"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="id"
+                                        placeholder="Service Station"
+                                        [(ngModel)]="addFuelExpenseQuery.supplierId"
+                                        [ngModelOptions]="{standalone: true}">
+                             </ng-select>
+                         </div>
+                         <div class="col-sm-6 form-group">
+                             <label class="control-label">Vehicle No<span class="mandatory-field">*</span></label>
+                             <ng-select
+                                        [items]="vehicles"
+                                        [multiple]="false"
+                                        bindLabel="regNo"
+                                        [closeOnSelect]="true"
+                                        bindValue="id"
+                                        placeholder="Select Vehicle"
+                                        [(ngModel)]="addFuelExpenseQuery.vehicleId"
+                                        [ngModelOptions]="{standalone: true}">
+                             </ng-select>
+                         </div>
+                         <div class="col-sm-6 form-group">
+                             <label class="control-label">OdometerReading<span class="mandatory-field">*</span></label>
+                             <input class="form-control form-control-sm" type="number" min="0"
+                                    placeholder=" Enter Mobile Number"  [(ngModel)]="addFuelExpenseQuery.odometer">
+                         </div>
+                         <div class="col-sm-6 form-group">
+                             <label class="control-label">Fuel Quantity<span class="mandatory-field">*</span></label>
+                             <input class="form-control form-control-sm" type="number" min="0"
+                                    placeholder=" Enter Mobile Number"  [(ngModel)]="addFuelExpenseQuery.quantity" (ngModelChange)="getFuelCost()">
+                         </div>
+                         <div class="col-sm-6 form-group">
+                             <label class="control-label">Fuel Rate<span class="mandatory-field">*</span></label>
+                             <input class="form-control form-control-sm" type="number" min="0"
+                                    placeholder=" Enter Mobile Number"  [(ngModel)]="addFuelExpenseQuery.rate" (ngModelChange)="getFuelCost()">
+                         </div>
+                         <div class="col-sm-6 form-group">
+                             <label class="control-label">Fuel Cost: <span class="mandatory-field">*</span></label>
+                             <input class="form-control form-control-sm" numbersOnly minlength="10" maxlength="10" disabled
+                                    placeholder=" Enter Mobile Number" type="text" [(ngModel)]="addFuelExpenseQuery.cost">
+<!--                             <span class="col-sm-5">{{addFuelExpenseQuery.cost}}</span>-->
+                         </div>
+                         <div class="col-sm-6 form-group">
+                             <label class="control-label">Remarks</label>
+                             <input class="form-control form-control-sm" numbersOnly minlength="10" maxlength="10"
+                                    placeholder=" Enter Mobile Number" type="text" [(ngModel)]="addFuelExpenseQuery.remarks">
+                         </div>
+                         <div class="col-sm-6 form-group">
+                             <div class="row">
+                                 <div class="col-sm-3 form-group">
+                                     <input type="checkbox" [(ngModel)]="addFuelExpenseQuery.paid" [ngModelOptions]="{standalone: true}" value="EXPENSE">&nbsp;&nbsp;&nbsp;
+                                     <label class="form-check-label">Bill Paid<span class="mandatory-field">*</span></label>
+                                 </div>
+                                 <div class="col-sm-3 form-group">
+                                     <input type="checkbox" [(ngModel)]="addFuelExpenseQuery.fillup" [ngModelOptions]="{standalone: true}" value="EXPENSE">&nbsp;&nbsp;&nbsp;
+                                     <label class="form-check-label">Is Fillup<span class="mandatory-field">*</span></label>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                <div class="tile-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger col-md-12" role="alert" *ngIf="errorMessage.length">
+                                <ul>
+                                    <li *ngFor="let error of errorMessage">{{error}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-3">
+                            <div class="pull-right">
+                                <button class="btn btn-sm btn-all-shadow waves-effect waves-light btn-info save-city-button"
+                                        (click)="saveFuelExpense()">
+                                    <i class="fa fa-fw fa-check-circle"></i>{{fuelExpenseId ? 'Update' : 'Save'}}
+                                </button>
+                                &nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-sm btn-all-shadow waves-effect waves-light btn-dark cancel-city-button"
+                                        (click)="cancel()">
+                                    <i class="fa fa-fw fa-times-circle"></i>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
