@@ -68,28 +68,28 @@
                          <div class="col-sm-6 form-group">
                              <label class="control-label">OdometerReading<span class="mandatory-field">*</span></label>
                              <input class="form-control form-control-sm" type="number" min="0"
-                                    placeholder=" Enter Mobile Number"  [(ngModel)]="addFuelExpenseQuery.odometer">
+                                    placeholder=" Enter Odometer Reading"  [(ngModel)]="addFuelExpenseQuery.odometer">
                          </div>
                          <div class="col-sm-6 form-group">
                              <label class="control-label">Fuel Quantity<span class="mandatory-field">*</span></label>
                              <input class="form-control form-control-sm" type="number" min="0"
-                                    placeholder=" Enter Mobile Number"  [(ngModel)]="addFuelExpenseQuery.quantity" (ngModelChange)="getFuelCost()">
+                                    placeholder=" Enter Quantity"  [(ngModel)]="addFuelExpenseQuery.quantity" (ngModelChange)="getFuelCost()">
                          </div>
                          <div class="col-sm-6 form-group">
                              <label class="control-label">Fuel Rate<span class="mandatory-field">*</span></label>
                              <input class="form-control form-control-sm" type="number" min="0"
-                                    placeholder=" Enter Mobile Number"  [(ngModel)]="addFuelExpenseQuery.rate" (ngModelChange)="getFuelCost()">
+                                    placeholder=" Enter Fuel Rate"  [(ngModel)]="addFuelExpenseQuery.rate" (ngModelChange)="getFuelCost()">
                          </div>
                          <div class="col-sm-6 form-group">
                              <label class="control-label">Fuel Cost: <span class="mandatory-field">*</span></label>
-                             <input class="form-control form-control-sm" numbersOnly minlength="10" maxlength="10" disabled
-                                    placeholder=" Enter Mobile Number" type="text" [(ngModel)]="addFuelExpenseQuery.cost">
+                             <input class="form-control form-control-sm" numbersOnly  disabled
+                                    placeholder=" Enter Fuel Cost" type="text" [(ngModel)]="addFuelExpenseQuery.cost">
 <!--                             <span class="col-sm-5">{{addFuelExpenseQuery.cost}}</span>-->
                          </div>
                          <div class="col-sm-6 form-group">
                              <label class="control-label">Remarks</label>
-                             <input class="form-control form-control-sm" numbersOnly minlength="10" maxlength="10"
-                                    placeholder=" Enter Mobile Number" type="text" [(ngModel)]="addFuelExpenseQuery.remarks">
+                             <input class="form-control form-control-sm"
+                                    placeholder=" Enter Remarks" type="text" [(ngModel)]="addFuelExpenseQuery.remarks">
                          </div>
                          <div class="col-sm-6 form-group">
                              <div class="row">
@@ -118,15 +118,11 @@
                     <div class="row">
                         <div class="col-md-12 col-md-offset-3">
                             <div class="pull-right">
-                                <button class="btn btn-sm btn-all-shadow waves-effect waves-light btn-info save-city-button"
-                                        (click)="saveFuelExpense()">
-                                    <i class="fa fa-fw fa-check-circle"></i>{{fuelExpenseId ? 'Update' : 'Save'}}
+                                <button type="submit" class="btn btn-success btn-sm mr-2" (click)="saveFuelExpense()">
+                                    <i class="fa fa-fw fa-check-circle"></i> {{fuelExpenseId ? 'Update' : 'Save'}}
                                 </button>
-                                &nbsp;&nbsp;&nbsp;
-                                <button class="btn btn-sm btn-all-shadow waves-effect waves-light btn-dark cancel-city-button"
-                                        (click)="cancel()">
-                                    <i class="fa fa-fw fa-times-circle"></i>
-                                    Cancel
+                                <button type="button" class="btn btn-danger btn-sm" (click)="cancel()">
+                                    <i class="fa fa-fw fa-times-circle"></i> Cancel
                                 </button>
                             </div>
                         </div>

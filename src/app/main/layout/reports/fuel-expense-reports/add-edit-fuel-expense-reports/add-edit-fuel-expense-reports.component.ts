@@ -4,6 +4,7 @@ import {ApiServiceService} from '../../../../../services/api-service.service';
 import {ApiUrls} from '../../../../../_helpers/apiUrls';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-add-edit-fuel-expense-reports',
@@ -33,7 +34,7 @@ export class AddEditFuelExpenseReportsComponent implements OnInit {
               public apiService: ApiServiceService,
               private apiUrls: ApiUrls,
               private actRoute: ActivatedRoute,
-              private modalService: NgbModal) {
+              private location: Location) {
     this.fuelExpenseId = this.actRoute.snapshot.params.id || '';
   }
 
@@ -113,7 +114,7 @@ export class AddEditFuelExpenseReportsComponent implements OnInit {
         this.apiService.update(this.apiUrls.updateFuelExpense, this.addFuelExpenseQuery).subscribe((res: any) => {
           if (res){
             Swal.fire('Great', 'Your Fuel Consumption successfully updated', 'success');
-            this.router.navigate(['fuelExpenseReports/:date']);
+            this.router.navigate(['fuelExpenseReports/' +  this.addFuelExpenseQuery.journeyDate]);
           }
         }, error => {
           this.errorMessage = error.message;
@@ -130,7 +131,7 @@ export class AddEditFuelExpenseReportsComponent implements OnInit {
         this.apiService.getAll(this.apiUrls.addFuelExpense, this.addFuelExpenseQuery).subscribe((res: any) => {
           if (res){
             Swal.fire('Great', 'Your Fuel Consumption successfully added', 'success');
-            this.router.navigate(['fuelExpenseReports/:date']);
+            this.router.navigate(['fuelExpenseReports/' +  this.addFuelExpenseQuery.journeyDate]);
           }
         }, error => {
           this.errorMessage = error.message;
@@ -140,7 +141,7 @@ export class AddEditFuelExpenseReportsComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate(['fuelExpenseReports/:date']);
+    this.location.back();
   }
 
   getFuelCost(): void {

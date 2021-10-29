@@ -283,7 +283,7 @@
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('fuelExpenseReports')">
-                        <a class="treeView-item" [routerLink]="['fuelExpenseReports/' + newDate]" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['fuelExpenseReports/' + apiService.newDate]" [routerLinkActive]="['active']">
                             <i class="icon fa fa-users" aria-hidden="true"></i>Fuel Expense Reports
                         </a>
                     </li>
