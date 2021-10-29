@@ -233,4 +233,13 @@ export class ApiUrls {
     serviceFeedbackStatusUpdate = 'api/v1/serviceFeedback/updateStatus/';
     bookingFeedbackStatusUpdate = 'api/v1/serviceFeedback/bookingFeedback/';
 
+    // Cash Transfer API's
+    cashTransferPendingCount = 'api/v1/cashTransfer/pending/count';
+    getPendingAll = 'api/v1/cashTransfer/pending/all';
+    userNamesMap = 'api/v1/userNamesMap';
+    nonPendingCount = 'api/v1/cashTransfer/nonpending/count';
+    getAllNonPending = 'api/v1/cashTransfer/nonpending/all';
+    saveOrUpdate = 'api/v1/cashTransfer/';
+    cashTransferSearch = 'api/v1/cashTransfer/search';
+
 }
