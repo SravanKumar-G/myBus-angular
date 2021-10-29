@@ -179,7 +179,17 @@ const layOutRoutes: Routes = [
             {
                 path: 'cashTransfer',
                 loadChildren: () => import ('./reports/cash-transfer/cash-transfer.module')
-                .then(m => m.CashTransferModule)
+                    .then(m => m.CashTransferModule)
+            },
+            {
+                path: 'reviews',
+                loadChildren: () => import('./customer-reports/reviews/reviews.module')
+                    .then(m => m.ReviewsModule)
+            },
+            {
+                path: 'escalations',
+                loadChildren: () => import('./customer-reports/escalations/escalations.module')
+                    .then(m => m.EscalationsModule)
             }
         ]
     },

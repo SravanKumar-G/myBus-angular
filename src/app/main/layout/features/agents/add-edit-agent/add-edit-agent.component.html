@@ -50,17 +50,13 @@
                                 <ng-option *ngFor="let office of branchOffices"
                                            [value]="office.id">{{office.name}}</ng-option>
                             </ng-select>
+                            <a class="cus-a pl-2" [routerLinkActive]="['active']" [routerLink]="['/branchOffices/addBranchOffice']"><u>Add New Branch</u></a>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label class="control-label"> Commission</label>
                             <input class="form-control form-control-sm " placeholder=" Enter Commission" type="text"
                                    [(ngModel)]="agent.commission">
                         </div>
-                        <div class="col-sm-6 form-group"></div>
-                        <div class="col-sm-6 form-group">
-                            <button class="btn btn-link" [routerLink]="['addBranchOffice']">Add New Branch</button>
-                        </div>
-
                     </div>
                 </div>
                 <div class="tile-footer">

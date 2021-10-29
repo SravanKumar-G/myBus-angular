@@ -1,0 +1,295 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-retweet" aria-hidden="true"></i>
+                Reviews
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Reviews</span></li>
+        </ul>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item active-tab-nav" (click)="tabChange(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Reviews</a>
+        </li>
+        <li class="nav-item deleted-tab-nav" (click)="tabChange(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Upload</a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile" *ngIf="tab === 1">
+                <div class="tile-body">
+                    <div class="col-sm-12">
+                        <div class="row form-group">
+                            <div class="col-sm-2 col-12">
+                                <label>Date of Journey</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Date of Journey"
+                                           name="dateOfJourney"
+                                           [(ngModel)]="dateOfJourney"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #jDate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="jDate.show()"
+                                                [attr.aria-expanded]="jDate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 col-12">
+                                <label>Search by PNR</label>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="filterObj.pnr"
+                                       [ngModelOptions]="{standalone: true}" placeholder="enter PNR number">
+                            </div>
+                            <div class="col-sm-2 col-12">
+                                <label>Select From</label>
+                                <ng-select
+                                        [items]="listOfRoutes"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="name"
+                                        placeholder="Select From"
+                                        [(ngModel)]="filterObj.from"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2 col-12">
+                                <label>Select To</label>
+                                <ng-select
+                                        [items]="listOfRoutes"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="name"
+                                        placeholder="Select to"
+                                        [(ngModel)]="filterObj.to"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-3 col-12 mt-auto">
+                                <button type="button" class="btn btn-success btn-sm mr-2" (click)="searchData()">
+                                    Search
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="exportToExcel()">Export to
+                                    Excel
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th [ngClass]="filterObj.sortOrder == 'passengerName'? 'headActive' : ''"
+                                            accessKey="passengerName" (click)="clickSorting($event)">Passenger_Name
+                                            <i *ngIf="filterObj.sortOrder != 'passengerName'" class="fa fa-sort"></i>
+                                            <i *ngIf="filterObj.sortOrder == 'passengerName'" class="fa"
+                                               [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="filterObj.sortOrder == 'pnr'? 'headActive' : ''"
+                                            accessKey="pnr" (click)="clickSorting($event)">PNR
+                                            <i *ngIf="filterObj.sortOrder != 'pnr'" class="fa fa-sort"></i>
+                                            <i *ngIf="filterObj.sortOrder == 'pnr'" class="fa"
+                                               [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="filterObj.sortOrder == 'route'? 'headActive' : ''"
+                                            accessKey="route" (click)="clickSorting($event)">Route
+                                            <i *ngIf="filterObj.sortOrder != 'route'" class="fa fa-sort"></i>
+                                            <i *ngIf="filterObj.sortOrder == 'route'" class="fa"
+                                               [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="filterObj.sortOrder == 'dateOfJourney'? 'headActive' : ''"
+                                            accessKey="dateOfJourney" (click)="clickSorting($event)">Date_Of_Journey
+                                            <i *ngIf="filterObj.sortOrder != 'dateOfJourney'" class="fa fa-sort"></i>
+                                            <i *ngIf="filterObj.sortOrder == 'dateOfJourney'" class="fa"
+                                               [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="filterObj.sortOrder == 'dateOfRating'? 'headActive' : ''"
+                                            accessKey="dateOfRating" (click)="clickSorting($event)">Date_Of_Rating
+                                            <i *ngIf="filterObj.sortOrder != 'dateOfRating'" class="fa fa-sort"></i>
+                                            <i *ngIf="filterObj.sortOrder == 'dateOfRating'" class="fa"
+                                               [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Rating</th>
+                                        <th>Positive Tags If Rating Five</th>
+                                        <th>Negative Tags If Rating Less Than Five</th>
+                                        <th>Review</th>
+                                        <th>Reply_To_Review</th>
+                                        <th>Others</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let review of listOfReviews; let i = index;">
+                                        <td>{{(filterObj.page - 1) * filterObj.size + i + 1}}</td>
+                                        <td>{{ review.passengerName || '--' }}</td>
+                                        <td>{{ review.pnr || '--' }}</td>
+                                        <td>{{ review.route || '--'}}</td>
+                                        <td>{{ review.dateOfJourney || '--' }}</td>
+                                        <td>{{ review.dateOfRating || '--' }}</td>
+                                        <td>{{ review.rating || '--' }}</td>
+                                        <td><a class="cus-a" title="Click on to Show"
+                                               *ngIf="review.positiveTagsIfRatingFive"
+                                               [ngbPopover]="showPositiveTags"
+                                               trigger="'mouseleave'" placement="auto">
+                                            <i class="fa fa-info-circle" style="font-size: 16px;"></i> </a>
+                                            <ng-template #showPositiveTags>
+                                                {{ review.positiveTagsIfRatingFive }}
+                                            </ng-template>
+                                            <span *ngIf="!review.positiveTagsIfRatingFive">---</span>
+                                        </td>
+                                        <td><a class="cus-a" title="Click on to Show"
+                                               *ngIf="review.negativeTagsIfRatingLessThanFive"
+                                               [ngbPopover]="showNegativeTags"
+                                               trigger="'mouseleave'" placement="auto">
+                                            <i class="fa fa-info-circle" style="font-size: 16px;"></i> </a>
+                                            <ng-template #showNegativeTags>
+                                                {{ review.negativeTagsIfRatingLessThanFive }}
+                                            </ng-template>
+                                            <span *ngIf="!review.negativeTagsIfRatingLessThanFive">---</span>
+                                        </td>
+                                        <td>{{ review.review || '--' }}</td>
+                                        <td>{{ review.replyToReview || '--' }}</td>
+                                        <td>{{ review.others || '--' }}</td>
+                                    </tr>
+                                    <tr *ngIf="!listOfReviews || listOfReviews.length === 0">
+                                        <td colspan="12">No Records exist</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row" style="display: inline-block">
+                                        <ngb-pagination *ngIf="reviewsCount || reviewsCount !== 0"
+                                                        [(page)]="filterObj.page"
+                                                        [pageSize]="filterObj.size"
+                                                        [collectionSize]="reviewsCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="handlePageChange($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                    </div>
+                                    <ul class="pagination pull-right" *ngIf="filterObj || filterObj !== 0">
+                                        <li class="page-item" [ngClass]="size == filterObj.size ? 'active' : ''"
+                                            *ngFor="let size of filterObj.pageSizes"
+                                            (click)="handlePageSizeChange(size)">
+                                            <button class="page-link"> {{ size }}
+                                                <span class="sr-only">(current)</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Excel Download-->
+                            <table class="table table-hover table-bordered text-center" id="reviewsData" style="display: none;">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th>Passenger_Name</th>
+                                    <th>PNR</th>
+                                    <th>Route</th>
+                                    <th>Date_Of_Journey</th>
+                                    <th>Date_Of_Rating</th>
+                                    <th>Rating</th>
+                                    <th>Positive Tags If Rating Five</th>
+                                    <th>Negative Tags If Rating Less Than Five</th>
+                                    <th>Review</th>
+                                    <th>Reply_To_Review</th>
+                                    <th>Others</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let review of listOfReviews; let i = index;">
+                                    <td>{{(filterObj.page - 1) * filterObj.size + i + 1}}</td>
+                                    <td>{{ review.passengerName || '--' }}</td>
+                                    <td>{{ review.pnr || '--' }}</td>
+                                    <td>{{ review.route || '--'}}</td>
+                                    <td>{{ review.dateOfJourney || '--' }}</td>
+                                    <td>{{ review.dateOfRating || '--' }}</td>
+                                    <td>{{ review.rating || '--' }}</td>
+                                    <td>{{ review.positiveTagsIfRatingFive || '--'}}</td>
+                                    <td>{{ review.negativeTagsIfRatingLessThanFive || '--'}}</td>
+                                    <td>{{ review.review || '--' }}</td>
+                                    <td>{{ review.replyToReview || '--' }}</td>
+                                    <td>{{ review.others || '--' }}</td>
+                                </tr>
+                                <tr *ngIf="!listOfReviews || listOfReviews.length === 0">
+                                    <td colspan="12">No Records exist</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tile" *ngIf="tab === 2">
+                <div class="tile-body">
+                    <div class="col-sm-12">
+                        <div class="row form-group">
+                            <div class="col-sm-6 col-12">
+                                <label>Upload Files<b class="mandatory-field">*</b></label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input"
+                                               id="inputGroupFile02" (change)="handleFileInput($event)"
+                                               aria-describedby="inputGroupFileAddon02">
+                                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                                    </div>
+                                    <div class="input-group-prepend">
+                                        <button type="submit" class="btn btn-success btn-sm ml-2"
+                                                (click)="fileUpload()" [disabled]="isDisabled"
+                                                title="{{isDisabled === true ? 'Please Select Files to Upload' : 'Upload Files'}}">
+                                            <i class="fa fa-fw fa-cloud-upload"></i> upload
+                                        </button>
+                                    </div>
+                                </div>
+                                <div *ngIf="files.length !== 0">
+                                    <div *ngFor="let file of files">
+                                        {{file.name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th scope="col" [appFrentendSort]="listOfDownloads"
+                                            data-order="desc" data-name="fileName">File Name<i class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="listOfDownloads"
+                                            data-order="desc" data-name="createdAt">Uploaded On<i class="fa fa-sort"></i></th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let upload of listOfDownloads; let i = index;">
+                                        <td>{{ i + 1}}</td>
+                                        <td>{{ upload.fileName || '--' }}</td>
+                                        <td>{{ (upload.createdAt | date) || '--' }}</td>
+                                        <td><a class="cus-a" (click)="viewUploadDetails(upload.id, upload.fileName)">View Details</a></td>
+                                    </tr>
+                                    <tr *ngIf="!listOfReviews || listOfReviews.length === 0">
+                                        <td colspan="12">No Records exist</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

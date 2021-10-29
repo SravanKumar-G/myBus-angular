@@ -1,0 +1,365 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-comment" aria-hidden="true"></i>
+                Escalations
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Escalations</span></li>
+        </ul>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item active-tab-nav" (click)="tabChange(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
+        </li>
+        <li class="nav-item deleted-tab-nav" (click)="tabChange(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Resolved</a>
+        </li>
+        <li class="nav-item deleted-tab-nav" (click)="tabChange(3)">
+            <a class="nav-link" [ngClass]="{active:tab==3}">Search</a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile" *ngIf="tab === 1">
+                <div class="tile-body">
+                    <div class="col-sm-12">
+                        <div class="row form-group">
+                            <div class="col-sm-2 col-12">
+                                <label>Select From</label>
+                                <ng-select
+                                        [items]="listOfRoutes"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="name"
+                                        placeholder="Select From"
+                                        [(ngModel)]="filterObj.from"
+                                        (ngModelChange)="loadCountOfEscalations('Escalated')"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2 col-12">
+                                <label>Select To</label>
+                                <ng-select
+                                        [items]="listOfRoutes"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="name"
+                                        placeholder="Select to"
+                                        [(ngModel)]="filterObj.to"
+                                        (ngModelChange)="loadCountOfEscalations('Escalated')"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2 col-12">
+                                <label>Rating</label>
+                                <select [(ngModel)]="filterObj.rating" [ngModelOptions]="{standalone: true}"
+                                class="form-control form-control-sm"
+                                        (ngModelChange)="loadCountOfEscalations('Escalated')">
+                                    <option value="" selected>--Selected Rating--</option>
+                                    <option value="0">All</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th>Service</th>
+                                        <th [ngClass]="filterObj.sortOrder == 'passengerName'? 'headActive' : ''"
+                                            accessKey="passengerName" (click)="clickSorting($event)">Passenger Name
+                                            <i *ngIf="filterObj.sortOrder != 'passengerName'" class="fa fa-sort"></i>
+                                            <i *ngIf="filterObj.sortOrder == 'passengerName'" class="fa"
+                                               [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="filterObj.sortOrder == 'pnr'? 'headActive' : ''"
+                                            accessKey="pnr" (click)="clickSorting($event)">PNR
+                                            <i *ngIf="filterObj.sortOrder != 'pnr'" class="fa fa-sort"></i>
+                                            <i *ngIf="filterObj.sortOrder == 'pnr'" class="fa"
+                                               [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="filterObj.sortOrder == 'dateOfJourney'? 'headActive' : ''"
+                                            accessKey="dateOfJourney" (click)="clickSorting($event)">Date Of Journey
+                                            <i *ngIf="filterObj.sortOrder != 'dateOfJourney'" class="fa fa-sort"></i>
+                                            <i *ngIf="filterObj.sortOrder == 'dateOfJourney'" class="fa"
+                                               [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Staff List</th>
+                                        <th>BookedBy</th>
+                                        <th>CalledBy</th>
+                                        <th>Redbus Review & Rating & Tags</th>
+                                        <th>Comments</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let escalation of listOfEscalations; let i = index;">
+                                        <td>{{(filterObj.page - 1) * filterObj.size + i + 1}}</td>
+                                        <td>{{escalation.serviceName}} <br /> {{escalation.vehicleNumber}}</td>
+                                        <td>{{escalation.name}} <br/> <b>{{escalation.phone}}</b><br /> {{escalation.email}}</td>
+                                        <td>{{ escalation.pnr}} <br /> {{escalation.seats}}</td>
+                                        <td>{{ escalation.jdate || '--' }}</td>
+                                        <td>
+                                            <a *ngIf="escalation.staffDetails.length > 0"
+                                               class="cus-a" [ngbPopover]="staffList"
+                                               trigger="'mouseleave'" placement="auto">
+                                                <i class="fa fa-info-circle"></i></a>
+                                            <ng-template #staffList>
+                                                <p>Staff List</p>
+                                                <table class="table-bordered table">
+                                                <tr *ngFor="let staff of escalation.staffDetails">
+                                                    <td>{{staff.name}} - <b>{{staff.number}}</b></td>
+                                                </tr>
+                                            </table>
+                                            </ng-template>
+                                        </td>
+                                        <td>{{ escalation.bookedBy}}</td>
+                                        <td>{{ escalation.calledBy}}</td>
+                                        <td>{{escalation.redbusReview || 'NA'}} <br />
+                                            {{escalation.redbusRating || 'NA'}}<br />
+                                            {{escalation.redbusReviewTags || 'NA'}}
+                                        </td>
+                                        <td>
+                                            <a *ngIf="escalation.escalationComments.length > 0"
+                                               class="cus-a" [ngbPopover]="escalationComments"
+                                               trigger="'mouseleave'" placement="auto">
+                                                <i class="fa fa-info-circle"></i></a>
+                                            <ng-template #escalationComments>
+                                                <table class="table-bordered" *ngFor="let comment of escalation.escalationComments; let i = index;">
+                                                    <td>{{i+1}} &nbsp; {{comment.comment}} <span style="color: initial"> - {{comment.addedBy}} - {{comment.addedOn}}</span></td>
+                                                </table>
+                                            </ng-template>
+                                            <span *ngIf="escalation.escalationComments.length === 0">NA</span>
+                                        </td>
+                                        <td class="td-active" style="min-width: 140px;">
+                                            <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                                    title="Add Comment" style="padding: 0;width: 30px;height: 30px;"
+                                                    (click)="addingComments(escalation.id, 'Escalated')">
+                                                <i class="fa fa-comment fa-1x" aria-hidden="true" style="color: green"></i>
+                                            </button>
+                                            <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                                    title="Resolve" style="padding: 0;width: 30px;height: 30px;"
+                                                    (click)="resolveBookingFeedback(escalation.id, 'Escalated')">
+                                                <i class="fa fa-recycle fa-1x" aria-hidden="true" style="color: deepskyblue"></i>
+                                            </button>
+                                            <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                                    title="Send Email" style="padding: 0;width: 30px;height: 30px;"
+                                                    (click)="sendEmail(escalation.id, 'Escalated')">
+                                                <i class="fa fa-envelope fa-1x" aria-hidden="true" style="color: indianred"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!listOfEscalations || listOfEscalations.length === 0">
+                                        <td colspan="12">No Records exist</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row" style="display: inline-block">
+                                        <ngb-pagination *ngIf="escalationsCount || escalationsCount !== 0"
+                                                        [(page)]="filterObj.page"
+                                                        [pageSize]="filterObj.size"
+                                                        [collectionSize]="escalationsCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="handlePageChange($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                    </div>
+                                    <ul class="pagination pull-right" *ngIf="escalationsCount || escalationsCount !== 0">
+                                        <li class="page-item" [ngClass]="size == filterObj.size ? 'active' : ''"
+                                            *ngFor="let size of filterObj.pageSizes"
+                                            (click)="handlePageSizeChange(size)">
+                                            <button class="page-link"> {{ size }}
+                                                <span class="sr-only">(current)</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tile" *ngIf="tab === 2">
+                <div class="tile-body">
+                    <div class="col-sm-12">
+                        <div class="row form-group">
+                            <div class="col-sm-2 col-12">
+                                <label>Select From</label>
+                                <ng-select
+                                        [items]="listOfRoutes"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="name"
+                                        placeholder="Select From"
+                                        [(ngModel)]="filterObj.from"
+                                        (ngModelChange)="loadCountOfEscalations('Resolved')"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2 col-12">
+                                <label>Select To</label>
+                                <ng-select
+                                        [items]="listOfRoutes"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="name"
+                                        placeholder="Select to"
+                                        [(ngModel)]="filterObj.to"
+                                        (ngModelChange)="loadCountOfEscalations('Resolved')"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2 col-12">
+                                <label>Rating</label>
+                                <select [(ngModel)]="filterObj.rating" [ngModelOptions]="{standalone: true}"
+                                        class="form-control form-control-sm"
+                                        (ngModelChange)="loadCountOfEscalations('Resolved')">
+                                    <option value="" selected>--Selected Rating--</option>
+                                    <option value="0">All</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th>Service</th>
+                                        <th [ngClass]="filterObj.sortOrder == 'passengerName'? 'headActive' : ''"
+                                            accessKey="passengerName" (click)="clickSortingApproved($event)">Passenger Name
+                                            <i *ngIf="filterObj.sortOrder != 'passengerName'" class="fa fa-sort"></i>
+                                            <i *ngIf="filterObj.sortOrder == 'passengerName'" class="fa"
+                                               [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="filterObj.sortOrder == 'pnr'? 'headActive' : ''"
+                                            accessKey="pnr" (click)="clickSortingApproved($event)">PNR
+                                            <i *ngIf="filterObj.sortOrder != 'pnr'" class="fa fa-sort"></i>
+                                            <i *ngIf="filterObj.sortOrder == 'pnr'" class="fa"
+                                               [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="filterObj.sortOrder == 'dateOfJourney'? 'headActive' : ''"
+                                            accessKey="dateOfJourney" (click)="clickSortingApproved($event)">Date Of Journey
+                                            <i *ngIf="filterObj.sortOrder != 'dateOfJourney'" class="fa fa-sort"></i>
+                                            <i *ngIf="filterObj.sortOrder == 'dateOfJourney'" class="fa"
+                                               [ngClass]="filterObj.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Staff List</th>
+                                        <th>BookedBy</th>
+                                        <th>CalledBy</th>
+                                        <th>Redbus Review & Rating & Tags</th>
+                                        <th>Comments</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let escalation of listOfEscalations; let i = index;">
+                                        <td>{{(filterObj.page - 1) * filterObj.size + i + 1}}</td>
+                                        <td>{{escalation.serviceName}} <br /> {{escalation.vehicleNumber}}</td>
+                                        <td>{{escalation.name}} <br/> <b>{{escalation.phone}}</b><br /> {{escalation.email}}</td>
+                                        <td>{{ escalation.pnr}} <br /> {{escalation.seats}}</td>
+                                        <td>{{ escalation.jdate || '--' }}</td>
+                                        <td>
+                                            <a *ngIf="escalation.staffDetails.length > 0"
+                                               class="cus-a" [ngbPopover]="staffList"
+                                               trigger="'mouseleave'" placement="auto">
+                                                <i class="fa fa-info-circle"></i></a>
+                                            <ng-template #staffList>
+                                                <p>Staff List</p>
+                                                <table class="table-bordered table">
+                                                    <tr *ngFor="let staff of escalation.staffDetails">
+                                                        <td>{{staff.name}} - <b>{{staff.number}}</b></td>
+                                                    </tr>
+                                                </table>
+                                            </ng-template>
+                                        </td>
+                                        <td>{{ escalation.bookedBy}}</td>
+                                        <td>{{ escalation.calledBy}}</td>
+                                        <td>{{escalation.redbusReview || 'NA'}} <br />
+                                            {{escalation.redbusRating || 'NA'}}<br />
+                                            {{escalation.redbusReviewTags || 'NA'}}
+                                        </td>
+                                        <td>
+                                            <a *ngIf="escalation.escalationComments.length > 0"
+                                               class="cus-a" [ngbPopover]="escalationComments"
+                                               trigger="'mouseleave'" placement="auto">
+                                                <i class="fa fa-info-circle"></i></a>
+                                            <ng-template #escalationComments>
+                                                <table class="table-bordered" *ngFor="let comment of escalation.escalationComments; let i = index;">
+                                                    <td>{{i+1}} &nbsp; {{comment.comment}} <span style="color: initial"> - {{comment.addedBy}} - {{comment.addedOn}}</span></td>
+                                                </table>
+                                            </ng-template>
+                                            <span *ngIf="escalation.escalationComments.length === 0">NA</span>
+                                        </td>
+                                        <td class="td-active" style="min-width: 140px;">
+                                            <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                                    title="Add Comment" style="padding: 0;width: 30px;height: 30px;"
+                                                    (click)="addingComments(escalation.id, 'Resolved')">
+                                                <i class="fa fa-comment fa-1x" aria-hidden="true" style="color: green"></i>
+                                            </button>
+                                            <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                                    title="Resolve" style="padding: 0;width: 30px;height: 30px;"
+                                                    (click)="resolveBookingFeedback(escalation.id, 'Resolved')">
+                                                <i class="fa fa-recycle fa-1x" aria-hidden="true" style="color: deepskyblue"></i>
+                                            </button>
+                                            <button type="button" class="action-icon-style waves-effect waves-blue edit-user-button"
+                                                    title="Send Email" style="padding: 0;width: 30px;height: 30px;"
+                                                    (click)="sendEmail(escalation.id, 'Resolved')">
+                                                <i class="fa fa-envelope fa-1x" aria-hidden="true" style="color: indianred"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!listOfEscalations || listOfEscalations.length === 0">
+                                        <td colspan="12">No Records exist</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row" style="display: inline-block">
+                                        <ngb-pagination *ngIf="escalationsCount || escalationsCount !== 0"
+                                                        [(page)]="filterObj.page"
+                                                        [pageSize]="filterObj.size"
+                                                        [collectionSize]="escalationsCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="handlePageApprovedChange($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                    </div>
+                                    <ul class="pagination pull-right" *ngIf="escalationsCount || escalationsCount !== 0">
+                                        <li class="page-item" [ngClass]="size == filterObj.size ? 'active' : ''"
+                                            *ngFor="let size of filterObj.pageSizes"
+                                            (click)="handlePageApprovedSizeChange(size)">
+                                            <button class="page-link"> {{ size }}
+                                                <span class="sr-only">(current)</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

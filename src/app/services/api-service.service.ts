@@ -89,10 +89,11 @@ export class ApiServiceService {
         return this.http.delete(this.Apiurls.mainUrl + subUrl);
     }
 
-    public upload = (subUrl: any, file: any) => {
+    public upload = (subUrl: any, files: any) => {
         const formData: FormData = new FormData();
-        console.log(file);
-        formData.append('files', file[0]);
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files[' + [i] + ']', files[i]);
+        }
         return this.http.post(this.Apiurls.mainUrl + subUrl, formData);
     }
 
