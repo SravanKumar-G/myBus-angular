@@ -242,4 +242,17 @@ export class ApiUrls {
     saveOrUpdate = 'api/v1/cashTransfer/';
     cashTransferSearch = 'api/v1/cashTransfer/search';
 
+    // Reviews API's
+    getAllRoutes = 'api/v1/review/getAllRoutes';
+    getReviewsCount = 'api/v1/review/getCount';
+    getAllReviews = 'api/v1/review/getAll';
+    getAllReviewUploads = 'api/v1/review/getAllReviewUploads';
+    reviewFileUpload = 'api/v1/review/upload';
+
+    // Escalations API's
+    countOfEscalations = 'api/v1/bookingFeedback/count/';
+    getAllEscalations = 'api/v1/bookingFeedback/get';
+    addCommentToBooking = 'api/v1/bookingFeedback/addComment/';
+    escalationResolve = 'api/v1/bookingFeedback/resolve/';
+    sendEmail = 'api/v1/bookingFeedback/sendEmailWithMessage/?';
 }
