@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {OnlynumberDirective} from '../../../../customDirectives/directives/onlynumber.directive';
 import Swal from 'sweetalert2';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-fuel-expense-reports',
@@ -43,12 +43,11 @@ export class FuelExpenseReportsComponent implements OnInit {
               public apiService: ApiServiceService,
               private apiUrls: ApiUrls,
               private actRoute: ActivatedRoute,
-              private modalService: NgbModal) { }
+              private location: Location) { }
 
   ngOnInit(): void {
     this.currentDate = this.actRoute.snapshot.params.date || '';
-    const date = new Date(this.newDate);
-    this.getDate(date);
+    this.getDate(new Date(this.currentDate));
     this.changeFuelExpenseTab(1);
     this.currentUser = JSON.parse(localStorage.getItem('currentUserDetails') as string);
   }
@@ -104,14 +103,16 @@ export class FuelExpenseReportsComponent implements OnInit {
     const currentDate = new Date(this.currentDate);
     const date = currentDate.setTime(currentDate.getTime() - 24 * 60 * 60 * 1000);
     this.currentDate = this.getDate(new Date(date));
-    this.getAllByDate();
   }
 
   nextDate(): void {
     const currentDate = new Date(this.currentDate);
     const date = currentDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
-    this.currentDate = this.getDate(new Date(date));
-    this.getAllByDate();
+    if (new Date(date) < new Date()) {
+      this.currentDate = this.getDate(new Date(date));
+    } else {
+      Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
+    }
   }
 
   getDate(date: any): any {
@@ -121,6 +122,7 @@ export class FuelExpenseReportsComponent implements OnInit {
     const year = dateObj.getFullYear();
     this.currentDate = year + '-' + month + '-' + day;
     this.getAllByDate();
+    this.location.replaceState('/fuelExpenseReports/' + this.currentDate);
     return year + '-' + month + '-' + day;
   }
 
@@ -267,5 +269,14 @@ export class FuelExpenseReportsComponent implements OnInit {
         this.fuelExpenseQuery = res.content;
       }
     });
+  }
+
+  routing(): void {
+    this.router.navigate(['/fuelExpenseReports/' + this.currentDate + '/addFuelExpense']);
+  }
+
+  downloadExcel(): void {
+    this.apiService.exportExcel('fuelExpenseData',
+        this.currentUser.userName + '_FuelExpenseReports' + '-' + this.currentDate, '', '');
   }
 }

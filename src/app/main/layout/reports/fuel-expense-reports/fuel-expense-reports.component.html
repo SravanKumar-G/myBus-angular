@@ -23,7 +23,7 @@
         <div class="col-lg-12 col-md-12" *ngIf="tab === 1">
             <div class="tile">
                 <div class="tile-body">
-                    <div class="row form-group">
+                    <div class="row">
                         <div class="col-sm-3">
                             <div class="input-group">
                                 <div class="input-group-append">
@@ -69,28 +69,27 @@
                                        bindValue="id"
                                        placeholder="Service Station"
                                        [(ngModel)]="fuelExpenseQuery.supplierId"
-                                       [ngModelOptions]="{standalone: true}" (ngModelChange)="filterBySupplier(fuelExpenseQuery.supplierId)">
+                                       [ngModelOptions]="{standalone: true}"
+                                       (ngModelChange)="filterBySupplier(fuelExpenseQuery.supplierId)">
                             </ng-select>
                         </div>
                         <div  class="col-sm-2 form-group">
                             <input class="form-control form-control-sm" placeholder="Search For RegNo" [(ngModel)]="vehicleNumber">
                         </div>
-                        <button class="btn btn-sm btn-success" style="margin-top: -1px; margin-bottom: 18px" (click)="print()">Print
-                        </button>
-                        <div class="col-sm-2 offset-1 text-right">
-                            <a class="btn btn-sm btn-success" [routerLink]="['addFuelExpense']">
-                                <span class="fa fa-plus"></span>Add FuelExpense</a>&nbsp;&nbsp;&nbsp;
-                        </div>&nbsp;
+                        <div class="col-sm-4 text-right">
+                            <button type="button" class="btn btn-sm btn-warning" (click)="print()">Print</button>
+                            <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="routing()" [routerLinkActive]="['active']">
+                                <span class="fa fa-plus"></span>Add FuelExpense</button>
+                            <button type="button" class="btn btn-sm btn-primary" (click)="downloadExcel()">Export Excel</button>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 table-responsive">
-                            <div class="form-group">
                                 <div class="flex-container">
                                     <div class="col-3 service-card">
                                         <label class="control-label">Total:</label>
                                         {{dayTotalBill || '0'}}
                                     </div>
-                                </div>
                             </div>
                             <table class="table table-hover dataTable text-center">
                                 <thead>
@@ -115,7 +114,7 @@
                                            [ngClass]="fuelExpenseQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                     </th>
                                     <th [ngClass]="fuelExpenseQuery.sortOrder == 'paid'? 'headActive' : ''"
-                                        accessKey="paid">P/F
+                                        accessKey="paid">Paid/Fillup
                                         <i *ngIf="fuelExpenseQuery.sortOrder != 'paid'" class="fa fa-sort"></i>
                                         <i *ngIf="fuelExpenseQuery.sortOrder == 'paid'" class="fa"
                                            [ngClass]="fuelExpenseQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
@@ -160,7 +159,7 @@
                                     <td>{{fuelExpense.attrs.vehicleNumber || 'NA'}}</td>
                                     <td>{{fuelExpense.serviceName || 'NA'}}</td>
                                     <td>{{fuelExpense.attrs.supplierName || 'NA'}}</td>
-                                    <td>{{ fuelExpense.paid }}/{{fuelExpense.fillup}}</td>
+                                    <td>{{ fuelExpense.paid === true ? 'Yes' : 'No' }} / {{fuelExpense.fillup === true ? 'Yes' : 'No'}}</td>
                                     <td>{{fuelExpense.odometer || 'NA'}}</td>
                                     <td>{{fuelExpense.quantity.toFixed() || 'NA'}}</td>
                                     <td>{{fuelExpense.rate.toFixed(2) || 'NA'}}</td>
@@ -216,6 +215,42 @@
                                     </ul>
                                 </div>
                             </div>
+<!--                            Excel Download-->
+                            <table class="table table-hover dataTable text-center" id="fuelExpenseData" style="display: none;">
+                                <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Registration </th>
+                                    <th>ServiceName</th>
+                                    <th>Supplier</th>
+                                    <th>Paid/Fillup</th>
+                                    <th>Odometer</th>
+                                    <th>Quantity (Q)</th>
+                                    <th>Rate (R)</th>
+                                    <th>Economy</th>
+                                    <th>CreatedBy</th>
+                                    <th>Remarks</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let fuelExpense of fuelExpenses | searchFilter: vehicleNumber; let i = index">
+                                    <td>{{(fuelExpenseQuery.page-1) * fuelExpenseQuery.size + i + 1}}</td>
+                                    <td>{{fuelExpense.attrs.vehicleNumber || 'NA'}}</td>
+                                    <td>{{fuelExpense.serviceName || 'NA'}}</td>
+                                    <td>{{fuelExpense.attrs.supplierName || 'NA'}}</td>
+                                    <td>{{ fuelExpense.paid === true ? 'Yes' : 'No' }} / {{fuelExpense.fillup === true ? 'Yes' : 'No'}}</td>
+                                    <td>{{fuelExpense.odometer || 'NA'}}</td>
+                                    <td>{{fuelExpense.quantity.toFixed() || 'NA'}}</td>
+                                    <td>{{fuelExpense.rate.toFixed(2) || 'NA'}}</td>
+                                    <td>{{fuelExpense.economy.toFixed(2) || 'NA'}}</td>
+                                    <td>{{fuelExpense.attrs.createdBy || 'NA'}}</td>
+                                    <td>{{fuelExpense.remarks || 'NA'}}</td>
+                                </tr>
+                                <tr *ngIf="count === 0 || !count">
+                                    <td colspan="12">No Payments</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
