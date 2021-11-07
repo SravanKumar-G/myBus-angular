@@ -80,6 +80,7 @@
                                     <th>From</th>
                                     <th>To</th>
                                     <th>Vehicle</th>
+                                    <th>Staff</th>
                                     <th>Cash/NetIncome</th>
                                     <th>Status</th>
                                     <th>SubmittedBy</th>
@@ -93,6 +94,7 @@
                                     <td>{{ service.source }}</td>
                                     <td>{{ service.destination }}</td>
                                     <td><a class="cus-a" (click)="goToServiceReport(service)">{{ service.vehicleRegNumber }}</a></td>
+                                    <td><li *ngFor="let staff of service.staffDetails; let s =index;">{{staff.name}} - {{staff.contactNumber}} </li></td>
                                     <td>{{ service.netCashIncome | number }}/{{ service.netIncome | number}}</td>
                                     <td>{{ service.status || '--'}}</td>
                                     <td>{{service.attrs.submittedBy || '--'}}</td>

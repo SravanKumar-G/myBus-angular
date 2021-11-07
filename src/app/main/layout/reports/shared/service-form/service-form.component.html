@@ -20,20 +20,12 @@
                             <div class="row form-group">
                                 <div class="flex-container">
                                     <div class="service-card">
-                                        <label class="control-label">From:</label>
-                                        {{serviceReportDetails.source}}
-                                    </div>
-                                    <div class="service-card">
-                                        <label class="control-label">To:</label>
-                                        {{serviceReportDetails.destination}}
+                                        <label class="control-label">Route:</label>
+                                        {{serviceReportDetails.source}} - {{serviceReportDetails.destination}} - {{serviceReportDetails.busType || '---'}}
                                     </div>
                                     <div class="service-card">
                                         <label class="control-label">Journey
                                             Date:</label>{{serviceReportDetails.jdate}}
-                                    </div>
-                                    <div class="service-card">
-                                        <label class="control-label">Bus Type:</label>
-                                        {{serviceReportDetails.busType || '---'}}
                                     </div>
                                     <div class="service-card">
                                         <label class="control-label">Vehicle:</label>
