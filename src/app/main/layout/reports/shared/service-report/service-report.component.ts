@@ -174,7 +174,9 @@ export class ServiceReportComponent implements OnInit {
         for (i = 0; i < this.serviceReportDetails.bookings.length; i++) {
             const booking = this.serviceReportDetails.bookings[i];
             if (this.isCashBooking(booking) && booking.netAmt && booking.netAmt !== '') {
-                this.serviceReportDetails.netCashIncome += parseFloat(booking.netAmt);
+                if (!booking.due) {
+                    this.serviceReportDetails.netCashIncome += parseFloat(booking.netAmt);
+                }
             }
             this.serviceReportDetails.grossIncome += parseFloat(booking.netAmt);
         }
