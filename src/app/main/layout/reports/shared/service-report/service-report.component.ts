@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiServiceService} from '../../../../../services/api-service.service';
 import {ApiUrls} from '../../../../../_helpers/apiUrls';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import Swal from 'sweetalert2';
 // @ts-ignore
 import * as _ from 'underscore';
@@ -35,7 +35,8 @@ export class ServiceReportComponent implements OnInit {
         private apiService: ApiServiceService,
         private apiUrls: ApiUrls,
         private actRoute: ActivatedRoute,
-        public modalService: NgbModal
+        public modalService: NgbModal,
+        public router: Router
     ) {
         this.serviceId = this.actRoute.snapshot.params.id || '';
     }
@@ -367,9 +368,10 @@ export class ServiceReportComponent implements OnInit {
                 if (result.isConfirmed) {
                     this.apiService.create(this.apiUrls.submitReport + status, this.serviceReportDetails).subscribe((res: any) => {
                         if (res) {
-                            Swal.fire('Great', 'The report successfully submitted', 'success');
-                            this.getServiceReport();
+                            Swal.fire('Great', 'The report successfully submitted for' + res.serviceNumber, 'success');
+                            // this.getServiceReport();
                             this.apiService.getLoggedInUserData();
+                            this.goBack();
                         }
                     }, error => {
                         this.serviceReportDetails.status = null;
@@ -424,5 +426,9 @@ export class ServiceReportComponent implements OnInit {
         }, error => {
             Swal.fire('error', error.message, 'error');
         });
+    }
+
+    public goBack(): void {
+        this.router.navigate(['serviceReports/' + this.actRoute.snapshot.params.date] );
     }
 }
