@@ -66,8 +66,6 @@ export class ServiceFeedbackReportComponent implements OnInit {
         this.errorMessage = '';
         if (feedback.status === null || feedback.status === '') {
             this.errorMessage = 'Please select Status';
-        } else if (feedback.feedback === null || feedback.feedback === '') {
-            this.errorCommentMessage = 'Please enter comment';
         } else {
             this.apiService.update(this.apiUrls.bookingFeedbackStatusUpdate + feedback.id,
                 {
