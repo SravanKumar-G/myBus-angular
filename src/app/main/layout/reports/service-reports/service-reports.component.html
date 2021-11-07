@@ -56,17 +56,17 @@
                         <div class="col-sm-6 mt-auto mb-auto text-left" *ngIf="downloaded">
                           <span>The report was downloaded on {{downloadedOn}}</span>
                         </div>
-                        <div class="col-sm-3 mt-auto mb-auto text-right">
+                        <div class="col-sm-6 mt-auto mb-auto text-right">
                             <button class="btn btn-sm btn-primary" (click)="exportToExcel()">
                                 Export to Excel
                             </button>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12" style="display: flex;justify-content: space-around;">
-                            <div>Total: {{allReports.length}}</div>
+                        <div class="col-sm-12 mb-1" style="display: flex;justify-content: space-between;">
                             <div>Submitted: {{submitted}}</div>
                             <div>Verified: {{verified}}</div>
+                            <div>Total: {{allReports.length}}</div>
                         </div>
                     </div>
                     <div class="row">
