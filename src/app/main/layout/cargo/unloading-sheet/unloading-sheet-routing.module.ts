@@ -5,6 +5,7 @@ import {UnloadingSheetComponent} from './unloading-sheet.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Unloading Sheet'},
     component: UnloadingSheetComponent
   }
 ];

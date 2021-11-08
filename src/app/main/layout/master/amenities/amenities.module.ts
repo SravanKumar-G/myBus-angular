@@ -5,6 +5,7 @@ import { AmenitiesRoutingModule } from './amenities-routing.module';
 import {AmenitiesComponent} from './amenities.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {FormsModule} from '@angular/forms';
     AmenitiesRoutingModule,
     NgbModule,
     FormsModule,
+    BreadcrumbModule,
   ]
 })
 export class AmenitiesModule { }

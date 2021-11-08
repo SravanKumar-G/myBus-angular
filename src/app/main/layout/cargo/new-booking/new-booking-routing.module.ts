@@ -5,6 +5,7 @@ import {NewBookingComponent} from './new-booking.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'New Cargo Booking'},
     component: NewBookingComponent
   }
 ];

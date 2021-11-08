@@ -9,6 +9,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {NgbPaginationModule, NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import {LayoutModule} from '../../layout.module';
 import { ViewReviewComponent } from './view-review/view-review.component';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ViewReviewComponent } from './view-review/view-review.component';
     NgSelectModule,
     NgbPopoverModule,
     NgbPaginationModule,
-    LayoutModule
+    LayoutModule,
+    BreadcrumbModule
   ]
 })
 export class ReviewsModule { }

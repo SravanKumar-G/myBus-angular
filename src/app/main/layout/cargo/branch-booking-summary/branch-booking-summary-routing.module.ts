@@ -5,6 +5,7 @@ import {BranchBookingSummaryComponent} from './branch-booking-summary.component'
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Branch Booking Summary'},
     component: BranchBookingSummaryComponent
   }
 ];

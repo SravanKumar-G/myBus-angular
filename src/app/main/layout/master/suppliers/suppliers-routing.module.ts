@@ -4,6 +4,7 @@ import {SuppliersComponent} from './suppliers.component';
 
 const routes: Routes = [{
   path: '',
+  data: {breadcrumb: 'Suppliers'},
   component: SuppliersComponent
 }];
 

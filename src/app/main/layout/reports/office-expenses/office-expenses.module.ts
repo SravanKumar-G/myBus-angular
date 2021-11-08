@@ -10,6 +10,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import { AddEditOfficeExpenseComponent } from './add-edit-office-expense/add-edit-office-expense.component';
 import {AngularFileUploaderModule} from 'angular-file-uploader';
 import {LayoutModule} from '../../layout.module';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {LayoutModule} from '../../layout.module';
         BsDatepickerModule,
         NgSelectModule,
         AngularFileUploaderModule,
-        LayoutModule
+        LayoutModule,
+        BreadcrumbModule
     ]
 })
 export class OfficeExpensesModule { }

@@ -8,6 +8,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
         NgSelectModule,
         NgbModule,
         FormsModule,
-        BsDatepickerModule
+        BsDatepickerModule,
+        BreadcrumbModule
     ]
 })
 export class StaffModule {

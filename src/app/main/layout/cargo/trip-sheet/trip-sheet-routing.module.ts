@@ -5,6 +5,7 @@ import {TripSheetComponent} from './trip-sheet.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Cargo Trip Sheet'},
     component: TripSheetComponent
   }
 ];

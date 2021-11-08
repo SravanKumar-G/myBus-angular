@@ -8,6 +8,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AddEditVehicleComponent } from './add-edit-vehicle/add-edit-vehicle.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {LayoutModule} from '../../layout.module';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {LayoutModule} from '../../layout.module';
         NgbModule,
         ReactiveFormsModule,
         BsDatepickerModule,
-        LayoutModule
+        LayoutModule,
+        BreadcrumbModule
     ]
 })
 export class VehiclesModule { }

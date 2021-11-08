@@ -5,6 +5,7 @@ import {CitiesComponent} from './cities.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Cities'},
     component: CitiesComponent
   }
 ];
