@@ -79,9 +79,13 @@
                                         </td>
                                         <td data-title="'CalledBy'"  class="clickable-item col-xs-2 col-md-2" >
                                             {{feedback.calledBy || '---'}} <br />
-                                            <button class="btn btn-primary btn-sm" (click)="sendWhatsAppMes(feedback)" title="Send WhatsApp Message">
-                                                <i class="fa fa-whatsapp"></i>
+                                            <button class="btn btn-primary btn-sm" (click)="sendThankYouMessage(feedback)" title="Thank you">
+                                                <i class="fa fa-whatsapp">ThankYou</i>
                                             </button>
+                                            <button class="btn btn-primary btn-sm" (click)="sendApologies(feedback)" title="Send Apologies">
+                                                <i class="fa fa-whatsapp">Sorry</i>
+                                            </button>
+
                                         </td>
                                         <td class="text-left" style="min-width: 200px;">
                                             <select class="form-control form-control-sm mb-1" [(ngModel)]="feedback.status" [ngModelOptions]="{standalone: true}">

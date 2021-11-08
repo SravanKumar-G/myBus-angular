@@ -90,7 +90,15 @@ export class ServiceFeedbackReportComponent implements OnInit {
         this.location.back();
     }
 
-    sendWhatsAppMes(data: any): void {
-        this.apiService.sendWhatsApp(data.phone, 'Thanks for travelling in Sri Krishna Travels');
+    sendThankYouMessage(data: any): void {
+        this.apiService.sendWhatsApp(data.phone, 'Thanks for travelling in Sri Krishna Travels.' +
+            ' We are glad to hear that you liked travelling with us.' +
+            ' Can you please take a moment to rate our service on Redbus/PayTM. ' +
+            'You will get an email and WhatsApp message with a link to give us rating  ');
+    }
+    sendApologies(data: any): void {
+        this.apiService.sendWhatsApp(data.phone, 'Thanks for travelling in Sri Krishna Travels. ' +
+            'We apologize for the issue caused to you.' +
+            ' We will investigate further on this and take necessar action. ');
     }
 }
