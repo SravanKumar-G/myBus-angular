@@ -63,7 +63,7 @@ export class ViewCargoBookingComponent implements OnInit {
         const printContent = document.getElementById('report_left_inner');
         const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
         // @ts-ignore
-        WindowPrt.document.write(printContent.innerHTML);
+        WindowPrt.document.write('<html><body onload="window.print()">' + printContent.innerHTML + '</body></html>');
         // @ts-ignore
         WindowPrt.document.close();
     }

@@ -371,7 +371,7 @@ export class ServiceReportComponent implements OnInit {
                             Swal.fire('Great', 'The report successfully submitted for' + res.serviceNumber, 'success');
                             // this.getServiceReport();
                             this.apiService.getLoggedInUserData();
-                            this.goBack();
+                            this.goToReportsPage();
                         }
                     }, error => {
                         this.serviceReportDetails.status = null;
@@ -428,7 +428,7 @@ export class ServiceReportComponent implements OnInit {
         });
     }
 
-    public goBack(): void {
+    public goToReportsPage(): void {
         this.router.navigate(['serviceReports/' + this.actRoute.snapshot.params.date] );
     }
 }
