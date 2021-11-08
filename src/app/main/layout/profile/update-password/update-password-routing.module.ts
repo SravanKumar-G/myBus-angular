@@ -5,6 +5,7 @@ import {UpdatePasswordComponent} from './update-password.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Update Password'},
     component: UpdatePasswordComponent
   }
 ];

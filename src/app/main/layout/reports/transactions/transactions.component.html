@@ -6,9 +6,7 @@
             </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><a class="fa fa-home fa-lg breadcrumb-home-link" (click)="goToDashboard()"></a>
-            </li>
-            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Transactions</span></li>
+          <xng-breadcrumb></xng-breadcrumb>
         </ul>
     </div>
     <div class="row">
@@ -17,7 +15,7 @@
               <div class="tile-body">
                  <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                      <div class="row">
-                         <div class="col-sm-3">
+                         <div class="col-sm-2">
                              <label class="control-label">Start Date</label>
                              <div class="input-group">
                                  <input name="startDate" class="form-control form-control-sm"
@@ -37,7 +35,7 @@
                                  </div>
                              </div>
                          </div>
-                         <div class="col-sm-3">
+                         <div class="col-sm-2">
                              <label class="control-label">End Date</label>
                              <div class="input-group">
                                  <input name="endDate" class="form-control form-control-sm"
@@ -57,7 +55,7 @@
                                  </div>
                              </div>
                          </div>
-                         <div class="col-sm-3 form-group">
+                         <div class="col-sm-2 form-group">
                              <label class="control-label">Select User<b class="mandatory-field">*</b></label>
                              <ng-select [(ngModel)]="userId"
                                         [ngModelOptions]="{standalone: true}"
@@ -68,13 +66,13 @@
                                  <ng-option *ngFor="let users of usersNames"
                                             [value]="users.id">{{users.fullName}}</ng-option>
                              </ng-select>
-<!--                             <select class="form-control form-control-sm" [(ngModel)]="userId" [ngModelOptions]="{standalone: true}">-->
-<!--                                 <option value="" selected>Selected User</option>-->
-<!--                                 <option *ngFor="let users of usersNames" value="{{users.id}}">{{users.fullName}}</option>-->
-<!--                             </select>-->
-                         </div>&nbsp;
-                         <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="search()"> Search Transactions </button> &nbsp;&nbsp;&nbsp;
-                         <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="exportToExcel()"> Export to Excel </button>
+                         </div>
+                         <div class="col-sm-2">
+                             <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="search()"> Search Transactions </button>
+                         </div>
+                         <div class="col-sm-4 text-right">
+                             <button type="button" class="btn btn-sm btn-primary " style="margin-top: 17px; margin-bottom: 17px" (click)="exportToExcel()"> Export to Excel </button>
+                         </div>
                      </div>
                      <div class="row" *ngIf="SearchError"  style="text-align: center">
                          <div class="col-md-12" role="alert">

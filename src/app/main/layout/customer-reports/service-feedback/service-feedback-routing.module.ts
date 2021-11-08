@@ -6,10 +6,12 @@ import {ServiceFeedbackReportComponent} from './service-feedback-report/service-
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Service Feedback'},
     component: ServiceFeedbackComponent
   },
   {
     path: 'serviceFeedbackReport/:id',
+    data: {breadcrumb: 'Service Feedback By Service'},
     component: ServiceFeedbackReportComponent
   }
 ];

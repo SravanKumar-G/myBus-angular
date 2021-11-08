@@ -5,6 +5,7 @@ import {RolesComponent} from './roles.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Roles'},
     component: RolesComponent
   }
 ];

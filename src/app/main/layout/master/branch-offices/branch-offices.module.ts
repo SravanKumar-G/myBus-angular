@@ -7,6 +7,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AddEditBranchOfficeComponent } from './add-edit-branch-office/add-edit-branch-office.component';
 import {FormsModule} from '@angular/forms';
 import {LayoutModule} from '../../layout.module';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {LayoutModule} from '../../layout.module';
         BranchOfficesRoutingModule,
         NgbModule,
         FormsModule,
-        LayoutModule
+        LayoutModule,
+        BreadcrumbModule
     ]
 })
 export class BranchOfficesModule { }

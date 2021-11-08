@@ -6,6 +6,7 @@ import {CashTransferComponent} from './cash-transfer.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Cash Transfers'},
     component: CashTransferComponent
   }
 ];

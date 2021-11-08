@@ -5,6 +5,7 @@ import {ServiceCollectionReportComponent} from './service-collection-report.comp
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Service Collection Report'},
     component: ServiceCollectionReportComponent
   }
 ];

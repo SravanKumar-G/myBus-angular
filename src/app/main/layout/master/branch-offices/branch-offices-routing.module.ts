@@ -6,14 +6,17 @@ import {AddEditBranchOfficeComponent} from './add-edit-branch-office/add-edit-br
 const routes: Routes = [
     {
         path: '',
+        data: {breadcrumb: 'Branch Offices'},
         component: BranchOfficesComponent
     },
     {
         path: 'addBranchOffice',
+        data: {breadcrumb: 'Add Branch Office'},
         component: AddEditBranchOfficeComponent
     },
     {
         path: 'editBranchOffice/:id',
+        data: {breadcrumb: 'Edit Branch Office'},
         component: AddEditBranchOfficeComponent
     }
 ];

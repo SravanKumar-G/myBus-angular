@@ -5,6 +5,7 @@ import {DeliverySheetComponent} from './delivery-sheet.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Delivery Sheet'},
     component: DeliverySheetComponent
   }
 ];

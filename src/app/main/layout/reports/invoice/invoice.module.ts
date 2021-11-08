@@ -5,6 +5,7 @@ import { InvoiceRoutingModule } from './invoice-routing.module';
 import {InvoiceComponent} from './invoice.component';
 import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
     CommonModule,
     InvoiceRoutingModule,
     FormsModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    BreadcrumbModule
   ]
 })
 export class InvoiceModule { }

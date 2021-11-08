@@ -6,6 +6,7 @@ import {CashbalanceComponent} from './cashbalance.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
     CashbalanceRoutingModule,
     NgSelectModule,
     FormsModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    BreadcrumbModule
   ]
 })
 export class CashbalanceModule { }

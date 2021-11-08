@@ -4,6 +4,7 @@ import {ExpenseIncomeReportsComponent} from './expense-income-reports.component'
 
 const routes: Routes = [{
   path: '',
+  data: {breadcrumb: 'Expense Income Report'},
   component: ExpenseIncomeReportsComponent,
 }];
 

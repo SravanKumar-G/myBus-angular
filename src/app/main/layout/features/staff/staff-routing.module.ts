@@ -7,14 +7,17 @@ import {AddEditStaffComponent} from './add-edit-staff/add-edit-staff.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Staff'},
     component: StaffComponent
   },
   {
     path: 'addStaff',
+    data: {breadcrumb: 'Add Staff'},
     component: AddEditStaffComponent
   },
   {
     path: 'editStaff/:id',
+    data: {breadcrumb: 'Edit Staff'},
     component: AddEditStaffComponent
   }
 ];

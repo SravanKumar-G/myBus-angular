@@ -7,9 +7,7 @@
             </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
-            <li class="breadcrumb-item"><span class="breadcrumb-item-router"><a class="cus-a" (click)="goToReportsPage()">Service Reports</a></span></li>
-            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Service Report</span></li>
+            <xng-breadcrumb></xng-breadcrumb>
         </ul>
     </div>
     <div class="row">
@@ -43,7 +41,8 @@
                                            placeholder="Select Vehicle"
                                            [(ngModel)]="serviceReportDetails.vehicleRegNumber"
                                            (ngModelChange)="updateOdometerReading()"
-                                           [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}">
+                                           [disabled]="isDisabled()"
+                                           [ngModelOptions]="{standalone: true}">
                                 </ng-select>
                             </div>
                             <div class="service-card">

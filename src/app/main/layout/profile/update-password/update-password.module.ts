@@ -7,6 +7,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {LayoutModule} from '../../layout.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {UpdatePasswordComponent} from './update-password.component';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {UpdatePasswordComponent} from './update-password.component';
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
+    BreadcrumbModule,
     // BrowserModule
   ]
 })
