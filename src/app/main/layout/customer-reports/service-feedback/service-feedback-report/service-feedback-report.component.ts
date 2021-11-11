@@ -101,4 +101,8 @@ export class ServiceFeedbackReportComponent implements OnInit {
             'We apologize for the issue caused to you.' +
             ' We will investigate further on this and take necessar action. ');
     }
+    sendCargoIntro(data: any): void {
+        this.apiService.sendWhatsApp(data.phone, 'Thanks for travelling in Sri Krishna Travels. ' +
+            'We also have cargo services. You can send packages to your loved ones easily through our buses. Please call on 9246460533 for further details.');
+    }
 }

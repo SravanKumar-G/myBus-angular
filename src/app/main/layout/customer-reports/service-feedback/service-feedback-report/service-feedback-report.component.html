@@ -86,6 +86,10 @@
                                                 <i class="fa fa-whatsapp">Sorry</i>
                                             </button>
 
+                                            <button class="btn btn-primary btn-sm" (click)="sendCargoIntro(feedback)" title="Send Apologies">
+                                                <i class="fa fa-ship">CargoIntro</i>
+                                            </button>
+
                                         </td>
                                         <td class="text-left" style="min-width: 200px;">
                                             <select class="form-control form-control-sm mb-1" [(ngModel)]="feedback.status" [ngModelOptions]="{standalone: true}">
