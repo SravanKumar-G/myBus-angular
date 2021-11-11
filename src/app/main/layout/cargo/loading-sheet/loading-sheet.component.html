@@ -113,7 +113,6 @@
                                                     [multiple]="false"
                                                     bindLabel="regNo"
                                                     [closeOnSelect]="true"
-                                                    bindValue="id"
                                                     placeholder="Select Vehicle"
                                                     [(ngModel)]="truckId"
                                                     [ngModelOptions]="{standalone: true}">
@@ -121,7 +120,7 @@
                                         </div>
                                         <div class="form-group mt-auto text-right p-0">
                                             <button type="button" class="btn btn-sm btn-success mr-2"
-                                                    (click)="loadVehicle(truckId)">Load to Vehicle
+                                                    (click)="loadVehicle(truckId, loadToTripSheetContent)">Load to Vehicle
                                             </button>
                                             <a class="btn btn-sm btn-primary" (click)="exportToExcel()">Export to
                                                 Excel</a>
@@ -256,3 +255,55 @@
         </div>
     </div>
 </div>
+
+<!--Modal for Load to TripSheet Content-->
+<ng-template #loadToTripSheetContent>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">Select the Trip Sheet ({{vehicleRegNo.regNo}})</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalService.dismissAll()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="col-sm-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-hover text-center mb-0">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th>Trip Sheet Number</th>
+                                    <th>Date</th>
+                                    <th>Total Cargo</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tr *ngFor="let tripSheet of tripSheets; let i = index;">
+                                    <td data-title="'S No'">{{i + 1}}</td>
+                                    <td>{{tripSheet.tripNumber}}</td>
+                                    <td>{{tripSheet.createdAt | date}}</td>
+                                    <td>{{tripSheet.totalShipmemntCost}}</td>
+                                    <td><button class="btn btn-sm btn-link" (click)="selectTripSheet(tripSheet.id)">Load</button></td>
+                                </tr>
+                                <tr *ngIf="!tripSheets || tripSheets.length === 0" class="text-center">
+                                    <td colspan="4">No Trip Sheets found</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12 text-right p-0">
+            <button type="button" class="btn btn-sm btn-success" (click)="createTripSheet()">Create New Trip Sheet</button>
+            <button type="button" class="btn btn-danger btn-sm ml-2" (click)="modalService.dismissAll()">
+                <i class="fa fa-fw fa-times-circle"></i> Close
+            </button>
+        </div>
+    </div>
+
+</ng-template>
