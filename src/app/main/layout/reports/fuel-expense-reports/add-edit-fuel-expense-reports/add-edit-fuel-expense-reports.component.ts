@@ -19,7 +19,7 @@ export class AddEditFuelExpenseReportsComponent implements OnInit {
   addFuelExpenseQuery: any = {
     date: new Date(),
     journeyDate: new Date(),
-    supplierId: [],
+    supplierId: '',
     vehicleId: [],
     odometer: 0,
     quantity: 0,
