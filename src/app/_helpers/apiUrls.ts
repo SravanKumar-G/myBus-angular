@@ -264,4 +264,11 @@ export class ApiUrls {
     getFuelExpense = 'api/v1/FuelExpense/getFuelExpense/';
     deleteFuelExpense = 'api/v1/FuelExpense/deleteFuelExpense/';
     updateServiceName = 'api/v1/FuelExpense/updateServiceName?';
+
+    // Pending Reports
+    pendingReports = 'api/v1/serviceReport/pending';
+
+    // Reports To Be Viewed
+    reportsToBeReviewed = 'api/v1/serviceReport/toBeReviewed';
+
 }

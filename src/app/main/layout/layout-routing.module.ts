@@ -197,6 +197,16 @@ const layOutRoutes: Routes = [
                 path: 'fuelExpenseReports/:date',
                 loadChildren: () => import('./reports/fuel-expense-reports/fuel-expense-reports.module')
                     .then(m => m.FuelExpenseReportsModule)
+            },
+            {
+                path: 'pendingReports',
+                loadChildren: () => import('./Check-List/pending-reports/pending-reports.module')
+                    .then(m => m.PendingReportsModule)
+            },
+            {
+                path: 'reportsToBeReviewed',
+                loadChildren: () => import('./Check-List/reports-to-be-reviewed/reports-to-be-reviewed.module')
+                    .then(m => m.ReportsToBeReviewedModule)
             }
         ]
     },
