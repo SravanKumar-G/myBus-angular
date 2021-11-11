@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {LayoutModule} from '../../layout.module';
 import { ServiceFeedbackReportComponent } from './service-feedback-report/service-feedback-report.component';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ServiceFeedbackReportComponent } from './service-feedback-report/servic
     ServiceFeedbackRoutingModule,
     FormsModule,
     BsDatepickerModule,
-    LayoutModule
+    LayoutModule,
+    BreadcrumbModule
   ]
 })
 export class ServiceFeedbackModule { }

@@ -6,6 +6,7 @@ import {BranchBookingSummaryComponent} from './branch-booking-summary.component'
 import {LayoutModule} from '../../layout.module';
 import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
     BranchBookingSummaryRoutingModule,
     LayoutModule,
     FormsModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    BreadcrumbModule
   ]
 })
 export class BranchBookingSummaryModule { }

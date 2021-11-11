@@ -7,14 +7,17 @@ import {ServiceFormComponent} from '../shared/service-form/service-form.componen
 const routes: Routes = [
   {
     path: '',
-    component: ServiceReportsComponent
+    component: ServiceReportsComponent,
+    data: {breadcrumb:  'Service Reports' }
   },
   {
     path: 'serviceReport/:id',
+    data: {breadcrumb: 'Service Report'},
     component: ServiceReportComponent
   },
   {
     path: 'serviceForm/:id',
+    data: {breadcrumb: 'Service Form'},
     component: ServiceFormComponent
   }
 ];

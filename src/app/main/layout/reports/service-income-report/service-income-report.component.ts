@@ -53,7 +53,7 @@ export class ServiceIncomeReportComponent implements OnInit {
     serviceReportByDates(id: any): void {
         if (id) {
             StorageServiceService.setIncomeFilters(this.filterObj);
-            this.router.navigate(['serviceReportByService', id]);
+            this.router.navigate(['serviceIncomeReport/serviceReportByService/' + id]);
         }
     }
 

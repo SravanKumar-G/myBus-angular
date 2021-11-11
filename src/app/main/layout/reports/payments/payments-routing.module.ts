@@ -5,6 +5,7 @@ import {PaymentsComponent} from './payments.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Payments'},
     component: PaymentsComponent,
   }
 ];

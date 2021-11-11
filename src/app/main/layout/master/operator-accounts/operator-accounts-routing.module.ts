@@ -6,14 +6,17 @@ import {AddEditOperatorAccountsComponent} from './add-edit-operator-accounts/add
 const routes: Routes = [
     {
         path: '',
+        data: {breadcrumb: 'Operator Accounts'},
         component: OperatorAccountsComponent,
     },
     {
         path: 'addOperatorAccount',
+        data: {breadcrumb: 'Add Operator Account'},
         component: AddEditOperatorAccountsComponent
     },
     {
         path: 'editOperatorAccount/:id',
+        data: {breadcrumb: 'Edit Operator Account'},
         component: AddEditOperatorAccountsComponent
     }
 ];

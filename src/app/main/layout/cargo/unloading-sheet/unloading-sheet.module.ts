@@ -6,6 +6,7 @@ import {UnloadingSheetComponent} from './unloading-sheet.component';
 import {LayoutModule} from '../../layout.module';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {NgSelectModule} from '@ng-select/ng-select';
     UnloadingSheetRoutingModule,
     LayoutModule,
     FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    BreadcrumbModule
   ]
 })
 export class UnloadingSheetModule { }

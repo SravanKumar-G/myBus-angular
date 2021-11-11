@@ -6,6 +6,7 @@ import {NewBookingComponent} from './new-booking.component';
 import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {LayoutModule} from '../../layout.module';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {LayoutModule} from '../../layout.module';
         NewBookingRoutingModule,
         FormsModule,
         BsDatepickerModule,
-        LayoutModule
+        LayoutModule,
+        BreadcrumbModule
     ]
 })
 export class NewBookingModule { }

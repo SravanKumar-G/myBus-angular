@@ -5,6 +5,7 @@ import { ExpenseIncomeReportsRoutingModule } from './expense-income-reports-rout
 import {ExpenseIncomeReportsComponent} from './expense-income-reports.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {FormsModule} from '@angular/forms';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {FormsModule} from '@angular/forms';
     CommonModule,
     ExpenseIncomeReportsRoutingModule,
     BsDatepickerModule,
-    FormsModule
+    FormsModule,
+    BreadcrumbModule
   ]
 })
 export class ExpenseIncomeReportsModule { }

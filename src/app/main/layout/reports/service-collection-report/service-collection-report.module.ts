@@ -6,6 +6,7 @@ import {ServiceCollectionReportComponent} from './service-collection-report.comp
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {FormsModule} from '@angular/forms';
 import {LayoutModule} from '../../layout.module';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {LayoutModule} from '../../layout.module';
         ServiceCollectionReportRoutingModule,
         BsDatepickerModule,
         FormsModule,
-        LayoutModule
+        LayoutModule,
+        BreadcrumbModule
     ]
 })
 export class ServiceCollectionReportModule { }

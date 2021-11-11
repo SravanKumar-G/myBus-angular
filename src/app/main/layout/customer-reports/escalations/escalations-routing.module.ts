@@ -5,6 +5,7 @@ import {EscalationsComponent} from './escalations.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Escalations'},
     component: EscalationsComponent
   }
 ];

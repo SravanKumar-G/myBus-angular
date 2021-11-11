@@ -5,6 +5,7 @@ import {ViewCargoBookingComponent} from './view-cargo-booking.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Vew Cargo Booking'},
     component: ViewCargoBookingComponent
   }
 ];

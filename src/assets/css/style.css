@@ -4334,3 +4334,6 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
     color: #998e8e;
     padding-right: 6px;
 }
+.xng-breadcrumb-trail{
+    color: rgb(149 139 139 / 90%) !important;
+}

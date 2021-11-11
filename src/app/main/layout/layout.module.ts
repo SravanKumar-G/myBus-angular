@@ -17,6 +17,7 @@ import { FileUploadComponent } from './shared/file-upload/file-upload.component'
 import { CashTransferComponent } from './reports/cash-transfer/cash-transfer.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 
@@ -39,7 +40,8 @@ import {NgSelectModule} from '@ng-select/ng-select';
         FormsModule,
         NgbModule,
         BsDatepickerModule,
-        NgSelectModule
+        NgSelectModule,
+        BreadcrumbModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],

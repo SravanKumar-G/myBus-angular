@@ -5,6 +5,7 @@ import {AmenitiesComponent} from './amenities.component';
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Amenities'},
     component: AmenitiesComponent
   }
 ];

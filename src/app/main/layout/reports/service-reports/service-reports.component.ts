@@ -71,7 +71,7 @@ export class ServiceReportsComponent implements OnInit {
         const year = dateObj.getFullYear();
         this.currentDate = year + '-' + month + '-' + day;
         this.loadReports();
-        this.location.replaceState('/serviceFeedback/' + this.currentDate);
+        this.location.replaceState('/serviceReports/' + this.currentDate);
         return year + '-' + month + '-' + day;
     }
 
@@ -89,7 +89,7 @@ export class ServiceReportsComponent implements OnInit {
         // console.log(new Date(date));
         if (new Date(date) <= new Date()) {
             this.currentDate = this.getDate(new Date(date));
-            this.location.replaceState('/serviceFeedback/' + this.currentDate);
+            this.location.replaceState('/serviceReports/' + this.currentDate);
         } else {
             Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
         }
@@ -98,7 +98,7 @@ export class ServiceReportsComponent implements OnInit {
     previousDate(): void {
         const currentDate = new Date(this.currentDate);
         const date = currentDate.setTime(currentDate.getTime() - 24 * 60 * 60 * 1000);
-        this.location.replaceState('/serviceFeedback/' + this.currentDate);
+        this.location.replaceState('/serviceReports/' + this.currentDate);
         this.currentDate = this.getDate(new Date(date));
     }
 

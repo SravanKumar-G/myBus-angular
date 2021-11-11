@@ -5,6 +5,7 @@ import { RolesRoutingModule } from './roles-routing.module';
 import {RolesComponent} from './roles.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {FormsModule} from '@angular/forms';
     CommonModule,
     RolesRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    BreadcrumbModule
   ]
 })
 export class RolesModule { }

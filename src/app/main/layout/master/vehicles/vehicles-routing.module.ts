@@ -6,14 +6,17 @@ import {AddEditVehicleComponent} from './add-edit-vehicle/add-edit-vehicle.compo
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Vehicles'},
     component: VehiclesComponent
   },
   {
     path: 'addVehicle',
+    data: {breadcrumb: 'Add Vehicle'},
     component: AddEditVehicleComponent
   },
   {
     path: 'editVehicle/:id',
+    data: {breadcrumb: 'Edit Vehicle'},
     component: AddEditVehicleComponent
   }
 

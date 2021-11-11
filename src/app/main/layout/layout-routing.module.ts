@@ -7,6 +7,7 @@ import {FuelExpenseReportsModule} from './reports/fuel-expense-reports/fuel-expe
 const layOutRoutes: Routes = [
     {
         path: '',
+        data: {breadcrumb: 'Dashboard'},
         component: LayoutComponent,
         children: [
             {
@@ -114,11 +115,11 @@ const layOutRoutes: Routes = [
                 loadChildren: () => import('./reports/service-income-report/service-income-report.module')
                     .then(m => m.ServiceIncomeReportModule)
             },
-            {
-                path: 'serviceReportByService/:id',
-                loadChildren: () => import('./reports/service-report-by-service/service-report-by-service.module')
-                    .then(m => m.ServiceReportByServiceModule)
-            },
+            // {
+            //     path: 'serviceReportByService/:id',
+            //     loadChildren: () => import('./reports/service-report-by-service/service-report-by-service.module')
+            //         .then(m => m.ServiceReportByServiceModule)
+            // },
             {
                 path: 'agents',
                 loadChildren: () => import('./features/agents/agents.module')

@@ -7,8 +7,7 @@
             </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><span class="fa fa-home fa-lg" (click)="goToDashboard()"></span></li>
-            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Invoice</span></li>
+           <xng-breadcrumb></xng-breadcrumb>
         </ul>
     </div>
     <div class="row">
@@ -56,7 +55,8 @@
                                </div>
                            </div>
                        </div>
-                       <div class="col-sm-2 form-group col-12 mt-3">
+                       <div class="col-sm-2 form-group col-12">
+                           <label>Select Channel</label>
                            <select class="form-control form-control-sm" [(ngModel)]="invoiceObj.channel"
                                    [ngModelOptions]="{standalone: true}">
                                <option value="" selected>Select channel</option>
@@ -64,10 +64,10 @@
                                        [value]="data.value">{{data.name}}</option>
                            </select>
                        </div>
-                       <div class="col-sm-1 form-group col-12 mt-auto mb-auto">
+                       <div class="col-sm-2 form-group col-12 mt-auto mb-auto">
                            <button class="btn btn-sm btn-success" (click)="SearchGetInvoices()">Search Booking</button>
                        </div>
-                       <div class="col-sm-2 form-group col-12 mt-auto mb-auto text-right">
+                       <div class="col-sm-4 form-group col-12 mt-auto mb-auto text-right">
                            <button class="btn btn-sm btn-primary" (click)="exportToExcel()">Export to Excel</button>
                        </div>
                    </div>

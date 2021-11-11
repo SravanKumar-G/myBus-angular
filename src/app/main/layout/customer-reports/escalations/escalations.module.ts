@@ -6,6 +6,7 @@ import {EscalationsComponent} from './escalations.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FormsModule} from '@angular/forms';
 import {NgbPaginationModule, NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {NgbPaginationModule, NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap'
         NgSelectModule,
         FormsModule,
         NgbPaginationModule,
-        NgbPopoverModule
+        NgbPopoverModule,
+        BreadcrumbModule
     ]
 })
 export class EscalationsModule { }

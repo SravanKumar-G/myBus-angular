@@ -8,6 +8,7 @@ import {FormsModule} from '@angular/forms';
 import { AddEditAgentComponent } from './add-edit-agent/add-edit-agent.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         LayoutModule,
         FormsModule,
         NgSelectModule,
-        NgbModule
+        NgbModule,
+        BreadcrumbModule
     ]
 })
 export class AgentsModule {

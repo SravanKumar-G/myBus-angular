@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {LayoutModule} from '../../layout.module';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {LayoutModule} from '../../layout.module';
         FormsModule,
         BsDatepickerModule,
         NgbModule,
-        LayoutModule
+        LayoutModule,
+        BreadcrumbModule
     ]
 })
 export class CargoBookingsModule { }

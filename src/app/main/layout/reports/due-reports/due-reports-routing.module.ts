@@ -9,22 +9,27 @@ import {OfficeDueReportByAgentComponent} from './office-due-report-by-agent/offi
 const routes: Routes = [
   {
     path: '',
+    data: {breadcrumb: 'Due Reports'},
     component: DueReportsComponent
   },
   {
     path: 'officeDueReport/:id',
+    data: {breadcrumb: 'Office Due Report'},
     component: OfficeDueReportComponent
   },
   {
     path: 'officeDueReport/:id/officeDueReportByDate/:date',
+    data: {breadcrumb: 'Office Due Report By Date'},
     component: OfficeDueReportByDateComponent
   },
   {
     path: 'officeDueReport/:id/officeDueReportByService/:service',
+    data: {breadcrumb: 'Office Due Report By Service'},
     component: OfficeDueReportByServiceComponent
   },
   {
     path: 'officeDueReport/:id/officeDueReportByAgent/:agentName',
+    data: {breadcrumb: 'Office Due Report By Agent'},
     component: OfficeDueReportByAgentComponent
   }
 ];

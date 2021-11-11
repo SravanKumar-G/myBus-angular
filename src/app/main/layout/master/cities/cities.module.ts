@@ -5,6 +5,7 @@ import { CitiesRoutingModule } from './cities-routing.module';
 import {CitiesComponent} from './cities.component';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         CitiesRoutingModule,
         FormsModule,
         NgbModule,
+        BreadcrumbModule,
     ]
 })
 export class CitiesModule { }
