@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 // @ts-ignore
 import * as _ from 'underscore';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-service-form',
@@ -20,29 +21,50 @@ export class ServiceFormComponent implements OnInit {
   public downloaded = false;
   public currentUser: any;
   public vehicles: Array<any> = [];
+  public serviceReports: Array<any> = [];
   public serviceData: any;
+  public indexCount = 0;
+  private currentDate: any;
 
   constructor(
       private apiService: ApiServiceService,
       private apiUrls: ApiUrls,
       private actRoute: ActivatedRoute,
       public modalService: NgbModal,
+      public router: Router,
+      public location: Location
   ) {
     this.formId = this.actRoute.snapshot.params.id || '';
+    this.indexCount = this.actRoute.snapshot.params.index || 0;
   }
 
   ngOnInit(): void {
     if (this.formId) {
-      this.getServiceFormDetails();
+      this.getServiceFormDetails(this.formId);
     }else{
       Swal.fire('error', 'Did not find any Service form Id', 'error');
+    }
+    if (this.actRoute.snapshot.params.date) {
+      this.currentDate = this.actRoute.snapshot.params.date;
+      this.loadReports();
     }
     this.currentUser = JSON.parse(localStorage.getItem('currentUserDetails') as string);
     this.getAllVehicles();
   }
 
-  getServiceFormDetails(): void {
-    this.apiService.get(this.apiUrls.getDetailsByFormId + this.formId).subscribe((res: any) => {
+  loadReports(): void {
+    const dateObj = this.apiService.getYYYYMMDD(this.currentDate);
+    this.apiService.get(this.apiUrls.loadServiceReports + dateObj).subscribe((res: any) => {
+      if (res) {
+        this.serviceReports = res;
+      }
+    }, error => {
+      Swal.fire('Oops...', error.message, 'error');
+    });
+  }
+
+  getServiceFormDetails(formId: any): void {
+    this.apiService.get(this.apiUrls.getDetailsByFormId + formId).subscribe((res: any) => {
       if (res) {
         this.serviceReportDetails = res;
         this.serviceReportDetails.fuelExpenses = [];
@@ -75,5 +97,20 @@ export class ServiceFormComponent implements OnInit {
 
   rateToBeVerified(booking: any): any {
 
+  }
+  nextAndPreviousService(status: any): void {
+    if (status === 'decrement') {
+      this.indexCount--;
+    } else if (status === 'increment') {
+      this.indexCount++;
+    }
+    const data = this.serviceReports[this.indexCount];
+    console.log(this.indexCount);
+    if (data.attrs.formId) {
+      this.getServiceFormDetails(data.attrs.formId);
+      this.location.replaceState('/serviceReports/' + this.currentDate + '/serviceForm/' + data.attrs.formId + '/' + this.indexCount);
+    }else {
+      this.router.navigate(['serviceReports/' + this.currentDate + '/serviceReport/' + data.id + '/' + this.indexCount]);
+    }
   }
 }

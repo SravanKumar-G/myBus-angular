@@ -15,6 +15,17 @@
             <div class="tile">
                 <div class="tile-body">
                     <div class="row" *ngIf="downloaded">
+                            <div class="col-sm-12 text-right mb-2">
+                                <button type="button" class="btn btn-primary btn-sm" title="Previous Service"
+                                        (click)="nextAndPreviousService('decrement')" [disabled]="indexCount === 0">
+                                    <i class="fa fa-angle-left"></i>
+                                </button>
+                                <span style="padding: 8px;">{{indexCount}} / {{serviceReports.length}}</span>
+                                <button type="button" class="btn btn-primary btn-sm" title="Next Service"
+                                        (click)="nextAndPreviousService('increment')" [disabled]="indexCount === serviceReports.length">
+                                    <i class="fa fa-angle-right"></i>
+                                </button>
+                        </div>
                         <div class="col-sm-12">
                             <div class="row form-group">
                                 <div class="flex-container">

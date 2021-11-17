@@ -19,6 +19,16 @@ const routes: Routes = [
     path: 'serviceForm/:id',
     data: {breadcrumb: 'Service Form'},
     component: ServiceFormComponent
+  },
+  {
+    path: 'serviceReport/:id/:index',
+    data: {breadcrumb: 'Service Report'},
+    component: ServiceReportComponent
+  },
+  {
+    path: 'serviceForm/:id/:index',
+    data: {breadcrumb: 'Service Form'},
+    component: ServiceFormComponent
   }
 ];
 
