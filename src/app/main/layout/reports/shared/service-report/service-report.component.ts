@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 // @ts-ignore
 import * as _ from 'underscore';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-service-report',
@@ -13,7 +14,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./service-report.component.css']
 })
 export class ServiceReportComponent implements OnInit {
-    private readonly serviceId: any;
+    private serviceId: any;
     public serviceReportDetails: any = {
         fuelExpenses: [],
         expenses: [],
@@ -30,24 +31,34 @@ export class ServiceReportComponent implements OnInit {
     selectedStaffId: any;
     public agent: any;
     public branchOffices: Array<any> = [];
+    public serviceReports: Array<any> = [];
+    public indexCount = 0;
+    private currentDate: any;
 
     constructor(
         private apiService: ApiServiceService,
         private apiUrls: ApiUrls,
         private actRoute: ActivatedRoute,
         public modalService: NgbModal,
-        public router: Router
+        public router: Router,
+        private location: Location
     ) {
         this.serviceId = this.actRoute.snapshot.params.id || '';
+        this.indexCount = this.actRoute.snapshot.params.index || 0;
     }
 
     ngOnInit(): void {
+        if (this.actRoute.snapshot.params.date) {
+            this.currentDate = this.actRoute.snapshot.params.date;
+            this.loadReports();
+        }
         this.currentUser = JSON.parse(localStorage.getItem('currentUserDetails') as string);
         if (this.serviceId) {
-            this.getServiceReport();
+            this.getServiceReport('');
         } else {
             Swal.fire('error', 'Did not find any Service Id', 'error');
         }
+
         this.getAllVehicles();
         this.getAgentNames();
         this.getSuppliers();
@@ -55,7 +66,21 @@ export class ServiceReportComponent implements OnInit {
         this.loadBranchOffices();
     }
 
-    getServiceReport(): void {
+        loadReports(): void {
+            const dateObj = this.apiService.getYYYYMMDD(this.currentDate);
+            this.apiService.get(this.apiUrls.loadServiceReports + dateObj).subscribe((res: any) => {
+                if (res) {
+                    this.serviceReports = res;
+                }
+            }, error => {
+                Swal.fire('Oops...', error.message, 'error');
+            });
+        }
+
+    getServiceReport(service: any): void {
+        if (service) {
+            this.serviceId = service.id;
+        }
         this.apiService.get(this.apiUrls.getServiceReportDetails + this.serviceId).subscribe((res: any) => {
             if (res) {
                 if (res.fuelExpenses.length > 0) {
@@ -431,4 +456,20 @@ export class ServiceReportComponent implements OnInit {
     public goToReportsPage(): void {
         this.router.navigate(['serviceReports/' + this.actRoute.snapshot.params.date] );
     }
+
+    nextAndPreviousService(status: any): void {
+        if (status === 'decrement') {
+            this.indexCount--;
+        } else if (status === 'increment') {
+            this.indexCount++;
+        }
+        const data = this.serviceReports[this.indexCount];
+        if (data.attrs.formId) {
+            this.router.navigate(['serviceReports/' + this.currentDate + '/serviceForm/' + data.attrs.formId + '/' + this.indexCount]);
+        }else {
+            this.getServiceReport(data);
+            this.location.replaceState('/serviceReports/' + this.currentDate + '/serviceReport/' + data.id + '/' + this.indexCount);
+        }
+    }
+
 }
