@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import * as _ from 'underscore';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Location} from '@angular/common';
+import {ChangeDetectorRef} from '@angular/core';
 
 @Component({
     selector: 'app-service-report',
@@ -41,7 +42,8 @@ export class ServiceReportComponent implements OnInit {
         private actRoute: ActivatedRoute,
         public modalService: NgbModal,
         public router: Router,
-        private location: Location
+        private location: Location,
+        private ref: ChangeDetectorRef
     ) {
         this.serviceId = this.actRoute.snapshot.params.id || '';
         this.indexCount = this.actRoute.snapshot.params.index || 0;
@@ -174,16 +176,20 @@ export class ServiceReportComponent implements OnInit {
         return booking.bookingType === '4' || booking.bookedOnline;
     }
 
-    calculateNet(changedBooking: any): any {
+    checkDues(event: any, changedBooking: any): any {
         if (changedBooking) {
             const bookedBy = changedBooking.name.toLowerCase();
-            if (changedBooking.due && (bookedBy.indexOf('buspay') !== -1 || bookedBy.indexOf('bus pay') !== -1
-                || bookedBy.indexOf('buspa') !== -1)) {
+            if (bookedBy.indexOf('buspay') !== -1 || bookedBy.indexOf('bus pay') !== -1
+                || bookedBy.indexOf('buspa') !== -1) {
                 alert('bus pay can not be set to due');
                 changedBooking.due = false;
+                event.stopPropagation();
                 return false;
             }
         }
+        this.calculateNet(changedBooking);
+    }
+    calculateNet(changedBooking: any): any {
         this.serviceReportDetails.netCashIncome = 0;
         this.serviceReportDetails.grossIncome = 0;
         let expenseTotal = 0;
@@ -284,7 +290,7 @@ export class ServiceReportComponent implements OnInit {
         this.serviceReportDetails.bookings = _.filter(this.serviceReportDetails.bookings, (thisBooking: any) => {
             return thisBooking.index !== booking.index;
         });
-        this.calculateNet('');
+        this.calculateNet(null);
         this.countSeats();
     }
 
@@ -317,7 +323,7 @@ export class ServiceReportComponent implements OnInit {
 
     deleteExpense(index: any): void {
         this.serviceReportDetails.expenses.splice(index, 1);
-        this.calculateNet('');
+        this.calculateNet(  null);
     }
 
     addStaff(): void {

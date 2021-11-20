@@ -175,6 +175,8 @@
                                        [ngClass]="pagination.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                 </th>
                                 <th>Amount</th>
+                                <th>Fright</th>
+                                <th>Loading Charges</th>
                                 <th [ngClass]="pagination.sortOrder == 'bookedBy'? 'headActive' : ''"
                                     accessKey="bookedBy" (click)="clickSorting($event)">Booked By
                                     <i *ngIf="pagination.sortOrder != 'bookedBy'" class="fa fa-sort"></i>
@@ -196,6 +198,8 @@
                                 <td>{{cargo.toName}}<br>{{cargo.toContact}}</td>
                                 <td>{{cargo.remarks || '--'}}</td>
                                 <td>{{cargo.totalCharge || '0'}}</td>
+                                <td>{{cargo.totalCharge-cargo.loadingCharge || '0'}}</td>
+                                <td>{{cargo.loadingCharge || '0'}}</td>
                                 <td> {{cargo.attrs.bookedBy || '--'}}</td>
                                 <td>
                                     <a style="color: #007bff;" class="cus-a"

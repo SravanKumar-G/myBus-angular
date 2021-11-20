@@ -232,11 +232,6 @@
                     <i class="treeView-indicator fa fa-angle-right"></i>
                 </a>
                 <ul class="treeView-menu">
-                    <li class="waves-effect waves-light" *ngIf="canAccessModule('tripreports')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
-                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Trip Reports
-                        </a>
-                    </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('servicereports')">
                         <a class="treeView-item" [routerLink]="['serviceIncomeReport']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Service Income Reports

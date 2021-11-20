@@ -250,6 +250,7 @@
                                                                         [(ngModel)]="booking.due"
                                                                         [disabled]="isDisabled()"
                                                                         [ngModelOptions]="{standalone: true}"
+                                                                        (click)="checkDues($event, booking)"
                                                                         (ngModelChange)="calculateNet(booking)">
                                                                      <label style="margin-left: 20px;margin-top: 2px;"
                                                                             class="form-check-label"
@@ -314,7 +315,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.luggageIncome"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -324,7 +325,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.advance"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -334,7 +335,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.onRoadServiceIncome"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -344,7 +345,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.otherIncome"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                     </table>
@@ -361,7 +362,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.tollFee"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -371,7 +372,7 @@
                                                                    [(ngModel)]="serviceReportDetails.driverBatta"
                                                                    [disabled]="isDisabled()"
                                                                    [ngModelOptions]="{standalone: true}"
-                                                                   (ngModelChange)="calculateNet('')"/>
+                                                                   (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
 
@@ -382,7 +383,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.police"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -392,7 +393,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.pooja"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -402,7 +403,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.repair"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
 
@@ -413,7 +414,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.parking"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
 
@@ -424,7 +425,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.luggageCommission"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -434,7 +435,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.tollFasttag"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -444,7 +445,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.insurance"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -454,7 +455,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.fuelExpense"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -464,7 +465,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.roadTax"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -474,7 +475,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="serviceReportDetails.salary"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                         </tr>
 
@@ -490,7 +491,7 @@
                                                        class="form-control form-control-sm"
                                                        [(ngModel)]="expense.amount"
                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
-                                                       (ngModelChange)="calculateNet('')"/>
+                                                       (ngModelChange)="calculateNet(null)"/>
                                             </td>
                                             <td>
                                                 <a class="cus-a" style="color: red !important;font-size: 15px"

@@ -26,6 +26,7 @@ export class LoadingSheetComponent implements OnInit {
     public toPayCargoBooking: any;
     public truckId: any;
     public selectedBookings: Array<any> = [];
+    public selectedBooking: any;
     date = new Date();
     tripSheets: Array<any> = [];
     public vehicleRegNo: any;
@@ -192,6 +193,7 @@ export class LoadingSheetComponent implements OnInit {
                this.tripSheets = res;
                this.vehicleRegNo  = truckId;
                this.modalService.open(modal, {size: 'lg'});
+               this.selectedBookings = [];
                // this.getLoadingSheetData();
            }
         }, error => {
@@ -202,9 +204,9 @@ export class LoadingSheetComponent implements OnInit {
     selectTripSheet(id: any): void {
         this.apiService.create(this.apiUrls.addBookingsToTripSheet + id, this.selectedBookings).subscribe((res: any) => {
             if (res) {
-                Swal.fire('Success', 'Successfully Loaded', 'success');
                 this.modalService.dismissAll();
                 this.getLoadingSheetData();
+                Swal.fire('Success', 'Successfully Loaded', 'success');
             }
         }, error => {
             Swal.fire('Error loading bookings to Tripsheet', error.message, 'error');
