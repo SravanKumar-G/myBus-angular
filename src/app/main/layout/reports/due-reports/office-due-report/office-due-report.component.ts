@@ -212,6 +212,7 @@ export class OfficeDueReportComponent implements OnInit {
                         'success'
                     );
                     this.searchByPNR(booking.ticketNo);
+                    this.apiService.getLoggedInUserData();
                 });
             }
         });
