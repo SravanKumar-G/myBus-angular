@@ -90,19 +90,18 @@ export class ServiceFeedbackReportComponent implements OnInit {
         this.location.back();
     }
 
-    sendThankYouMessage(data: any): void {
-        this.apiService.sendWhatsApp(data.phone, 'Thanks for travelling in Sri Krishna Travels.' +
-            ' We are glad to hear that you liked travelling with us.' +
-            ' Can you please take a moment to rate our service on Redbus/PayTM. ' +
+    sendThankYouMessage(feedback: any): void {
+        this.apiService.sendWhatsApp(feedback.phone, 'Hello ' + feedback.name + ' garu, thanks for travelling in Sri Krishna Travels.' +
+            ' Can you please take a moment to rate our service on ' + feedback.bookedBy +
             'You will get an email and WhatsApp message with a link to give us rating  ');
     }
-    sendApologies(data: any): void {
-        this.apiService.sendWhatsApp(data.phone, 'Thanks for travelling in Sri Krishna Travels. ' +
+    sendApologies(feedback: any): void {
+        this.apiService.sendWhatsApp(feedback.phone, 'Hello ' + feedback.name + ' garu, thanks for travelling in Sri Krishna Travels. ' +
             'We apologize for the issue caused to you.' +
             ' We will investigate further on this and take necessar action. ');
     }
-    sendCargoIntro(data: any): void {
-        this.apiService.sendWhatsApp(data.phone, 'Thanks for travelling in Sri Krishna Travels. ' +
+    sendCargoIntro(feedback: any): void {
+        this.apiService.sendWhatsApp(feedback.phone, 'Hello ' + feedback.name + ' garu, thanks for travelling in Sri Krishna Travels. ' +
             'We also have cargo services. You can send packages to your loved ones easily through our buses. Please call on 9246460533 for further details.');
     }
 }
