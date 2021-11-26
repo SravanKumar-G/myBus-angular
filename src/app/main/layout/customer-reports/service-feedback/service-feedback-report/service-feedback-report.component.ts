@@ -93,7 +93,7 @@ export class ServiceFeedbackReportComponent implements OnInit {
     sendThankYouMessage(feedback: any): void {
         this.apiService.sendWhatsApp(feedback.phone, 'Hello ' + feedback.name + ' garu, thank you for travelling in Sri Krishna Travels.' +
             ' Can you please take a moment to rate our service on ' + feedback.bookedBy +
-            '. You will get an email and WhatsApp message with a link to give us rating  ');
+            '?. You will get an email and WhatsApp message with a link to give us rating  ');
     }
     sendApologies(feedback: any): void {
         this.apiService.sendWhatsApp(feedback.phone, 'Hello ' + feedback.name + ' garu, thank you for travelling in Sri Krishna Travels. ' +
