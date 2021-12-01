@@ -121,16 +121,11 @@ const layOutRoutes: Routes = [
             //         .then(m => m.ServiceReportByServiceModule)
             // },
             {
-                path: 'serviceReportByService/:id',
-                loadChildren: () => import('./reports/service-report-by-service/service-report-by-service.module').
-                then(m => m.ServiceReportByServiceModule)
-            },
-            {
                 path: 'maintenance',
                 loadChildren: () => import('./maintenance/maintenance.module').
                 then(m => m.MaintenanceModule)
             },
-                path: 'agents',
+            {    path: 'agents',
                 loadChildren: () => import('./features/agents/agents.module')
                     .then(m => m.AgentsModule)
             },

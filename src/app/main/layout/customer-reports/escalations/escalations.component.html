@@ -79,10 +79,10 @@
                                         <div class="flex-container">
                                             <div class="service-card"
                                                  style="background: #dbd2d2 !important; border-radius: 50px;">{{(filterObj.page - 1) * filterObj.size + i + 1}}</div>
-                                            <div class="service-card"><label>Service
-                                                Name:</label><b>{{escalation.serviceName}}</b></div>
-                                            <div class="service-card"><label>Vehicle
-                                                Number:</label><b>{{escalation.vehicleNumber}}</b></div>
+                                            <div class="service-card"><label>Service Name:</label><b>{{escalation.serviceName}}</b></div>
+                                            <div class="service-card"><label>Vehicle Number:</label><b>{{escalation.vehicleNumber}}</b></div>
+                                            <div class="service-card"><label>Status:</label><b>{{escalation.status}}</b></div>
+
                                         </div>
                                     </div>
                                     <div class="card-body" style="padding: 12px !important;">
@@ -322,10 +322,9 @@
                                     <div class="card-header" style="align-items: center;padding: 8px 15px !important;">
                                         <div class="flex-container">
                                             <div class="service-card">{{(query.page - 1) * query.size + i + 1}}</div>
-                                            <div class="service-card"><label>Service
-                                                Name:</label><b>{{escalation.serviceName || 'NA'}}</b></div>
-                                            <div class="service-card"><label>Vehicle
-                                                Number:</label><b>{{escalation.vehicleNumber || 'NA'}}</b></div>
+                                            <div class="service-card"><label>Service Name:</label><b>{{escalation.serviceName || 'NA'}}</b></div>
+                                            <div class="service-card"><label>Vehicle Number:</label><b>{{escalation.vehicleNumber || 'NA'}}</b></div>
+                                            <div class="service-card"><label>Status:</label><b>{{escalation.status}}</b></div>
                                         </div>
                                     </div>
                                     <div class="card-body" style="padding: 12px !important;">
@@ -372,6 +371,13 @@
                                                     <i class="fa fa-envelope fa-1x" aria-hidden="true"
                                                        style="color: indianred"></i> Send Email
                                                 </a>
+                                            </div>
+                                        </div>
+                                        <div class="flex-container">
+                                            Comments:
+                                            <div *ngFor="let comment of escalation.escalationComments; let i = index;" class="service-card">
+                                                {{comment.comment}} <span style="color: initial"><i><b>- {{comment.addedBy}} - {{comment.addedOn}}</b></i></span>
+                                                <br/>
                                             </div>
                                         </div>
                                     </div>
