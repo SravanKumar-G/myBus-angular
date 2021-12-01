@@ -21,7 +21,7 @@ import {PipeFilterPipe} from '../../customDirectives/pipes/pipe-filter.pipe';
         FrentendSortDirective,
         SearchFilterPipe,
         CargoLookUpComponent,
-        PipeFilterPipe
+        PipeFilterPipe,
     ],
     imports: [
         CommonModule,

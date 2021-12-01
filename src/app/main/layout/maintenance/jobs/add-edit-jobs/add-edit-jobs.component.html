@@ -1,0 +1,229 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-building" aria-hidden="true"></i>
+                {{titleName}}
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router"> {{titleName}}</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-12 mx-auto">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Vehicle:<span class="mandatory-field">*</span></label>
+                            <select  class="form-control" [(ngModel)]="job.vehicleId"
+                            id="vehicle" ng-change="getOdometerReading(vehicle)">
+                                <option value="" selected>--Select Vehicle--</option>
+                                <option *ngFor="let vehicle of allVehicles" [value]="vehicle.id">{{vehicle.regNo}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Job Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Start Date"
+                                           name="permit"
+                                           [(ngModel)]="job.jobDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #startDate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="startDate.show()"
+                                                [attr.aria-expanded]="startDate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-sm-6 col-12 form-group pt-4">
+                            <label>Old Odometer</label>
+                            <!-- <ng-select
+                                    [items]="suppliers"
+                                    [multiple]="false"
+                                    bindLabel="name"
+                                    [closeOnSelect]="true"
+                                    bindValue="id"
+                                    placeholder="Select Supplier ..."
+                                    [(ngModel)]="inventory.supplierType"
+                                    [ngModelOptions]="{standalone: true}">
+                            </ng-select> -->
+                            {{odometerReading}}
+                        </div>
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Current Milage:</label>
+                            <input type="number" class="form-control form-control-sm"
+                                   placeholder="Current Milage"
+                                   [(ngModel)]="job.mileage"
+                                   [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Service Location:</label>
+                            <input type="text" class="form-control form-control-sm"
+                                   placeholder="Service Location"
+                                   [(ngModel)]="job.serviceLocation"
+                                   [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                    </div>
+                        <!-- <div class="col-sm-6 col-12 form-group">
+                            <label>Unit Cost:<span class="mandatory-field">*</span></label>
+                            <input type="text" class="form-control form-control-sm"
+                                   placeholder="Unit Cost"
+                                   [(ngModel)]="inventory.unitCost"
+                                   [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                        <div class="col-sm-6 col-12 form-group">
+                            <label class="form-check-label" for="skipAgentValidity">Paid :</label>
+                            <div class="form-check ml-2" style="display: inline;">
+                                <input type="checkbox" class="form-check-input" id="skipAgentValidity"
+                                       [(ngModel)]="inventory.paid"
+                                       [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div> -->
+                        <div class="row">
+                        <div class="form-group">
+                            <div style="font-size: 20px;" class="float-right" (click)="addJobInventories()">
+                                    <i class="fa fa-plus-square"> Add Spares</i>
+                                </div>
+                        </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div *ngFor="let inventory of job.inventories; let i = index;" class="col-sm-12">
+                                <div class="row">
+                                <label class="col-sm-2 control-label" for="inventory">Part Name<span class="data-required">*</span></label>
+                                <div class="col-sm-4">
+                                    <select  class="form-control"
+                                            [(ngModel)]="inventory.inventoryId" id="inventory" (ngModelChange)="setUnitCost(inventory)">
+                                        <option value="" selected>--Select Inventory--</option>
+                                        <option [value]="s.id" *ngFor="let s of allInventories">{{s.nameAndPrice}}</option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-1 control-label" for="inventoryQuantity">Quantity</label>
+                                <div class="col-sm-4">
+                                    <input type="number" id="inventoryQuantity" name="inventoryQuantity" class="form-control" [(ngModel)]="inventory.quantity" (ngModelChange)="calculateTotal()">
+                                </div>
+                                <span style="font-size: 20px;" (click)="deleteJobInventory(i)">
+                                <i class="fa fa-minus-square"></i>
+                                </span>
+                                <!-- &nbsp -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Additional Cost:</label>
+                            <input type="number" class="form-control form-control-sm"
+                                   placeholder="Additional Cost"
+                                   [(ngModel)]="job.additionalCost"
+                                   [ngModelOptions]="{standalone: true}"
+                                   (ngModelChange)="calculateTotal()"/>
+                        </div>
+
+                        <div class="col-sm-6 col-12 form-group pt-4">
+                            <label>Total Cost:</label>
+                            <!-- <input type="number" class="form-control form-control-sm"
+                                   placeholder="Current Milage"
+                                   [(ngModel)]="job.additionalCost"
+                                   [ngModelOptions]="{standalone: true}"
+                                   (ngModelChange)="calculateTotal()"/> -->
+                                   {{job.totalCost}}
+                        </div>
+
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Job Description:</label>
+                            <textarea class="form-control form-control-sm" [(ngModel)]="job.jobDescription"
+                            [ngModelOptions]="{standalone: true}" rows="7"> </textarea>
+                        </div>
+
+                        <div class="col-sm-6 col-12 form-group pt-4">
+                            <label>Job Completed:</label>
+                            <input type="checkbox" class="ml-2" [(ngModel)]="job.jobCompleted" 
+                            [ngModelOptions]="{standalone: true}">
+                        </div>
+
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Reminder:</label>
+                            <input type="checkbox" class="ml-2" [(ngModel)]="job.reminder" 
+                            [ngModelOptions]="{standalone: true}">
+                        </div>
+
+
+                        <div class="row m-2" *ngIf="job.reminder">
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Reminder Date:</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Reminder Date"
+                                           name="permit"
+                                           [(ngModel)]="job.reminderDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #reminderDate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="reminderDate.show()"
+                                                [attr.aria-expanded]="reminderDate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Reminder Text:</label>
+                                <textarea id="remainderText" [(ngModel)]="job.reminderText" rows="3"
+                                [ngModelOptions]="{standalone: true}" class="form-control"></textarea>
+                            </div>
+
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Expected Mileage:</label>
+                                <input type="text" class="form-control" [(ngModel)]="job.expectedMileage" 
+                                [ngModelOptions]="{standalone: true}">
+                            </div>
+
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>For user :</label>
+                                <select  class="form-control"
+                                [(ngModel)]="job.forUser" [ngModelOptions]="{standalone: true}"
+                                id="">
+                                <option value="" selected>--Select User--</option>
+                                <option *ngFor="let user of allUsers" [value]="user.id">{{user.fullName}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Remarks:</label>
+                                <textarea id="remainderText" [(ngModel)]="job.remarks" rows="3"
+                                [ngModelOptions]="{standalone: true}" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile-footer">
+                    <div class="col-12 text-center">
+                        <p class="error-field">{{errorMessage}}</p>
+                    </div>
+                    <div class="col-sm-12 text-right p-0">
+                        <button type="button" class="btn btn-success btn-sm mr-2" (click)="save()">
+                            <i class="fa fa-fw fa-check-circle"></i> {{jobId ? 'Update' : 'Save'}}
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="cancel()">
+                            <i class="fa fa-fw fa-times-circle"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

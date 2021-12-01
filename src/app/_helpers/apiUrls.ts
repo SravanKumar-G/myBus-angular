@@ -7,9 +7,10 @@ import {environment} from 'src/environments/environment';
 })
 
 export class ApiUrls {
-    mainUrl = 'http://localhost:8091/';
+    // mainUrl = 'http://localhost:8091/';
+    // mainUrl = 'http://qacargo.srikrishnatravels.in/'
     // mainUrl = 'http://cargo.srikrishnatravels.in/';
-    // mainUrl = environment.testPath;
+    mainUrl = environment.testPath;
 
 
     getCurrentUser = 'api/v1/user/me';
@@ -74,6 +75,7 @@ export class ApiUrls {
     updateVehicle = 'api/v1/vehicle/';
     getVehicleById = 'api/v1/vehicle/';
     deleteVehicle = 'api/v1/vehicle/';
+    getVehicleOdometerReading = 'api/v1/vehicle/odometerReading/';
 
     // transactions
     search = 'api/v1/transactions/search';
@@ -144,4 +146,37 @@ export class ApiUrls {
     getDistinctSource = 'api/v1/serviceReport/getCities';
     searchServiceReport = 'api/v1/serviceReport/incomeReport';
     serviceReportByServiceId = 'api/v1/serviceReport/serviceIncomeReportDaily';
+
+    // Inventories API's
+    getAllInventories = 'api/v1/inventory/getAllInventories';
+    getInventoriesCount = 'api/v1/inventory/getCount';
+    getInventory = 'api/v1/inventory/get/';
+    updateInventory = 'api/v1/inventory/updateInventory';
+    addInventory = 'api/v1/inventory/addInventory';
+    deleteInventory = 'api/v1/inventory/delete/';
+
+
+    // Tyres API's
+    getAllTyres = 'api/v1/tyre/getAll';
+    getTyreCount = 'api/v1/tyre/count';
+    getTyreById = 'api/v1/tyre/find/';
+    updateTyre = 'api/v1/tyre/update/';
+    createTyre = 'api/v1/tyre/add';
+    getTyreActivityById = 'api/v1/tyreActivity/find/';
+    createTyreActivity = 'api/v1/tyreActivity/add';
+    updateTyreActivity = 'api/v1/tyreActivity/update/';
+    uninstallTyre ='api/v1/tyreActivity/uninstall';
+    deletetyre = 'api/v1/tyre/delete/';
+
+
+    // Jobs API's
+    
+    getCountForJobs = 'api/v1/jobs/getCount';
+    getAllsearchJobs = 'api/v1/jobs/searchJobs';
+    getPendingJobs = 'api/v1/jobs/getPendingJobs';
+    getCompletedJobs = 'api/v1/jobs/getCompletedJobs';
+    getJob ='api/v1/jobs/getAJob/';
+    updateJob ='api/v1/jobs/updateJob';
+    addJob = 'api/v1/jobs/addJob';
+    deleteJob = 'api/v1/jobs/delete/';
 }

@@ -120,7 +120,12 @@ const layOutRoutes: Routes = [
                 path: 'serviceReportByService/:id',
                 loadChildren: () => import('./reports/service-report-by-service/service-report-by-service.module').
                 then(m => m.ServiceReportByServiceModule)
-            }
+            },
+            {
+                path: 'maintenance',
+                loadChildren: () => import('./maintenance/maintenance.module').
+                then(m => m.MaintenanceModule)
+            },
         ]
     },
     {path: '', pathMatch: 'full', component: CargoDashboardComponent}];
