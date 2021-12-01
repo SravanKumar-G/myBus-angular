@@ -12,6 +12,15 @@ import {SearchFilterPipe} from '../../customDirectives/pipes/search-filter.pipe'
 import { CargoLookUpComponent } from './cargo/cargo-look-up/cargo-look-up.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PipeFilterPipe} from '../../customDirectives/pipes/pipe-filter.pipe';
+import { FilesUploadComponent } from './shared/files-upload/files-upload.component';
+import { FileUploadComponent } from './shared/file-upload/file-upload.component';
+import { CashTransferComponent } from './reports/cash-transfer/cash-transfer.component';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {NgSelectModule} from '@ng-select/ng-select';
+import {BreadcrumbModule} from 'xng-breadcrumb';
+
+
+
 
 @NgModule({
     declarations: [
@@ -22,12 +31,18 @@ import {PipeFilterPipe} from '../../customDirectives/pipes/pipe-filter.pipe';
         SearchFilterPipe,
         CargoLookUpComponent,
         PipeFilterPipe,
+        FilesUploadComponent,
+        FileUploadComponent,
+        CashTransferComponent,
     ],
     imports: [
         CommonModule,
         LayoutRoutingModule,
         FormsModule,
-        NgbModule
+        NgbModule,
+        BsDatepickerModule,
+        NgSelectModule,
+        BreadcrumbModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],
@@ -40,7 +55,9 @@ import {PipeFilterPipe} from '../../customDirectives/pipes/pipe-filter.pipe';
         FrentendSortDirective,
         SearchFilterPipe,
         CargoLookUpComponent,
-        PipeFilterPipe
+        PipeFilterPipe,
+        FilesUploadComponent,
+        FileUploadComponent
     ]
 })
 export class LayoutModule {

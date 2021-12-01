@@ -1,0 +1,407 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i>
+                Salary Reports
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <xng-breadcrumb></xng-breadcrumb>
+        </ul>
+    </div>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item active-tab-nav" (click)="tabChange(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
+        </li>
+        <li class="nav-item deleted-tab-nav" (click)="tabChange(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Paid</a>
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile" *ngIf="tab === 1">
+                <div class="tile-body">
+                    <div class="col-sm-12">
+                        <div class="row form-group">
+                            <div class="col-sm-2">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Start Date"
+                                           name="startdate"
+                                           [(ngModel)]="fromDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #startdate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="startdate.show()"
+                                                [attr.aria-expanded]="startdate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>End Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="End Date"
+                                           name="enddate"
+                                           [(ngModel)]="toDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #enddate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="enddate.show()"
+                                                [attr.aria-expanded]="enddate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>Select Vehicle</label>
+                                <ng-select
+                                        [items]="vehicles"
+                                        [multiple]="false"
+                                        bindLabel="regNo"
+                                        [closeOnSelect]="true"
+                                        bindValue="id"
+                                        placeholder="Select Vehicle"
+                                        [(ngModel)]="vehicleId"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>Select Staff</label>
+                                <ng-select
+                                        [items]="staffList"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="id"
+                                        placeholder="Select Staff"
+                                        [(ngModel)]="staffId"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-1 mt-auto">
+                                <button type="button" class="btn btn-sm btn-primary" (click)="searchSalaryReports()">
+                                    Search
+                                </button>
+                            </div>
+                            <div class="col-sm-3 mt-auto text-right">
+                                <button type="button" class="btn btn-sm btn-primary" (click)="exportPendingData()">
+                                    Export to Excel
+                                </button>
+                                <button type="button" class="btn btn-sm btn-success ml-2"
+                                        *ngIf="selectedPayments.length > 0" (click)="paySalary()">Pay
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-hover text-center table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th [ngClass]="pagination.sortOrder == 'tripDate'? 'headActive' : ''"
+                                        accessKey="tripDate" (click)="clickSorting($event)">Trip Date
+                                        <i *ngIf="pagination.sortOrder != 'tripDate'" class="fa fa-sort"></i>
+                                        <i *ngIf="pagination.sortOrder == 'tripDate'" class="fa"
+                                           [ngClass]="pagination.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="pagination.sortOrder == 'staffName'? 'headActive' : ''"
+                                        accessKey="staffName" (click)="clickSorting($event)">Staff
+                                        <i *ngIf="pagination.sortOrder != 'staffName'" class="fa fa-sort"></i>
+                                        <i *ngIf="pagination.sortOrder == 'staffName'" class="fa"
+                                           [ngClass]="pagination.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="pagination.sortOrder == 'RegNo'? 'headActive' : ''"
+                                        accessKey="RegNo" (click)="clickSorting($event)">VehicleNo
+                                        <i *ngIf="pagination.sortOrder != 'RegNo'" class="fa fa-sort"></i>
+                                        <i *ngIf="pagination.sortOrder == 'RegNo'" class="fa"
+                                           [ngClass]="pagination.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="pagination.sortOrder == 'salaryPerDuty'? 'headActive' : ''"
+                                        accessKey="salaryPerDuty" (click)="clickSorting($event)">Salary
+                                        <i *ngIf="pagination.sortOrder != 'salaryPerDuty'" class="fa fa-sort"></i>
+                                        <i *ngIf="pagination.sortOrder == 'salaryPerDuty'" class="fa"
+                                           [ngClass]="pagination.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th>Pay</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let report of currentPageOfData; let i = index;">
+                                    <td>{{(pagination.page - 1) * pagination.size + i + 1}}
+                                    <td>{{ report.tripDate | date}}</td>
+                                    <td>{{ report.attrs.staffName }}</td>
+                                    <td>{{ report.attrs.RegNo }}</td>
+                                    <td>{{ (report.salaryPerDuty | number) || 'NA' }}</td>
+                                    <td>
+                                        <span>
+                                             <input type="checkbox"
+                                                    name="selectedPayments[]"
+                                                    value="{{report.id}}"
+                                                    (click)="toggleSalaryReportSelection(report.id)">
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="!currentPageOfData || currentPageOfData.length === 0">
+                                    <td colspan="12">No records exist</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="form-group">
+                                <div class="list-row" style="display: inline-block">
+                                    <ngb-pagination *ngIf="salaryReportsCount || salaryReportsCount !== 0"
+                                                    [(page)]="pagination.page"
+                                                    [pageSize]="pagination.size"
+                                                    [collectionSize]="salaryReportsCount"
+                                                    [boundaryLinks]="true"
+                                                    (pageChange)="handlePageChange($event)"
+                                                    [maxSize]="5">
+                                    </ngb-pagination>
+                                </div>
+                                <ul class="pagination pull-right"
+                                    *ngIf="salaryReportsCount || salaryReportsCount !== 0">
+                                    <li class="page-item" [ngClass]="size == pagination.size ? 'active' : ''"
+                                        *ngFor="let size of pagination.pageSizes" (click)="handlePageSizeChange(size)">
+                                        <button class="page-link"> {{ size }}
+                                            <span class="sr-only">(current)</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--Excel download-->
+                        <table class="table table-condensed table-hover text-center table-bordered" id="pendingData" style="display: none;">
+                            <thead>
+                            <tr>
+                                <th>S No</th>
+                                <th>Trip Date</th>
+                                <th>Staff</th>
+                                <th>VehicleNo</th>
+                                <th>Salary</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let report of currentPageOfData; let i = index;">
+                                <td>{{(pagination.page - 1) * pagination.size + i + 1}}
+                                <td>{{ report.tripDate | date}}</td>
+                                <td>{{ report.attrs.staffName }}</td>
+                                <td>{{ report.attrs.RegNo }}</td>
+                                <td>{{ (report.salaryPerDuty | number) || 'NA' }}</td>
+                                <td>Payment Pending</td>
+                            </tr>
+                            <tr *ngIf="!currentPageOfData || currentPageOfData.length === 0">
+                                <td colspan="12">No records exist</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tile" *ngIf="tab === 2">
+                <div class="tile-body">
+                    <div class="col-sm-12">
+                        <div class="row form-group">
+                            <div class="col-sm-2">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Start Date"
+                                           name="startdate"
+                                           [(ngModel)]="fromDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #startdate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="startdate.show()"
+                                                [attr.aria-expanded]="startdate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>End Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="End Date"
+                                           name="enddate"
+                                           [(ngModel)]="toDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #enddate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="enddate.show()"
+                                                [attr.aria-expanded]="enddate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>Select Vehicle</label>
+                                <ng-select
+                                        [items]="vehicles"
+                                        [multiple]="false"
+                                        bindLabel="regNo"
+                                        [closeOnSelect]="true"
+                                        bindValue="id"
+                                        placeholder="Select Vehicle"
+                                        [(ngModel)]="vehicleId"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>Select Staff</label>
+                                <ng-select
+                                        [items]="staffList"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="id"
+                                        placeholder="Select Vehicle"
+                                        [(ngModel)]="staffId"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-1 mt-auto">
+                                <button type="button" class="btn btn-sm btn-primary" (click)="searchSalaryReports()">
+                                    Search
+                                </button>
+                            </div>
+                            <div class="col-sm-3 mt-auto text-right">
+                                <button type="button" class="btn btn-sm btn-primary" (click)="exportPaidData()">
+                                    Export to Excel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-hover text-center table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th [ngClass]="pagination.sortOrder == 'tripDate'? 'headActive' : ''"
+                                        accessKey="tripDate" (click)="clickSorting($event)">Trip Date
+                                        <i *ngIf="pagination.sortOrder != 'tripDate'" class="fa fa-sort"></i>
+                                        <i *ngIf="pagination.sortOrder == 'tripDate'" class="fa"
+                                           [ngClass]="pagination.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="pagination.sortOrder == 'staffName'? 'headActive' : ''"
+                                        accessKey="staffName" (click)="clickSorting($event)">Staff
+                                        <i *ngIf="pagination.sortOrder != 'staffName'" class="fa fa-sort"></i>
+                                        <i *ngIf="pagination.sortOrder == 'staffName'" class="fa"
+                                           [ngClass]="pagination.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="pagination.sortOrder == 'RegNo'? 'headActive' : ''"
+                                        accessKey="RegNo" (click)="clickSorting($event)">VehicleNo
+                                        <i *ngIf="pagination.sortOrder != 'RegNo'" class="fa fa-sort"></i>
+                                        <i *ngIf="pagination.sortOrder == 'RegNo'" class="fa"
+                                           [ngClass]="pagination.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="pagination.sortOrder == 'paidOn'? 'headActive' : ''"
+                                        accessKey="paidOn" (click)="clickSorting($event)">PaidOn
+                                        <i *ngIf="pagination.sortOrder != 'paidOn'" class="fa fa-sort"></i>
+                                        <i *ngIf="pagination.sortOrder == 'paidOn'" class="fa"
+                                           [ngClass]="pagination.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th>Amount Paid</th>
+                                    <th [ngClass]="pagination.sortOrder == 'userName'? 'headActive' : ''"
+                                        accessKey="userName" (click)="clickSorting($event)">PaidBy
+                                        <i *ngIf="pagination.sortOrder != 'userName'" class="fa fa-sort"></i>
+                                        <i *ngIf="pagination.sortOrder == 'userName'" class="fa"
+                                           [ngClass]="pagination.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let report of currentPageOfPaidData; let i = index;">
+                                    <td>{{(pagination.page - 1) * pagination.size + i + 1}}
+                                    <td>{{ report.tripDate | date}}</td>
+                                    <td>{{ report.attrs.staffName }}</td>
+                                    <td>{{ report.attrs.RegNo }}</td>
+                                    <td>{{report.paidOn | date}}</td>
+                                    <td>{{report.amountPaid}}</td>
+                                    <td *ngIf="report.paidBy">{{report.paidBy.userName || '---'}}</td>
+                                </tr>
+                                <tr *ngIf="!currentPageOfData || currentPageOfData.length === 0">
+                                    <td colspan="12">No records exist</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="form-group">
+                                <div class="list-row" style="display: inline-block">
+                                    <ngb-pagination *ngIf="salaryReportsCount || salaryReportsCount !== 0"
+                                                    [(page)]="pagination.page"
+                                                    [pageSize]="pagination.size"
+                                                    [collectionSize]="salaryReportsCount"
+                                                    [boundaryLinks]="true"
+                                                    (pageChange)="handlePageChange($event)"
+                                                    [maxSize]="5">
+                                    </ngb-pagination>
+                                </div>
+                                <ul class="pagination pull-right"
+                                    *ngIf="salaryReportsCount || salaryReportsCount !== 0">
+                                    <li class="page-item" [ngClass]="size == pagination.size ? 'active' : ''"
+                                        *ngFor="let size of pagination.pageSizes" (click)="handlePageSizeChange(size)">
+                                        <button class="page-link"> {{ size }}
+                                            <span class="sr-only">(current)</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--Excel download-->
+                        <table class="table table-condensed table-hover text-center table-bordered" id="paidData" style="display: none;">
+                            <thead>
+                            <tr>
+                                <th>S No</th>
+                                <th>Trip Date</th>
+                                <th>Staff</th>
+                                <th>VehicleNo</th>
+                                <th>Paid On</th>
+                                <th>Amount Paid</th>
+                                <th>Paid By</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let report of currentPageOfData; let i = index;">
+                                <td>{{(pagination.page - 1) * pagination.size + i + 1}}
+                                <td>{{ report.tripDate | date}}</td>
+                                <td>{{ report.attrs.staffName }}</td>
+                                <td>{{ report.attrs.RegNo }}</td>
+                                <td>{{report.paidOn | date}}</td>
+                                <td>{{report.amountPaid}}</td>
+                                <td *ngIf="report.paidBy">{{report.paidBy.userName || '---'}}</td>
+                            </tr>
+                            <tr *ngIf="!currentPageOfData || currentPageOfData.length === 0">
+                                <td colspan="12">No records exist</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

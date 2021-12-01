@@ -1,0 +1,443 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i>
+                Office Due Report
+            </h1>
+        </div>
+        <div>
+            <label style="color: #979f9d">Branch:</label><b class="pl-2">{{dueReportByDate.name}}</b>
+        </div>
+        <div>
+            <label style="color: #979f9d">Manager Name:</label> <b class="pl-2">{{dueReportByDate.managerName}}</b>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <xng-breadcrumb></xng-breadcrumb>
+<!--            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>-->
+<!--            <li class="breadcrumb-item"><span class="breadcrumb-item-router"><a class="cus-a"-->
+<!--                                                                                [routerLink]="['/dueReports']">Due Reports</a></span>-->
+<!--            </li>-->
+<!--            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Office Due Report</span></li>-->
+        </ul>
+    </div>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item pending-users-tab" (click)="changeTab(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Due Report By Date</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeTab(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Due Report By Service</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeTab(3)">
+            <a class="nav-link" [ngClass]="{active:tab==3}">Due Report By Agents</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeTab(4)">
+            <a class="nav-link" [ngClass]="{active:tab==4}">Search</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeTab(5)">
+            <a class="nav-link" [ngClass]="{active:tab==5}">Search By PNR</a>
+        </li>
+    </ul>
+
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <!-- Due Reports By Date-->
+            <div class="tile" *ngIf="tab === 1">
+                <div class="tile-body">
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row form-group">
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th scope="col" [appFrentendSort]="dueReportByDate.duesByDate"
+                                            data-order="desc" data-name="date">Date<i class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="dueReportByDate.duesByDate"
+                                            data-order="desc" data-name="totalDue">Total Due<i class="fa fa-sort"></i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let data of dueReportByDate.duesByDate; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td><a class="cus-a" [routerLink]="['officeDueReportByDate/' + data.date]">{{data.date}}</a>
+                                        </td>
+                                        <td>{{data.totalDue | numberFormatter}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Due Reports By Service-->
+            <div class="tile" *ngIf="tab === 2">
+                <div class="tile-body">
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row form-group">
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th scope="col" [appFrentendSort]="dueReportByService"
+                                            data-order="desc" data-name="_id">Service Id<i class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="dueReportByService"
+                                            data-order="desc" data-name="totalDue">Total Due<i class="fa fa-sort"></i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let data of dueReportByService; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td><a class="cus-a" [routerLink]="['officeDueReportByService/' + data._id]">{{data._id}}</a>
+                                        </td>
+                                        <td>{{data.totalDue | numberFormatter}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Due Reports By Agents-->
+            <div class="tile" *ngIf="tab === 3">
+                <div class="tile-body">
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row form-group">
+                            <div class="col-sm-12 table-responsive">
+                                <div class="row form-group">
+                                    <div class="col-sm-3">
+                                        <label>Search By Agent Name</label>
+                                        <input type="text" class="form-control form-control-sm" [(ngModel)]="searchText"
+                                               placeholder="search by agent name"
+                                               [ngModelOptions]="{standalone: true}"/>
+                                    </div>
+                                </div>
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th scope="col" [appFrentendSort]="dueReportByAgents"
+                                            data-order="desc" data-name="_id">Agent Name<i class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="dueReportByAgents"
+                                            data-order="desc" data-name="totalDue">Total Due<i class="fa fa-sort"></i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let data of dueReportByAgents | searchFilter : searchText; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td><a class="cus-a" [routerLink]="['officeDueReportByAgent/' + data._id]">{{data._id}}</a>
+                                        </td>
+                                        <td>{{data.totalDue | numberFormatter}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- search-->
+            <div class="tile" *ngIf="tab === 4">
+                <div class="tile-body">
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="Start Date"
+                                           name="startDate"
+                                           [(ngModel)]="searchObj.startDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #startDate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="startDate.show()"
+                                                [attr.aria-expanded]="startDate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label>End Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm"
+                                           placeholder="End Date"
+                                           name="endDate"
+                                           [(ngModel)]="searchObj.endDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bsDatepicker
+                                           #endDate="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                (click)="endDate.show()"
+                                                [attr.aria-expanded]="endDate.isOpen" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label>Select Branch Office</label>
+                                <ng-select
+                                        [items]="branchOffices"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="id"
+                                        placeholder="Select Office"
+                                        [(ngModel)]="searchObj.branchOfficeId"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-3 mt-auto">
+                                <button type="button" class="btn btn-sm btn-success mr-1" (click)="search()">Search
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary mr-1"
+                                        (click)="searchDataExportToExcel()">Export
+                                    Excel
+                                </button>
+                                <button type="button" class="btn btn-sm btn-success"
+                                        (click)="payBookings(paidSummaryModal)"
+                                        *ngIf="selectedBookings.length > 0">
+                                    Pay Bookings
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="text-left col-sm-6 mb-2"><b>Total Count: {{dueBookings.length}}</b></div>
+                            <div class="text-right col-sm-6 mb-2"><b>Total Due: {{totalDue | number}}</b></div>
+                            <div class="table-responsive col-sm-12">
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="bookedBy">BookedBy<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="ticketNo">PNR<i class="fa fa-sort"></i></th>
+                                        <th>Passenger</th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="seats">Seats<i class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="serviceNumber">Service#<i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="serviceName">Route<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="jdate">JourneyDate<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="bookedDate">BookedOn<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="netAmt">Due<i class="fa fa-sort"></i></th>
+                                        <th>Pay</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let booking of dueBookings; let i = index;">
+                                        <th>{{i + 1}}</th>
+                                        <td>{{booking.bookedBy}}</td>
+                                        <td>{{booking.ticketNo}}</td>
+                                        <td>{{booking.name}} {{booking.phoneNo}}</td>
+                                        <td>{{booking.seats }}</td>
+                                        <td>{{booking.serviceNumber }}</td>
+                                        <td>{{booking.source}} - {{booking.destination}} - {{booking.serviceName}})</td>
+                                        <td>{{booking.jdate }}</td>
+                                        <td>{{booking.bookedDate || '--' }}</td>
+                                        <td>{{ booking.netAmt | number }}</td>
+                                        <td>
+                                            <input
+                                                    type="checkbox"
+                                                    name="selectedBookings[]"
+                                                    value="{{booking.id}}"
+                                                    (click)="toggleBookingSelection(booking.id)"/>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                    <tr *ngIf="!dueBookings || dueBookings.length === 0">
+                                        <td colspan="11">No Bookings found</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Due Bookings by Search with date excel Downloading-->
+                            <table class="table table-bordered table-hover text-center" id="dueBookingsDataBySearch" style="display: none !important;">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th>BookedBy</th>
+                                    <th>PNR</th>
+                                    <th>Passenger</th>
+                                    <th>Seats</th>
+                                    <th>Service#</th>
+                                    <th>Route</th>
+                                    <th>JourneyDate</th>
+                                    <th>BookedOn</th>
+                                    <th>Due</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let booking of dueBookings; let i = index;">
+                                    <th>{{i + 1}}</th>
+                                    <td>{{booking.bookedBy}}</td>
+                                    <td>{{booking.ticketNo}}</td>
+                                    <td>{{booking.name}} {{booking.phoneNo}}</td>
+                                    <td>{{booking.seats }}</td>
+                                    <td>{{booking.serviceNumber }}</td>
+                                    <td>{{booking.source}} - {{booking.destination}} - {{booking.serviceName}})</td>
+                                    <td>{{booking.jdate }}</td>
+                                    <td>{{booking.bookedDate || '--' }}</td>
+                                    <td>{{ booking.netAmt | number }}</td>
+                                </tr>
+                                </tbody>
+                                <tr *ngIf="!dueBookings || dueBookings.length === 0">
+                                    <td colspan="10">No Bookings found</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Search by PNR-->
+            <div class="tile" *ngIf="tab === 5 && dueBookingsByPnr">
+                <div class="tile-body">
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label>Search by PNR</label>
+                                <input type="text" class="form-control form-control-sm" placeholder="Search by PNR"
+                                       [(ngModel)]="pnrNumber" [ngModelOptions]="{standalone: true}"/>
+                            </div>
+                            <div class="col-sm-1 mt-auto">
+                                <button type="button" class="btn btn-sm btn-success mr-2"
+                                        (click)="searchByPNR(pnrNumber)">Search
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="table-responsive col-sm-12">
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" [appFrentendSort]="dueBookingsByPnr"
+                                            data-order="desc" data-name="bookedBy">BookedBy<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookingsByPnr"
+                                            data-order="desc" data-name="ticketNo">PNR<i class="fa fa-sort"></i></th>
+                                        <th>Passenger</th>
+                                        <th scope="col" [appFrentendSort]="dueBookingsByPnr"
+                                            data-order="desc" data-name="seats">Seats<i class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="dueBookingsByPnr"
+                                            data-order="desc" data-name="serviceNumber">Service#<i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="dueBookingsByPnr"
+                                            data-order="desc" data-name="serviceName">Route<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookingsByPnr"
+                                            data-order="desc" data-name="jdate">JourneyDate<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookingsByPnr"
+                                            data-order="desc" data-name="bookedDate">BookedOn<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookingsByPnr"
+                                            data-order="desc" data-name="netAmt">Due<i class="fa fa-sort"></i></th>
+                                        <th *ngIf="reportDue">Pay</th>
+                                        <th *ngIf="!reportDue">Paid By</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let booking of dueBookingsByPnr ">
+                                        <td>{{booking.bookedBy}}</td>
+                                        <td>{{booking.ticketNo}}</td>
+                                        <td>{{booking.name}} {{booking.phoneNo}}</td>
+                                        <td>{{booking.seats }}</td>
+                                        <td>{{booking.serviceNumber }}</td>
+                                        <td>{{booking.source}} - {{booking.destination}} - {{booking.serviceName}})</td>
+                                        <td>{{booking.jdate }}</td>
+                                        <td>{{booking.bookedDate || '--' }}</td>
+                                        <td>{{ booking.netAmt | number }}</td>
+                                        <td *ngIf="booking.due"><a class="cus-a" (click)="payBooking(booking)">Pay
+                                            Now</a></td>
+                                        <td *ngIf="!booking.due">
+                                            Paid By:{{booking.attrs.paidBy}} on {{booking.paidOn|date}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tr *ngIf="!dueBookingsByPnr || dueBookingsByPnr.length === 0">
+                                        <td colspan="10">No Bookings found for {{this.pnrNumber}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modals-->
+<!--Paid Summary Modal-->
+<ng-template #paidSummaryModal>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">Booking Payments</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalService.dismissAll()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12 table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Ticket No</th>
+                        <th>BookedBy</th>
+                        <th>Route</th>
+                        <th>JourneyDate</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let booking of paidSummary">
+                        <td>{{booking.ticketNo}}</td>
+                        <td>{{booking.bookedBy}}</td>
+                        <td>{{booking.source}} - {{booking.destination}} - {{booking.serviceName}})</td>
+                        <td>{{booking.jdate }}</td>
+                        <td>{{ booking.netAmt }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><span class="pull-right"> Total paid</span></td>
+                        <td>{{totalPaidAmount}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12 text-right p-0">
+            <button type="button" class="btn btn-danger btn-sm" (click)="modalService.dismissAll()">
+                <i class="fa fa-fw fa-times-circle"></i> Close
+            </button>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,487 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-book fa-lg" aria-hidden="true"></i> FuelExpense Report
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <xng-breadcrumb></xng-breadcrumb>
+        </ul>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item pending-users-tab" (click)="changeFuelExpenseTab(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Today</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeFuelExpenseTab(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Search</a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 1">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <button class="btn btn-sm btn-default" (click)="previousDate()">
+                                        <i class="fa fa-arrow-left"></i>
+                                    </button>
+                                </div>
+                                <input class="form-control form-control-sm"
+                                       placeholder=""
+                                       name="permit"
+                                       [maxDate]="newDate"
+                                       [(ngModel)]="currentDate"
+                                       [ngModelOptions]="{standalone: true}"
+                                       (ngModelChange)="getDate(currentDate)"
+                                       bsDatepicker
+                                       #dt="bsDatepicker"
+                                       [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                            (click)="dt.show()"
+                                            [attr.aria-expanded]="dt.isOpen" type="button">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                                <div class="input-group-append">
+                                    <button class="btn btn-sm btn-default" (click)="nextDate()">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="button" class="btn btn-sm " (click)="refreshServiceNames()">
+                                <span class="fa fa-refresh"></span>
+                            </button>
+                        </div>
+                        <div  class="col-sm-2 form-group">
+                            <ng-select
+                                       [items]="suppliers"
+                                       [multiple]="false"
+                                       bindLabel="name"
+                                       [closeOnSelect]="true"
+                                       bindValue="id"
+                                       placeholder="Service Station"
+                                       [(ngModel)]="fuelExpenseQuery.supplierId"
+                                       [ngModelOptions]="{standalone: true}"
+                                       (ngModelChange)="filterBySupplier(fuelExpenseQuery.supplierId)">
+                            </ng-select>
+                        </div>
+                        <div  class="col-sm-2 form-group">
+                            <input class="form-control form-control-sm" placeholder="Search For RegNo" [(ngModel)]="vehicleNumber">
+                        </div>
+                        <div class="col-sm-4 text-right">
+                            <button type="button" class="btn btn-sm btn-warning" (click)="print()">Print</button>
+                            <button type="button" class="btn btn-sm btn-success ml-2 mr-2" (click)="routing()" [routerLinkActive]="['active']">
+                                <span class="fa fa-plus"></span>Add FuelExpense</button>
+                            <button type="button" class="btn btn-sm btn-primary" (click)="downloadExcel()">Export Excel</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                                <div class="flex-container">
+                                    <div class="col-3 service-card">
+                                        <label class="control-label">Total:</label>
+                                        {{dayTotalBill || '0'}}
+                                    </div>
+                            </div>
+                            <table class="table table-hover dataTable text-center">
+                                <thead>
+                                <tr class="table-bordered" (click)="clickSorting($event)">
+                                    <th>S.No</th>
+                                    <th [ngClass]="fuelExpenseQuery.sortOrder == 'vehicleNumber'? 'headActive' : ''"
+                                        accessKey="vehicleNumber">Registration
+                                        <i *ngIf="fuelExpenseQuery.sortOrder != 'vehicleNumber'" class="fa fa-sort"></i>
+                                        <i *ngIf="fuelExpenseQuery.sortOrder == 'vehicleNumber'" class="fa"
+                                           [ngClass]="fuelExpenseQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="fuelExpenseQuery.sortOrder == 'serviceName'? 'headActive' : ''"
+                                        accessKey="serviceName">ServiceName
+                                        <i *ngIf="fuelExpenseQuery.sortOrder != 'serviceName'" class="fa fa-sort"></i>
+                                        <i *ngIf="fuelExpenseQuery.sortOrder == 'serviceName'" class="fa"
+                                           [ngClass]="fuelExpenseQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="fuelExpenseQuery.sortOrder == 'supplierName'? 'headActive' : ''"
+                                        accessKey="supplierName">Supplier
+                                        <i *ngIf="fuelExpenseQuery.sortOrder != 'supplierName'" class="fa fa-sort"></i>
+                                        <i *ngIf="fuelExpenseQuery.sortOrder == 'supplierName'" class="fa"
+                                           [ngClass]="fuelExpenseQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="fuelExpenseQuery.sortOrder == 'paid'? 'headActive' : ''"
+                                        accessKey="paid">Paid/Fillup
+                                        <i *ngIf="fuelExpenseQuery.sortOrder != 'paid'" class="fa fa-sort"></i>
+                                        <i *ngIf="fuelExpenseQuery.sortOrder == 'paid'" class="fa"
+                                           [ngClass]="fuelExpenseQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="fuelExpenseQuery.sortOrder == 'odometer'? 'headActive' : ''"
+                                        accessKey="odometer">Odometer
+                                        <i *ngIf="fuelExpenseQuery.sortOrder != 'odometer'" class="fa fa-sort"></i>
+                                        <i *ngIf="fuelExpenseQuery.sortOrder == 'odometer'" class="fa"
+                                           [ngClass]="fuelExpenseQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="fuelExpenseQuery.sortOrder == 'quantity'? 'headActive' : ''"
+                                        accessKey="quantity">Quantity (Q)
+                                        <i *ngIf="fuelExpenseQuery.sortOrder != 'quantity'" class="fa fa-sort"></i>
+                                        <i *ngIf="fuelExpenseQuery.sortOrder == 'quantity'" class="fa"
+                                           [ngClass]="fuelExpenseQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="fuelExpenseQuery.sortOrder == 'rate'? 'headActive' : ''"
+                                        accessKey="rate">Rate (R)
+                                        <i *ngIf="fuelExpenseQuery.sortOrder != 'rate'" class="fa fa-sort"></i>
+                                        <i *ngIf="fuelExpenseQuery.sortOrder == 'rate'" class="fa"
+                                           [ngClass]="fuelExpenseQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="fuelExpenseQuery.sortOrder == 'economy'? 'headActive' : ''"
+                                        accessKey="economy">Economy
+                                        <i *ngIf="fuelExpenseQuery.sortOrder != 'economy'" class="fa fa-sort"></i>
+                                        <i *ngIf="fuelExpenseQuery.sortOrder == 'economy'" class="fa"
+                                           [ngClass]="fuelExpenseQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="fuelExpenseQuery.sortOrder == 'createdBy'? 'headActive' : ''"
+                                        accessKey="createdBy">CreatedBy
+                                        <i *ngIf="fuelExpenseQuery.sortOrder != 'createdBy'" class="fa fa-sort"></i>
+                                        <i *ngIf="fuelExpenseQuery.sortOrder == 'createdBy'" class="fa"
+                                           [ngClass]="fuelExpenseQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th>Remarks</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let fuelExpense of fuelExpenses | searchFilter: vehicleNumber; let i = index">
+                                    <td>{{(fuelExpenseQuery.page-1) * fuelExpenseQuery.size + i + 1}}</td>
+                                    <td>{{fuelExpense.attrs.vehicleNumber || 'NA'}}</td>
+                                    <td>{{fuelExpense.serviceName || 'NA'}}</td>
+                                    <td>{{fuelExpense.attrs.supplierName || 'NA'}}</td>
+                                    <td>{{ fuelExpense.paid === true ? 'Yes' : 'No' }} / {{fuelExpense.fillup === true ? 'Yes' : 'No'}}</td>
+                                    <td>{{fuelExpense.odometer || 'NA'}}</td>
+                                    <td>{{fuelExpense.quantity.toFixed() || 'NA'}}</td>
+                                    <td>{{fuelExpense.rate.toFixed(2) || 'NA'}}</td>
+                                    <td>{{fuelExpense.economy.toFixed(2) || 'NA'}}</td>
+                                    <td>{{fuelExpense.attrs.createdBy || 'NA'}}</td>
+                                    <td>{{fuelExpense.remarks || 'NA'}}</td>
+                                    <td class="td-active">
+                                        <div style="display: flex;justify-content: center;">
+                                            <button class="action-icon-style waves-effect waves-light" [routerLink]="['editFuelExpense/' + fuelExpense.id]"
+                                                    title="Edit Invoice"
+                                                    style="padding: 0; height: 35px;width: 35px;">
+                                                <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                            </button>
+                                            <button class="action-icon-style waves-effect waves-light"  style="padding: 0; height: 35px;width: 35px;"
+                                                    (click)="delete(fuelExpense.id)">
+                                                <i class="fa fa-trash fa-1x"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="count === 0 || !count">
+                                    <td colspan="12">No Payments</td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr *ngIf="count != 0 || count">
+                                    <th colspan="12">
+                                        <div class="pull-right">
+                                            Total Count : {{count || 0}}
+                                        </div>
+                                    </th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <div class="form-group">
+                                <div class="list-row">
+                                    <ngb-pagination *ngIf="count|| count != 0"
+                                                    [(page)]="fuelExpenseQuery.page"
+                                                    [pageSize]="fuelExpenseQuery.size"
+                                                    [collectionSize]="count"
+                                                    [boundaryLinks]="true"
+                                                    (pageChange)="changeTodayPage($event)"
+                                                    [maxSize]="5">
+                                    </ngb-pagination>
+                                    <ul class="pagination pull-right" style="margin-top: -37px !important;"
+                                        *ngIf="count || count !== 0">
+                                        <li class="page-item" [ngClass]="size == fuelExpenseQuery.size ? 'active' : ''"
+                                            *ngFor="let size of fuelExpenseQuery.pageSizes" (click)="handleTodayPageSizeChange(size)">
+                                            <button class="page-link"> {{ size }}
+                                                <span class="sr-only">(current)</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+<!--                            Excel Download-->
+                            <table class="table table-hover dataTable text-center" id="fuelExpenseData" style="display: none;">
+                                <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Registration </th>
+                                    <th>ServiceName</th>
+                                    <th>Supplier</th>
+                                    <th>Paid/Fillup</th>
+                                    <th>Odometer</th>
+                                    <th>Quantity (Q)</th>
+                                    <th>Rate (R)</th>
+                                    <th>Economy</th>
+                                    <th>CreatedBy</th>
+                                    <th>Remarks</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let fuelExpense of fuelExpenses | searchFilter: vehicleNumber; let i = index">
+                                    <td>{{(fuelExpenseQuery.page-1) * fuelExpenseQuery.size + i + 1}}</td>
+                                    <td>{{fuelExpense.attrs.vehicleNumber || 'NA'}}</td>
+                                    <td>{{fuelExpense.serviceName || 'NA'}}</td>
+                                    <td>{{fuelExpense.attrs.supplierName || 'NA'}}</td>
+                                    <td>{{ fuelExpense.paid === true ? 'Yes' : 'No' }} / {{fuelExpense.fillup === true ? 'Yes' : 'No'}}</td>
+                                    <td>{{fuelExpense.odometer || 'NA'}}</td>
+                                    <td>{{fuelExpense.quantity.toFixed() || 'NA'}}</td>
+                                    <td>{{fuelExpense.rate.toFixed(2) || 'NA'}}</td>
+                                    <td>{{fuelExpense.economy.toFixed(2) || 'NA'}}</td>
+                                    <td>{{fuelExpense.attrs.createdBy || 'NA'}}</td>
+                                    <td>{{fuelExpense.remarks || 'NA'}}</td>
+                                </tr>
+                                <tr *ngIf="count === 0 || !count">
+                                    <td colspan="12">No Payments</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 2">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row form-group">
+                        <div class="col-sm-2">
+                            <label class="control-label">Start Date</label>
+                            <div class="input-group">
+                                <input name="startDate" class="form-control form-control-sm"
+                                       [(ngModel)]="startDate"
+                                       placeholder="Enter Date"
+                                       readonly type="text"
+                                       #date1="bsDatepicker"
+                                       [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                                       bsDatepicker/>
+                                <div class="input-group-append">
+                                    <button class="btn btn-light btn-sm" type="button"
+                                            style="border: 1px solid #ced4da;"
+                                            (click)="date1.show()"
+                                            [attr.aria-expanded]="date1.isOpen">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="control-label">End Date</label>
+                            <div class="input-group">
+                                <input name="endDate" class="form-control form-control-sm"
+                                       [(ngModel)]="endDate"
+                                       placeholder="Enter Date"
+                                       readonly type="text"
+                                       #date2="bsDatepicker"
+                                       [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                                       bsDatepicker/>
+                                <div class="input-group-append">
+                                    <button class="btn btn-light btn-sm" type="button"
+                                            style="border: 1px solid #ced4da;"
+                                            (click)="date2.show()"
+                                            [attr.aria-expanded]="date2.isOpen">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <ng-select style="margin-top: 17px; margin-bottom: 17px"
+                                       [items]="vehicles"
+                                       [multiple]="false"
+                                       bindLabel="regNo"
+                                       [closeOnSelect]="true"
+                                       bindValue="regNo"
+                                       placeholder="Select Vehicle"
+                                       [(ngModel)]="searchQuery.vehicleRegNumber"
+                                        [ngModelOptions]="{standalone: true}">
+                            </ng-select>
+                        </div>
+                        <div  class="col-sm-2">
+                            <ng-select style="margin-top: 17px; margin-bottom: 17px"
+                                       [items]="suppliers"
+                                       [multiple]="false"
+                                       bindLabel="name"
+                                       [closeOnSelect]="true"
+                                       bindValue="id"
+                                       placeholder="Service Station"
+                                       [(ngModel)]="searchQuery.supplierId"
+                                       [ngModelOptions]="{standalone: true}">
+                            </ng-select>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="search()"> Search </button> &nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="exportToExcel()"> Export to Excel </button>
+                    </div>
+                    <div class="row" *ngIf="SearchError"  style="text-align: center">
+                        <div class="col-md-12" role="alert">
+                            <span style="color: red">{{SearchError}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                            <table class="table table-hover dataTable text-center" id="fuelExpenseReports">
+                                <thead>
+                                <tr class="table-bordered" (click)="clickSearchSorting($event)">
+                                    <th>S.No</th>
+                                    <th [ngClass]="searchQuery.sortOrder == 'vehicleNumber'? 'headActive' : ''"
+                                        accessKey="vehicleNumber">Registration
+                                        <i *ngIf="searchQuery.sortOrder != 'vehicleNumber'" class="fa fa-sort"></i>
+                                        <i *ngIf="searchQuery.sortOrder == 'vehicleNumber'" class="fa"
+                                           [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="searchQuery.sortOrder == 'serviceName'? 'headActive' : ''"
+                                        accessKey="serviceName">ServiceName
+                                        <i *ngIf="searchQuery.sortOrder != 'serviceName'" class="fa fa-sort"></i>
+                                        <i *ngIf="searchQuery.sortOrder == 'serviceName'" class="fa"
+                                           [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="searchQuery.sortOrder == 'date'? 'headActive' : ''"
+                                        accessKey="date">Date
+                                        <i *ngIf="searchQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                        <i *ngIf="searchQuery.sortOrder == 'date'" class="fa"
+                                           [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="searchQuery.sortOrder == 'supplierName'? 'headActive' : ''"
+                                        accessKey="supplierName">Supplier
+                                        <i *ngIf="searchQuery.sortOrder != 'supplierName'" class="fa fa-sort"></i>
+                                        <i *ngIf="searchQuery.sortOrder == 'supplierName'" class="fa"
+                                           [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="searchQuery.sortOrder == 'paid'? 'headActive' : ''"
+                                        accessKey="paid">P/F
+                                        <i *ngIf="searchQuery.sortOrder != 'paid'" class="fa fa-sort"></i>
+                                        <i *ngIf="searchQuery.sortOrder == 'paid'" class="fa"
+                                           [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="searchQuery.sortOrder == 'odometer'? 'headActive' : ''"
+                                        accessKey="odometer">Odometer
+                                        <i *ngIf="searchQuery.sortOrder != 'odometer'" class="fa fa-sort"></i>
+                                        <i *ngIf="searchQuery.sortOrder == 'odometer'" class="fa"
+                                           [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="searchQuery.sortOrder == 'quantity'? 'headActive' : ''"
+                                        accessKey="quantity">Quantity (Q)
+                                        <i *ngIf="searchQuery.sortOrder != 'quantity'" class="fa fa-sort"></i>
+                                        <i *ngIf="searchQuery.sortOrder == 'quantity'" class="fa"
+                                           [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="searchQuery.sortOrder == 'rate'? 'headActive' : ''"
+                                        accessKey="rate">Rate (R)
+                                        <i *ngIf="searchQuery.sortOrder != 'rate'" class="fa fa-sort"></i>
+                                        <i *ngIf="searchQuery.sortOrder == 'rate'" class="fa"
+                                           [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="searchQuery.sortOrder == 'economy'? 'headActive' : ''"
+                                        accessKey="economy">Economy
+                                        <i *ngIf="searchQuery.sortOrder != 'economy'" class="fa fa-sort"></i>
+                                        <i *ngIf="searchQuery.sortOrder == 'economy'" class="fa"
+                                           [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="searchQuery.sortOrder == 'createdBy'? 'headActive' : ''"
+                                        accessKey="createdBy">CreatedBy
+                                        <i *ngIf="searchQuery.sortOrder != 'createdBy'" class="fa fa-sort"></i>
+                                        <i *ngIf="searchQuery.sortOrder == 'createdBy'" class="fa"
+                                           [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th>Remarks</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let fuelExpense of searchList; let i = index">
+                                    <td>{{(searchQuery.page-1) * searchQuery.size + i + 1}}</td>
+                                    <td>{{fuelExpense.attrs.vehicleNumber || 'NA'}}</td>
+                                    <td>{{fuelExpense.serviceName || 'NA'}}</td>
+                                    <td>{{fuelExpense.jdate || 'NA'}}</td>
+                                    <td>{{fuelExpense.attrs.supplierName || 'NA'}}</td>
+                                    <td>{{ fuelExpense.paid }}/{{fuelExpense.fillup}}</td>
+                                    <td>{{fuelExpense.odometer || 'NA'}}</td>
+                                    <td>{{fuelExpense.quantity.toFixed(2) || 'NA'}}</td>
+                                    <td>{{fuelExpense.rate.toFixed(2) || 'NA'}}</td>
+                                    <td>{{fuelExpense.economy.toFixed(2) || 'NA'}}</td>
+                                    <td>{{fuelExpense.attrs.createdBy || 'NA'}}</td>
+                                    <td>{{fuelExpense.remarks || 'NA'}}</td>
+                                </tr>
+                                <tr *ngIf="searchCount === 0 || !searchCount">
+                                    <td colspan="12">No FuelExpenses</td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr *ngIf="searchCount != 0 || searchCount">
+                                    <th colspan="12">
+                                        <div class="pull-right">
+                                            Total Count : {{searchCount || 0}}
+                                        </div>
+                                    </th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                            <div class="form-group">
+                                <div class="list-row">
+                                    <ngb-pagination *ngIf="searchCount|| searchCount != 0"
+                                                    [(page)]="searchQuery.page"
+                                                    [pageSize]="searchQuery.size"
+                                                    [collectionSize]="searchCount"
+                                                    [boundaryLinks]="true"
+                                                    (pageChange)="changeSearchPage($event)"
+                                                    [maxSize]="5">
+                                    </ngb-pagination>
+                                    <ul class="pagination pull-right" style="margin-top: -37px !important;"
+                                        *ngIf="searchCount || searchCount !== 0">
+                                        <li class="page-item" [ngClass]="size == searchQuery.size ? 'active' : ''"
+                                            *ngFor="let size of searchQuery.pageSizes" (click)="handleSearchPageSizeChange(size)">
+                                            <button class="page-link"> {{ size }}
+                                                <span class="sr-only">(current)</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="report_left_inner"  style="display: none;">
+<!--        <div class="col-xs-12">Total :</div>-->
+        <div class="col-xs-12">
+                <table class="table table-bordered table-condensed table-hover text-center">
+                    <thead>
+                       <tr class="table-bordered" >
+                           <th>S.No</th>
+                           <th>Registration</th>
+                           <th>ServiceName</th>
+                           <th>Quantity (Q)</th>
+                           <th>Economy</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let fuelExpense of fuelExpenses ; let i = index">
+                        <td >{{(fuelExpenseQuery.page - 1) * fuelExpenseQuery.size + i + 1 }}</td>
+                        <td>{{ fuelExpense.attrs.vehicleNumber || 'NA'}}</td>
+                        <td>{{ fuelExpense.serviceName || 'NA'}}</td>
+                        <td>{{ fuelExpense.quantity.toFixed(2) || 'NA'}}</td>
+                        <td>{{ fuelExpense.economy.toFixed(2) || 'NA' }}</td>
+                    </tr>
+                    <tr *ngIf="!count || count === 0">
+                        <td colspan="5">No reports exist.</td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>

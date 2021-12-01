@@ -1,0 +1,41 @@
+<label>Upload Files<b class="mandatory-field">*</b></label>
+<div class="input-group">
+    <div class="custom-file">
+        <input type="file" class="custom-file-input"
+               id="inputGroupFile02" (change)="handleFileInput($event)"
+               aria-describedby="inputGroupFileAddon02">
+        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+    </div>
+    <div class="input-group-prepend">
+        <button type="submit" class="btn btn-success btn-sm ml-2"
+                (click)="fileUpload()" [disabled]="isDisabled"
+                title="{{isDisabled === true ? 'Please Select Files to Upload' : 'Upload Files'}}">
+            <i class="fa fa-fw fa-cloud-upload"></i> upload
+        </button>
+    </div>
+</div>
+<div *ngIf="listOfImages.length === 0">
+    <div *ngFor="let file of files">
+        {{file.name}}
+    </div>
+</div>
+<div class="table-responsive mt-3" *ngIf="listOfImages.length > 0">
+    <table class="table table-bordered table-hover" style="margin-bottom: 0 !important;">
+        <tbody>
+        <tr *ngFor="let image of listOfImages; let i = index;">
+            <td>{{i + 1}}</td>
+            <td><a href="{{image.url}}" target="_blank">{{image.displayName}}</a></td>
+            <td>
+                <a class="cus-a"
+                   (click)="deleteImage(refId, image.fileName)"><i
+                        class="fa fa-trash" style="color: red;"></i> </a>
+            </td>
+        </tr>
+        <tr *ngIf="!listOfImages || listOfImages.length === 0">
+            <td colspan="3">No Images found</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+

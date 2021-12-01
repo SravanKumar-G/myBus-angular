@@ -6,6 +6,7 @@ import {OperatorAccountsComponent} from './operator-accounts.component';
 import { AddEditOperatorAccountsComponent } from './add-edit-operator-accounts/add-edit-operator-accounts.component';
 import {FormsModule} from '@angular/forms';
 import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
         CommonModule,
         OperatorAccountsRoutingModule,
         FormsModule,
-        NgbPaginationModule
+        NgbPaginationModule,
+        BreadcrumbModule
     ]
 })
 export class OperatorAccountsModule { }

@@ -5,6 +5,7 @@ import {CargoCancellationsComponent} from './cargo-cancellations.component';
 const routes: Routes = [
     {
         path: '',
+        data: {breadcrumb: 'Cancellations'},
         component: CargoCancellationsComponent
     }
 ];

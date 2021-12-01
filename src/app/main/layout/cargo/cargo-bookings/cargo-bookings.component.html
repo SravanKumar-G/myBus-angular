@@ -8,8 +8,7 @@
             </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
-            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Cargo Bookings</span></li>
+          <xng-breadcrumb></xng-breadcrumb>
         </ul>
     </div>
 
@@ -20,13 +19,7 @@
                     <app-cargo-look-up></app-cargo-look-up>
                     <div class="col-sm-12 mb-3 mt-3">
                         <div class="row">
-                            <div class="col-sm-12 text-right">
-                                <a class="btn btn-sm btn-success mr-1" (click)="navigateToNewBooking()">New Booking</a>
-                                <a class="btn btn-sm btn-primary" (click)="exportToExcel()">Export to Excel</a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3 col-12 form-group">
+                            <div class="col-sm-2 col-12 form-group">
                                 <label>From Office</label>
                                 <div>
                                     <select class="form-control form-control-sm"
@@ -39,7 +32,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-12 form-group">
+                            <div class="col-sm-2 col-12 form-group">
                                 <label>To Office</label>
                                 <div>
                                     <select class="form-control form-control-sm"
@@ -52,7 +45,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-12 form-group">
+                            <div class="col-sm-2 col-12 form-group">
                                 <label>Booked By</label>
                                 <div>
                                     <select class="form-control form-control-sm"
@@ -64,7 +57,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-12 form-group">
+                            <div class="col-sm-2 col-12 form-group">
                                 <label>Status</label>
                                 <div>
                                     <select class="form-control form-control-sm"
@@ -80,7 +73,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-12 form-group">
+                            <div class="col-sm-2 col-12 form-group">
                                 <label>LR Type</label>
                                 <div>
                                     <select class="form-control form-control-sm"
@@ -94,7 +87,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-12 form-group">
+                            <div class="col-sm-2 col-12 form-group">
                                 <label>Start Date</label>
                                 <div class="input-group">
                                     <input class="form-control form-control-sm"
@@ -114,7 +107,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-12 form-group">
+                            <div class="col-sm-2 col-12 form-group">
                                 <label>End Date</label>
                                 <div class="input-group">
                                     <input class="form-control form-control-sm"
@@ -134,10 +127,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-12 form-group m-auto">
+                            <div class="col-sm-2 col-12 form-group mt-auto">
                                 <button type="button" class="btn btn-primary btn-sm"
                                         (click)="loadCargoBookingsCount(filterObj)">Search Bookings
                                 </button>
+                            </div>
+                            <div class="col-sm-8 text-right mt-auto mb-auto">
+                                <a class="btn btn-sm btn-success mr-1" (click)="navigateToNewBooking()">New Booking</a>
+                                <a class="btn btn-sm btn-primary" (click)="exportToExcel()">Export to Excel</a>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,23 @@
+
+<div class="input-group">
+    <div class="custom-file">
+        <input type="file" class="custom-file-input"
+               id="inputGroupFile02" (change)="handleFileInput($event)"
+               aria-describedby="inputGroupFileAddon02">
+        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+    </div>
+    <div class="input-group-prepend">
+        <button type="submit" class="btn btn-success btn-sm ml-2"
+                (click)="fileUpload()" [disabled]="isDisabled"
+                title="{{isDisabled === true ? 'Please Select Files to Upload' : 'Upload Files'}}">
+            <i class="fa fa-upload"></i></button>
+    </div>
+</div>
+<div>
+    <div *ngFor="let file of files">
+        {{file.name}}
+    </div>
+</div>
+
+
+

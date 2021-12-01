@@ -1,0 +1,166 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="div">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i>{{headerTitle}}
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+           <xng-breadcrumb></xng-breadcrumb>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-12 mx-auto">
+            <div class="tile">
+                <h3 class="tile-title form-head-line-style">{{headerTitle}}</h3>
+                <hr>
+                <div class="tile-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-sm-6 col-12 form-group">
+                                <label class="control-label">Date<span class="mandatory-field">*</span></label>
+                                <div class="input-group">
+                                    <input name="startDate" class="form-control form-control-sm"
+                                           [(ngModel)]="addExpenseQuery.date"
+                                           placeholder="Enter Date"
+                                           readonly type="text"
+                                           #date1="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                                           bsDatepicker/>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" type="button"
+                                                style="border: 1px solid #ced4da;"
+                                                (click)="date1.show()"
+                                                [attr.aria-expanded]="date1.isOpen">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Description:<span class="mandatory-field">*</span></label>
+                                <input type="text" class="form-control form-control-sm"
+                                       placeholder="Enter Description" [(ngModel)]="addExpenseQuery.description"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Amount:<span class="mandatory-field">*</span></label>
+                                <input type="text" class="form-control form-control-sm" numbersOnly
+                                       placeholder="Enter Amount" [(ngModel)]="addExpenseQuery.amount"
+                                       [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                            <div class="col-sm-6 col-12 form-group"></div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label class="control-label">Select ExpenseType</label>
+                                <ng-select [(ngModel)]="addExpenseQuery.expenseType"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bindValue="expenseList"
+                                           bindLabel="expenseList"
+                                           [clearable]="false">
+                                    <ng-option value="" selected>Select ExpenseType(Optional)</ng-option>
+                                    <ng-option *ngFor="let expense of expenseList"
+                                               [value]="expense">{{expense}}</ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group">
+                                <label>Branch</label>
+                                <ng-select [(ngModel)]="addExpenseQuery.branchOfficeId"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bindValue="id"
+                                           bindLabel="name"
+                                           [clearable]="false">
+                                    <ng-option value="" selected>Select Branch (Optional)</ng-option>
+                                    <ng-option *ngFor="let users of names"
+                                               [value]="users.id">{{users.name}}</ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group"
+                                 *ngIf="addExpenseQuery.expenseType === 'SALARY' || addExpenseQuery.expenseType === 'VEHICLE MAINTENANCE' || addExpenseQuery.expenseType === 'DIESEL' || addExpenseQuery.expenseType === 'TRIP ADVANCE'">
+                                <label class=" control-label">select vehicle</label>
+                                <ng-select [(ngModel)]="addExpenseQuery.vehicleId"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bindValue="id"
+                                           bindLabel="regNo"
+                                           [clearable]="false">
+                                    <ng-option value="" selected>Select Vehicle</ng-option>
+                                    <ng-option *ngFor="let vehicle of vehicles"
+                                               [value]="vehicle.id">{{vehicle.regNo}}</ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group" *ngIf="addExpenseQuery.expenseType == 'SALARY'">
+                                <label class=" control-label">From Date</label>
+                                <div class="input-group">
+                                    <input name="startDate" class="form-control form-control-sm"
+                                           [(ngModel)]="addExpenseQuery.fromDate"
+                                           placeholder="Enter Date"
+                                           readonly type="text"
+                                           #date1="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                                           bsDatepicker/>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" type="button"
+                                                style="border: 1px solid #ced4da;"
+                                                (click)="date1.show()"
+                                                [attr.aria-expanded]="date1.isOpen">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group" *ngIf="addExpenseQuery.expenseType == 'SALARY'">
+                                <label class=" control-label">To Date</label>
+                                <div class="input-group">
+                                    <input name="startDate" class="form-control form-control-sm"
+                                           [(ngModel)]="addExpenseQuery.toDate"
+                                           placeholder="Enter Date"
+                                           readonly type="text"
+                                           #date1="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                                           bsDatepicker/>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm" type="button"
+                                                style="border: 1px solid #ced4da;"
+                                                (click)="date1.show()"
+                                                [attr.aria-expanded]="date1.isOpen">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group" *ngIf="addExpenseQuery.expenseType === 'DIESEL'">
+                                <label class="control-label">Filling Station</label>
+                                <ng-select [(ngModel)]="addExpenseQuery.name"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bindValue="id"
+                                           bindLabel="name"
+                                           [clearable]="false">
+                                    <ng-option value="" selected>Select Option</ng-option>
+                                    <ng-option *ngFor="let supplier of suppliersList"
+                                               [value]="supplier.id">{{supplier.name}}</ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-6 col-12 form-group" *ngIf="officeExpenseId">
+                                <app-files-upload [refId]="officeExpenseId" [type]="'ExpenseType'"></app-files-upload>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tile-footer">
+                    <div class="col-12 text-center">
+                        <p class="error-field">{{errorMessage}}</p>
+                    </div>
+                    <div class="col-sm-12 text-right p-0">
+                        <button type="submit" class="btn btn-success btn-sm mr-2" (click)="save()">
+                            <i class="fa fa-fw fa-check-circle"></i> {{officeExpenseId ? 'Update' : 'Save'}}
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="close()">
+                            <i class="fa fa-fw fa-times-circle"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

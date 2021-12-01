@@ -143,7 +143,7 @@
                 </a>
                 <ul class="treeView-menu">
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('agents')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['agents']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Agents
                         </a>
                     </li>
@@ -203,7 +203,7 @@
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('staff')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['staff']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Staff
                         </a>
                     </li>
@@ -243,7 +243,7 @@
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('servicereports')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['serviceReports/' + apiService.newDate]" [routerLinkActive]="['active']">
                             <i class="icon fa fa-university" aria-hidden="true"></i>Service Reports
                         </a>
                     </li>
@@ -253,7 +253,7 @@
                         </a>
                     </li>
                     <li class="waves-effect waves-light">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['serviceCollectionReport/' + apiService.newDate]" [routerLinkActive]="['active']">
                             <i class="icon fa fa-map-marker" aria-hidden="true"></i>Service Collection Report
                         </a>
                     </li>
@@ -273,7 +273,7 @@
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('salaryreports')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['salaryReports']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Salary Reports
                         </a>
                     </li>
@@ -282,18 +282,18 @@
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Full Trips
                         </a>
                     </li>
-                    <li class="waves-effect waves-light" *ngIf="canAccessModule('fuelexpensereports')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                    <li class="waves-effect waves-light" *ngIf="canAccessModule('fuelExpenseReports')">
+                        <a class="treeView-item" [routerLink]="['fuelExpenseReports/' + apiService.newDate]" [routerLinkActive]="['active']">
                             <i class="icon fa fa-users" aria-hidden="true"></i>Fuel Expense Reports
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('duereport')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['dueReports']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-bus" aria-hidden="true"></i>Due Reports
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('cashtransfers')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['cashTransfer']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Cash Transfers
                         </a>
                     </li>
@@ -307,23 +307,23 @@
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Transactions
                         </a>
                     </li>
-                    <li class="waves-effect waves-light" *ngIf="canAccessModule('officeexpenses')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                    <li class="waves-effect waves-light" *ngIf="canAccessModule('officeExpenses')">
+                        <a class="treeView-item" [routerLink]="['officeExpenses']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Office Expenses
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('expensesincomesreports')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
-                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Expenses Incomes Reports
+                        <a class="treeView-item" [routerLink]="['expensesIncomeReports/' + apiService.newDate]" [routerLinkActive]="['active']">
+                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Expenses Income Reports
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('cashbalances')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['cashBalance']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Cash Balances
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('invoices')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['invoices']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Invoices
                         </a>
                     </li>
@@ -347,12 +347,12 @@
                 </a>
                 <ul class="treeView-menu">
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('pendingreports')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['pendingReports']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Pending Reports
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('ReportsToBeReviewed')">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['reportsToBeReviewed']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>ReportsToBeReviewed
                         </a>
                     </li>
@@ -371,7 +371,7 @@
                 </a>
                 <ul class="treeView-menu">
                     <li class="waves-effect waves-light">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['updatePassword']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-pencil-square" aria-hidden="true"></i>Update Password
                         </a>
                     </li>
@@ -438,17 +438,17 @@
                 </a>
                 <ul class="treeView-menu">
                     <li class="waves-effect waves-light">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['serviceFeedback/' + apiService.newDate]" [routerLinkActive]="['active']">
                             <i class="icon fa fa-commenting" aria-hidden="true"></i>Service Feedback
                         </a>
                     </li>
                     <li class="waves-effect waves-light">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['reviews']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-retweet" aria-hidden="true"></i>Reviews
                         </a>
                     </li>
                     <li class="waves-effect waves-light">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
+                        <a class="treeView-item" [routerLink]="['escalations']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-comment" aria-hidden="true"></i>Escalations
                         </a>
                     </li>

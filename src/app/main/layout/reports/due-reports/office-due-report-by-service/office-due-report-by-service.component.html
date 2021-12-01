@@ -1,0 +1,98 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i>
+                Office Due Report by Service
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">
+                <a class="cus-a" [routerLink]="['/dueReports']">Due Reports</a></span>
+            </li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">
+                <a class="cus-a" (click)="back()">Office Due Reports</a></span>
+            </li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Office Due Report by Service</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row form-group">
+                            <div class="col-sm-3 mt-auto mb-auto">
+                                Service Number: <b class="pl-1">{{serviceId}}</b>
+                            </div>
+                            <div class="col-sm-9 text-right m-auto" *ngIf="selectedBookings.length > 0">
+                                <app-show-due-payment-summary [selectedBookings] = selectedBookings></app-show-due-payment-summary>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="bookedBy">BookedBy<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="ticketNo">PNR<i class="fa fa-sort"></i></th>
+                                        <th>Passenger</th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="seats">Seats<i class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="serviceNumber">Service#<i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="serviceName">Route<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="jdate">JourneyDate<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="bookedDate">BookedOn<i class="fa fa-sort"></i>
+                                        </th>
+                                        <th scope="col" [appFrentendSort]="dueBookings"
+                                            data-order="desc" data-name="netAmt">Due<i class="fa fa-sort"></i></th>
+                                        <th>Pay</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let booking of dueBookings; let i = index;">
+                                        <th>{{i + 1}}</th>
+                                        <td>{{booking.bookedBy}}</td>
+                                        <td>{{booking.ticketNo}}</td>
+                                        <td>{{booking.name}} {{booking.phoneNo}}</td>
+                                        <td>{{booking.seats }}</td>
+                                        <td>{{booking.serviceNumber }}</td>
+                                        <td>{{booking.source}} - {{booking.destination}} - {{booking.serviceName}})</td>
+                                        <td>{{booking.jdate }}</td>
+                                        <td>{{booking.bookedDate || '--' }}</td>
+                                        <td>{{ booking.netAmt | number }}</td>
+                                        <td>
+                                            <input
+                                                    type="checkbox"
+                                                    name="selectedBookings[]"
+                                                    value="{{booking.id}}"
+                                                    (click)="toggleBookingSelection(booking.id)"/>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                    <tr *ngIf="!dueBookings || dueBookings.length === 0">
+                                        <td colspan="11">No Bookings found</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

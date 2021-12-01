@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ViewCargoBookingRoutingModule } from './view-cargo-booking-routing.module';
 import {ViewCargoBookingComponent} from './view-cargo-booking.component';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import {ViewCargoBookingComponent} from './view-cargo-booking.component';
   ],
   imports: [
     CommonModule,
-    ViewCargoBookingRoutingModule
+    ViewCargoBookingRoutingModule,
+    BreadcrumbModule
   ]
 })
 export class ViewCargoBookingModule { }

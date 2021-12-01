@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication.service';
 import {ApiServiceService} from '../../services/api-service.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {BroadcastService} from '../../services/broadcast.service';
 
 declare var jQuery: any;
 
@@ -15,14 +16,15 @@ export class LayoutComponent implements OnInit {
     currentUser: any;
     public currentUserDetails: any = {};
     public currentDate = new Date();
+    public newDate: any;
 
     constructor(private router: Router,
                 private authenticationService: AuthenticationService,
-                private apiService: ApiServiceService,
-                private modalService: NgbModal) {
-        this.authenticationService.currentUser.subscribe(x => {
-            this.currentUser = x;
-        });
+                public apiService: ApiServiceService,
+                private modalService: NgbModal,
+                private data: BroadcastService) {
+        this.authenticationService.currentUser.subscribe(x => { this.currentUser = x; });
+        this.data.getCurrentUser$().subscribe((currentUser: any) => { this.currentUserDetails = currentUser; });
     }
 
     // @ts-ignore
@@ -36,7 +38,6 @@ export class LayoutComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.currentUserDetails = JSON.parse(localStorage.getItem('currentUserDetails') as string);
         (($) => {
             // tslint:disable-next-line:typedef
             $(document).ready(() => {

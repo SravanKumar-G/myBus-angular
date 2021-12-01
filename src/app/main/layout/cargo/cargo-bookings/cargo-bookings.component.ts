@@ -108,6 +108,7 @@ export class CargoBookingsComponent implements OnInit {
                             if (response) {
                                 Swal.fire('Great!', response.shipmentNumber + ' has been delivered', 'success');
                                 this.loadCargoBookingsCount(this.pagination);
+                                this.apiService.getLoggedInUserData();
                             }
                         }, (error) => {
                             Swal.showValidationMessage(

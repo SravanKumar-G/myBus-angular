@@ -25,6 +25,7 @@ export class AddEditVehicleComponent implements OnInit {
     public vehicleId: any;
     public headerTitle: any = 'Add a Vehicle';
     public newDate: any = new Date();
+    uploadType: any = 'single';
 
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
@@ -114,4 +115,15 @@ export class AddEditVehicleComponent implements OnInit {
         }
     }
 
+    uploadImage(event: any): void {
+        this.apiService.upload(event.url + this.vehicleId, event.files).subscribe((res: any) => {
+            if (res) {
+                console.log(res, '===>');
+                Swal.fire('Wow!', 'File uploaded Successfully', 'success');
+                this.getVehicleDetailsById();
+            }
+        }, error => {
+            Swal.fire('error', error.message, 'error');
+        });
+    }
 }

@@ -3,7 +3,7 @@ import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {Router} from '@angular/router';
 import Swal from 'sweetalert2';
-import {ViewCargoBookingComponent} from '../view-cargo-booking/view-cargo-booking.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-loading-sheet',
@@ -26,11 +26,14 @@ export class LoadingSheetComponent implements OnInit {
     public toPayCargoBooking: any;
     public truckId: any;
     public selectedBookings: Array<any> = [];
+    date = new Date();
+    tripSheets: Array<any> = [];
+    public vehicleRegNo: any;
 
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
                 private router: Router,
-                private viewCargo: ViewCargoBookingComponent) {
+                public modalService: NgbModal) {
     }
 
     ngOnInit(): void {
@@ -93,8 +96,46 @@ export class LoadingSheetComponent implements OnInit {
         this.router.navigate(['viewCargoBooking', id]);
     }
 
-    addComment(id: any): void {
-        this.viewCargo.addCommentToBooking(id);
+    addComment(bookingId: any): void {
+        this.apiService.get(this.apiUrls.getCargoBooking + bookingId).subscribe((cargoBooking: any) => {
+            if (cargoBooking) {
+                Swal.fire({
+                    title: '<h4>' + 'Comment?' + '</h4>',
+                    html: 'Please provide comment:',
+                    input: 'text',
+                    inputPlaceholder: 'Add Comment',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    inputValue: cargoBooking.reviewComment,
+                    showCancelButton: true,
+                    confirmButtonText: 'Add Comment',
+                    confirmButtonColor: 'green',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (data) => {
+                        if (!data) {
+                            Swal.showValidationMessage(
+                                'Enter comment'
+                            );
+                        } else {
+                            this.apiService.update(this.apiUrls.saveCommentCargoBooking
+                                + bookingId, data)
+                                .subscribe((response: any) => {
+                                    if (response) {
+                                        Swal.fire('Great!', 'Comment added Successfully..!', 'success');
+                                        this.getLoadingSheetData();
+                                    }
+                                }, (error) => {
+                                    Swal.showValidationMessage(
+                                        `Enter comment :` + error
+                                    );
+                                });
+                        }
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                });
+            }
+        });
     }
 
     filterBookingsByStatus(status: any): void {
@@ -122,15 +163,13 @@ export class LoadingSheetComponent implements OnInit {
         const idx = this.selectedBookings.indexOf(bookingId);
         if (idx > -1) {
             this.selectedBookings.splice(idx, 1);
-            console.log('If', this.selectedBookings);
         } else {
             this.selectedBookings.push(bookingId);
-            console.log('else', this.selectedBookings);
         }
     }
 
-    loadVehicle(truckId: any): void {
-        if (!truckId) {
+    loadVehicle(truckId: any, modal: any): void {
+        if (!truckId.id) {
             Swal.fire('Error', 'Please select a vehicle number to load', 'error');
             return;
         }
@@ -138,13 +177,49 @@ export class LoadingSheetComponent implements OnInit {
             Swal.fire('Error', 'Please select a bookings to load', 'error');
             return;
         }
-        this.apiService.getAll(this.apiUrls.loadToVehicle + truckId, this.selectedBookings).subscribe((res: any) => {
+        const startYear = this.date.getFullYear();
+        let startMonth: number = this.date.getMonth() + 1;
+        if (startMonth < 10) {
+            startMonth = parseInt('0' + startMonth, 0 );
+        }
+        let startDay = this.date.getDate();
+        if (startDay < 10) {
+            startDay = parseInt('0' + startDay, 0);
+        }
+        const tripDate = startYear + '-' + startMonth + '-' + startDay;
+        this.apiService.getAll(this.apiUrls.loadToVehicle + truckId.id, {ids: this.selectedBookings, tripDate}).subscribe((res: any) => {
            if (res) {
-               this.selectedBookings = [];
-               this.getLoadingSheetData();
+               this.tripSheets = res;
+               this.vehicleRegNo  = truckId;
+               this.modalService.open(modal, {size: 'lg'});
+               // this.getLoadingSheetData();
            }
         }, error => {
             Swal.fire('Error unloading bookings', error.message, 'error');
+        });
+    }
+
+    selectTripSheet(id: any): void {
+        this.apiService.create(this.apiUrls.addBookingsToTripSheet + id, this.selectedBookings).subscribe((res: any) => {
+            if (res) {
+                Swal.fire('Success', 'Successfully Loaded', 'success');
+                this.modalService.dismissAll();
+                this.getLoadingSheetData();
+            }
+        }, error => {
+            Swal.fire('Error loading bookings to Tripsheet', error.message, 'error');
+        });
+    }
+
+    createTripSheet(): void {
+        this.apiService.create(this.apiUrls.createTripSheet + this.vehicleRegNo.id, this.selectedBookings).subscribe((res: any) => {
+            if (res) {
+                Swal.fire('Success', 'Successfully created Tripsheet', 'success');
+                this.modalService.dismissAll();
+                this.getLoadingSheetData();
+            }
+        }, error => {
+            Swal.fire('Error loading bookings to Tripsheet', error.message, 'error');
         });
     }
 }

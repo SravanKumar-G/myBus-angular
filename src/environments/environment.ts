@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  testPath : 'https://qa.srikrishnatravels.in/'
+  testPath : 'http://qacargo.srikrishnatravels.in/'
 };
 
 /*

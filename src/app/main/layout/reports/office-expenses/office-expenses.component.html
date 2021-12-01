@@ -1,0 +1,500 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="row">
+            <h1>
+                <i class="fa fa-book fa-lg" aria-hidden="true"></i> Office Expenses
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+           <xng-breadcrumb></xng-breadcrumb>
+        </ul>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item pending-users-tab" (click)="changeOfficeExpenseTab(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeOfficeExpenseTab(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Approved/Rejected</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeOfficeExpenseTab(3)">
+            <a class="nav-link" [ngClass]="{active:tab==3}">Search</a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 1">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                         <div class="row form-group">
+                             <div class="col-sm-6"></div>
+                             <div class="col-sm-6 p-0">
+                                 <div class="toolbar-button-div pull-right">
+                                     <a class="btn btn-sm btn-success" [routerLink]="['addOfficeExpense']">Add OfficeExpense</a>
+                                     <button type="button" class="btn btn-sm btn-success pull-right " (click)="approveOrRejectExpense(true)"
+                                             *ngIf="selectedOfficeExpenses.length > 0"> Approve Payments
+                                     </button>&nbsp;&nbsp;
+                                     <button type="button" class="btn btn-sm btn-danger pull-right " (click)="approveOrRejectExpense(false)"
+                                             *ngIf="selectedOfficeExpenses.length > 0"> Reject Payments
+                                     </button>&nbsp;&nbsp;
+<!--                                     <div class="col-sm-4">-->
+<!--                                        -->
+<!--                                     </div>-->
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                                 <table class="table table-hover dataTable text-center">
+                                     <thead>
+                                     <tr class="table-bordered" (click)="pendingClickSorting($event)">
+                                        <th>S.No</th>
+                                         <th [ngClass]="pendingQuery.sortOrder == 'date'? 'headActive' : ''"
+                                             accessKey="date">Date
+                                             <i *ngIf="pendingQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                             <i *ngIf="pendingQuery.sortOrder == 'date'" class="fa"
+                                                [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th [ngClass]="pendingQuery.sortOrder == 'createdAt'? 'headActive' : ''"
+                                             accessKey="createdAt">Created On
+                                             <i *ngIf="pendingQuery.sortOrder != 'createdAt'" class="fa fa-sort"></i>
+                                             <i *ngIf="pendingQuery.sortOrder == 'createdAt'" class="fa"
+                                                [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th [ngClass]="pendingQuery.sortOrder == 'description'? 'headActive' : ''"
+                                             accessKey="description">Description
+                                             <i *ngIf="pendingQuery.sortOrder != 'description'" class="fa fa-sort"></i>
+                                             <i *ngIf="pendingQuery.sortOrder == 'description'" class="fa"
+                                                [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th [ngClass]="pendingQuery.sortOrder == 'expenseType'? 'headActive' : ''"
+                                             accessKey="expenseType">Type
+                                             <i *ngIf="pendingQuery.sortOrder != 'expenseType'" class="fa fa-sort"></i>
+                                             <i *ngIf="pendingQuery.sortOrder == 'expenseType'" class="fa"
+                                                [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th [ngClass]="pendingQuery.sortOrder == 'vehicle'? 'headActive' : ''"
+                                             accessKey="vehicle">Vehicle
+                                             <i *ngIf="pendingQuery.sortOrder != 'vehicle'" class="fa fa-sort"></i>
+                                             <i *ngIf="pendingQuery.sortOrder == 'vehicle'" class="fa"
+                                                [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th [ngClass]="pendingQuery.sortOrder == 'fromDate'? 'headActive' : ''"
+                                             accessKey="fromDate">From Date
+                                             <i *ngIf="pendingQuery.sortOrder != 'fromDate'" class="fa fa-sort"></i>
+                                             <i *ngIf="pendingQuery.sortOrder == 'fromDate'" class="fa"
+                                                [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th [ngClass]="pendingQuery.sortOrder == 'toDate'? 'headActive' : ''"
+                                             accessKey="toDate">To Date
+                                             <i *ngIf="pendingQuery.sortOrder != 'toDate'" class="fa fa-sort"></i>
+                                             <i *ngIf="pendingQuery.sortOrder == 'toDate'" class="fa"
+                                                [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th>Created By</th>
+                                         <th [ngClass]="pendingQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                             accessKey="amount">Amount
+                                             <i *ngIf="pendingQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                             <i *ngIf="pendingQuery.sortOrder == 'amount'" class="fa"
+                                                [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th [ngClass]="pendingQuery.sortOrder == 'date'? 'headActive' : ''"
+                                             accessKey="date">Status
+                                             <i *ngIf="pendingQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                             <i *ngIf="pendingQuery.sortOrder == 'date'" class="fa"
+                                                [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                         </th>
+                                         <th>Actions</th>
+                                     </tr>
+                                     </thead>
+                                     <tbody>
+                                     <tr *ngFor="let pending of pendingList; let i = index">
+                                         <td>{{(pendingQuery.page -1) * pendingQuery.size + i + 1 }}</td>
+                                         <td>{{pending.date | date}}</td>
+                                         <td>{{pending.createdAt | date}}</td>
+                                         <td>{{pending.description || 'NA'}}</td>
+                                         <td>{{pending.expenseType || 'NA'}}</td>
+                                         <td>{{pending.attrs.vehicle || 'NA'}}</td>
+                                         <td>{{pending.fromDate || 'NA'}}</td>
+                                         <td>{{pending.toDate || 'NA'}}</td>
+                                         <td>{{pending.attrs.createdBy || 'NA'}}</td>
+                                         <td>{{pending.amount.toFixed(2)}}</td>
+                                         <td>
+                                             <span *ngIf="!pending.status">
+                                                    <input
+                                                            type="checkbox"
+                                                            name="selectedPayments[]"
+                                                            value="{{pending.id}}"
+                                                            (click)="toggleOfficeExpenseSelection(pending.id)">
+                                             </span>
+                                             <span *ngIf="pending.status">
+                                                 {{pending.status}}
+                                             </span>
+                                         </td>
+                                         <td class="td-active">
+                                             <div style="display: flex;justify-content: center;">
+                                                 <button class="action-icon-style waves-effect waves-light"
+                                                         title="Edit OfficeExpense" [routerLink]="['editOfficeExpense/' + pending.id]"
+                                                         style="padding: 0; height: 35px;width: 35px;">
+                                                     <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                                 </button>
+                                                 <button class="action-icon-style waves-effect waves-light" style="padding: 0; height: 35px;width: 35px;"
+                                                         (click)="deleteOfficeExpense(pending.id)">
+                                                     <i class="fa fa-trash fa-1x"></i>
+                                                 </button>
+                                             </div>
+                                         </td>
+                                     </tr>
+                                     <tr *ngIf="countPending === 0 || !countPending">
+                                         <td colspan="12">No OfficeExpenses</td>
+                                     </tr>
+                                     </tbody>
+                                     <tfoot>
+                                     <tr *ngIf="countPending != 0 || countPending">
+                                         <th colspan="12">
+                                             <div class="pull-right">
+                                                 Total Count : {{countPending || 0}}
+                                             </div>
+                                         </th>
+                                     </tr>
+                                     </tfoot>
+                                 </table>
+                                 <div class="form-group">
+                                     <div class="list-row">
+                                         <ngb-pagination *ngIf="countPending || countPending != 0"
+                                                         [(page)]="pendingQuery.page"
+                                                         [pageSize]="pendingQuery.size"
+                                                         [collectionSize]="countPending"
+                                                         [boundaryLinks]="true"
+                                                         (pageChange)="changePendingPage($event)"
+                                                         [maxSize]="5">
+                                         </ngb-pagination>
+                                         <ul class="pagination pull-right" style="margin-top: -37px !important;"
+                                             *ngIf="countPending || countPending !== 0">
+                                             <li class="page-item" [ngClass]="size == pendingQuery.size ? 'active' : ''"
+                                                 *ngFor="let size of pendingQuery.pageSizes" (click)="handlePendingPageSizeChange(size)">
+                                                 <button class="page-link"> {{ size }}
+                                                     <span class="sr-only">(current)</span>
+                                                 </button>
+                                             </li>
+                                         </ul>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 2">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                                <table class="table table-hover dataTable text-center">
+                                    <thead>
+                                    <tr class="table-bordered" (click)="approvedClickSorting($event)">
+                                        <th>S.No</th>
+                                        <th [ngClass]="pendingQuery.sortOrder == 'date'? 'headActive' : ''"
+                                            accessKey="date">Date
+                                            <i *ngIf="pendingQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingQuery.sortOrder == 'date'" class="fa"
+                                               [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="pendingQuery.sortOrder == 'description'? 'headActive' : ''"
+                                            accessKey="description">Description
+                                            <i *ngIf="pendingQuery.sortOrder != 'description'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingQuery.sortOrder == 'description'" class="fa"
+                                               [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="pendingQuery.sortOrder == 'expenseType'? 'headActive' : ''"
+                                            accessKey="expenseType">Type
+                                            <i *ngIf="pendingQuery.sortOrder != 'expenseType'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingQuery.sortOrder == 'expenseType'" class="fa"
+                                               [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="pendingQuery.sortOrder == 'fromDate'? 'headActive' : ''"
+                                            accessKey="fromDate">Vehicle
+                                            <i *ngIf="pendingQuery.sortOrder != 'fromDate'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingQuery.sortOrder == 'fromDate'" class="fa"
+                                               [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="pendingQuery.sortOrder == 'toDate'? 'headActive' : ''"
+                                            accessKey="toDate">From Date
+                                            <i *ngIf="pendingQuery.sortOrder != 'toDate'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingQuery.sortOrder == 'toDate'" class="fa"
+                                               [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="pendingQuery.sortOrder == 'vehicle'? 'headActive' : ''"
+                                            accessKey="vehicle">To Date
+                                            <i *ngIf="pendingQuery.sortOrder != 'vehicle'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingQuery.sortOrder == 'vehicle'" class="fa"
+                                               [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Created By</th>
+                                        <th>Approved By</th>
+                                        <th [ngClass]="pendingQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                            accessKey="amount">Amount
+                                            <i *ngIf="pendingQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="pendingQuery.sortOrder == 'date'? 'headActive' : ''"
+                                            accessKey="date">Status
+                                            <i *ngIf="pendingQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                            <i *ngIf="pendingQuery.sortOrder == 'date'" class="fa"
+                                               [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let approved of ApprovedList; let i = index">
+                                        <td>{{(approvedQuery.page - 1)* approvedQuery.size + i + 1}}</td>
+                                        <td>{{approved.date | date}}</td>
+                                        <td>{{approved.description ||  'NA'}}</td>
+                                        <td>{{approved.expenseType || 'NA'}}</td>
+                                        <td>{{approved. fromDate | date}}</td>
+                                        <td>{{approved.toDate | date}}</td>
+                                        <td>{{approved.attrs ? approved.attrs.vehicle: 'NA' }}</td>
+                                        <td>{{approved.attrs ? approved.attrs.createdBy : 'NA'}}</td>
+                                        <td><span *ngIf="approved.status != 'Auto'">{{approved.attrs ? approved.attrs.updatedBy : 'NA'}}</span></td>
+                                        <td>{{approved.amount}}</td>
+                                        <td>{{approved.status}}</td>
+                                    </tr>
+                                    <tr *ngIf="countApproved === 0 || !countApproved">
+                                        <td colspan="12">No OfficeExpenses</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr *ngIf="countApproved != 0 || countApproved">
+                                        <th colspan="12">
+                                            <div class="pull-right">
+                                                Total Count : {{countApproved || 0}}
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row">
+                                        <ngb-pagination *ngIf="countApproved|| countApproved != 0"
+                                                        [(page)]="approvedQuery.page"
+                                                        [pageSize]="approvedQuery.size"
+                                                        [collectionSize]="countApproved"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="changeApprovedPage($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                        <ul class="pagination pull-right" style="margin-top: -37px !important;"
+                                            *ngIf="countApproved || countApproved !== 0">
+                                            <li class="page-item" [ngClass]="size == approvedQuery.size ? 'active' : ''"
+                                                *ngFor="let size of approvedQuery.pageSizes" (click)="handleApprovedPageSizeChange(size)">
+                                                <button class="page-link"> {{ size }}
+                                                    <span class="sr-only">(current)</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 3">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <label class="control-label">Start Date</label>
+                                        <div class="input-group">
+                                            <input name="startDate" class="form-control form-control-sm"
+                                                   [(ngModel)]="startDate"
+                                                   placeholder="Enter Date"
+                                                   readonly type="text"
+                                                   #date1="bsDatepicker"
+                                                   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                                                   bsDatepicker/>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-light btn-sm" type="button"
+                                                        style="border: 1px solid #ced4da;"
+                                                        (click)="date1.show()"
+                                                        [attr.aria-expanded]="date1.isOpen">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label class="control-label">End Date</label>
+                                        <div class="input-group">
+                                            <input name="endDate" class="form-control form-control-sm"
+                                                   [(ngModel)]="endDate"
+                                                   placeholder="Enter Date"
+                                                   readonly type="text"
+                                                   #date2="bsDatepicker"
+                                                   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                                                   bsDatepicker/>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-light btn-sm" type="button"
+                                                        style="border: 1px solid #ced4da;"
+                                                        (click)="date2.show()"
+                                                        [attr.aria-expanded]="date2.isOpen">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div  class="col-sm-2 form-group">
+                                        <label>Branch</label>
+                                        <ng-select [(ngModel)]="searchQuery.branchOfficeId"
+                                                   [ngModelOptions]="{standalone: true}"
+                                                   bindValue="id"
+                                                   bindLabel="name"
+                                                   [clearable]="false">
+                                            <ng-option value="" selected>Select Branch (Optional) </ng-option>
+                                            <ng-option *ngFor="let users of names"
+                                                       [value]="users.id">{{users.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-sm-2 form-group">
+                                        <label class="control-label">Select User<b class="mandatory-field">*</b></label>
+                                        <ng-select [(ngModel)]="searchQuery.userId"
+                                                   [ngModelOptions]="{standalone: true}"
+                                                   bindValue="id"
+                                                   bindLabel="fullName"
+                                                   [clearable]="false">
+                                            <ng-option value="" selected>Select User(Optional)</ng-option>
+                                            <ng-option *ngFor="let users of usersNames"
+                                                       [value]="users.id">{{users.fullName}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-sm-2 form-group">
+                                        <label class="control-label">Select ExpenseType<b class="mandatory-field">*</b></label>
+                                        <ng-select [(ngModel)]="searchQuery.expenseType"
+                                                   [ngModelOptions]="{standalone: true}"
+                                                   bindValue="expenseList"
+                                                   bindLabel="expenseList"
+                                                   [clearable]="false">
+                                            <ng-option value="" selected>Select ExpenseType(Optional)</ng-option>
+                                            <ng-option *ngFor="let expense of expenseList" [value]="expense">{{expense}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="search()"> Search Transactions </button> &nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="exportToExcel()"> Export to Excel </button>
+                                </div>
+                                <div class="row" *ngIf="SearchError"  style="text-align: center">
+                                    <div class="col-md-12" role="alert">
+                                        <span style="color: red">{{SearchError}}</span>
+                                    </div>
+                                </div>
+                                <table class="table table-hover dataTable text-center">
+                                    <thead>
+                                    <tr class="table-bordered" (click)="searchClickSorting($event)" id="officeExpenseExcel">
+                                        <th>S.No</th>
+                                        <th [ngClass]="searchQuery.sortOrder == 'date'? 'headActive' : ''"
+                                            accessKey="date">Date
+                                            <i *ngIf="searchQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchQuery.sortOrder == 'date'" class="fa"
+                                               [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="searchQuery.sortOrder == 'description'? 'headActive' : ''"
+                                            accessKey="description">Description
+                                            <i *ngIf="searchQuery.sortOrder != 'description'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchQuery.sortOrder == 'description'" class="fa"
+                                               [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="searchQuery.sortOrder == 'expenseType'? 'headActive' : ''"
+                                            accessKey="expenseType">Type
+                                            <i *ngIf="searchQuery.sortOrder != 'expenseType'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchQuery.sortOrder == 'expenseType'" class="fa"
+                                               [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="searchQuery.sortOrder == 'vehicle'? 'headActive' : ''"
+                                            accessKey="vehicle">Vehicle
+                                            <i *ngIf="searchQuery.sortOrder != 'vehicle'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchQuery.sortOrder == 'vehicle'" class="fa"
+                                               [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="searchQuery.sortOrder == 'fromDate'? 'headActive' : ''"
+                                            accessKey="fromDate">From Date
+                                            <i *ngIf="searchQuery.sortOrder != 'fromDate'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchQuery.sortOrder == 'fromDate'" class="fa"
+                                               [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="searchQuery.sortOrder == 'toDate'? 'headActive' : ''"
+                                            accessKey="toDate">To Date
+                                            <i *ngIf="searchQuery.sortOrder != 'toDate'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchQuery.sortOrder == 'toDate'" class="fa"
+                                               [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="searchQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                            accessKey="amount">Amount
+                                            <i *ngIf="searchQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="searchQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Created By</th>
+                                        <th>Approved By</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let searchExpense of searchExpenseList; let i = index">
+                                        <td>{{(searchQuery.page - 1)* searchQuery.size + i + 1}}</td>
+                                        <td>{{searchExpense.date | date}}</td>
+                                        <td>{{searchExpense.description || 'NA'}}</td>
+                                        <td>{{searchExpense.expenseType || 'NA'}}</td>
+                                        <td>{{searchExpense. fromDate | date}}</td>
+                                        <td>{{searchExpense.toDate | date}}</td>
+                                        <td>{{searchExpense.attrs ? searchExpense.attrs.vehicle: 'NA' }}</td>
+                                        <td>{{searchExpense.amount}}</td>
+                                        <td>{{searchExpense.attrs ? searchExpense.attrs.createdBy : ''}}</td>
+                                        <td><span *ngIf="searchExpense.status != 'Auto'">{{searchExpense.attrs ? searchExpense.attrs.updatedBy : ''}}</span></td>
+                                    </tr>
+                                    <tr *ngIf="searchQuery.count === 0 || !searchQuery.count">
+                                        <td colspan="11">No OfficeExpenses</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr *ngIf="searchQuery.count != 0 || searchQuery.count">
+                                        <th colspan="11">
+                                            <div class="pull-right">
+                                                Total Count : {{searchQuery.count || 0}}
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row">
+                                        <ngb-pagination *ngIf="searchQuery.count|| searchQuery.count != 0"
+                                                        [(page)]="searchQuery.page"
+                                                        [pageSize]="searchQuery.size"
+                                                        [collectionSize]="searchQuery.count"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="changeSearchPage($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                        <ul class="pagination pull-right" style="margin-top: -37px !important;"
+                                            *ngIf="searchQuery.count || searchQuery.count !== 0">
+                                            <li class="page-item" [ngClass]="size == searchQuery.size ? 'active' : ''"
+                                                *ngFor="let size of searchQuery.pageSizes" (click)="handleSearchPageSizeChange(size)">
+                                                <button class="page-link"> {{ size }}
+                                                    <span class="sr-only">(current)</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

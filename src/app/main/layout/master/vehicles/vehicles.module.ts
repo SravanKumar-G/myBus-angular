@@ -7,6 +7,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AddEditVehicleComponent } from './add-edit-vehicle/add-edit-vehicle.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {LayoutModule} from '../../layout.module';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
         FormsModule,
         NgbModule,
         ReactiveFormsModule,
-        BsDatepickerModule
+        BsDatepickerModule,
+        LayoutModule,
+        BreadcrumbModule
     ]
 })
 export class VehiclesModule { }

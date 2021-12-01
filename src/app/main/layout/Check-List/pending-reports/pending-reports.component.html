@@ -1,0 +1,50 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="icon fa fa-users" aria-hidden="true"></i> Pending Reports
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Pending Reports List</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row p-3"></div>
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table table-hover text-center dataTable">
+                            <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Service#</th>
+                                <th>Journey Date</th>
+                                <th>Type</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Vehicle</th>
+                                <th>Cash/Net Income</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let service of reports; let i = index">
+                                <td>{{i + 1}}</td>
+                                <td (click)="goToServiceReport(service)">{{ service.serviceNumber}}</td>
+                                <td (click)="goToServiceReport(service)">{{service.journeyDate | date}}</td>
+                                <td (click)="goToServiceReport(service)">{{service.busType}}</td>
+                                <td (click)="goToServiceReport(service)">{{service.source}}</td>
+                                <td (click)="goToServiceReport(service)">{{service.destination}}</td>
+                                <td (click)="goToServiceReport(service)">{{service.vehicleRegNumber}}</td>
+                                <td (click)="goToServiceReport(service)">{{ service.netCashIncome }}/ {{ service.netIncome }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

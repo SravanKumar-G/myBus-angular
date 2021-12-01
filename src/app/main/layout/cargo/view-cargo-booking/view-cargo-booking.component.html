@@ -7,9 +7,7 @@
             </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
-            <li class="breadcrumb-item"><span
-                    class="breadcrumb-item-router">View Cargo Booking/ {{cargoBookingId}}</span></li>
+           <xng-breadcrumb></xng-breadcrumb>
         </ul>
     </div>
 
@@ -42,6 +40,11 @@
                                         (click)="sendSMS(cargoDetails.id)" title="Send SMS"
                                         *ngIf="!cargoDetails.canceled && cargoDetails.cargoTransitStatus !== 'DELIVERED'">
                                     <i class="fa fa-share"></i> Send SMS
+                                </button>
+                                <button type="button" class="btn btn-sm btn-success mr-1"
+                                        (click)="sendWhatsApp(cargoDetails)" title="Send SMS"
+                                        *ngIf="!cargoDetails.canceled && cargoDetails.cargoTransitStatus !== 'DELIVERED'">
+                                    <i class="fa fa-whatsapp"></i> Send WhatsApp
                                 </button>
                                 <button type="button" class="btn btn-sm btn-primary mr-1"
                                         (click)="addCommentToBooking(cargoDetails.id)" title="Add Comment"

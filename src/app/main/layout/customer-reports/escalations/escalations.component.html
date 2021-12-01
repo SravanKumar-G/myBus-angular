@@ -1,0 +1,295 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-comment" aria-hidden="true"></i>
+                Escalations
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+          <xng-breadcrumb></xng-breadcrumb>
+        </ul>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item active-tab-nav" (click)="tabChange(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
+        </li>
+        <li class="nav-item deleted-tab-nav" (click)="tabChange(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Resolved</a>
+        </li>
+        <li class="nav-item deleted-tab-nav" (click)="tabChange(3)">
+            <a class="nav-link" [ngClass]="{active:tab==3}">Search</a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile" *ngIf="tab === 1">
+                <div class="tile-body">
+                    <div class="col-sm-12">
+                        <div class="row form-group">
+                            <div class="col-sm-2 col-12">
+                                <label>Select From</label>
+                                <ng-select
+                                        [items]="listOfRoutes"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="name"
+                                        placeholder="Select From"
+                                        [(ngModel)]="filterObj.from"
+                                        (ngModelChange)="loadCountOfEscalations('Escalated')"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2 col-12">
+                                <label>Select To</label>
+                                <ng-select
+                                        [items]="listOfRoutes"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="name"
+                                        placeholder="Select to"
+                                        [(ngModel)]="filterObj.to"
+                                        (ngModelChange)="loadCountOfEscalations('Escalated')"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2 col-12">
+                                <label>Rating</label>
+                                <select [(ngModel)]="filterObj.rating" [ngModelOptions]="{standalone: true}"
+                                        class="form-control form-control-sm"
+                                        (ngModelChange)="loadCountOfEscalations('Escalated')">
+                                    <option value="" selected>--Selected Rating--</option>
+                                    <option value="0">All</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div class="card" style="margin: 15px 0 !important;"
+                                     *ngFor="let escalation of listOfEscalations; let i = index;">
+                                    <div class="card-header"
+                                         style="align-items: center;padding: 8px 15px !important;">
+                                        <div class="flex-container">
+                                            <div class="service-card"
+                                                 style="background: #dbd2d2 !important; border-radius: 50px;">{{(filterObj.page - 1) * filterObj.size + i + 1}}</div>
+                                            <div class="service-card"><label>Service
+                                                Name:</label><b>{{escalation.serviceName}}</b></div>
+                                            <div class="service-card"><label>Vehicle
+                                                Number:</label><b>{{escalation.vehicleNumber}}</b></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" style="padding: 12px !important;">
+                                        <div class="flex-container">
+                                            <div class="service-card">
+                                                <label>Feedback:</label> {{escalation.feedback || 'NA'}} </div>
+                                            <div class="service-card"><label>Journey
+                                                Date:</label> {{escalation.jdate}}
+                                            </div>
+                                            <div class="service-card"><label>PNR:</label>{{escalation.pnr }}
+                                                - {{escalation.seats}}</div>
+                                            <div class="service-card"><label>Booked
+                                                By:</label>{{escalation.bookedBy}}
+                                            </div>
+                                            <div class="service-card"><label>Called
+                                                By:</label>{{escalation.calledBy}}
+                                            </div>
+                                            <div class="service-card"><label>Passenger:</label>{{ escalation.name }}
+                                                -
+                                                <b>{{ escalation.phone }}</b> - {{escalation.email}}</div>
+                                            <div class="service-card"><label>Redbus Review &
+                                                Rating:</label>{{escalation.redbusReview || 'NA'}}
+                                                - {{escalation.redbusRating || 'NA'}}
+                                                - {{escalation.redbusReviewTags || 'NA'}}
+                                            </div>
+                                            <div class="service-card"><label>Staff:</label>
+                                                <span *ngFor="let staff of escalation.staffDetails; let j = index;">
+                                                  {{j + 1}} - {{staff.name}} - <b>{{staff.number}}</b>,
+                                                </span>
+                                            </div>
+                                            <div class="service-card" style="font-size: 12px !important;">
+                                                <a class="cus-a mr-2" title="Add Comment"
+                                                   (click)="addingComments(escalation.id, 'Escalated')">
+                                                    <i class="fa fa-comment fa-1x" aria-hidden="true"
+                                                       style="color: green"> Add Comment</i>
+                                                </a>
+                                                <a class="cus-a mr-2" title="Resolve"
+                                                   (click)="resolveBookingFeedback(escalation.id, 'Escalated')">
+                                                    <i class="fa fa-recycle fa-1x" aria-hidden="true"
+                                                       style="color: deepskyblue"></i> Resolve
+                                                </a>
+                                                <a class="cus-a mr-2" title="Send Email"
+                                                   (click)="sendEmail(escalation.id, 'Escalated')">
+                                                    <i class="fa fa-envelope fa-1x" aria-hidden="true"
+                                                       style="color: indianred"></i> Send Email
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="list-row" style="display: inline-block">
+                                        <ngb-pagination *ngIf="escalationsCount || escalationsCount !== 0"
+                                                        [(page)]="filterObj.page"
+                                                        [pageSize]="filterObj.size"
+                                                        [collectionSize]="escalationsCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="handlePageChange($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                    </div>
+                                    <ul class="pagination pull-right"
+                                        *ngIf="escalationsCount || escalationsCount !== 0">
+                                        <li class="page-item" [ngClass]="size == filterObj.size ? 'active' : ''"
+                                            *ngFor="let size of filterObj.pageSizes"
+                                            (click)="handlePageSizeChange(size)">
+                                            <button class="page-link"> {{ size }}
+                                                <span class="sr-only">(current)</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tile" *ngIf="tab === 2">
+                <div class="tile-body">
+                    <div class="col-sm-12">
+                        <div class="row form-group">
+                            <div class="col-sm-2 col-12">
+                                <label>Select From</label>
+                                <ng-select
+                                        [items]="listOfRoutes"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="name"
+                                        placeholder="Select From"
+                                        [(ngModel)]="filterObj.from"
+                                        (ngModelChange)="loadCountOfEscalations('Resolved')"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2 col-12">
+                                <label>Select To</label>
+                                <ng-select
+                                        [items]="listOfRoutes"
+                                        [multiple]="false"
+                                        bindLabel="name"
+                                        [closeOnSelect]="true"
+                                        bindValue="name"
+                                        placeholder="Select to"
+                                        [(ngModel)]="filterObj.to"
+                                        (ngModelChange)="loadCountOfEscalations('Resolved')"
+                                        [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-2 col-12">
+                                <label>Rating</label>
+                                <select [(ngModel)]="filterObj.rating" [ngModelOptions]="{standalone: true}"
+                                        class="form-control form-control-sm"
+                                        (ngModelChange)="loadCountOfEscalations('Resolved')">
+                                    <option value="" selected>--Selected Rating--</option>
+                                    <option value="0">All</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <div class="card" *ngFor="let escalation of listOfEscalations; let i = index;" style="margin: 15px 0;">
+                                    <div class="card-header" style="align-items: center;padding: 8px 15px !important;">
+                                        <div class="flex-container">
+                                            <div class="service-card">{{(filterObj.page - 1) * filterObj.size + i + 1}}</div>
+                                            <div class="service-card"><label>Service
+                                                Name:</label><b>{{escalation.serviceName}}</b></div>
+                                            <div class="service-card"><label>Vehicle
+                                                Number:</label><b>{{escalation.vehicleNumber}}</b></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" style="padding: 12px !important;">
+                                        <div class="flex-container">
+                                            <div class="service-card">
+                                                <label>Feedback:</label> {{escalation.feedback || 'NA'}} </div>
+                                            <div class="service-card"><label>Journey Date:</label> {{escalation.jdate}}
+                                            </div>
+                                            <div class="service-card"><label>PNR:</label>{{escalation.pnr }}
+                                                - {{escalation.seats}}</div>
+                                            <div class="service-card"><label>Booked By:</label>{{escalation.bookedBy}}
+                                            </div>
+                                            <div class="service-card"><label>Called By:</label>{{escalation.calledBy}}
+                                            </div>
+                                            <div class="service-card"><label>Passenger:</label>{{ escalation.name }} -
+                                                <b>{{ escalation.phone }}</b> - {{escalation.email}}</div>
+                                            <div class="service-card"><label>RedBus Review &
+                                                Rating:</label>{{escalation.redbusReview || 'NA'}}
+                                                - {{escalation.redbusRating || 'NA'}}
+                                                - {{escalation.redbusReviewTags || 'NA'}}
+                                            </div>
+                                            <div class="service-card"><label>Staff:</label>
+                                                <span *ngFor="let staff of escalation.staffDetails; let j = index;">
+                                                  {{j + 1}} - {{staff.name}} - <b>{{staff.number}}</b>,
+                                                </span>
+                                            </div>
+                                            <div class="service-card" style="font-size: 12px !important;">
+                                                <a class="cus-a mr-2" title="Add Comment"
+                                                   (click)="addingComments(escalation.id, 'Resolved')">
+                                                    <i class="fa fa-comment fa-1x" aria-hidden="true"
+                                                       style="color: green"> Add Comment</i>
+                                                </a>
+                                                <a class="cus-a mr-2" title="Resolve"
+                                                   (click)="resolveBookingFeedback(escalation.id, 'Resolved')">
+                                                    <i class="fa fa-recycle fa-1x" aria-hidden="true"
+                                                       style="color: deepskyblue"></i> Resolve
+                                                </a>
+                                                <a class="cus-a mr-2" title="Send Email"
+                                                   (click)="sendEmail(escalation.id, 'Resolved')">
+                                                    <i class="fa fa-envelope fa-1x" aria-hidden="true"
+                                                       style="color: indianred"></i> Send Email
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="list-row" style="display: inline-block">
+                                        <ngb-pagination *ngIf="escalationsCount || escalationsCount !== 0"
+                                                        [(page)]="filterObj.page"
+                                                        [pageSize]="filterObj.size"
+                                                        [collectionSize]="escalationsCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="handlePageApprovedChange($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                    </div>
+                                    <ul class="pagination pull-right"
+                                        *ngIf="escalationsCount || escalationsCount !== 0">
+                                        <li class="page-item" [ngClass]="size == filterObj.size ? 'active' : ''"
+                                            *ngFor="let size of filterObj.pageSizes"
+                                            (click)="handlePageApprovedSizeChange(size)">
+                                            <button class="page-link"> {{ size }}
+                                                <span class="sr-only">(current)</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

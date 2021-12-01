@@ -7,8 +7,7 @@
             </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
-            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Branch Offices</span></li>
+           <xng-breadcrumb></xng-breadcrumb>
         </ul>
     </div>
 
@@ -17,7 +16,7 @@
             <div class="tile">
                 <div class="tile-body">
                     <div class="col-sm-12 text-right mb-3">
-                        <a class="btn btn-sm btn-success" [routerLink]="['addBranchOffice']">Add Branch Office</a>
+                        <button class="btn btn-sm btn-success" [routerLink]="['addBranchOffice']">Add Branch Office</button>
                     </div>
                     <div class="col-sm-12 table-responsive">
                         <table class="table table-hover text-center dataTable">
@@ -26,41 +25,41 @@
                                 <th>S No</th>
                                 <th [ngClass]="branchOfficeQuery.sortOrder == 'name'?'headActive' : ''"
                                     accessKey="name" (click)="clickSorting($event)">Name
-                                    <i *ngIf="sortOrder != 'name'" class="fa fa-sort"></i>
-                                    <i *ngIf="sortOrder == 'name'" class="fa"
-                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                    <i *ngIf="branchOfficeQuery.sortOrder != 'name'" class="fa fa-sort"></i>
+                                    <i *ngIf="branchOfficeQuery.sortOrder == 'name'" class="fa"
+                                       [ngClass]="branchOfficeQuery.orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
                                 </th>
                                 <th [ngClass]="branchOfficeQuery.sortOrder == 'cityName'?'headActive' : ''"
                                     accessKey="cityName" (click)="clickSorting($event)">City
-                                    <i *ngIf="sortOrder != 'cityName'" class="fa fa-sort"></i>
-                                    <i *ngIf="sortOrder == 'cityName'" class="fa"
-                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                    <i *ngIf="branchOfficeQuery.sortOrder != 'cityName'" class="fa fa-sort"></i>
+                                    <i *ngIf="branchOfficeQuery.sortOrder == 'cityName'" class="fa"
+                                       [ngClass]="branchOfficeQuery.orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
                                 </th>
                                 <th>Manager</th>
                                 <th [ngClass]="branchOfficeQuery.sortOrder == 'contact'?'headActive' : ''"
                                     accessKey="contact" (click)="clickSorting($event)">Contact
-                                    <i *ngIf="sortOrder != 'contact'" class="fa fa-sort"></i>
-                                    <i *ngIf="sortOrder == 'contact'" class="fa"
-                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                    <i *ngIf="branchOfficeQuery.sortOrder != 'contact'" class="fa fa-sort"></i>
+                                    <i *ngIf="branchOfficeQuery.sortOrder == 'contact'" class="fa"
+                                       [ngClass]="branchOfficeQuery.orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
                                 </th>
                                 <th [ngClass]="branchOfficeQuery.sortOrder == 'email'?'headActive' : ''"
                                     accessKey="email" (click)="clickSorting($event)">Email
-                                    <i *ngIf="sortOrder != 'email'" class="fa fa-sort"></i>
-                                    <i *ngIf="sortOrder == 'email'" class="fa"
-                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                    <i *ngIf="branchOfficeQuery.sortOrder != 'email'" class="fa fa-sort"></i>
+                                    <i *ngIf="branchOfficeQuery.sortOrder == 'email'" class="fa"
+                                       [ngClass]="branchOfficeQuery.orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
                                 </th>
                                 <th [ngClass]="branchOfficeQuery.sortOrder == 'address'?'headActive' : ''"
                                     accessKey="address" (click)="clickSorting($event)">Address
-                                    <i *ngIf="sortOrder != 'address'" class="fa fa-sort"></i>
-                                    <i *ngIf="sortOrder == 'address'" class="fa"
-                                       [ngClass]="orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
+                                    <i *ngIf="branchOfficeQuery.sortOrder != 'address'" class="fa fa-sort"></i>
+                                    <i *ngIf="branchOfficeQuery.sortOrder == 'address'" class="fa"
+                                       [ngClass]="branchOfficeQuery.orderBy == 'asc'? 'fa-sort-asc': 'fa-sort-desc'"></i>
                                 </th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr *ngFor="let office of branchOffices; let i =index;">
-                                <td>{{i + 1}}</td>
+                                <td>{{(branchOfficeQuery.page - 1) * branchOfficeQuery.size + i + 1}}</td>
                                 <td>{{office.name}}</td>
                                 <td>{{office.attrs.cityName || '--'}}</td>
                                 <td>{{office.attrs.managerName || '--'}}</td>

@@ -1,0 +1,440 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i>
+                Service Form
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <xng-breadcrumb></xng-breadcrumb>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row" *ngIf="downloaded">
+                            <div class="col-sm-12 text-right mb-2">
+                                <button type="button" class="btn btn-primary btn-sm" title="Previous Service"
+                                        (click)="nextAndPreviousService('decrement')" [disabled]="indexCount === 0">
+                                    <i class="fa fa-angle-left"></i>
+                                </button>
+                                <span style="padding: 8px;">{{indexCount}} / {{serviceReports.length}}</span>
+                                <button type="button" class="btn btn-primary btn-sm" title="Next Service"
+                                        (click)="nextAndPreviousService('increment')" [disabled]="indexCount === serviceReports.length">
+                                    <i class="fa fa-angle-right"></i>
+                                </button>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="row form-group">
+                                <div class="flex-container">
+                                    <div class="service-card">
+                                        <label class="control-label">Route:</label>
+                                        {{serviceReportDetails.source}} - {{serviceReportDetails.destination}} - {{serviceReportDetails.busType || '---'}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Journey
+                                            Date:</label>{{serviceReportDetails.jdate}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Vehicle:</label>
+                                        {{serviceReportDetails.vehicleRegNumber || '---'}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Conductor:</label>
+                                        {{serviceReportDetails.conductorInfo || '---'}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Report ID:</label>
+                                        <span class="cus-a" data-toggle="modal" data-target="#largeShoes"
+                                              (click)="serviceIdClick(serviceReportDetails.serviceReportId, viewReportModal)">
+                                            {{serviceReportDetails.serviceReportId || '---'}}</span>
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Submitted By :</label>
+                                        {{serviceReportDetails.attrs.submittedBy}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="flex-container">
+                                    <div class="service-card">
+                                        <label class="control-label">Red Bus:</label>
+                                        {{serviceReportDetails.netRedbusIncome| number}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">PayTM:</label>
+                                        {{serviceReportDetails.netPaytmIncome| number}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Abhibus:</label>
+                                        {{serviceReportDetails.netAbhibusIncome| number}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Online:</label>
+                                        {{serviceReportDetails.netOnlineIncome| number}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">CashEarned:</label>
+                                        {{serviceReportDetails.cashAmount || 0 | number }}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Cash Bookings:</label>
+                                        {{serviceReportDetails.cashIncome| number}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Cash Collected:</label>
+                                        {{serviceReportDetails.netCashIncome| number}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Gross:</label>
+                                        {{serviceReportDetails.grossIncome| number}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Expenses:</label>
+                                        {{serviceReportDetails.totalExpenses| number}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Net:</label>
+                                        {{serviceReportDetails.netIncome| number}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-7 col-12">
+                                    <div class="table-responsive">
+                                        <h5>Bookings</h5>
+                                        <table class="table table-bordered text-center">
+                                            <thead>
+                                            <tr>
+                                                <th>S No</th>
+                                                <th scope="col" [appFrentendSort]="serviceReportDetails.bookings"
+                                                    data-order="desc" data-name="bookedBy">BookedBy<i
+                                                        class="fa fa-sort"></i></th>
+                                                <th scope="col" [appFrentendSort]="serviceReportDetails.bookings"
+                                                    data-order="desc" data-name="ticketNo">Ticket<i
+                                                        class="fa fa-sort"></i></th>
+                                                <th scope="col" [appFrentendSort]="serviceReportDetails.bookings"
+                                                    data-order="desc" data-name="seatsCount">Seats<i
+                                                        class="fa fa-sort"></i></th>
+                                                <th>Basic+Tax</th>
+                                                <th scope="col" [appFrentendSort]="serviceReportDetails.bookings"
+                                                    data-order="desc" data-name="netAmt">Net Amt<i
+                                                        class="fa fa-sort"></i></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let booking of serviceReportDetails.bookings; let i = index;">
+                                                <td>{{i + 1}}</td>
+                                                <td>{{booking.bookedBy}}</td>
+                                                <td>{{booking.ticketNo}}</td>
+                                                <td>{{booking.seatsCount}}</td>
+                                                <td>{{booking.basicAmount + booking.serviceTax | number}}</td>
+                                                <td>{{booking.netAmt | number}}
+                                                    <span class="ml-2" style="color:red;" *ngIf="booking.due">Due</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">Total Seats</td>
+                                                <td>{{serviceReportDetails.seatsCount}}</td>
+                                                <td colspan="2"></td>
+                                            </tr>
+                                            <tr *ngIf="!serviceReportDetails || serviceReportDetails.length === 0">
+                                                <td colspan="5">No bookings found.</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-12">
+                                    <h5>Additional Income</h5>
+                                    <table class="table table-bordered table-hover">
+                                        <tr>
+                                            <td>Luggage</td>
+                                            <td>{{serviceReportDetails.luggageIncome}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Advance Given</td>
+                                            <td>{{serviceReportDetails.advance}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>On Road Service Bookings</td>
+                                            <td>{{serviceReportDetails.onRoadServiceIncome}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Other</td>
+                                            <td>{{serviceReportDetails.otherIncome}}</td>
+                                        </tr>
+                                    </table>
+                                    <h5>Expenses</h5>
+                                    <table class="table table-bordered table-hover">
+                                        <tr>
+                                            <td>Toll Fee</td>
+                                            <td>{{serviceReportDetails.tollFee}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Staff Batta</td>
+                                            <td>{{serviceReportDetails.driverBatta}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Police</td>
+                                            <td>{{serviceReportDetails.police}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pooja</td>
+                                            <td>{{serviceReportDetails.pooja}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Repair</td>
+                                            <td>{{serviceReportDetails.repair}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Parking</td>
+                                            <td>{{serviceReportDetails.parking}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Luggage commission</td>
+                                            <td>{{serviceReportDetails.luggageCommission}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Toll(fasttag)</td>
+                                            <td>{{serviceReportDetails.tollFasttag}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Insurance(O)</td>
+                                            <td>{{serviceReportDetails.insurance}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fuel Expense(O)</td>
+                                            <td>{{serviceReportDetails.fuelExpense}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Road Tax(O)</td>
+                                            <td>{{serviceReportDetails.roadTax}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Salary(O)</td>
+                                            <td>{{serviceReportDetails.salary}}</td>
+                                        </tr>
+                                        <tr *ngFor="let expense of serviceReportDetails.expenses">
+                                            <td>{{expense.name}}</td>
+                                            <td>{{expense.amount}}</td>
+                                        </tr>
+                                    </table>
+                                    <h5>Staff</h5>
+                                    <table class="table table-bordered table-hover">
+                                        <tr *ngFor="let staff of serviceReportDetails.staffDetails; let s = index;">
+                                            <td>{{staff.displayName}}{{staff.nameCode}}</td>
+                                            <td>{{staff.type}}</td>
+                                        </tr>
+                                    </table>
+                                    <h5>Notes</h5>
+                                    <p>{{serviceReportDetails.notes || '--'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="!downloaded">
+                            <div class="col-sm-12">
+                                Please wait while the report data is loaded <i class="fa fa-spinner fa-spin"
+                                                                               style="font-size:24px"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal-->
+<ng-template #viewReportModal>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">Service Report</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalService.dismissAll()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <tr>
+                                    <td>From: {{serviceData.source}}</td>
+                                    <td>To:{{serviceData.destination}}</td>
+                                    <td>Journey Date:{{serviceData.jdate}}</td>
+                                    <td>{{serviceData.busType}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Conductor: {{serviceData.conductorInfo}}</td>
+                                    <td>Vehicle: {{serviceData.vehicleRegNumber}}</td>
+                                    <td>Received At: {{serviceData.source}}</td>
+                                    <td>{{serviceData.serviceNumber}}</td>
+                                </tr>
+                            </table>
+                            <table class="table table-bordered table-condensed table-hover">
+                                <tr>
+                                    <td>Net Income - Redbus</td>
+                                    <td>{{serviceData.netRedbusIncome| number}}</td>
+                                    <td>Net Income - Online</td>
+                                    <td>{{serviceData.netOnlineIncome| number}}</td>
+                                    <td>Net Income - Cash</td>
+                                    <td>{{serviceData.netCashIncome| number}}</td>
+                                    <td>Total Net Income</td>
+                                    <td>{{serviceData.netIncome| number}}</td>
+                                    <td>Gross Income</td>
+                                    <td>{{serviceData.grossIncome| number}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h6>Bookings</h6>
+                                    <div class="table-responsive" style="width: 505px; height: 650px; overflow: scroll">
+                                        <table class="table table-bordered table-hover">
+                                            <tr *ngFor="let booking of serviceData.bookings"
+                                                [ngClass]="{changedRate: rateToBeVerified(booking)}">
+                                                <td data-title="'Seats'" class="clickable-item col-md-1">
+                                                    {{booking.seats}}
+                                                </td>
+                                                <td data-title="'Tikcet#'" class="clickable-item col-md-1">
+                                                    {{ booking.ticketNo }}
+                                                </td>
+                                                <td data-title="'BookedBy'" class="clickable-item col-md-2">
+                                                    {{ booking.bookedBy}}
+                                                </td>
+                                                <td data-title="'Name'" class="clickable-item col-md-1">
+                                                    {{ booking.name}}
+                                                </td>
+                                                <td data-title="'NetAmt'" class="clickable-item col-md-2">
+                                                    {{booking.netAmt}}
+                                                </td>
+                                                <td data-title="'Net'" class="clickable-item col-md-2">
+                                                    {{booking.originalCost | number}}
+                                                </td>
+                                                <td data-title="'Basic'" class="clickable-item col-md-2">
+                                                    {{booking.basicAmount| number}}
+                                                </td>
+                                                <td data-title="'Tax'" class="clickable-item col-md-2">
+                                                    {{booking.serviceTax| number}}
+                                                </td>
+                                                <td data-title="'Comm'" class="clickable-item col-md-2">
+                                                    {{booking.commission| number}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total Seats:{{serviceData.totalSeats}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <b>Mileage:</b>{{serviceData.milage || '---'}}
+                                    <h6>Additional Income</h6>
+                                    <table class="table table-bordered table-condensed table-hover">
+                                        <tr>
+                                            <td>Luggage</td>
+                                            <td>{{serviceData.luggageIncome}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Advance Given</td>
+                                            <td>{{serviceData.advance}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>On Road Service Bookings</td>
+                                            <td>{{serviceData.onRoadServiceIncome}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Other</td>
+                                            <td>{{serviceData.otherIncome}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <h6>Expenses</h6>
+                                    <table class="table table-bordered table-condensed table-hover">
+                                        <tr>
+                                            <td>Toll Fee</td>
+                                            <td>{{ serviceData.tollFee }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Staff Batta</td>
+                                            <td>{{ serviceData.driverBatta }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Police</td>
+                                            <td>{{ serviceData.police }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pooja</td>
+                                            <td>{{ serviceData.pooja }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Repair</td>
+                                            <td>{{ serviceData.repair }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Parking</td>
+                                            <td>{{ serviceData.parking }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Luggage commission</td>
+                                            <td> {{ serviceData.luggageCommission }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Toll(fasttag)</td>
+                                            <td> {{serviceData.tollFasttag  }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Insurance(O)</td>
+                                            <td>{{serviceData.insurance  }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fuel Expense(O)</td>
+                                            <td>{{serviceData.fuelExpense}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Road Tax(O)</td>
+                                            <td> {{serviceData.roadTax }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Salary(O)</td>
+                                            <td> {{serviceData.salary }}</td>
+                                        </tr>
+                                        <tr *ngFor="let expense of serviceData.expenses">
+                                            <td>{{expense.name}}</td>
+                                            <td>{{expense.amount }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mt-2">
+                            <h6>Service Notes</h6>
+                            <p>{{serviceData.notes || '--'}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12 text-right p-0">
+            <button type="button" class="btn btn-danger btn-sm" (click)="modalService.dismissAll()">
+                <i class="fa fa-fw fa-times-circle"></i> Close
+            </button>
+        </div>
+    </div>
+</ng-template>

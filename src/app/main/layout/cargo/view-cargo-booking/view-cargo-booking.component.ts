@@ -27,7 +27,6 @@ export class ViewCargoBookingComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.cargoBookingId, this.cargoBookingId.length);
         if (this.cargoBookingId.length !== 24) {
             this.getCargoDetailsByBookingId();
         }else{
@@ -64,7 +63,7 @@ export class ViewCargoBookingComponent implements OnInit {
         const printContent = document.getElementById('report_left_inner');
         const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
         // @ts-ignore
-        WindowPrt.document.write(printContent.innerHTML);
+        WindowPrt.document.write('<html><body onload="window.print()">' + printContent.innerHTML + '</body></html>');
         // @ts-ignore
         WindowPrt.document.close();
     }
@@ -92,9 +91,9 @@ export class ViewCargoBookingComponent implements OnInit {
                         + bookingId, data)
                         .subscribe((response: any) => {
                             if (response) {
-                                Swal.fire('Great!', response.shipmentNumber + ' has been delivered', 'success');
-                                // this.router.navigate(['cargoBookings']);
-                                window.location.reload();
+                                Swal.fire('Great!', response.shipmentNumber + ' has been delivered.', 'success');
+                                this.router.navigate(['cargoBookings']);
+                                this.apiService.getLoggedInUserData();
                             }
                         }, (error) => {
                             Swal.showValidationMessage(
@@ -125,8 +124,8 @@ export class ViewCargoBookingComponent implements OnInit {
                             'Your booking has been Cancelled.',
                             'success'
                         );
-                        window.location.reload();
-                        // this.router.navigate(['cargoBookings']);
+                        // window.location.reload();
+                        this.router.navigate(['cargoBookings']);
                     }
                 }, error => {
                     Swal.fire(
@@ -184,8 +183,8 @@ export class ViewCargoBookingComponent implements OnInit {
                                 .subscribe((response: any) => {
                                     if (response) {
                                         Swal.fire('Great!', 'Comment added Successfully..!', 'success');
-                                        // this.router.navigate(['cargoBookings']);
-                                        window.location.reload();
+                                        this.router.navigate(['cargoBookings']);
+                                        // window.location.reload();
                                     }
                                 }, (error) => {
                                     Swal.showValidationMessage(
@@ -202,5 +201,9 @@ export class ViewCargoBookingComponent implements OnInit {
 
     goToBackPage(): void {
         this.location.back();
+    }
+
+    sendWhatsApp(cargoDetails: any): void {
+        this.apiService.sendWhatsApp(cargoDetails.fromContact, cargoDetails.attrs.SMS);
     }
 }

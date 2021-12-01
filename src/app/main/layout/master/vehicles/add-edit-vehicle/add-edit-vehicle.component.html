@@ -6,8 +6,7 @@
             </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
-            <li class="breadcrumb-item"><span class="breadcrumb-item-router">{{headerTitle}}</span></li>
+            <xng-breadcrumb></xng-breadcrumb>
         </ul>
     </div>
 
@@ -213,7 +212,8 @@
                             </div>
 
                             <div class="state-tax">
-                                <div class="row" *ngFor="let vehicle of vehicle.taxPayments; let i = index; let l = last;">
+                                <div class="row"
+                                     *ngFor="let vehicle of vehicle.taxPayments; let i = index; let l = last;">
                                     <div class="col-sm-5 col-12 form-group">
                                         <label>State:</label>
                                         <input type="text" class="form-control form-control-sm"
@@ -252,6 +252,43 @@
                                         <div class="cus-a" (click)="removeState(i)">
                                             <i class="fa fa-minus-square fa-2x" style="color: #e68220"></i>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="vehicleId" class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6 col-12 form-group">
+                                        <label>Upload RC</label>
+                                        <app-file-upload [refId]="vehicleId" [url]="'api/v1/rcUpload/'"
+                                                         (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                                    </div>
+                                    <div class="col-sm-6 col-12 form-group">
+                                        <label>Upload FC</label>
+                                        <app-file-upload [refId]="vehicleId" [url]="'api/v1/fcUpload/'"
+                                                         (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                                    </div>
+                                    <div class="col-sm-6 col-12 form-group">
+                                        <label>Upload Permit</label>
+                                        <app-file-upload [refId]="vehicleId" [url]="'api/v1/permitUpload/'"
+                                                         (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                                    </div>
+                                    <div class="col-sm-6 col-12 form-group">
+                                        <label>Upload Auth</label>
+                                        <app-file-upload [refId]="vehicleId" [url]="'api/v1/authUpload/'"
+                                                         (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                                    </div>
+                                    <div class="col-sm-6 col-12 form-group">
+                                        <label>Upload Insurance</label>
+                                        <app-file-upload [refId]="vehicleId" [url]="'api/v1/insuranceUpload/'"
+                                                         (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                                    </div>
+                                    <div class="col-sm-6 col-12 form-group">
+                                        <label>Upload Pollution</label>
+                                        <app-file-upload [refId]="vehicleId" [url]="'api/v1/pollutionUpload/'"
+                                                         (imageToEmitToUpload)="uploadImage($event)"></app-file-upload>
+                                    </div>
+                                    <div class="col-sm-6 col-12 form-group">
+                                        <app-files-upload [refId]="vehicleId" [type]="'Vehicle'"></app-files-upload>
                                     </div>
                                 </div>
                             </div>

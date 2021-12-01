@@ -1,0 +1,257 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-file-o" aria-hidden="true"></i>
+                Expense Income Reports
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+           <xng-breadcrumb></xng-breadcrumb>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <button class="btn btn-sm btn-default" (click)="previousDate()">
+                                        <i class="fa fa-arrow-left"></i>
+                                    </button>
+                                </div>
+                                <input class="form-control form-control-sm"
+                                       placeholder=""
+                                       name="permit"
+                                       [maxDate]="newDate"
+                                       [(ngModel)]="currentDate"
+                                       [ngModelOptions]="{standalone: true}"
+                                       (ngModelChange)="getDate(currentDate)"
+                                       bsDatepicker
+                                       #dt="bsDatepicker"
+                                       [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                            (click)="dt.show()"
+                                            [attr.aria-expanded]="dt.isOpen" type="button">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                                <div class="input-group-append">
+                                    <button class="btn btn-sm btn-default" (click)="nextDate()">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 mt-auto mb-auto text-left">
+                            <button class="btn btn-sm btn-success" (click)="print()">
+                                Print
+                            </button>
+                        </div>
+                        <div class="col-sm-6 mt-auto mb-auto text-right">
+                            <button class="btn btn-sm btn-primary" (click)="exportToExcel()">
+                                Export to Excel
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                            <div class="form-group">
+                                <div class="flex-container">
+                                    <div class="service-card">
+                                        <label class="control-label">Total:</label>
+                                        {{count || '0'}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Total Expenses:</label>
+                                        {{totalExpense || '0'}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Total Income :</label>
+                                        {{totalIncome || '0'}}
+                                    </div>
+                                    <div class="service-card">
+                                        <label class="control-label">Balance :</label>
+                                        {{totalExpense - totalIncome|| '0'}}
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-bordered table-hover text-center" id="expenseIncomesReports">
+                                <thead>
+                                <tr (click)="clickSorting($event)">
+                                    <th [ngClass]="expenseAndIncomeQuery.sortOrder == 'createdAt'? 'headActive' : ''"
+                                        accessKey="createdAt">Created On
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder != 'createdAt'" class="fa fa-sort"></i>
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder == 'createdAt'" class="fa"
+                                           [ngClass]="expenseAndIncomeQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="expenseAndIncomeQuery.sortOrder == 'date'? 'headActive' : ''"
+                                        accessKey="date">Journey Date
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder == 'date'" class="fa"
+                                           [ngClass]="expenseAndIncomeQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="expenseAndIncomeQuery.sortOrder == 'description'? 'headActive' : ''"
+                                        accessKey="description">Description
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder != 'description'" class="fa fa-sort"></i>
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder == 'description'" class="fa"
+                                           [ngClass]="expenseAndIncomeQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="expenseAndIncomeQuery.sortOrder == 'Type'? 'headActive' : ''"
+                                        accessKey="Type">Type
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder != 'Type'" class="fa fa-sort"></i>
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder == 'Type'" class="fa"
+                                           [ngClass]="expenseAndIncomeQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="expenseAndIncomeQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                        accessKey="amount">Income
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder == 'amount'" class="fa"
+                                           [ngClass]="expenseAndIncomeQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="expenseAndIncomeQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                        accessKey="amount">Expense
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder == 'amount'" class="fa"
+                                           [ngClass]="expenseAndIncomeQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="expenseAndIncomeQuery.sortOrder == 'submittedBy'? 'headActive' : ''"
+                                        accessKey="submittedBy">CreatedUser
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder != 'submittedBy'" class="fa fa-sort"></i>
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder == 'submittedBy'" class="fa"
+                                           [ngClass]="expenseAndIncomeQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                    <th [ngClass]="expenseAndIncomeQuery.sortOrder == 'status'? 'headActive' : ''"
+                                        accessKey="status">Status
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder != 'status'" class="fa fa-sort"></i>
+                                        <i *ngIf="expenseAndIncomeQuery.sortOrder == 'status'" class="fa"
+                                           [ngClass]="expenseAndIncomeQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let expenseAndReports of expenseIncomeList;let i = index">
+                                    <td>{{expenseAndReports.createdAt | date}}</td>
+                                    <td>{{expenseAndReports.date | date}}</td>
+                                    <td>
+                                        <a class="cus-a" *ngIf="expenseAndReports.serviceFormId" (click)="serviceReportsPopUp(ServiceReportPopUp, expenseAndReports)">{{expenseAndReports.description}}</a>
+                                        <a class="cus-a" *ngIf="expenseAndReports.bookingId ? expenseAndReports.bookingId : ''" (click)="bookingDuePopUpExpenses(bookingDueModal, expenseAndReports)">{{expenseAndReports.description}}</a>
+                                        <span *ngIf="!expenseAndReports.serviceFormId && !expenseAndReports.bookingId">{{expenseAndReports.description}}</span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="expenseAndReports.serviceFormId">Form Collection</span>
+                                        <span *ngIf="expenseAndReports.bookingId">Booking Due</span>
+                                    </td>
+                                    <td><span>{{expenseAndReports.type =='INCOME' ? expenseAndReports.amount : 'NA'}}</span></td>
+                                    <td><span>{{expenseAndReports.type =='EXPENSE' ? expenseAndReports.amount : 'NA'}}</span></td>
+                                    <td>{{expenseAndReports.attrs.submittedBy}}</td>
+                                    <td>{{expenseAndReports.status}}</td>
+                                </tr>
+                                <tr *ngIf="count === 0 || !count">
+                                    <td colspan="8">No Payments</td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr *ngIf="count != 0 || count">
+                                    <th colspan="8">
+                                        <div class="pull-right">
+                                            Total Count : {{count || 0}}
+                                        </div>
+                                    </th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #ServiceReportPopUp>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">{{service.serviceName}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form name="addNewExpenseForm" class="form-horizontal" role="form">
+            <div class="form-group"><label class="col-sm-4 col-sm-offset-2">Created By: </label>
+                <span class="col-sm-6">{{service.createdBy}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-4 col-sm-offset-2">Created On:</label>
+                <span class="col-sm-6">{{service.createdAt | date}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-4 col-sm-offset-2">Conductor Info:</label>
+                <span class="col-sm-6">{{service.conductorInfo}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-4 col-sm-offset-2">Journey Date:</label>
+                <span class="col-sm-6">{{service.jdate  | date}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-4 col-sm-offset-2">Net Income - Redbus:</label>
+                <span class="col-sm-6">{{service.netRedbusIncome}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-4 col-sm-offset-2">Net Income - Online:</label>
+                <span class="col-sm-6">{{service.netOnlineIncome}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-4 col-sm-offset-2">Net Income - Cash:</label>
+                <span class="col-sm-6">{{service.netCashIncome.toFixed(2)}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-4 col-sm-offset-2">Total Income:</label>
+                <span class="col-sm-6">{{service.netIncome.toFixed(2)}}</span>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12 text-right p-0">
+            <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">
+                <i class="fa fa-fw fa-times-circle"></i> Close
+            </button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #bookingDueModal>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">{{booking.serviceName}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+            <div class="form-group"><label class="col-sm-3 col-sm-offset-2">Booked By: </label>
+                <span class="col-sm-6">{{booking.bookedBy}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-3 col-sm-offset-2">Booked Date: </label>
+                <span class="col-sm-6">{{booking.bookedDate | date}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-3 col-sm-offset-2">Passenger :</label>
+                <span class="col-sm-6">{{booking.name}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-3 col-sm-offset-2">Service No :</label>
+                <span class="col-sm-6">{{booking.serviceNumber}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-3 col-sm-offset-2">Journey Date:</label>
+                <span class="col-sm-6">{{booking.jdate}}</span>
+            </div>
+            <div class="form-group"><label class="col-sm-3 col-sm-offset-2">Cleared Amount:</label>
+                <span class="col-sm-6">{{booking.netAmt.toFixed(2)}} ({{booking.paymentType}})</span>
+            </div>
+            <div class="form-group"><label class="col-sm-3 col-sm-offset-2">Ticket No:</label>
+                <span class="col-sm-6">{{booking.ticketNo}}</span>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12 text-right">
+            <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">
+                <i class="fa fa-fw fa-times-circle"></i>Close
+            </button>
+        </div>
+    </div>
+</ng-template>
+

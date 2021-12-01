@@ -42,7 +42,7 @@ table.tree-grid {
 
 body {
     /*font-size: 0.872rem !important;*/
-    font-size: 0.8rem !important;
+    font-size: 0.75rem !important;
     /*font-family: 'Roboto', sans-serif !important;*/
     font-family: 'Lato', sans-serif !important;
     background-color: #e8eff9 !important;
@@ -4221,6 +4221,7 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
 }
 .popover-body{
     color: #dd4d30 !important;
+    font-size: 0.75rem;
 }
 .cBlue{
     color: #0b526c;
@@ -4310,4 +4311,29 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
     text-transform: capitalize;
     font-weight: 400;
     font-size: 13px;
+}
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.flex-container>div {
+    padding: 0 10px;
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 4px;*/
+}
+
+.service-card{
+    margin: auto 5px !important;
+}
+.service-card .card-body{
+    padding: 10px;
+}
+.service-card label{
+    color: #998e8e;
+    padding-right: 6px;
+}
+.xng-breadcrumb-trail{
+    color: rgb(149 139 139 / 90%) !important;
 }

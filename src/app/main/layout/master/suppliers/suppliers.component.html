@@ -6,9 +6,7 @@
             </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><a class="fa fa-home fa-lg breadcrumb-home-link" (click)="goToDashboard()"></a>
-            </li>
-            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Transactions</span></li>
+         <xng-breadcrumb></xng-breadcrumb>
         </ul>
     </div>
     <div class="row">
@@ -17,8 +15,7 @@
                 <div class="tile-body">
                     <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
                         <div class="row">
-                            <div class="col-sm-6"></div>
-                            <div class="col-sm-6 p-0">
+                            <div class="col-sm-6 p-0 offset-6">
                                 <div class="pull-right mb-3">
                                     <button class="btn btn-sm btn-success"
                                             (click)= "addSupplier(addEditSupplierModal)">
@@ -134,26 +131,24 @@
     </div>
     <div class="modal-body">
         <form name="fillingStationForm" class="form-horizontal" role="form">
-            <div class="offset-1 form-group">
-                <label class="col-sm-3 control-label checkbox ls text-uppercase text-600 font-weight-semi-bold" for="fname">Name</label>
-                <label class="col-sm-8">
-                    <input type="text" id="fname" class="form-control" [(ngModel)]="addSupplierQuery.name" [ngModelOptions]="{standalone: true}" placeholder="Name">
-                </label>
+            <div class="col-sm-8 col-12 offset-2 form-group">
+                <label>Name<span class="mandatory-field">*</span></label>
+                <input type="text" id="fname" class="form-control-sm form-control" [(ngModel)]="addSupplierQuery.name" [ngModelOptions]="{standalone: true}" placeholder="Name">
             </div>
-            <div class="offset-1 form-group">
-                <label class="col-sm-3 control-label checkbox ls text-uppercase text-600 font-weight-semi-bold" for="fcontact">Contact</label>
-                <label class="col-sm-8">
-                    <input type="text" id="fcontact" class="form-control" [(ngModel)]="addSupplierQuery.contact" [ngModelOptions]="{standalone: true}" placeholder="Contact">
-                </label>
+            <div class="col-sm-8 col-12 offset-2 form-group">
+                <label>Contact<span class="mandatory-field">*</span></label>
+                <input type="text" id="fcontact" class="form-control" [(ngModel)]="addSupplierQuery.contact" [ngModelOptions]="{standalone: true}" placeholder="Contact">
+
             </div>
-            <div class="offset-1 form-group">
-                <label class="col-sm-3 control-label checkbox ls text-uppercase text-600 font-weight-semi-bold" for="activeInactive" style="padding-top:0; ">Active</label>
-                <label class="col-sm-1">
-                    <input type="checkbox" id="activeInactive" [(ngModel)]="addSupplierQuery.active" [ngModelOptions]="{standalone: true}">
-                </label>
+            <div class="col-sm-8 col-12 offset-2 form-group">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="active"
+                           [(ngModel)]="addSupplierQuery.active" [ngModelOptions]="{standalone: true}">
+                    <label class="form-check-label" for="active">Active</label>
+                </div>
             </div>
-            <div class="offset-1 form-group">
-                <label class="col-sm-4 control-label checkbox ls text-uppercase text-600 font-weight-semi-bold" for="activeInactive">Party Type</label>
+            <div class="col-sm-8 col-12 offset-2 form-group">
+                <label>Party Type<span style="color: red">:</span></label>&nbsp;&nbsp;
                 <label class="radio-inline control-label checkbox ls">
                     <input type="radio" name="CREDITORS" value="CREDITORS" [(ngModel)]="addSupplierQuery.partyType" [ngModelOptions]="{standalone: true}"> Creditors
                 </label> &nbsp;&nbsp;

@@ -15,7 +15,8 @@ export class ApiUrls {
 
     getCurrentUser = 'api/v1/user/me';
     getAllUsers = 'api/v1/userNames';
-    getAllStaffList = 'api/v1/staff';
+    getAgentNames = 'api/v1/agentNames';
+    getSuppliers = 'api/v1/suppliers/';
 
     // Cancellations API's
     pendingShipmentsCount = 'api/v1/shipment/count/cancellationPendingShipments';
@@ -123,6 +124,8 @@ export class ApiUrls {
     // Cargo Loading Sheet
     getBookingsForLoading = 'api/v1/shipment/search/loading';
     loadToVehicle = 'api/v1/shipment/assignVehicle/';
+    addBookingsToTripSheet = 'api/v1/shipment/loadToTripSheet/';
+    createTripSheet = 'api/v1/shipment/createTripSheet/';
 
     // Unloading Sheet
     getBookingsForUnloading = 'api/v1/shipment/search/unloading';
@@ -179,4 +182,131 @@ export class ApiUrls {
     updateJob ='api/v1/jobs/updateJob';
     addJob = 'api/v1/jobs/addJob';
     deleteJob = 'api/v1/jobs/delete/';
+  
+    // Service Form API's
+    getDetailsByFormId = 'api/v1/serviceForm/';
+
+
+    // Service Report API's
+    getServiceReportDetails = 'api/v1/serviceReport/';
+    updateVehicleRegNo = 'api/v1/vehicle/odometerReading/';
+    submitReport = 'api/v1/serviceReport/';
+
+    // Agents API's
+    getAllAgents = 'api/v1/agents';
+    getAgentsCount = 'api/v1/agent/count';
+    addAgent = 'api/v1/agent/addAgent';
+    editAgent = 'api/v1/agent/';
+    updateAgent = 'api/v1/agent/update';
+
+    // Staff API's
+    getStaffList = 'api/v1/staff';
+    getStaffCount = 'api/v1/staff/count';
+    getStaffDetails = 'api/v1/staff/';
+    addNewStaff = 'api/v1/staff/create';
+    editStaff = 'api/v1/staff/';
+
+    // OfficeExpenses
+    pendingCount = 'api/v1/officeExpenses/count?pending=true';
+    allPending = 'api/v1/officeExpenses/pending';
+    approvedCount = 'api/v1/officeExpenses/count?pending=false';
+    allApproves = 'api/v1/officeExpenses/approved';
+    searchExpense = 'api/v1/officeExpenses/search';
+    expensesTypes = 'api/v1/officeExpenses/types';
+    getExpense = 'api/v1/officeExpense/';
+    approveOrRejectStatus = 'api/v1/officeExpenses/approveOrReject/';
+    addExpense = 'api/v1/officeExpense/';
+    editExpense = 'api/v1/officeExpense/';
+    deleteOfficeExpense = 'api/v1/officeExpense/';
+    suppliers = 'api/v1/suppliers/';
+    vehiclesList = 'api/v1/vehicles';
+    fileUpload = 'api/v1/fileUpload';
+    getFile = 'api/v1/getUploads/';
+
+    // Cash Balance
+    getCashBalances = 'api/v1/user/cashBalances';
+
+    // Service Reports API's
+    loadServiceReports = 'api/v1/serviceReport/loadReports?travelDate=';
+    downloadPassengerReport = 'api/v1/serviceReport/download?travelDate=';
+
+    // invoices
+    searchInvoice = 'api/v1/invoice/search';
+
+    // Due Reports API's
+    loadDueReports = 'api/v1/dueReports';
+    loadOfficeDueReportByDate = 'api/v1/dueReport/office/';
+    loadOfficeDueReportByService = 'api/v1/dueReport/officeDuesByService';
+    loadOfficeDueReportByAgents = 'api/v1/dueReport/officeDuesByAgent';
+    searchDueReports = 'api/v1/dueReport/search';
+    searchByPNR = 'api/v1/dueReport/searchByPNR?';
+    payBookingDue = 'api/v1/dueReport/payBookingDue/';
+    payBookingDues = 'api/v1/dueReport/payBookingDues/';
+    officeDuesByDate = 'api/v1/dueReport/office/';
+    officeDuesByService = 'api/v1/dueReport/dueBookingByService/';
+    officeDuesByAgent = 'api/v1/dueReport/officeDuesByAgent/';
+
+    // Update Password
+    updatePassword = 'api/v1/user/updatePassword';
+
+    // Search collection
+    searchCollection = 'api/v1/serviceReport/searchCollection';
+
+    // expenseIncomeReports
+    expenseIncomeReportsData = 'api/v1/payments/day?';
+    bookingModal = 'api/v1/serviceReport/booking/';
+
+    // Image related APIs
+    getUploads = 'api/v1/getUploads/?id=';
+    removeImage = '/api/v1/deleteUpload';
+
+    // Salary Reports API's
+    getSalaryReportsCount = 'api/v1/dailyTrips/getSalaryReportsCount';
+    getSalaryReports = 'api/v1/dailyTrips/getSalaryReports';
+    paySalaryForSelected = 'api/v1/dailyTrips/paySalary';
+
+    // Service Feedback API's
+    serviceFeedbackSearch = 'api/v1/serviceFeedback/search/?&travelDate=';
+    serviceFeedbackReports = 'api/v1/serviceFeedback/feedbackReport/?&reportId=';
+    serviceFeedbackStatusUpdate = 'api/v1/serviceFeedback/updateStatus/';
+    bookingFeedbackStatusUpdate = 'api/v1/serviceFeedback/bookingFeedback/';
+
+    // Cash Transfer API's
+    cashTransferPendingCount = 'api/v1/cashTransfer/pending/count';
+    getPendingAll = 'api/v1/cashTransfer/pending/all';
+    userNamesMap = 'api/v1/userNamesMap';
+    nonPendingCount = 'api/v1/cashTransfer/nonpending/count';
+    getAllNonPending = 'api/v1/cashTransfer/nonpending/all';
+    saveOrUpdate = 'api/v1/cashTransfer/';
+    cashTransferSearch = 'api/v1/cashTransfer/search';
+
+    // Reviews API's
+    getAllRoutes = 'api/v1/review/getAllRoutes';
+    getReviewsCount = 'api/v1/review/getCount';
+    getAllReviews = 'api/v1/review/getAll';
+    getAllReviewUploads = 'api/v1/review/getAllReviewUploads';
+    reviewFileUpload = 'api/v1/review/upload';
+
+    // Escalations API's
+    countOfEscalations = 'api/v1/bookingFeedback/count/';
+    getAllEscalations = 'api/v1/bookingFeedback/get';
+    addCommentToBooking = 'api/v1/bookingFeedback/addComment/';
+    escalationResolve = 'api/v1/bookingFeedback/resolve/';
+    sendEmail = 'api/v1/bookingFeedback/sendEmailWithMessage/?';
+
+    // fuelExpenseReport
+    getAllByDate = 'api/v1/FuelExpense/getAllByDate';
+    searchData = 'api/v1/FuelExpense/search';
+    addFuelExpense = 'api/v1/FuelExpense/addFuelExpense';
+    updateFuelExpense = 'api/v1/FuelExpense/updateFuelExpense';
+    getFuelExpense = 'api/v1/FuelExpense/getFuelExpense/';
+    deleteFuelExpense = 'api/v1/FuelExpense/deleteFuelExpense/';
+    updateServiceName = 'api/v1/FuelExpense/updateServiceName?';
+
+    // Pending Reports
+    pendingReports = 'api/v1/serviceReport/pending';
+
+    // Reports To Be Viewed
+    reportsToBeReviewed = 'api/v1/serviceReport/toBeReviewed';
+
 }

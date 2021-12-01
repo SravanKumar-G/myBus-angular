@@ -1,0 +1,636 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-bus" aria-hidden="true"></i>
+                Service Report
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <xng-breadcrumb></xng-breadcrumb>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row form-group">
+                        <div class="col-sm-12 text-right mb-2">
+                            <button type="button" class="btn btn-primary btn-sm" title="Previous Service"
+                                    (click)="nextAndPreviousService('decrement')" [disabled]="indexCount === 0">
+                                <i class="fa fa-angle-left"></i>
+                            </button>
+                            <span style="padding: 8px;">{{indexCount}} / {{serviceReports.length}}</span>
+                            <button type="button" class="btn btn-primary btn-sm" title="Next Service"
+                                    (click)="nextAndPreviousService('increment')" [disabled]="indexCount === serviceReports.length">
+                                <i class="fa fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-12 text-right" style="font-size: 14px;">
+                             <span *ngIf="serviceReportDetails.status" style="color:red"> Service report has been submitted on {{serviceReportDetails.updatedAt|date}}
+                                 by {{serviceReportDetails.attrs.submittedBy}}</span>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="flex-container">
+                            <div class="service-card">
+                                <label class="control-label">Route:</label>
+                                {{serviceReportDetails.source}} - {{serviceReportDetails.destination}} - {{serviceReportDetails.busType || '---'}}
+                            </div>
+                            <div class="service-card">
+                                <label class="control-label">Journey Date:</label>
+                                {{serviceReportDetails.jdate}}
+                            </div>
+                            <div class="service-card">
+                                <label class="control-label">Vehicle:</label>
+                                <ng-select style="display: inline-block !important;"
+                                           [items]="vehicles"
+                                           [multiple]="false"
+                                           bindLabel="regNo"
+                                           [closeOnSelect]="true"
+                                           bindValue="regNo"
+                                           placeholder="Select Vehicle"
+                                           [(ngModel)]="serviceReportDetails.vehicleRegNumber"
+                                           (ngModelChange)="updateOdometerReading()"
+                                           [disabled]="isDisabled()"
+                                           [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="service-card">
+                                <label class="control-label">Received At:</label>
+                                {{currentUser.attrs.branchName}}</div>
+                            <div class="service-card">
+                                <label class="control-label">Service Number:</label>
+                                {{serviceReportDetails.serviceNumber}}</div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="flex-container">
+                                <div class="service-card">
+                                   <label class="control-label">Red Bus:</label>
+                                    {{serviceReportDetails.netRedbusIncome| number}}
+                                </div>
+                                <div class="service-card">
+                                   <label class="control-label">PayTM:</label>
+                                    {{serviceReportDetails.netPaytmIncome| number}}
+                                </div>
+                                <div class="service-card">
+                                    <label class="control-label">Abhibus:</label>
+                                    {{serviceReportDetails.netAbhibusIncome| number}}
+                                </div>
+                                <div class="service-card">
+                                    <label class="control-label">Online:</label>
+                                    {{serviceReportDetails.netOnlineIncome| number}}
+                                </div>
+                                <div class="service-card">
+                                    <label class="control-label">Cash Bookings:</label>
+                                    {{serviceReportDetails.cashIncome| number}}
+                                </div>
+                                <div class="service-card">
+                                   <label class="control-label">Gross:</label>
+                                    {{serviceReportDetails.grossIncome| number}}
+                                </div>
+                                <div class="service-card">
+                                    <label class="control-label">Net:</label>
+                                    {{serviceReportDetails.netIncome| number}}
+                                </div>
+                                <div class="service-card">
+                                    <label class="control-label">Cash Collected:</label>
+                                    {{serviceReportDetails.netCashIncome| number}}
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row form-group">
+                        <div class="col-sm-7" *ngIf="serviceReportDetails.fuelExpenses.length > 0">
+                            <h5>Fuel Expenses</h5>
+                            <table class="table table-hover table-bordered mt-2" style="margin-bottom: 0 !important;">
+                                <tr *ngFor="let fuelExpense of serviceReportDetails.fuelExpenses; let i = index">
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm"
+                                               placeholder="fuel quantity"
+                                               [(ngModel)]="fuelExpense.quantity"
+                                               [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"></td>
+                                    <td><input type="number" class="form-control form-control-sm"
+                                               placeholder="fuel cost"
+                                               [(ngModel)]="fuelExpense.cost"
+                                               [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"></td>
+                                    <td>
+                                        <ng-select
+                                                style="width: 180px"
+                                                [items]="suppliers"
+                                                [multiple]="false"
+                                                bindLabel="name"
+                                                [closeOnSelect]="true"
+                                                bindValue="id"
+                                                placeholder="Select Agent"
+                                                [(ngModel)]="fuelExpense.supplierId"
+                                                [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}">
+                                        </ng-select>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input class="form-control form-control-sm"
+                                                   placeholder="Journey Date"
+                                                   name="journeyDate"
+                                                   [(ngModel)]="fuelExpense.journeyDate"
+                                                   [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                   bsDatepicker
+                                                   #journeyDate="bsDatepicker"
+                                                   [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                        (click)="journeyDate.show()"
+                                                        [attr.aria-expanded]="journeyDate.isOpen" type="button">
+                                                    <i class="fa fa-calendar"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="!isDisabled()">
+                                        <a class="cus-a" style="color: red !important;font-size: 15px;"
+                                           (click)="deleteFuelExpense(i)">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-sm-5 mt-auto" *ngIf="!isDisabled()">
+                            <button class="btn btn-sm btn-success" (click)="addFuelExpense()">
+                                Add Fuel Expense
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row form-group mt-2">
+                        <div class="col-sm-8 col-12">
+                            <h5>Bookings</h5>
+                            <div class="mt-2">
+                                <table class="table table-hover table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" [appFrentendSort]="serviceReportDetails.bookings"
+                                            data-order="desc" data-name="seats">Seats<i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="serviceReportDetails.bookings"
+                                            data-order="desc" data-name="ticketNo">Ticket#<i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="serviceReportDetails.bookings"
+                                            data-order="desc" data-name="bookedBy">BookedBy<i
+                                                class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="serviceReportDetails.bookings"
+                                            data-order="desc" data-name="name">Name<i
+                                                class="fa fa-sort"></i></th>
+                                        <th>NetAmt</th>
+                                        <th>Net</th>
+                                        <th>Basic</th>
+                                        <th>Tax</th>
+                                        <th>Comm</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let booking of serviceReportDetails.bookings"
+                                        [ngClass]="{changedRate: rateToBeVerified(booking)}">
+                                        <td>
+                                            <span *ngIf="booking.id != null" title="{{booking.seats}}">
+                                                 {{ booking.seats}}
+                                            </span>
+                                            <span *ngIf="booking.id == null">
+                                                 <input [(ngModel)]="booking.seats" class="form-control form-control-sm"
+                                                        [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                        (ngModelChange)="countSeats()">
+                                            </span>
+                                        </td>
+                                        <td>{{ booking.ticketNo }}</td>
+                                        <td [ngStyle]="isCashBooking(booking) && !booking.hasValidAgent && {'background-color':'red'}">
+                                           <span *ngIf="booking.id != null">
+                                                 {{ booking.bookedBy}}
+                                            </span>
+                                            <span *ngIf="!booking.hasValidAgent">
+                                                <a class="cus-a"
+                                                   (click)="editAgent(booking.bookedBy, editAgentModal)">Update branch</a></span>
+                                            <span *ngIf="booking.id == null">
+                                                 <ng-select
+                                                         [items]="agents"
+                                                         [multiple]="false"
+                                                         bindLabel="username"
+                                                         [closeOnSelect]="true"
+                                                         bindValue="username"
+                                                         placeholder="Select Agent"
+                                                         [(ngModel)]="booking.bookedBy">
+                                                </ng-select>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="booking.id != null" title="{{booking.name}}">
+                                                 {{ booking.name}}
+                                            </span>
+                                            <span *ngIf="booking.id == null">
+                                                <input [(ngModel)]="booking.name" class="form-control form-control-sm"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}">
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="isOnlineBooking(booking)">{{booking.netAmt | number}}</span>
+                                            <span *ngIf="isCashBooking(booking)">
+                                                    <table class="table table-hover table-bordered"
+                                                           style="margin-bottom: 0 !important;">
+                                                        <tr>
+                                                            <td style="width: 150px;">
+                                                                <input type="number"
+                                                                       class="form-control form-control-sm"
+                                                                       [(ngModel)]="booking.netAmt"
+                                                                       (ngModelChange)="calculateNet(booking)"
+                                                                       [disabled]="isDisabled()"
+                                                                       [ngModelOptions]="{standalone: true}"/>
+                                                            </td>
+                                                            <td>
+                                                                 <input type="checkbox"
+                                                                        style="margin-left: 0;" class="form-check-input"
+                                                                        id="due"
+                                                                        [(ngModel)]="booking.due"
+                                                                        [disabled]="isDisabled()"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        (ngModelChange)="calculateNet(booking)">
+                                                                     <label style="margin-left: 20px;margin-top: 2px;"
+                                                                            class="form-check-label"
+                                                                            for="due">Due</label>
+                                                            </td>
+                                                            <td *ngIf="booking.index">
+                                                              <a class="cus-a" (click)="deleteBooking(booking)"
+                                                                 title="Delete booking">
+                                                                  <i class="fa fa-trash"></i>
+                                                              </a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                            </span>
+                                        </td>
+                                        <td>{{booking.originalCost | number}}</td>
+                                        <td>{{booking.basicAmount | number}}</td>
+                                        <td>{{booking.serviceTax | number}}</td>
+                                        <td>{{booking.commission | number}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Seats:{{serviceReportDetails.totalSeats || 0}}</td>
+                                    </tr>
+                                    <tr *ngIf="!serviceReportDetails.bookings || serviceReportDetails.bookings.length === 0">
+                                        <td colspan="9">No bookings found.</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-success btn-sm pull-right" (click)="addBooking()"
+                                        *ngIf="!isDisabled()">
+                                    Add Booking
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-12 mt-4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-condensed table-hover mt-2">
+                                        <tr>
+                                            <td>Old Mileage:</td>
+                                            <td>{{serviceReportDetails.oldOdometerReading}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mileage:</td>
+                                            <td>
+                                                <input [(ngModel)]="serviceReportDetails.milage" type="text"
+                                                       class="form-control form-control-sm"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h5>Additional Income</h5>
+                                    <table class="table table-bordered table-condensed table-hover mt-2">
+                                        <tr>
+                                            <td>Luggage</td>
+                                            <td>
+                                                <input type="number" placeholder="amount"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.luggageIncome"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Advance Given</td>
+                                            <td>
+                                                <input type="number" placeholder="amount"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.advance"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>On Road Service Bookings</td>
+                                            <td>
+                                                <input type="number" placeholder="On Road Service Bookings"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.onRoadServiceIncome"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Other</td>
+                                            <td>
+                                                <input type="number" placeholder="Amount"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.otherIncome"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h5>Expenses</h5>
+                                    <table class="table table-bordered table-condensed table-hover mt-2">
+                                        <tr>
+                                            <td>Toll Fee</td>
+                                            <td colspan="2">
+                                                <input type="number" placeholder="toll fee"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.tollFee"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Staff Batta</td>
+                                            <td colspan="2"><input type="number" placeholder="driver batta"
+                                                                   class="form-control form-control-sm"
+                                                                   [(ngModel)]="serviceReportDetails.driverBatta"
+                                                                   [disabled]="isDisabled()"
+                                                                   [ngModelOptions]="{standalone: true}"
+                                                                   (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Police</td>
+                                            <td colspan="2">
+                                                <input type="number" placeholder="police"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.police"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pooja</td>
+                                            <td colspan="2">
+                                                <input type="number" placeholder="pooja"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.pooja"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Repair</td>
+                                            <td colspan="2">
+                                                <input type="number" placeholder="repair"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.repair"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Parking</td>
+                                            <td colspan="2">
+                                                <input type="number" placeholder="parking"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.parking"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Luggage commission</td>
+                                            <td colspan="2">
+                                                <input type="number" placeholder="luggage commission"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.luggageCommission"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Toll(fasttag)</td>
+                                            <td colspan="2">
+                                                <input type="number" placeholder="fast tag"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.tollFasttag"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Insurance(O)</td>
+                                            <td colspan="2">
+                                                <input type="number" placeholder="insurance"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.insurance"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fuel Expense(O)</td>
+                                            <td colspan="2">
+                                                <input type="number" placeholder="fuel expense"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.fuelExpense"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Road Tax(O)</td>
+                                            <td colspan="2">
+                                                <input type="number" placeholder="road tax"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.roadTax"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Salary(O)</td>
+                                            <td colspan="2">
+                                                <input type="number" placeholder="salary"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="serviceReportDetails.salary"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr *ngFor="let expense of serviceReportDetails.expenses; let e = index;">
+                                            <td>
+                                                <input type="text" placeholder="expense name"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="expense.salary"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"/>
+                                            </td>
+                                            <td>
+                                                <input type="number" placeholder="amount"
+                                                       class="form-control form-control-sm"
+                                                       [(ngModel)]="expense.amount"
+                                                       [disabled]="isDisabled()" [ngModelOptions]="{standalone: true}"
+                                                       (ngModelChange)="calculateNet('')"/>
+                                            </td>
+                                            <td>
+                                                <a class="cus-a" style="color: red !important;font-size: 15px"
+                                                   *ngIf="expense.index"
+                                                   (click)="deleteExpense(e)">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <button class="btn btn-success btn-sm pull-right" (click)="addExpenses()"
+                                            *ngIf="!isDisabled()">
+                                        Add Expense
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h5>Staff</h5>
+                                    <table class="table table-bordered table-condensed table-hover mt-2">
+                                        <tr *ngFor="let staff of serviceReportDetails.staffDetails; let s = index;">
+                                            <td>{{staff.displayName}}</td>
+                                            <td>{{staff.type || '--'}}</td>
+                                            <td *ngIf="!isDisabled()">
+                                                <a class="cus-a" style="color: red !important;font-size: 15px"
+                                                   (click)="deleteStaff(s)">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="!isDisabled()">
+                                            <td>
+                                                <ng-select style="width: 220px"
+                                                           [items]="allStaff"
+                                                           [multiple]="false"
+                                                           bindLabel="displayName"
+                                                           [closeOnSelect]="true"
+                                                           placeholder="Select Staff"
+                                                           [(ngModel)]="newStaffId"
+                                                           (ngModelChange)="onStaffSelect(newStaffId)">
+                                                </ng-select>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm pull-right" (click)="addStaff()">
+                                                    Add Staff
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h5>Service Notes</h5>
+                                    <textarea class="form-control form-control-sm" rows="6" placeholder="Enter notes"
+                                              [(ngModel)]="serviceReportDetails.notes"
+                                              [disabled]="isDisabled()"
+                                              [ngModelOptions]="{standalone: true}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 text-right">
+                            <button type="button" class="btn btn-sm btn-danger mr-2" (click)="haltService('HALT')"
+                                    *ngIf="!serviceReportDetails.invalid && !serviceReportDetails.status">
+                                <span class="glyphicon"></span> Halted Service
+                            </button>
+                            <button type="button" class="btn btn-sm btn-warning mr-2" (click)="submit('SUBMITTED')"
+                                    *ngIf="requireVerification()">
+                                <span class="glyphicon"></span> Submit For Verification
+                            </button>
+                            <button type="button" class="btn btn-sm btn-success mr-2" (click)="submit('SUBMITTED')"
+                                    *ngIf="canSubmit() || !isDisabled()">
+                                <span class="glyphicon"></span> Submit Report
+                            </button>
+                            <span *ngIf="serviceReportDetails.status" style="color:red"> Service report has been submitted on {{serviceReportDetails.updatedAt|date}}
+                                by {{serviceReportDetails.attrs.submittedBy}}</span>
+                            <span *ngIf="serviceReportDetails.invalid" style="color:red;">Please assign branch offices to agents <a
+                                    (click)="launchAgents()">here</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--edit agent modal-->
+<ng-template #editAgentModal>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">Edit Agent</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row form-group">
+            <div class="col-sm-8 offset-2">
+                UserName : {{agent.username}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-8 offset-2">
+                <label class="control-label">BranchOffice</label>
+                <div>
+                    <ng-select
+                            [items]="branchOffices"
+                            [multiple]="false"
+                            bindLabel="name"
+                            [closeOnSelect]="true"
+                            bindValue="id"
+                            placeholder="Select Office"
+                            [(ngModel)]="agent.branchOfficeId"
+                            [ngModelOptions]="{standalone: true}">
+                    </ng-select>
+                </div>
+                <a class="cus-a" [routerLink]="['/branchOffices/addBranchOffice']" (click)="modalService.dismissAll()">Add
+                    New Branch</a>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-8 offset-2">
+                <label class="control-label">Commission</label>
+                <input type="number" class="form-control form-control-sm"
+                       [(ngModel)]="agent.commission"
+                       placeholder="enter agent commission"
+                       [ngModelOptions]="{standalone: true}"/>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="col-sm-12 text-right p-0">
+            <button type="button" class="btn btn-success btn-sm mr-2" (click)="updateAgent()">
+                <i class="fa fa-fw fa-check-circle"></i> Update Agent
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">
+                <i class="fa fa-fw fa-times-circle"></i> Close
+            </button>
+        </div>
+    </div>
+
+</ng-template>
