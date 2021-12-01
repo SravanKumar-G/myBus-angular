@@ -1,0 +1,94 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-building" aria-hidden="true"></i>
+                {{headerTitle}}
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router"> {{headerTitle}}</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-12 mx-auto">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Inventory Name:</label>
+                            <input type="text" class="form-control form-control-sm"
+                                   placeholder="Inventory Name"
+                                   [(ngModel)]="inventory.name"
+                                   [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Unique Id:<span class="mandatory-field">*</span></label>
+                            <input type="text" class="form-control form-control-sm"
+                                   placeholder="Inventory Unique ID"
+                                   [(ngModel)]="inventory.uniqueId"
+                                   [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Select Supplier</label>
+                            <ng-select
+                                    [items]="suppliers"
+                                    [multiple]="false"
+                                    bindLabel="name"
+                                    [closeOnSelect]="true"
+                                    bindValue="id"
+                                    placeholder="Select Supplier ..."
+                                    [(ngModel)]="inventory.supplierType"
+                                    [ngModelOptions]="{standalone: true}">
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Quantity:<span class="mandatory-field">*</span></label>
+                            <input type="text" class="form-control form-control-sm"
+                                   placeholder="Quantity"
+                                   [(ngModel)]="inventory.quantity"
+                                   [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                        <div class="col-sm-6 col-12 form-group" *ngIf="inventory.supplierType == 'others'">
+                            <label>Other:<span class="mandatory-field">*</span></label>
+                            <input type="text" class="form-control form-control-sm"
+                                   placeholder="Supplier"
+                                   [(ngModel)]="inventory.othersSupplierName"
+                                   [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                        <div class="col-sm-6 col-12 form-group">
+                            <label>Unit Cost:<span class="mandatory-field">*</span></label>
+                            <input type="text" class="form-control form-control-sm"
+                                   placeholder="Unit Cost"
+                                   [(ngModel)]="inventory.unitCost"
+                                   [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                        <div class="col-sm-6 col-12 form-group">
+                            <label class="form-check-label" for="skipAgentValidity">Paid :</label>
+                            <div class="form-check ml-2" style="display: inline;">
+                                <input type="checkbox" class="form-check-input" id="skipAgentValidity"
+                                       [(ngModel)]="inventory.paid"
+                                       [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tile-footer">
+                    <div class="col-12 text-center">
+                        <p class="error-field">{{errorMessage}}</p>
+                    </div>
+                    <div class="col-sm-12 text-right p-0">
+                        <button type="button" class="btn btn-success btn-sm mr-2" (click)="save()">
+                            <i class="fa fa-fw fa-check-circle"></i> {{inventoryId ? 'Update' : 'Save'}}
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="cancel()">
+                            <i class="fa fa-fw fa-times-circle"></i> Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

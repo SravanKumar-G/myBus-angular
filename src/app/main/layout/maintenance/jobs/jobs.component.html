@@ -1,0 +1,389 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-houzz" aria-hidden="true"></i>
+                Jobs
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+            <li class="breadcrumb-item"><span class="breadcrumb-item-router">Jobs</span></li>
+        </ul>
+    </div>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item pending-users-tab" (click)="changePaymentsTab(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changePaymentsTab(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Completed</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changePaymentsTab(3)">
+            <a class="nav-link" [ngClass]="{active:tab==3}">Search</a>
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 1">
+            <div class="tile">
+                <div class="tile-body">
+                    <!-- <div class="col-sm-12 mb-2 mt-2"> -->
+                        <div class="row">
+                        </div>
+                        <div class="row p-3" style="align-items:center;">
+                            <div class="col-sm-2">
+                                <label class="ls text-uppercase text-600 font-weight-semi-bold">Total
+                                    Count: </label> {{pendingCount || '0'}}
+                            </div>
+                            <div class="col-sm-4">
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="col-sm-12 text-right">
+                                    <a class="btn btn-sm btn-primary" [routerLink]="['addJobs']">
+                                        <span class="fa fa-plus"></span> Add Jobs</a>&nbsp;&nbsp;&nbsp;
+                                    <!-- <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export
+                                        Excel
+                                    </button> -->
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover text-center tableFixHead">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th>Inventory</th>
+                                        <th>Vehicle</th>
+                                        <th>Mileage</th>
+                                        <th>Job Date</th>
+                                        <th>Description & Location</th>
+                                        <th>Remainder Date</th>
+                                        <th>Cost</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let job of pendingJobs; let i = index;">
+                                            <td>{{(pendingpagination.page-1) * pendingpagination.size + i + 1}}</td>
+                                            <td>{{job.attrs.inventory }}</td>
+                                            <td>{{job.attrs.RegNo }}</td>
+                                            <td>{{job.mileage}}</td>
+                                            <td>{{job.jobDate | date}}</td>
+                                            <td>Description : {{job.jobDescription}} - Location :{{job.serviceLocation}}</td>
+                                            <td>{{job.reminderDate | date}}</td>
+                                            <td>{{job.totalCost}}</td>
+                                            <td>
+                                                <button *ngIf="!job.jobCompleted" type="button" class="action-icon-style text-primary waves-effect waves-blue edit-user-button"
+                                                        title="Edit Jobs"  [routerLink]="['editJobs/' + job.id]">
+                                                        <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                                </button>
+                                                <button *ngIf="!job.jobCompleted" type="button" class="action-icon-style text-danger waves-effect waves-blue edit-user-button"
+                                                        title="Delete Jobs" (click)="deleteJob(job.id)">
+                                                        <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="!pendingJobs || pendingJobs.length === 0" class="text-center">
+                                            <td colspan="12">No Pending Jobs found</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr *ngIf="pendingJobs.length > 0">
+                                            <th colspan="11">
+                                                <div class="pull-right">
+                                                    Total Count : {{pendingCount || 0}}
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row" style="display: inline-block">
+                                        <ngb-pagination *ngIf="pendingCount || pendingCount !== 0"
+                                                        [(page)]="pendingpagination.page"
+                                                        [pageSize]="pendingpagination.size"
+                                                        [collectionSize]="pendingCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="pendinghandlePageChange($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                    </div>
+                                    <ul class="pagination pull-right" *ngIf="pendingCount || pendingCount !== 0">
+                                        <li class="page-item" [ngClass]="size == pendingpagination.size ? 'active' : ''"
+                                            *ngFor="let size of pendingpagination.pageSizes" (click)="pendinghandlePageSizeChange(size)">
+                                            <button class="page-link"> {{ size }}
+                                                <span class="sr-only">(current)</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 2">
+            <div class="tile">
+                <div class="tile-body">
+                    <!-- <div class="col-sm-12 mb-2 mt-2"> -->
+                        <div class="row">
+                        </div>
+                        <div class="row p-3" style="align-items:center;">
+                            <div class="col-sm-2">
+                                <label class="ls text-uppercase text-600 font-weight-semi-bold">Total
+                                    Count: </label> {{completedCount || '0'}}
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover text-center tableFixHead">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th>Inventory</th>
+                                        <th>Vehicle</th>
+                                        <th>Mileage</th>
+                                        <th>Job Date</th>
+                                        <th>Description & Location</th>
+                                        <th>Remainder Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let job of completedJobs; let i = index;">
+                                            <td>{{(completedpagination.page-1) * completedpagination.size + i + 1}}</td>
+                                            <td>{{job.attrs.inventory }}</td>
+                                            <td>{{job.attrs.RegNo }}</td>
+                                            <td>{{job.mileage}}</td>
+                                            <td>{{job.jobDate | date}}</td>
+                                            <td>Description : {{job.jobDescription}} - Location :{{job.serviceLocation}}</td>
+                                            <td>{{job.reminderDate | date}}</td>
+                                        </tr>
+                                        <tr *ngIf="!completedJobs || completedJobs.length === 0" class="text-center">
+                                            <td colspan="12">No Completed Jobs found</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr *ngIf="completedJobs.length > 0">
+                                            <th colspan="11">
+                                                <div class="pull-right">
+                                                    Total Count : {{completedCount || 0}}
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row" style="display: inline-block">
+                                        <ngb-pagination *ngIf="completedCount || completedCount !== 0"
+                                                        [(page)]="completedpagination.page"
+                                                        [pageSize]="completedpagination.size"
+                                                        [collectionSize]="completedCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="completedhandlePageChange($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                    </div>
+                                    <ul class="pagination pull-right" *ngIf="completedCount || completedCount !== 0">
+                                        <li class="page-item" [ngClass]="size == completedpagination.size ? 'active' : ''"
+                                            *ngFor="let size of completedpagination.pageSizes" (click)="completedhandlePageSizeChange(size)">
+                                            <button class="page-link"> {{ size }}
+                                                <span class="sr-only">(current)</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 3">
+            <div class="tile">
+                <div class="tile-body">
+                    <!-- <div class="col-sm-12 mb-2 mt-2"> -->
+                        <div class="row">
+                            <!-- <div class="col-sm- form-group"> -->
+                                <label class="col-sm-2 control-label ml-3 mb-3">Start Date:</label>
+                                <div class="col-sm-3 mb-3">
+                                    <!-- <my-datepicker ng-model="query.startDate" name="fromDate"></my-datepicker> -->
+                                    <div class="input-group">
+                                        <input class="form-control form-control-sm"
+                                               placeholder="Start Date"
+                                               name="permit"
+                                               [(ngModel)]="query.startDate"
+                                               [ngModelOptions]="{standalone: true}"
+                                               bsDatepicker
+                                               #startDate="bsDatepicker"
+                                               [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                    (click)="startDate.show()"
+                                                    [attr.aria-expanded]="startDate.isOpen" type="button">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <label class="col-sm-2 control-label ml-3 mb-3">End Date:</label>
+                                <div class="col-sm-3 mb-3">
+                                    <!-- <my-datepicker ng-model="query.endDate"></my-datepicker> -->
+                                    <div class="input-group">
+                                        <input class="form-control form-control-sm"
+                                               placeholder="End Date"
+                                               name="permit"
+                                               [(ngModel)]="query.endDate"
+                                               [ngModelOptions]="{standalone: true}"
+                                               bsDatepicker
+                                               #endDate="bsDatepicker"
+                                               [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                                    (click)="endDate.show()"
+                                                    [attr.aria-expanded]="endDate.isOpen" type="button">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+                            <!-- <div class="col-xs-12 form-group"> -->
+                                <label class="control-label col-sm-2 ml-3 mb-3">Vehicle:</label>
+                                <div class="col-sm-3 mb-3">
+                                    <select class="form-control"
+                                    [(ngModel)]="query.vehicleId" id="vehicle" name="vehicleId">
+                                        <option value="" selected>&#45;&#45;Select Vehicle&#45;&#45;</option>
+                                        <option *ngFor="let vehicle of allVehicles" [value]="vehicle.id">{{vehicle.regNo}}</option>
+                                    </select>
+                                </div>
+                                <label class="control-label col-sm-2 ml-3 mb-3">Inventory:</label>
+                                <div class="col-sm-3 mb-3">
+                                    <select class="form-control"
+                                    [(ngModel)]="query.inventoryId" id="inventory" name="vehicleId">
+                                        <option value="" selected>&#45;&#45;Select Inventory&#45;&#45;</option>
+                                        <option *ngFor="let inventory of inventories" [value]="inventory.id">{{inventory.name}}</option>
+                                    </select>
+                                </div>
+                            <!-- </div> -->
+                            <!-- <div class="col-xs-12 form-group"> -->
+                                <div class="col-sm-4">
+                                </div>
+                                 <div class="col-sm-4 mb-3 float-center">
+                                    <button type="button"  class="btn btn-sm btn-success mr-3" (click)="searchJob()"> Search Job</button>
+                                     
+                                     <button type="button"  class="btn btn-sm btn-success mr-3" (click)="exportToExcel('jobSearchTable', 'Jobs')"> Export To Excel</button>
+                                    
+                                     <button type="button"  class="btn btn-sm btn-success" (click)="print('jobSearchTable')"> Print</button>
+                                
+                                </div>
+                            <!-- </div> -->
+                        </div>
+                        <!-- <div class="row p-3" style="align-items:center;">
+                            <div class="col-sm-2">
+                                <label class="ls text-uppercase text-600 font-weight-semi-bold">Total
+                                    Count: </label> {{pendingCount || '0'}}
+                            </div>
+                            <div class="col-sm-4">
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="col-sm-12 text-right">
+                                    <a class="btn btn-sm btn-primary" [routerLink]="['add-inventories']">
+                                        <span class="fa fa-plus"></span> Add Jobs</a>&nbsp;&nbsp;&nbsp; -->
+                                    <!-- <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export
+                                        Excel
+                                    </button> --
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                    <div class="row">
+                        <div class="col-sm-12"> 
+                            <div class="table-responsive"  id="jobSearchTable1">
+                                <table class="table table-bordered table-hover text-center tableFixHead" id="jobSearchTable">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th>Inventory</th>
+                                        <th>Vehicle</th>
+                                        <th>Cost</th>
+                                        <th>Mileage</th>
+                                        <th>Job Date</th>
+                                        <th>Details</th>
+                                        <th>Remainder Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let job of searchResults; let i = index;">
+                                            <td>{{(searchpagination.page-1) * searchpagination.size + i + 1}}</td>
+                                            <td>{{job.attrs.inventory }}</td>
+                                            <td>{{job.attrs.RegNo }}</td>
+                                            <td>{{job.totalCost}}</td>
+                                            <td>{{job.mileage}}</td>
+                                            <td>{{job.jobDate | date}}</td>
+                                            <td>Description : {{job.jobDescription}} - Location :{{job.serviceLocation}}</td>
+                                            <td>{{job.reminderDate | date}}</td>
+                                            
+                                            <td>
+                                                <button  type="button" class="action-icon-style text-primary waves-effect waves-blue edit-user-button"
+                                                        title="Edit Jobs" [routerLink]="['editJobs/' + job.id]">
+                                                        <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                                </button>
+                                                <button  type="button" class="action-icon-style text-danger waves-effect waves-blue edit-user-button"
+                                                        title="Delete Jobs" (click)="deleteJob(job.id)">
+                                                        <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="!searchResults || searchResults.length === 0" class="text-center">
+                                            <td colspan="12">No Jobs found</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr *ngIf="searchResults.length > 0">
+                                            <th colspan="11">
+                                                <div class="pull-right">
+                                                    Total Count : {{searchcount || 0}}
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row" style="display: inline-block">
+                                        <ngb-pagination *ngIf="searchcount || searchcount !== 0"
+                                                        [(page)]="searchpagination.page"
+                                                        [pageSize]="searchpagination.size"
+                                                        [collectionSize]="searchcount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="searchhandlePageChange($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                    </div>
+                                    <ul class="pagination pull-right" *ngIf="searchcount || searchcount !== 0">
+                                        <li class="page-item" [ngClass]="size == searchpagination.size ? 'active' : ''"
+                                            *ngFor="let size of searchpagination.pageSizes" (click)="searchhandlePageSizeChange(size)">
+                                            <button class="page-link"> {{ size }}
+                                                <span class="sr-only">(current)</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

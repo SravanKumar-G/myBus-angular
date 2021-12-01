@@ -4,6 +4,7 @@ import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {Router} from '@angular/router';
 import {OnlynumberDirective} from '../../../../customDirectives/directives/onlynumber.directive';
 import Swal from 'sweetalert2';
+import {data} from 'jquery';
 
 @Component({
     selector: 'app-escalations',
@@ -18,8 +19,15 @@ export class EscalationsComponent implements OnInit {
         size: 20,
         pageSizes: [],
     };
+    query: any = {
+        page: 1,
+        size: 10,
+        key: '',
+        rating: '',
+    };
     public escalationsCount: any;
     public listOfEscalations: Array<any> = [];
+    public allSearchComplaints: Array<any> = [];
     public listOfRoutes: Array<any> = [];
 
     constructor(private apiService: ApiServiceService,
@@ -41,6 +49,9 @@ export class EscalationsComponent implements OnInit {
             case 2:
                 this.loadCountOfEscalations('Resolved');
                 break;
+            case 3:
+                this.getAllSearchComplaints();
+                break;
             default:
                 this.loadCountOfEscalations('Escalated');
                 break;
@@ -50,7 +61,6 @@ export class EscalationsComponent implements OnInit {
     loadCountOfEscalations(status: any): void {
         this.filterObj.status = status;
         this.apiService.getAll(this.apiUrls.countOfEscalations, this.filterObj).subscribe((count: any) => {
-                console.log(count);
                 this.escalationsCount = count;
                 OnlynumberDirective.pagination(count, this.filterObj);
                 this.getAllEscalations();
@@ -67,6 +77,14 @@ export class EscalationsComponent implements OnInit {
             }
         }, error => {
             Swal.fire('Error', error.message, 'error');
+        });
+    }
+
+    public getAllSearchComplaints(): void{
+        this.apiService.getAll(this.apiUrls.searchComplaints, this.query).subscribe((res: any) => {
+           if (res) {
+               this.allSearchComplaints = res;
+           }
         });
     }
 
@@ -116,7 +134,9 @@ export class EscalationsComponent implements OnInit {
                                 Swal.fire('Great!', 'Booking feedback status is successfully updated..!', 'success');
                                 if (status === 'Resolved') {
                                    this.tabChange(2);
-                                }else{
+                                }else if (status === 'search'){
+                                   this.tabChange(3);
+                                } else {
                                     this.tabChange(1);
                                 }
                             }
@@ -149,7 +169,9 @@ export class EscalationsComponent implements OnInit {
                         );
                         if (status === 'Resolved') {
                             this.tabChange(2);
-                        }else{
+                        }else if (status === 'search'){
+                            this.tabChange(3);
+                        } else{
                             this.tabChange(1);
                         }
                     }
@@ -187,7 +209,9 @@ export class EscalationsComponent implements OnInit {
                             }
                             if (status === 'Resolved') {
                                 this.tabChange(2);
-                            }else{
+                            }else if (status === 'search'){
+                                this.tabChange(3);
+                            } else{
                                 this.tabChange(1);
                             }
                         }, (error) => {

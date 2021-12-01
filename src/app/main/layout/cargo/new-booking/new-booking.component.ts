@@ -101,7 +101,8 @@ export class NewBookingComponent implements OnInit {
 
     getTotalPrice(): any {
         this.newBooking.totalCharge = 0;
-        this.newBooking.loadingCharge = 0;
+        // this.newBooking.loadingCharge = 0;
+        console.log(this.newBooking.loadingCharge, this.newBooking);
         let index;
         for (index = 0; index < this.newBooking.items.length; index++) {
             if (this.newBooking.items[index].quantity) {
