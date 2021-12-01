@@ -56,6 +56,7 @@ export class LayoutComponent implements OnInit {
                     if (!$(this).parent().hasClass('is-expanded')) {
                         treeViewMenu.find('[data-toggle=\'treeView\']').parent().removeClass('is-expanded');
                     }
+                    console.log($.fn.init());
                     $(this).parent().toggleClass('is-expanded');
                 });
 

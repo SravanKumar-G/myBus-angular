@@ -1,0 +1,198 @@
+
+<div class="app-content">
+<div class="app-title">
+    <div class="">
+        <h1>
+            <i class="fa fa-building" aria-hidden="true"></i>
+            Jobs
+            <!-- <a ui-sref="inventories"><i class="fa fa-arrow-left" aria-hidden="true"></i>Go To Inventories Page</a> -->
+        </h1>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><span class="fa fa-home fa-lg"></span></li>
+        <li class="breadcrumb-item"><span class="breadcrumb-item-router" [routerLink]="['/maintenance/inventories']" style="cursor: pointer; color: blue"> Inventories</span></li>
+        <li class="breadcrumb-item"><span class="breadcrumb-item-router"> Jobs</span></li>
+    </ul>
+</div>
+<div>
+    <div class="bpdp-tab">
+        
+        <div class="tab-content">
+            <div class="form-group">
+                <!-- <div class="col-xs-2">
+                    <label class="control-label p-5">Count:</label>{{jobsCount}}
+                </div> -->
+            </div>
+            <!-- <table class="table table-bordered table-striped table-condensed table-hover text-center" ng-table="pendingTableParams"
+                   hide-pagination="false">
+                <tr ng-repeat="job in inventoryJobs"class="text-center">
+                    <td data-title="'S No'">{{ $index + 1 }}</td>
+                    <td data-title="'Inventory'" sortable="'attrs.inventory'" class="clickable-item col-sm-2">{{job.attrs.inventory }}</td>
+                    <td data-title="'Vehicle'" sortable="'attrs.RegNo'" class="clickable-item">{{job.attrs.RegNo }}</td>
+                    <td data-title="'Mileage'" sortable="'mileage'" class="clickable-item">{{job.mileage}}</td>
+                    <td data-title="'Job Date'" sortable="'jobDate'" class="clickable-item">{{job.jobDate | date}}</td>
+                    <td data-title="'Description'">{{job.jobDescription}}</td>
+                    <td data-title="'Remainder Date'" sortable="'reminderDate'" class="clickable-item col-sm-2">{{job.reminderDate | date}}</td>
+                    <td data-title="'Cost'" class="clickable-item col-sm-2">{{job.totalCost}}</td>
+                </tr>
+                <tr ng-if="!inventoryJobs || inventoryJobs.length === 0">
+                    <td colspan="7">No Jobs exist.</td>
+                </tr>
+            </table> -->
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                    <div class="row">
+                    </div>
+                    <div class="row p-3" style="align-items:center;">
+                        <div class="col-sm-2">
+                            <label class="ls text-uppercase text-600 font-weight-semi-bold">Total
+                                Count: </label> {{jobsCount || '0'}}
+                        </div>
+                        <!-- <div class="col-sm-4">
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control" [(ngModel)]="pagination.query" placeholder="Search by Name"
+                                       aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary btn-sm" aria-label="Small" type="button"
+                                            (click)="loadInventories()">Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="col-sm-6">
+                            <div class="col-sm-12 text-right">
+                                <a class="btn btn-sm btn-primary" [routerLink]="['add-inventories']">
+                                    <span class="fa fa-plus"></span> Add Inventory</a>&nbsp;&nbsp;&nbsp;
+                                <!-- <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export
+                                    Excel
+                                </button> --
+                            </div>
+                        </div> -->
+                    </div>
+                <!-- </div> -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover text-center">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th>Inventory</th>
+                                    <th>Vehicle</th>
+                                    <th>Mileage</th>
+                                    <th>Job Date</th>
+                                    <th>Description</th>
+                                    <th>Remainder Date</th>
+                                    <th>Cost</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let job of inventoryJobs; let i = index;">
+                                        <td>{{(pagination.page-1) * pagination.size + i + 1}}</td>
+                                        <td>{{job.attrs.inventory }}</td>
+                                        <td>{{job.attrs.RegNo }}</td>
+                                        <td>{{job.mileage}}</td>
+                                        <td>{{job.jobDate | date}}</td>
+                                        <td>{{job.jobDescription}}</td>
+                                        <td>{{job.reminderDate | date}}</td>
+                                        <td>{{job.totalCost}}</td>
+                                    </tr>
+                                    <tr *ngIf="!inventoryJobs || inventoryJobs.length === 0" class="text-center">
+                                        <td colspan="12">No Jobs exist.</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr *ngIf="inventoryJobs.length > 0">
+                                        <th colspan="11">
+                                            <div class="pull-right">
+                                                Total Count : {{jobsCount || 0}}
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="form-group" *ngIf="jobsCount > 10">
+                                <div class="list-row" style="display: inline-block">
+                                    <ngb-pagination *ngIf="jobsCount || jobsCount !== 0"
+                                                    [(page)]="pagination.page"
+                                                    [pageSize]="pagination.size"
+                                                    [collectionSize]="jobsCount"
+                                                    [boundaryLinks]="true"
+                                                    (pageChange)="handlePageChange($event)"
+                                                    [maxSize]="5">
+                                    </ngb-pagination>
+                                </div>
+                                <ul class="pagination pull-right" *ngIf="jobsCount || jobsCount !== 0">
+                                    <li class="page-item" [ngClass]="size == pagination.size ? 'active' : ''"
+                                        *ngFor="let size of pagination.pageSizes" (click)="handlePageSizeChange(size)">
+                                        <button class="page-link"> {{ size }}
+                                            <span class="sr-only">(current)</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <table class="table table-bordered table-hover text-center tableFixHead" id="cargoBookings"
+                       style="display: none">
+                    <thead>
+                    <tr>
+                        <th>S No</th>
+                        <th>LR#</th>
+                        <th>DispatchDate</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>To Contact</th>
+                        <th>Remarks</th>
+                        <th>No of Items</th>
+                        <th>Amount</th>
+                        <th>Payment Type</th>
+                        <th>Loaded Vehicle</th>
+                        <th>Comment</th>
+                    </tr>
+                    </thead>
+                    <tr *ngFor="let cargoBooking of cargoBookings | pipeFilter: filterString; let i = index;">
+                        <td>{{i + 1}}</td>
+                        <td>
+                            {{cargoBooking.shipmentNumber}}
+                        </td>
+                        <td>{{cargoBooking.dispatchDate|date}}</td>
+                        <td>{{cargoBooking.attrs.fromBranchOfficeName}}</td>
+                        <td>{{cargoBooking.attrs.toBranchOfficeName}}</td>
+                        <td>
+                            {{cargoBooking.toName}}<br>{{cargoBooking.toContact}}</td>
+                        <td>
+                            {{cargoBooking.remarks || '--'}}</td>
+                        <td>{{cargoBooking.totalArticles}}</td>
+                        <td>
+                            {{cargoBooking.totalCharge}}
+                        </td>
+                        <!-- <td data-title="'Status'" class="clickable-item">
+                             {{cargoBooking.cargoTransitStatus}}
+                         </td>--
+                        <td>
+                            {{cargoBooking.paymentType}}
+                        </td>
+                        <td>
+                            {{cargoBooking.messages[cargoBooking.messages.length - 1]}}
+                        </td>
+                        <td>
+                            <a>{{cargoBooking.reviewComment || '--'}}</a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!cargoBookings || cargoBookings.length === 0" class="text-center">
+                        <td colspan="12">No Cargo Bookings found</td>
+                    </tr>
+                </table> -->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
