@@ -257,6 +257,7 @@ export class ApiUrls {
     addCommentToBooking = 'api/v1/bookingFeedback/addComment/';
     escalationResolve = 'api/v1/bookingFeedback/resolve/';
     sendEmail = 'api/v1/bookingFeedback/sendEmailWithMessage/?';
+    searchComplaints = 'api/v1/bookingFeedback/searchComplaints';
 
     // fuelExpenseReport
     getAllByDate = 'api/v1/FuelExpense/getAllByDate';
