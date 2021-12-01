@@ -16,13 +16,15 @@ export class ApiServiceService {
         'July', 'August', 'September', 'October', 'November', 'December'] | undefined;
     private currentUserDetails: any;
     newDate: any;
+    urlDate = new Date();
 
     constructor(private http: HttpClient,
                 public Apiurls: ApiUrls,
                 public authenticationService: AuthenticationService,
                 public service: BroadcastService) {
         this.newDate = new Date().getFullYear() + '-' + ('0' + (parseInt(String(new Date().getMonth() + 1)))).slice(-2)
-            + '-' + ('0' + (new Date().getDate() - 1)).slice(-2);
+            + '-' + ('0' + (new Date().getDate()));
+        console.log(this.newDate);
         this.authenticationService.currentUser.subscribe((userDetails: any) => {
             if (userDetails) {
                 this.currentUser = userDetails;

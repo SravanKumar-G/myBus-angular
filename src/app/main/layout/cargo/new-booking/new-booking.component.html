@@ -246,11 +246,11 @@
                                                [ngModelOptions]="{standalone: true}"/>
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control form-control-sm"
-                                               [(ngModel)]="item.quantity"
-                                               placeholder="Enter Quantity"
+                                        <input (ngModelChange)="getTotalPrice()" [(ngModel)]="item.quantity"
                                                [ngModelOptions]="{standalone: true}"
-                                               (ngModelChange)="getTotalPrice()"/>
+                                               class="form-control form-control-sm"
+                                               placeholder="Enter Quantity"
+                                               type="number"/>
                                     </td>
                                     <td>
                                         <input type="number" class="form-control form-control-sm"
@@ -259,11 +259,11 @@
                                                [ngModelOptions]="{standalone: true}"/>
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control form-control-sm"
-                                               [(ngModel)]="item.charge"
-                                               placeholder="Enter Amount"
+                                        <input (ngModelChange)="getTotalPrice()" [(ngModel)]="item.charge"
                                                [ngModelOptions]="{standalone: true}"
-                                               (ngModelChange)="getTotalPrice()"/>
+                                               class="form-control form-control-sm"
+                                               placeholder="Enter Amount"
+                                               type="number"/>
                                     </td>
                                     <td class="td-active">
                                         <span *ngIf="l" (click)="addItems(item)" title="Add Item"
@@ -282,31 +282,31 @@
                                 <tr>
                                     <td colspan="5" class="text-right">Loading Charges</td>
                                     <td>
-                                        <input type="number" class="form-control form-control-sm"
-                                               [(ngModel)]="newBooking.loadingCharge"
-                                               placeholder="Enter Loading Charge"
+                                        <input (ngModelChange)="getTotalPrice()" [(ngModel)]="newBooking.loadingCharge"
                                                [ngModelOptions]="{standalone: true}"
-                                               (ngModelChange)="getTotalPrice()"/>
+                                               class="form-control form-control-sm"
+                                               placeholder="Enter Loading Charge"
+                                               type="number"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="5" class="text-right">Unloading Charges</td>
                                     <td>
-                                        <input type="number" class="form-control form-control-sm"
-                                               [(ngModel)]="newBooking.unloadingCharge"
-                                               placeholder="Enter Unloading Charge"
+                                        <input (ngModelChange)="getTotalPrice()" [(ngModel)]="newBooking.unloadingCharge"
                                                [ngModelOptions]="{standalone: true}"
-                                               (ngModelChange)="getTotalPrice()"/>
+                                               class="form-control form-control-sm"
+                                               placeholder="Enter Unloading Charge"
+                                               type="number"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="5" class="text-right">Other Charges</td>
                                     <td>
-                                        <input type="number" class="form-control form-control-sm"
-                                               [(ngModel)]="newBooking.otherCharge"
-                                               placeholder="Enter Other Charges"
+                                        <input (ngModelChange)="getTotalPrice()" [(ngModel)]="newBooking.otherCharge"
                                                [ngModelOptions]="{standalone: true}"
-                                               (ngModelChange)="getTotalPrice()"/>
+                                               class="form-control form-control-sm"
+                                               placeholder="Enter Other Charges"
+                                               type="number"/>
                                     </td>
                                 </tr>
                                 <tr>
