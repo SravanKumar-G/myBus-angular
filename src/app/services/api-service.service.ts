@@ -24,7 +24,7 @@ export class ApiServiceService {
                 public service: BroadcastService) {
         this.newDate = new Date().getFullYear() + '-' + ('0' + (parseInt(String(new Date().getMonth() + 1)))).slice(-2)
             + '-' + ('0' + (new Date().getDate()));
-        console.log(this.newDate);
+        // console.log(this.newDate);
         this.authenticationService.currentUser.subscribe((userDetails: any) => {
             if (userDetails) {
                 this.currentUser = userDetails;

@@ -246,7 +246,7 @@
                                                [ngModelOptions]="{standalone: true}"/>
                                     </td>
                                     <td>
-                                        <input (ngModelChange)="getTotalPrice()" [(ngModel)]="item.quantity"
+                                        <input (mouseup)="calculateLoadingCharges()" (keyup)="calculateLoadingCharges()" [(ngModel)]="item.quantity"
                                                [ngModelOptions]="{standalone: true}"
                                                class="form-control form-control-sm"
                                                placeholder="Enter Quantity"
@@ -259,7 +259,7 @@
                                                [ngModelOptions]="{standalone: true}"/>
                                     </td>
                                     <td>
-                                        <input (ngModelChange)="getTotalPrice()" [(ngModel)]="item.charge"
+                                        <input (mouseup)="getTotalPrice()" (keyup)="getTotalPrice()" [(ngModel)]="item.charge"
                                                [ngModelOptions]="{standalone: true}"
                                                class="form-control form-control-sm"
                                                placeholder="Enter Amount"
@@ -282,7 +282,7 @@
                                 <tr>
                                     <td colspan="5" class="text-right">Loading Charges</td>
                                     <td>
-                                        <input (ngModelChange)="getTotalPrice()" [(ngModel)]="newBooking.loadingCharge"
+                                        <input (mouseup)="getTotalPrice()" (keyup)="getTotalPrice()" [(ngModel)]="newBooking.loadingCharge"
                                                [ngModelOptions]="{standalone: true}"
                                                class="form-control form-control-sm"
                                                placeholder="Enter Loading Charge"
@@ -292,7 +292,7 @@
                                 <tr>
                                     <td colspan="5" class="text-right">Unloading Charges</td>
                                     <td>
-                                        <input (ngModelChange)="getTotalPrice()" [(ngModel)]="newBooking.unloadingCharge"
+                                        <input (mouseup)="getTotalPrice()" (keyup)="getTotalPrice()" [(ngModel)]="newBooking.unloadingCharge"
                                                [ngModelOptions]="{standalone: true}"
                                                class="form-control form-control-sm"
                                                placeholder="Enter Unloading Charge"
@@ -302,7 +302,7 @@
                                 <tr>
                                     <td colspan="5" class="text-right">Other Charges</td>
                                     <td>
-                                        <input (ngModelChange)="getTotalPrice()" [(ngModel)]="newBooking.otherCharge"
+                                        <input (mouseup)="getTotalPrice()" (keyup)="getTotalPrice()" [(ngModel)]="newBooking.otherCharge"
                                                [ngModelOptions]="{standalone: true}"
                                                class="form-control form-control-sm"
                                                placeholder="Enter Other Charges"
@@ -310,8 +310,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="5" class="text-right">TOTALS</td>
-                                    <td>{{getTotalPrice()}}</td>
+                                    <th colspan="5" class="text-right" style="font-size: 15px;">TOTALS</th>
+                                    <th style="font-size: 15px;padding-left: 15px !important;">{{newBooking.totalCharge}}</th>
                                 </tr>
                                 </tfoot>
                             </table>

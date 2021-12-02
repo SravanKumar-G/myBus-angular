@@ -16,11 +16,14 @@ export class NewBookingComponent implements OnInit {
         dispatchDate: new Date(),
         copySenderDetails: false,
         paymentType: '',
+        loadingCharge: 0,
+        unloadingCharge: 0,
+        otherCharge: 0,
         items: [
             {
                 description: '',
                 value: '',
-                quantity: '',
+                quantity: 0,
                 weight: '',
                 charge: ''
             }
@@ -49,7 +52,8 @@ export class NewBookingComponent implements OnInit {
         this.loadBranchOffice();
         this.getShipmentTypes();
         this.loadUsers();
-        console.log(this.searchData);
+        this.newBooking.loadingCharge = 0;
+        this.getTotalPrice();
     }
 
     loadBranchOffice(): void {
@@ -101,13 +105,24 @@ export class NewBookingComponent implements OnInit {
 
     getTotalPrice(): any {
         this.newBooking.totalCharge = 0;
-        // this.newBooking.loadingCharge = 0;
-        console.log(this.newBooking.loadingCharge, this.newBooking);
+        this.calculateTotal();
+    }
+
+    calculateLoadingCharges(): any {
+        this.newBooking.loadingCharge = 0;
         let index;
         for (index = 0; index < this.newBooking.items.length; index++) {
             if (this.newBooking.items[index].quantity) {
                 this.newBooking.loadingCharge += this.newBooking.items[index].quantity * 10;
             }
+        }
+        this.calculateTotal();
+    }
+
+    calculateTotal(): any {
+        this.newBooking.totalCharge = 0;
+        let index;
+        for (index = 0; index < this.newBooking.items.length; index++) {
             if (this.newBooking.items[index].charge) {
                 this.newBooking.totalCharge += parseFloat(this.newBooking.items[index].charge);
             }
@@ -122,9 +137,6 @@ export class NewBookingComponent implements OnInit {
             this.newBooking.totalCharge += parseFloat(this.newBooking.otherCharge);
         }
         return this.newBooking.totalCharge;
-    }
-
-    calculateTotal(): any {
     }
 
     save(): void {
@@ -202,7 +214,7 @@ export class NewBookingComponent implements OnInit {
     cargoSearchById(id: any): void {
         if (!id) {
             Swal.fire('error', 'Enter the bookingId for search', 'error');
-        }else{
+        } else {
             this.router.navigate(['viewCargoBooking', id]);
         }
     }
