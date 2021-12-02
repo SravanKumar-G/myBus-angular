@@ -36,7 +36,6 @@ export class EscalationsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getAllRoutes();
         this.tabChange(this.tab);
     }
 
@@ -50,7 +49,6 @@ export class EscalationsComponent implements OnInit {
                 this.loadCountOfEscalations('Resolved');
                 break;
             case 3:
-                this.getAllSearchComplaints();
                 break;
             default:
                 this.loadCountOfEscalations('Escalated');
@@ -87,15 +85,6 @@ export class EscalationsComponent implements OnInit {
            }
         });
     }
-
-    public getAllRoutes(): void {
-        this.apiService.get(this.apiUrls.getAllRoutes).subscribe((res: any) => {
-            if (res) {
-                this.listOfRoutes = res;
-            }
-        });
-    }
-
     handlePageChange(event: any): void {
         this.filterObj.page = event;
         this.loadCountOfEscalations('Escalated');
@@ -185,7 +174,17 @@ export class EscalationsComponent implements OnInit {
             }
         });
     }
-
+    escalateTicket(id: any, status: any): void {
+        this.apiService.update(this.apiUrls.bookingFeedbackStatusUpdate + id,
+            {
+                serviceFeedbackId: id,
+                status: 'Escalated'
+            }).subscribe((res: any) => {
+            Swal.fire('Great', 'Booking feedback status is successfully updated', 'success');
+        }, error => {
+            Swal.fire('Error', 'Booking feedback status update failed', 'error');
+        });
+    }
     sendEmail(id: any, status: any): void {
         Swal.fire({
             title: '<h4>' + 'Email Message' + '</h4>',
