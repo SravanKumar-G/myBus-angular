@@ -21,7 +21,6 @@ export class AddEditOfficeExpenseComponent implements OnInit {
         description: '',
         amount: '',
         vehicleId: '',
-        // name: '',
         supplierId: '',
         fromDate: new Date(),
         toDate: new Date(),
@@ -51,6 +50,7 @@ export class AddEditOfficeExpenseComponent implements OnInit {
         if (this.officeExpenseId) {
             this.headerTitle = 'Update OfficeExpense';
             this.getExpenseDetails();
+            this.getVehicles();
         } else {
             this.headerTitle = 'Add OfficeExpense';
             this.getVehicles();
