@@ -18,6 +18,7 @@ import { CashTransferComponent } from './reports/cash-transfer/cash-transfer.com
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {BreadcrumbModule} from 'xng-breadcrumb';
+import { HaltReportsComponent } from './Check-List/halt-reports/halt-reports.component';
 
 
 

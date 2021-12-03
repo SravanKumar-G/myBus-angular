@@ -168,21 +168,21 @@ export class ApiUrls {
     getTyreActivityById = 'api/v1/tyreActivity/find/';
     createTyreActivity = 'api/v1/tyreActivity/add';
     updateTyreActivity = 'api/v1/tyreActivity/update/';
-    uninstallTyre ='api/v1/tyreActivity/uninstall';
+    uninstallTyre = 'api/v1/tyreActivity/uninstall';
     deletetyre = 'api/v1/tyre/delete/';
 
 
     // Jobs API's
-    
+
     getCountForJobs = 'api/v1/jobs/getCount';
     getAllsearchJobs = 'api/v1/jobs/searchJobs';
     getPendingJobs = 'api/v1/jobs/getPendingJobs';
     getCompletedJobs = 'api/v1/jobs/getCompletedJobs';
-    getJob ='api/v1/jobs/getAJob/';
-    updateJob ='api/v1/jobs/updateJob';
+    getJob = 'api/v1/jobs/getAJob/';
+    updateJob = 'api/v1/jobs/updateJob';
     addJob = 'api/v1/jobs/addJob';
     deleteJob = 'api/v1/jobs/delete/';
-  
+
     // Service Form API's
     getDetailsByFormId = 'api/v1/serviceForm/';
 
@@ -309,5 +309,9 @@ export class ApiUrls {
 
     // Reports To Be Viewed
     reportsToBeReviewed = 'api/v1/serviceReport/toBeReviewed';
+
+    // Halt Reports
+    haltedServices = 'api/v1/serviceReport/haltedServices';
+    filterHaltedServices = 'api/v1/serviceReport/filterHaltedServices';
 
 }

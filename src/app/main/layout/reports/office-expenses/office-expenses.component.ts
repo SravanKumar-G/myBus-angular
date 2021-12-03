@@ -36,6 +36,10 @@ export class OfficeExpensesComponent implements OnInit {
     pageSizes: [],
     userId: '',
     branchOfficeId: '',
+    // name: '',
+    supplierId: '',
+    expenseType: '',
+    vehicleId: '',
     sort: this.sortOrder + ',' + this.orderBy,
   };
   public countPending: any;
@@ -52,6 +56,8 @@ export class OfficeExpensesComponent implements OnInit {
   public expenseList: any;
   public selectedOfficeExpenses: any = [];
   public approvedAndRejected: any;
+  public suppliersList: Array<any> = [];
+  public vehicles: Array<any> = [];
 
   constructor(private router: Router,
               public apiService: ApiServiceService,
@@ -138,6 +144,20 @@ export class OfficeExpensesComponent implements OnInit {
       }
     });
   }
+  getSuppliers(): void {
+    this.apiService.get(this.apiUrls.suppliers).subscribe((res: any) => {
+      if (res) {
+        this.suppliersList = res;
+      }
+    });
+  }
+  getVehicles(): void {
+    this.apiService.getAll(this.apiUrls.vehiclesList, {}).subscribe((res: any) => {
+      if (res) {
+        this.vehicles = res.content;
+      }
+    });
+  }
   changeOfficeExpenseTab(tabkey: number): void {
     this.tab = tabkey ? tabkey : 1;
     switch (this.tab) {
@@ -152,6 +172,8 @@ export class OfficeExpensesComponent implements OnInit {
         this.getAllUsers();
         this.getExpenseTypes();
         this.searchExpenses();
+        this.getSuppliers();
+        this.getVehicles();
     }
   }
 
