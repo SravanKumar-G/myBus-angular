@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './layout.component';
 import {CargoDashboardComponent} from './cargo/cargo-dashboard/cargo-dashboard.component';
 import {FuelExpenseReportsModule} from './reports/fuel-expense-reports/fuel-expense-reports.module';
+import {HaltReportsComponent} from './Check-List/halt-reports/halt-reports.component';
 
 const layOutRoutes: Routes = [
     {
@@ -207,6 +208,11 @@ const layOutRoutes: Routes = [
                 path: 'reportsToBeReviewed',
                 loadChildren: () => import('./Check-List/reports-to-be-reviewed/reports-to-be-reviewed.module')
                     .then(m => m.ReportsToBeReviewedModule)
+            },
+            {
+                path: 'haltReports',
+                loadChildren: () => import('./Check-List/halt-reports/halt-reports.module')
+                    .then( m => m.HaltReportsModule)
             }
         ]
     },

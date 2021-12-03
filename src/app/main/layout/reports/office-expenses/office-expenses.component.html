@@ -384,6 +384,31 @@
                                             <ng-option *ngFor="let expense of expenseList" [value]="expense">{{expense}}</ng-option>
                                         </ng-select>
                                     </div>
+                                    <div class="col-sm-2 col-12 form-group"
+                                    >
+                                        <label class=" control-label">select vehicle</label>
+                                        <ng-select [(ngModel)]="searchQuery.vehicleId"
+                                                   [ngModelOptions]="{standalone: true}"
+                                                   bindValue="id"
+                                                   bindLabel="regNo"
+                                                   [clearable]="false">
+                                            <ng-option value="" selected>Select Vehicle</ng-option>
+                                            <ng-option *ngFor="let vehicle of vehicles"
+                                                       [value]="vehicle.id">{{vehicle.regNo}}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="col-sm-2 col-12 form-group" >
+                                        <label class="control-label">Supplier</label>
+                                        <ng-select [(ngModel)]="searchQuery.supplierId"
+                                                   [ngModelOptions]="{standalone: true}"
+                                                   bindValue="id"
+                                                   bindLabel="name"
+                                                   [clearable]="false">
+                                            <ng-option value="" selected>Select Option</ng-option>
+                                            <ng-option *ngFor="let supplier of suppliersList"
+                                                       [value]="supplier.id">{{supplier.name}}</ng-option>
+                                        </ng-select>
+                                    </div>
                                     <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="search()"> Search Transactions </button> &nbsp;&nbsp;&nbsp;
                                     <button type="button" class="btn btn-sm btn-success " style="margin-top: 17px; margin-bottom: 17px" (click)="exportToExcel()"> Export to Excel </button>
                                 </div>

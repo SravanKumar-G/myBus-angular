@@ -51,19 +51,6 @@
                                        [ngModelOptions]="{standalone: true}"
                                 />
                             </div>
-                            <div class="col-sm-6 col-12 form-group"></div>
-                            <div class="col-sm-6 col-12 form-group">
-                                <label class="control-label">Select ExpenseType</label>
-                                <ng-select [(ngModel)]="addExpenseQuery.expenseType"
-                                           [ngModelOptions]="{standalone: true}"
-                                           bindValue="expenseList"
-                                           bindLabel="expenseList"
-                                           [clearable]="false">
-                                    <ng-option value="" selected>Select ExpenseType(Optional)</ng-option>
-                                    <ng-option *ngFor="let expense of expenseList"
-                                               [value]="expense">{{expense}}</ng-option>
-                                </ng-select>
-                            </div>
                             <div class="col-sm-6 col-12 form-group">
                                 <label>Branch</label>
                                 <ng-select [(ngModel)]="addExpenseQuery.branchOfficeId"
@@ -76,8 +63,22 @@
                                                [value]="users.id">{{users.name}}</ng-option>
                                 </ng-select>
                             </div>
+<!--                            <div class="col-sm-6 col-12 form-group"></div>-->
+                            <div class="col-sm-6 col-12 form-group">
+                                <label class="control-label">Select ExpenseType</label>
+                                <ng-select [(ngModel)]="addExpenseQuery.expenseType"
+                                           [ngModelOptions]="{standalone: true}"
+                                           bindValue="expenseList"
+                                           bindLabel="expenseList"
+                                           [clearable]="false">
+                                    <ng-option value="" selected>Select ExpenseType(Optional)</ng-option>
+                                    <ng-option *ngFor="let expense of expenseList"
+                                               [value]="expense">{{expense}}</ng-option>
+                                </ng-select>
+                            </div>
+<!--                            *ngIf="addExpenseQuery.expenseType === 'SALARY' || addExpenseQuery.expenseType === 'VEHICLE MAINTENANCE' || addExpenseQuery.expenseType === 'DIESEL' || addExpenseQuery.expenseType === 'TRIP ADVANCE'"-->
                             <div class="col-sm-6 col-12 form-group"
-                                 *ngIf="addExpenseQuery.expenseType === 'SALARY' || addExpenseQuery.expenseType === 'VEHICLE MAINTENANCE' || addExpenseQuery.expenseType === 'DIESEL' || addExpenseQuery.expenseType === 'TRIP ADVANCE'">
+                                 >
                                 <label class=" control-label">select vehicle</label>
                                 <ng-select [(ngModel)]="addExpenseQuery.vehicleId"
                                            [ngModelOptions]="{standalone: true}"
@@ -129,9 +130,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-12 form-group" *ngIf="addExpenseQuery.expenseType === 'DIESEL'">
-                                <label class="control-label">Filling Station</label>
-                                <ng-select [(ngModel)]="addExpenseQuery.name"
+<!--                            *ngIf="addExpenseQuery.expenseType === 'DIESEL'"-->
+                            <div class="col-sm-6 col-12 form-group" >
+                                <label class="control-label">Supplier</label>
+                                <ng-select [(ngModel)]="addExpenseQuery.supplierId"
                                            [ngModelOptions]="{standalone: true}"
                                            bindValue="id"
                                            bindLabel="name"
