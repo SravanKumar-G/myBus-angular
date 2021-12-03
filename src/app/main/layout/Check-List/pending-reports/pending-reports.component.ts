@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-pending-reports',
@@ -14,7 +14,6 @@ export class PendingReportsComponent implements OnInit {
     orderBy = 'asc';
     Query: any = {
         searchText: '',
-        byVaccinated: false,
         page: 1,
         size: 10,
         count: 0,
@@ -23,11 +22,14 @@ export class PendingReportsComponent implements OnInit {
         sortOrder: 's.name',
         sort: this.sortOrder + ',' + this.orderBy,
     };
+    public id: any;
 
     constructor(
         public apiService: ApiServiceService,
         private apiUrls: ApiUrls,
-        private router: Router, ) {
+        private router: Router,
+        private actRoute: ActivatedRoute) {
+        this.id = this.actRoute.snapshot.paramMap.get('id') || '';
     }
 
     ngOnInit(): void {
@@ -43,9 +45,13 @@ export class PendingReportsComponent implements OnInit {
     }
   goToServiceReport(service: any): void{
     if (service.attrs.formId) {
-      this.router.navigate(['serviceform/' + service.attrs.formId]);
+      this.router.navigate(['./pendingReports/serviceForm/' + service.attrs.formId]);
     } else {
-      this.router.navigate(['servicereport/' + service.id]);
+        console.log(service);
+        this.router.navigate(['/pendingReports/serviceReport/' + service.id]);
     }
   }
+    exportExcel(): void{
+        this.apiService.exportExcel('pendingReportData', 'Pending Report', '', '');
+    }
 }

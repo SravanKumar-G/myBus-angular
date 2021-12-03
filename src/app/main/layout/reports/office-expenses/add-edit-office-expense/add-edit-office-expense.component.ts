@@ -20,6 +20,9 @@ export class AddEditOfficeExpenseComponent implements OnInit {
         expenseType: '',
         description: '',
         amount: '',
+        vehicleId: '',
+        // name: '',
+        supplierId: '',
         fromDate: new Date(),
         toDate: new Date(),
     };
@@ -50,6 +53,7 @@ export class AddEditOfficeExpenseComponent implements OnInit {
             this.getExpenseDetails();
         } else {
             this.headerTitle = 'Add OfficeExpense';
+            this.getVehicles();
         }
     }
 
@@ -89,7 +93,7 @@ export class AddEditOfficeExpenseComponent implements OnInit {
     getVehicles(): void {
         this.apiService.getAll(this.apiUrls.vehiclesList, {}).subscribe((res: any) => {
             if (res) {
-                this.vehicles = res;
+                this.vehicles = res.content;
             }
         });
     }

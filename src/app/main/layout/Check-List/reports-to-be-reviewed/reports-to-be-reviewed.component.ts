@@ -10,6 +10,19 @@ import {Router} from '@angular/router';
 })
 export class ReportsToBeReviewedComponent implements OnInit {
   reports: any;
+  sortOrder = 's.name';
+  orderBy = 'asc';
+  Query: any = {
+    searchText: '',
+    page: 1,
+    size: 10,
+    count: 0,
+    pageSizes: [],
+    orderBy: 'asc',
+    sortOrder: 's.name',
+    sort: this.sortOrder + ',' + this.orderBy,
+  };
+
   constructor(public apiService: ApiServiceService,
               private apiUrls: ApiUrls,
               private router: Router, ) { }
@@ -31,5 +44,8 @@ export class ReportsToBeReviewedComponent implements OnInit {
     } else {
       this.router.navigate(['servicereport/' + service.id]);
     }
+  }
+  exportExcel(): void{
+    this.apiService.exportExcel('reportToViewData', 'Report to Reviewed', '', '');
   }
 }
