@@ -51,6 +51,7 @@ export class AddEditOfficeExpenseComponent implements OnInit {
             this.headerTitle = 'Update OfficeExpense';
             this.getExpenseDetails();
             this.getVehicles();
+            this.getSuppliers();
         } else {
             this.headerTitle = 'Add OfficeExpense';
             this.getVehicles();
