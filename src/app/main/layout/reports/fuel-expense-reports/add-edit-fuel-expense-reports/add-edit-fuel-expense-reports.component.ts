@@ -98,9 +98,9 @@ export class AddEditFuelExpenseReportsComponent implements OnInit {
       this.errorMessage.push('Please enter vehicleId');
     } else if (!this.addFuelExpenseQuery.supplierId) {
       this.errorMessage.push('Please enter supplierId');
-    }else if (!this.addFuelExpenseQuery.odometer) {
+    }/*else if (!this.addFuelExpenseQuery.odometer) {
       this.errorMessage.push('Please enter odometerReading');
-    }else if (!this.addFuelExpenseQuery.quantity) {
+    }*/else if (!this.addFuelExpenseQuery.quantity) {
       this.errorMessage.push('Please enter the quantity');
     }else if (!this.addFuelExpenseQuery.rate) {
       this.errorMessage.push( 'Please enter the rate');
