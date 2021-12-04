@@ -153,7 +153,7 @@
                                 </thead>
                                 <tbody>
                                 <tr *ngFor="let fuelExpense of fuelExpenses | searchFilter: vehicleNumber; let i = index">
-                                    <td>{{(fuelExpenseQuery.page-1) * fuelExpenseQuery.size + i + 1}}</td>
+                                    <td>{{ i + 1}}</td>
                                     <td>{{fuelExpense.attrs.vehicleNumber || 'NA'}}</td>
                                     <td>{{fuelExpense.serviceName || 'NA'}}</td>
                                     <td>{{fuelExpense.attrs.supplierName || 'NA'}}</td>

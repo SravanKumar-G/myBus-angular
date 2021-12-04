@@ -113,6 +113,22 @@
                                                   {{j + 1}} - {{staff.name}} - <b>{{staff.number}}</b>,
                                                 </span>
                                             </div>
+                                            <div class="service-card" *ngFor="let comment of escalation.escalationComments">
+<!--                                                <div class="row">-->
+
+                                                <label>Comment:</label>
+                                                <span >{{comment.Feedback || comment.comment}}</span><br>
+                                                <label>Added By:</label>
+                                                <span >{{comment.addedBy}}</span><br>
+                                                <label>Added On:</label>
+                                                <span >{{comment.addedOn}}</span><br>
+<!--                                                <span *ngFor="let staff of escalation.escalationComments.comment; let j = index;">-->
+<!--                                                  {{j + 1}} - {{staff.name}} - <b>{{staff.number}}</b>,-->
+<!--                                                </span>-->
+<!--                                                </div>-->
+                                            </div>
+
+
                                             <div class="service-card" style="font-size: 12px !important;">
                                                 <a class="cus-a mr-2" title="Add Comment"
                                                    (click)="addingComments(escalation.id, 'Escalated')">

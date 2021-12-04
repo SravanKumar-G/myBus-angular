@@ -44,6 +44,8 @@ export class AuthenticationService {
   logOut(): void {
     // @ts-ignore
     localStorage.clear('currentUser');
+    // @ts-ignore
+    localStorage.clear('currentUserDetails');
     this.currentUserSubject.next(null);
   }
 }
