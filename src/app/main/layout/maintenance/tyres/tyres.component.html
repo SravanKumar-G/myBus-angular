@@ -207,11 +207,16 @@
                                                         (click)="removeTyreInstallation(tyreactivity.id)" title="Remove Tyre Installation">
                                                     Uninstall Tyre
                                                 </button>
+<!--                                                <button class="btn btn-sm btn-primary" *ngIf="tyreactivity.installationId"-->
+<!--                                                        [routerLink]="['addTyreActivity/' + tyre.id]">Install Tyre-->
+
+<!--                                                </button>-->
                     
                                             </div>
                                         </td>
                                         <td style="width: 180px!important;">
-                                            <a  [routerLink]="['addTyreActivity/' + tyre.id]" >Installation Tyre</a>&nbsp;&nbsp;&nbsp;
+                                            <button type="button"  [routerLink]="['addTyreActivity/' + tyre.id]" title="Installation Tyre">
+                                                <i class="fa fa-download"></i></button>&nbsp;&nbsp;&nbsp;
                                             <!--                        <a href="" ng-click="">Add Comment</a>-->
                                             <button type="button" class="btn btn-xs btn-success mr-1" [routerLink]="['editTyres/' + tyre.id]" 
                                                     title="Edit Tyre">

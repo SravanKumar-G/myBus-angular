@@ -15,21 +15,21 @@ export class AddEditTyreActivityComponent implements OnInit {
   public errorMessage: any;
   public tyreActivtyId: any;
   public tyreId: any;
-  public tyreActivity:any = {
+  public tyreActivity: any = {
     tyreId: '',
     installedOn: new Date(),
-    vehicleId:'',
-    location: ''
+    vehicleId: '',
+    location: '',
   };
   public allVehicles: Array<any> = [];
   public Tyres: Array<any> = [];
   public day = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   constructor(private router: Router,
-    public apiService: ApiServiceService,
-    private apiUrls: ApiUrls,
-    private actRoute: ActivatedRoute,
-    private datePipe: DatePipe) { 
+              public apiService: ApiServiceService,
+              private apiUrls: ApiUrls,
+              private actRoute: ActivatedRoute,
+              private datePipe: DatePipe) {
       this.tyreActivtyId = this.actRoute.snapshot.params.typeActivityId || '';
       this.tyreId = this.actRoute.snapshot.params.id || '';
     }
@@ -56,9 +56,9 @@ export class AddEditTyreActivityComponent implements OnInit {
               this.tyreActivity = response;
               this.tyreActivity.date = new Date(this.tyreActivity.date);
           }
-      })
+      });
     } else {
-      this.tyreActivateTitle = 'Add'
+      this.tyreActivateTitle = 'Add';
     }
 
     if (this.tyreId) {
@@ -69,8 +69,8 @@ export class AddEditTyreActivityComponent implements OnInit {
   }
 
   getVehicleOdometerReading(): void{
-    for(let v=0;v <this.allVehicles.length; v++){
-        if(this.allVehicles[v].id === this.tyreActivity.vehicleId) {
+    for (let v = 0; v < this.allVehicles.length; v++){
+        if (this.allVehicles[v].id === this.tyreActivity.vehicleId) {
           this.apiService.get(this.apiUrls.getVehicleOdometerReading + this.allVehicles[v].regNo).subscribe((response: any) => {
                 this.tyreActivity.odometerReading = response;
             });
@@ -78,9 +78,9 @@ export class AddEditTyreActivityComponent implements OnInit {
     }
   }
 
-  save():void {
+  save(): void {
     if (this.tyreActivtyId) {
-      var updateTyreActivity = {
+      let updateTyreActivity = {
           tyreId: this.tyreActivity.tyreId,
           activity: this.tyreActivity.activity,
           installedOn: new Date(this.tyreActivity.installedOn),
@@ -91,26 +91,21 @@ export class AddEditTyreActivityComponent implements OnInit {
       };
       this.apiService.update(this.apiUrls.updateTyreActivity + this.tyreActivtyId, updateTyreActivity).subscribe((response: any) => {
         this.router.navigate(['maintenance/tyres']);
-      })
+      }, error => {
+          this.errorMessage = error.message;
+      });
     } else {
       this.apiService.getAll(this.apiUrls.createTyreActivity, this.tyreActivity).subscribe((response: any) => {
           if (response) {
             this.router.navigate(['maintenance/tyres']);
           }
-      })
-    }     
+      }, error => {
+          this.errorMessage = error.message;
+      });
+    }
   }
-  
+
   cancel(): void {
     this.router.navigate(['maintenance/tyres']);
   }
 }
-
-    
-
-   
-
-    
-   
-
-    
