@@ -182,6 +182,7 @@ export class ApiUrls {
     updateJob = 'api/v1/jobs/updateJob';
     addJob = 'api/v1/jobs/addJob';
     deleteJob = 'api/v1/jobs/delete/';
+    getLatestJobs = 'api/v1/jobs/getLatestJobs/';
 
     // Service Form API's
     getDetailsByFormId = 'api/v1/serviceForm/';
