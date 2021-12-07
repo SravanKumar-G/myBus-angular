@@ -83,6 +83,15 @@ export class OfficeExpensesComponent implements OnInit {
     });
   }
 
+  getSearchCount(): void{
+    this.apiService.get(this.apiUrls.searchExpensesCount).subscribe((res: any) => {
+      if (res >= 0){
+        this.countPending = res;
+        OnlynumberDirective.pagination(res, this.searchQuery);
+        this.getAllPending();
+      }
+    });
+  }
   getAllPending(): void{
     this.apiService.get(this.apiUrls.allPending + '?page=' + this.pendingQuery.page +
         '&size=' + this.pendingQuery.size + '&sort=' + this.pendingQuery.sort).subscribe((res: any) => {
@@ -92,6 +101,28 @@ export class OfficeExpensesComponent implements OnInit {
     });
   }
 
+  searchExpenses(): void{
+    this.apiService.getAll(this.apiUrls.searchExpense + '?page=' + this.searchQuery.page +
+        '&size=' + this.searchQuery.size + '&sort=' + this.searchQuery.sort, this.searchQuery).subscribe((res: any) => {
+      if (res){
+        if (res){
+          this.searchExpenseList = res.content;
+          this.searchQuery.count = res.totalElements;
+        }
+      }
+    });
+  }
+  searchExpensesOld(): void{
+    this.apiService.getAll(this.apiUrls.searchExpense, this.searchQuery).subscribe((res: any) => {
+      if (res){
+        if (res){
+          this.searchExpenseList = res;
+          this.searchQuery.count = res.totalElements;
+          console.log('dsd', this.searchQuery.count );
+        }
+      }
+    });
+  }
   getApprovedCount(): void{
     this.apiService.get(this.apiUrls.approvedCount).subscribe((res: any) => {
       if (res >= 0){
@@ -111,17 +142,6 @@ export class OfficeExpensesComponent implements OnInit {
     });
   }
 
-  searchExpenses(): void{
-    this.apiService.getAll(this.apiUrls.searchExpense, this.searchQuery).subscribe((res: any) => {
-      if (res){
-        if (res){
-          this.searchExpenseList = res;
-          this.searchQuery.count = res.totalElements;
-          console.log('dsd', this.searchQuery.count );
-        }
-      }
-    });
-  }
   branchOfficeNames(): void{
     this.apiService.get(this.apiUrls.branchOfficeNames).subscribe((res: any) => {
       if (res){
@@ -152,9 +172,9 @@ export class OfficeExpensesComponent implements OnInit {
     });
   }
   getVehicles(): void {
-    this.apiService.getAll(this.apiUrls.vehiclesList, {}).subscribe((res: any) => {
+    this.apiService.getAll(this.apiUrls.vehicleNumbersList, {}).subscribe((res: any) => {
       if (res) {
-        this.vehicles = res.content;
+        this.vehicles = res;
       }
     });
   }

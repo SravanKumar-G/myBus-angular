@@ -439,6 +439,7 @@
                                             <i *ngIf="searchQuery.sortOrder == 'expenseType'" class="fa"
                                                [ngClass]="searchQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                         </th>
+                                        <th>Supplier</th>
                                         <th [ngClass]="searchQuery.sortOrder == 'vehicle'? 'headActive' : ''"
                                             accessKey="vehicle">Vehicle
                                             <i *ngIf="searchQuery.sortOrder != 'vehicle'" class="fa fa-sort"></i>
@@ -473,6 +474,7 @@
                                         <td>{{searchExpense.date | date}}</td>
                                         <td>{{searchExpense.description || 'NA'}}</td>
                                         <td>{{searchExpense.expenseType || 'NA'}}</td>
+                                        <td>{{searchExpense.attrs.supplierName || 'NA'}}</td>
                                         <td>{{searchExpense. fromDate | date}}</td>
                                         <td>{{searchExpense.toDate | date}}</td>
                                         <td>{{searchExpense.attrs ? searchExpense.attrs.vehicle: 'NA' }}</td>

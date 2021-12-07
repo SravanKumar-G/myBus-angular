@@ -213,6 +213,8 @@ export class ApiUrls {
     approvedCount = 'api/v1/officeExpenses/count?pending=false';
     allApproves = 'api/v1/officeExpenses/approved';
     searchExpense = 'api/v1/officeExpenses/search';
+    searchExpensesCount = 'api/v1/officeExpenses/searchCount';
+
     expensesTypes = 'api/v1/officeExpenses/types';
     getExpense = 'api/v1/officeExpense/';
     approveOrRejectStatus = 'api/v1/officeExpenses/approveOrReject/';
@@ -220,7 +222,9 @@ export class ApiUrls {
     editExpense = 'api/v1/officeExpense/';
     deleteOfficeExpense = 'api/v1/officeExpense/';
     suppliers = 'api/v1/suppliers/';
+    supplierNames = 'api/v1/supplierNames/';
     vehiclesList = 'api/v1/vehicles';
+    vehicleNumbersList = 'api/v1/vehicleNumbers';
     fileUpload = 'api/v1/fileUpload';
     getFile = 'api/v1/getUploads/';
 
