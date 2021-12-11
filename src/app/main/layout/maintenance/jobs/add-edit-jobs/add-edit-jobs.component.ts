@@ -43,7 +43,7 @@ export class AddEditJobsComponent implements OnInit {
     this.router.navigate(['maintenance/jobs']);
   }
 
-  getVehicles() {
+  getVehicles(): void{
     this.apiService.getAll(this.apiUrls.getAllVehicles, {}).subscribe((res: any) => {
         this.allVehicles = res.content;
         // $rootScope.$broadcast('vehicles', this.allVehicles);
@@ -53,6 +53,7 @@ export class AddEditJobsComponent implements OnInit {
                 this.job = data;
                 this.job.jobDate = new Date(this.job.jobDate);
                 this.getOdometerReading();
+                this.getLatestJobsToTable();
             });
         }
     });

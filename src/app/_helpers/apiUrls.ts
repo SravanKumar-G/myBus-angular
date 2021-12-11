@@ -8,7 +8,7 @@ import {environment} from 'src/environments/environment';
 
 export class ApiUrls {
     // mainUrl = 'http://localhost:8091/';
-    // mainUrl = 'http://qacargo.srikrishnatravels.in/'
+    // mainUrl = 'http://qacargo.srikrishnatravels.in/';
     // mainUrl = 'http://cargo.srikrishnatravels.in/';
     mainUrl = environment.testPath;
 

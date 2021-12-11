@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 
 import { ServiceReportsRoutingModule } from './service-reports-routing.module';
 import {ServiceReportsComponent} from './service-reports.component';
@@ -22,7 +22,8 @@ import {BreadcrumbModule} from 'xng-breadcrumb';
     FormsModule,
     NgbPopoverModule,
     BsDatepickerModule,
-    BreadcrumbModule
-  ]
+    BreadcrumbModule,
+  ],
+  providers: [ DatePipe]
 })
 export class ServiceReportsModule { }

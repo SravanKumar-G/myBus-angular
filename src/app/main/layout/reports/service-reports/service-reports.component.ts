@@ -3,7 +3,7 @@ import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {ActivatedRoute, Router} from '@angular/router';
 import Swal from 'sweetalert2';
-import {Location} from '@angular/common';
+import {DatePipe, Location} from '@angular/common';
 
 @Component({
     selector: 'app-service-reports',
@@ -25,8 +25,12 @@ export class ServiceReportsComponent implements OnInit {
                 private apiUrls: ApiUrls,
                 private router: Router,
                 private actRoute: ActivatedRoute,
-                private location: Location) {
+                private location: Location,
+                private  datePipe: DatePipe) {
         this.currentDate = this.actRoute.snapshot.params.date || '';
+        this.currentDate = new Date();
+        console.log(this.currentDate);
+        this.currentDate.setDate(this.currentDate.getDate() - 1);
     }
 
     ngOnInit(): void {
@@ -37,7 +41,18 @@ export class ServiceReportsComponent implements OnInit {
     }
 
     loadReports(): void {
-        const date = this.apiService.getYYYYMMDD(this.currentDate);
+        // const date = this.apiService.getYYYYMMDD(this.currentDate);
+        // const dateObj = date;
+        // const month = dateObj.getMonth() + 1;
+        // const day = dateObj.getDate();
+        // const year = dateObj.getFullYear();
+        // this.currentDate = year + '-' + month + '-' + day;
+        // let date: any = new Date(this.currentDate);
+        // date.setDate(date - 1);
+        const date = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
+        // this.loadReports();
+        this.location.replaceState('/serviceReports/' + date);
+        // return year + '-' + month + '-' + day;
         this.submitted = 0;
         this.apiService.get(this.apiUrls.loadServiceReports + date).subscribe((res: any) => {
             if (res) {
@@ -45,7 +60,7 @@ export class ServiceReportsComponent implements OnInit {
                 if (this.submitted === 0) {
                     for (const data of this.allReports) {
                         if (data.status === 'SUBMITTED') {
-                            this.submitted = this.submitted + 1;
+                            this.submitted = this.submitted +  1;
                         }
                     }
                 }
@@ -85,15 +100,27 @@ export class ServiceReportsComponent implements OnInit {
 
     nextDate(): void {
         const currentDate = new Date(this.currentDate);
+        const todaydate: any = new Date();
+        todaydate.setDate(todaydate.getDate() - 1);
         const date = currentDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
-        // console.log(new Date(date));
-        if (new Date(date) <= new Date()) {
-            this.currentDate = this.getDate(new Date(date));
+        if (new Date(date) <= todaydate) {
+            this.currentDate = this.getDate(currentDate);
             this.location.replaceState('/serviceReports/' + this.currentDate);
         } else {
             Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
         }
     }
+    // nextDate(): void {
+    //     const currentDate = new Date(this.currentDate);
+    //     const date = currentDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
+    //     // console.log(new Date(date));
+    //     if (new Date(date) <= new Date()) {
+    //         this.currentDate = this.getDate(new Date(date));
+    //         this.location.replaceState('/serviceReports/' + this.currentDate);
+    //     } else {
+    //         Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
+    //     }
+    // }
 
     previousDate(): void {
         const currentDate = new Date(this.currentDate);
