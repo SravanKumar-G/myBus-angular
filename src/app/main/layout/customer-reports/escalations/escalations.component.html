@@ -113,21 +113,9 @@
                                                   {{j + 1}} - {{staff.name}} - <b>{{staff.number}}</b>,
                                                 </span>
                                             </div>
-                                            <div class="service-card" *ngFor="let comment of escalation.escalationComments">
-<!--                                                <div class="row">-->
 
-                                                <label>Comment:</label>
-                                                <span >{{comment.Feedback || comment.comment}}</span><br>
-                                                <label>Added By:</label>
-                                                <span >{{comment.addedBy}}</span><br>
-                                                <label>Added On:</label>
-                                                <span >{{comment.addedOn}}</span><br>
-<!--                                                <span *ngFor="let staff of escalation.escalationComments.comment; let j = index;">-->
-<!--                                                  {{j + 1}} - {{staff.name}} - <b>{{staff.number}}</b>,-->
-<!--                                                </span>-->
-<!--                                                </div>-->
-                                            </div>
-
+                                            <div class="service-card"><label>Boarding Point:</label> {{escalation.boardingPoint}}</div>
+                                            <div class="service-card"><label>Dropping Point:</label> {{escalation.droppingPoint}}</div>
 
                                             <div class="service-card" style="font-size: 12px !important;">
                                                 <a class="cus-a mr-2" title="Add Comment"
@@ -144,6 +132,12 @@
                                                    (click)="sendEmail(escalation.id, 'Escalated')">
                                                     <i class="fa fa-envelope fa-1x" aria-hidden="true"
                                                        style="color: indianred"></i> Send Email
+                                                </a>
+                                                <a class="btn btn-primary btn-sm" (click)="sendThankYouMessage(escalation)" title="Thank you">
+                                                    <i class="fa fa-whatsapp">ThankYou</i>
+                                                </a>
+                                                <a class="btn btn-primary btn-sm m-2" (click)="sendApologies(escalation)" title="Send Apologies">
+                                                    <i class="fa fa-whatsapp">Sorry</i>
                                                 </a>
                                             </div>
                                             <div class="flex-container">
@@ -385,6 +379,9 @@
                                                   {{j + 1}} - {{staff.name}} - <b>{{staff.number}}</b>,
                                                 </span>
                                             </div>
+                                            <div class="service-card"><label>Boarding Point:</label> {{escalation.boardingPoint}}</div>
+                                            <div class="service-card"><label>Dropping Point:</label> {{escalation.droppingPoint}}</div>
+
                                             <div class="service-card" style="font-size: 12px !important;">
                                                 <a class="cus-a mr-2" title="Add Comment"
                                                    (click)="addingComments(escalation.id, 'search')">
@@ -405,6 +402,12 @@
                                                    (click)="escalateTicket(escalation.id, 'search')">
                                                     <i class="fa fa-bullhorn fa-1x" aria-hidden="true"
                                                        style="color: indianred"></i> Escalate
+                                                </a>
+                                                <a class="btn btn-primary btn-sm" (click)="sendThankYouMessage(escalation)" title="Thank you">
+                                                    <i class="fa fa-whatsapp">ThankYou</i>
+                                                </a>
+                                                <a class="btn btn-primary btn-sm m-2" (click)="sendApologies(escalation)" title="Send Apologies">
+                                                    <i class="fa fa-whatsapp">Sorry</i>
                                                 </a>
                                             </div>
                                         </div>

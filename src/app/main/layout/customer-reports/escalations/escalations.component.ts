@@ -185,6 +185,20 @@ export class EscalationsComponent implements OnInit {
             Swal.fire('Error', 'Booking feedback status update failed', 'error');
         });
     }
+    sendThankYouMessage(feedback: any): void {
+        this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels.' +
+            ' Can you please take a moment to rate our service on ' + feedback.bookedBy +
+            '?. You will get an email and WhatsApp message with a link to give us rating  ');
+    }
+    sendApologies(feedback: any): void {
+        this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels. ' +
+            'We apologize for the issue caused to you.' +
+            ' We will investigate further on this and take necessar action. ');
+    }
+    sendCargoIntro(feedback: any): void {
+        this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + ' garu, thank you for travelling in Sri Krishna Travels. ' +
+            'We also have cargo services. You can send packages to your loved ones easily through our buses. Please call on 9246460533 for further details.');
+    }
     sendEmail(id: any, status: any): void {
         Swal.fire({
             title: '<h4>' + 'Email Message' + '</h4>',
