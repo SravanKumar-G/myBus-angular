@@ -29,6 +29,13 @@ export class OfficeExpensesComponent implements OnInit {
     pageSizes: [],
     sort: this.sortOrder + ',' + this.orderBy,
   };
+  public payLaterQuery: any = {
+    page: 1,
+    size: 10,
+    count: 0,
+    pageSizes: [],
+    sort: this.sortOrder + ',' + this.orderBy,
+  };
   public searchQuery: any = {
     page: 1,
     size: 10,
@@ -45,7 +52,9 @@ export class OfficeExpensesComponent implements OnInit {
   public countPending: any;
   public pendingList: Array<any> = [];
   public ApprovedList: Array<any> = [];
+  public paylaterContent: Array<any> = [];
   public countApproved: any;
+  public countPaylater: any;
   public searchExpenseList: any;
   public startDate = new Date();
   public endDate = new Date();
@@ -133,8 +142,26 @@ export class OfficeExpensesComponent implements OnInit {
     });
   }
 
+  getPayLaterCount(): void{
+    this.apiService.get(this.apiUrls.paylaterCount).subscribe((res: any) => {
+      if (res >= 0){
+        this.countPaylater = res;
+        OnlynumberDirective.pagination(res, this.payLaterQuery);
+        this.getAllPayLater();
+      }
+    });
+  }
+
+  getAllPayLater(): void{
+    this.apiService.get(this.apiUrls.allPaylater + '?page=' + this.payLaterQuery.page +
+        '&size=' + this.payLaterQuery.size + '&sort=' + this.payLaterQuery.sort).subscribe((res: any) => {
+      if (res){
+        this.paylaterContent = res.content;
+      }
+    });
+  }
   getAllApproved(): void{
-    this.apiService.get(this.apiUrls.allApproves + '?page=' + this.approvedQuery.page +
+    this.apiService.get(this.apiUrls.allApproved + '?page=' + this.approvedQuery.page +
         '&size=' + this.approvedQuery.size + '&sort=' + this.approvedQuery.sort).subscribe((res: any) => {
       if (res){
         this.ApprovedList = res.content;
@@ -194,6 +221,10 @@ export class OfficeExpensesComponent implements OnInit {
         this.searchExpenses();
         this.getSuppliers();
         this.getVehicles();
+        break;
+      case 4:
+        this.getPayLaterCount();
+        break;
     }
   }
 
@@ -285,7 +316,74 @@ export class OfficeExpensesComponent implements OnInit {
     this.searchExpenses();
   }
 
+  payLater(id: any): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Pay this later',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes!',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value){
+        console.log('paying later');
+        this.apiService.update(this.apiUrls.payLater + id, {}).subscribe((res: any) => {
+          Swal.fire(
+              'Disable!',
+              'successfully disable!',
+              'success'
+          );
+          this.getPendingCount();
+        });
+      }
+    });
+  }
 
+  payNow(id: any): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Pay Now',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes!',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value){
+        console.log('paying later');
+        this.apiService.update(this.apiUrls.payNow + id, {}).subscribe((res: any) => {
+          Swal.fire(
+              'Paid!',
+              'successfully disable!',
+              'success'
+          );
+          this.getPayLaterCount();
+        });
+      }
+    });
+  }
+
+  reject(id: any): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Reject this payment',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes!',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value){
+        console.log('paying later');
+        this.apiService.update(this.apiUrls.reject + id, {}).subscribe((res: any) => {
+          Swal.fire(
+              'Rejected!',
+              'successfully disable!',
+              'success'
+          );
+          this.getPayLaterCount();
+        });
+      }
+    });
+  }
   deleteOfficeExpense(id: any): void {
     Swal.fire({
       title: 'Are you sure?',
@@ -337,4 +435,6 @@ export class OfficeExpensesComponent implements OnInit {
     OnlynumberDirective.clickSorting($event, this.searchQuery);
     this.searchExpenses();
   }
+
+
 }

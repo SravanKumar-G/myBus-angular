@@ -208,10 +208,14 @@ export class ApiUrls {
     editStaff = 'api/v1/staff/';
 
     // OfficeExpenses
-    pendingCount = 'api/v1/officeExpenses/count?pending=true';
+    pendingCount = 'api/v1/officeExpenses/count/pending';
     allPending = 'api/v1/officeExpenses/pending';
-    approvedCount = 'api/v1/officeExpenses/count?pending=false';
-    allApproves = 'api/v1/officeExpenses/approved';
+    approvedCount = 'api/v1/officeExpenses/count/approved';
+    allApproved = 'api/v1/officeExpenses/approved';
+
+    paylaterCount = 'api/v1/officeExpenses/count/paylater';
+    allPaylater = 'api/v1/officeExpenses/paylater';
+
     searchExpense = 'api/v1/officeExpenses/search';
     searchExpensesCount = 'api/v1/officeExpenses/searchCount';
 
@@ -221,6 +225,9 @@ export class ApiUrls {
     addExpense = 'api/v1/officeExpense/';
     editExpense = 'api/v1/officeExpense/';
     deleteOfficeExpense = 'api/v1/officeExpense/';
+    payLater = 'api/v1/officeExpense/payLater/';
+    payNow = 'api/v1/officeExpense/payNow/';
+    reject = 'api/v1/officeExpense/payNow/';
     suppliers = 'api/v1/suppliers/';
     supplierNames = 'api/v1/supplierNames/';
     vehiclesList = 'api/v1/vehicles';
