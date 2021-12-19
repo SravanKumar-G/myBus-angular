@@ -18,6 +18,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="row">
+
                                 <div class="col-sm-6 col-12 form-group">
                                     <label>Vehicle:<span class="mandatory-field">*</span></label>
 <!--                                    <select class="form-control" [(ngModel)]="job.vehicleId"-->
@@ -39,6 +40,20 @@
                                         <ng-option value="">--Select Vehicle--</ng-option>
                                         <ng-option *ngFor="let vehicle of allVehicles"
                                                    [value]="vehicle.id">{{vehicle.regNo}}</ng-option>
+                                    </ng-select>
+                                </div>
+                                <div class="col-sm-6 col-12 form-group">
+                                    <label>Job Type:<span class="mandatory-field">*</span></label>
+                                    <ng-select
+                                            [(ngModel)]="job.typeId"
+                                            [ngModelOptions]="{standalone: true}"
+                                            bindValue="id"
+                                            bindLabel="job type"
+                                            placeholder="job type"
+                                            [clearable]="false">
+                                        <ng-option value="">--Select Type--</ng-option>
+                                        <ng-option *ngFor="let type of jobCategories"
+                                                   [value]="type.id">{{type.name}}</ng-option>
                                     </ng-select>
 
                                 </div>

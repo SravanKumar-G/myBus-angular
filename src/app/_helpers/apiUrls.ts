@@ -158,6 +158,9 @@ export class ApiUrls {
     addInventory = 'api/v1/inventory/addInventory';
     deleteInventory = 'api/v1/inventory/delete/';
 
+    //Job categories API
+    getAllJobCategories = 'api/v1/jobCategory/all';
+
 
     // Tyres API's
     getAllTyres = 'api/v1/tyre/getAll';

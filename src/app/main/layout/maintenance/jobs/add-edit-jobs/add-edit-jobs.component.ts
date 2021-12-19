@@ -17,6 +17,7 @@ export class AddEditJobsComponent implements OnInit {
     vehicleId: ''
   };
   allVehicles: any = [];
+  jobCategories: any = [];
   allInventories: any = [];
   allUsers: any = [];
   titleName = 'Add Job';
@@ -37,6 +38,7 @@ export class AddEditJobsComponent implements OnInit {
     this.getVehicles();
     this.getInventories();
     this.getAllUsers();
+    this.getAllJobCategories();
   }
 
   cancel(): void{
@@ -58,7 +60,14 @@ export class AddEditJobsComponent implements OnInit {
     });
   }
 
-  getOdometerReading(): void{
+  getAllJobCategories() {
+    this.apiService.get(this.apiUrls.getAllJobCategories).subscribe((res: any) => {
+        this.jobCategories = res;
+    });
+  }
+
+
+    getOdometerReading(): void{
     for (let i = 0; i < this.allVehicles.length; i++) {
         if (this.allVehicles[i].id === this.job.vehicleId){
             this.odometerReading =  this.allVehicles[i].odometerReading;
