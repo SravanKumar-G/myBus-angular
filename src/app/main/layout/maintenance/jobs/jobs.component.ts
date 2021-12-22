@@ -196,12 +196,6 @@ deleteJob(id:any): void {
 
 // /* For Job search */
 loadsearchJobs(): void{
-    // paginationService.pagination(tableParams, function(response){
-    //     pageable = {page:tableParams.page(),
-    //         size:tableParams.count(),
-    //         sort:response
-    //     };
-    // });
     this.query.page = this.searchpagination.page-1;
     this.query.sort = this.searchpagination.sort;
     this.query.size = this.searchpagination.size;
@@ -219,33 +213,10 @@ loadsearchJobs(): void{
             this.searchResults = response.content;
             this.searchcount = response.totalElements;
             OnlynumberDirective.pagination(this.searchcount, this.searchpagination);
-            console.log(this.searchpagination);
-            this.query = {
-              vehicleId: '',
-              inventoryId: ''
-            }
         });
     }
 };
 
-// this.searchFind = function () {
-//     jobManager.count(this.query, function (count) {
-//         this.searchTableParams = new NgTableParams({
-//             page: 1, // show first page
-//             size: 10,
-//             sorting: {
-//                 date: 'desc'
-//             }
-//         }, {
-//             total:count,
-//             counts: [],
-//             getData: function (params) {
-//                 loadsearchJobs(params);
-//             }
-//         });
-//     });
-
-// };
 
 searchJob(){
     if(this.query.startDate) {

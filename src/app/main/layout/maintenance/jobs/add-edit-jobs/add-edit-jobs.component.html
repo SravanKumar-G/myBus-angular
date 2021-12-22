@@ -93,16 +93,6 @@
                                 </div>
                                 <div class="col-sm-6 col-12 form-group pt-4">
                                     <label>Old Odometer</label>
-                                    <!-- <ng-select
-                                            [items]="suppliers"
-                                            [multiple]="false"
-                                            bindLabel="name"
-                                            [closeOnSelect]="true"
-                                            bindValue="id"
-                                            placeholder="Select Supplier ..."
-                                            [(ngModel)]="inventory.supplierType"
-                                            [ngModelOptions]="{standalone: true}">
-                                    </ng-select> -->
                                     {{odometerReading}}
                                 </div>
                             </div>
@@ -113,6 +103,7 @@
                                 <tr>
                                     <th>S.No</th>
                                     <th>Job Date</th>
+                                    <th>Type</th>
                                     <th style="width: 150px">Description</th>
                                     <th>Service Location</th>
                                     <th>Total Cost</th>
@@ -122,6 +113,7 @@
                                 <tr *ngFor="let jb of listOfTyres; let i = index">
                                     <td>{{i + 1}}</td>
                                     <td>{{jb.jobDate | date}}</td>
+                                    <td>{{jb.attrs.type}}</td>
                                     <td>{{jb.jobDescription}}</td>
                                     <td>{{jb.serviceLocation}}</td>
                                     <td>{{jb.totalCost}}</td>
