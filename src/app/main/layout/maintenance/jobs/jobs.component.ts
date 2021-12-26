@@ -96,13 +96,6 @@ export class JobsComponent implements OnInit {
   
 
   loadPending(): void{
-    // paginationService.pagination(tableParams, function(response){
-    //     pageable = {page:tableParams.page(),
-    //         size:tableParams.count(),
-    //         sort:response,
-    //         query:this.query
-    //     };
-    // });
     this.apiService.getAll(this.apiUrls.getCountForJobs, {"completed":false}).subscribe((count: any) => {
       if (count) {
         this.pendingCount = count;
@@ -123,13 +116,6 @@ export class JobsComponent implements OnInit {
 };
 
 loadCompleted(): void{
-    // paginationService.pagination(tableParams, function(response){
-    //     pageable = {page:tableParams.page(),
-    //         size:tableParams.count(),
-    //         sort:response,
-    //         query:this.query
-    //     };
-    // });
     this.apiService.getAll(this.apiUrls.getCountForJobs, {"completed":true}).subscribe((count: any) => {
       if (count) {
         this.completedCount = count;

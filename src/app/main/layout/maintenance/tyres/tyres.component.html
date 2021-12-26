@@ -131,18 +131,10 @@
                                 (click)="getAllTyres()">Search
                                 </button>
                             </div>
-                            <!-- <div class="col-sm-3">
-                                <button class="btn btn-success btn-sm" aria-label="Small" type="button"
-                                [routerLink]="['addTyres']">Add Tyre
-                                </button>
-                            </div> -->
                             <div class="col-sm-2">
                                 <div class="col-sm-12 text-right">
                                     <a class="btn btn-sm btn-success" [routerLink]="['addTyres']">
                                         <span class="fa fa-plus"></span> Add Tyre</a>&nbsp;&nbsp;&nbsp;
-                                    <!-- <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export
-                                        Excel
-                                    </button> -->
                                 </div>
                             </div>
                         </div>
@@ -152,50 +144,20 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover text-center">
                                     <thead>
-                                    <!-- <tr>
-                                        <th>S No</th>
-                                        <th>Inventory Name</th>
-                                        <th>Unique Id</th>
-                                        <th>Supplier</th>
-                                        <th>Quantity</th>
-                                        <th>Remaining Quantity</th>
-                                        <th>UnitPrice</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let inventory of inventories; let i = index;">
-                                            <td>{{(pagination.page-1) * pagination.size + i + 1}}</td>
-                                            <td>{{ inventory.name }}</td>
-                                            <td>{{ inventory.uniqueId }}</td>
-                                            <td>{{ inventory.attrs.supplierName}}</td>
-                                            <td>{{ inventory.quantity }}</td>
-                                            <td>{{ inventory.remainingQuantity }}</td>
-                                            <td>{{ inventory.unitCost }}</td>
-                                            <td>
-                                                <button type="button" class="action-icon-style text-primary waves-effect waves-blue edit-user-button"
-                                                        title="Edit Inventory" [routerLink]="['add-inventories/' + inventory.id]">
-                                                        <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
-                                                </button>
-                                                <button type="button" class="action-icon-style text-danger waves-effect waves-blue edit-user-button"
-                                                        title="Delete City" >
-                                                        <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
-                                                </button>
-                                                <button type="button" class="action-icon-style text-success waves-effect waves-blue edit-user-button"
-                                                        title="View Jobs" >
-                                                        <i class="fa fa-eye fa-1x" aria-hidden="true"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr *ngIf="!inventories || inventories.length === 0" class="text-center">
-                                            <td colspan="12">No Inventories found</td>
-                                        </tr>
-                                    </tbody> -->
+
                                     <tr *ngFor="let tyre of currentPageOfTyres; let i = index;">
                                         <td style="text-align: center">{{(pagination.page-1) * pagination.size + i + 1}}
                                         </td>
                                         <td>
-                                            <b>Tyre Number: </b>{{ tyre.uniqueId }}, <b>Entry Date: </b>{{ tyre.createdAt | date }}, <b>Supplier: </b>{{ tyre.supplierName }}<br>
+                                            <b>Tyre Number: </b>{{ tyre.uniqueId }}, <b>Entry Date: </b>{{ tyre.createdAt | date }}, <b>Supplier: </b>{{ tyre.supplierName }} <b>Status: </b>{{ tyre.status }}
+                                            <span *ngIf="tyre.status === 'Uninstalled' || tyre.status === 'New'">
+                                                <a [routerLink]="['addTyreActivity/' + tyre.id]">Install Tyre</a>
+                                            </span>
+                                            <span *ngIf="tyre.status === 'Installed'">Uninstall Tyre</span>
+
+                                            <br>
+
+
                                             <div *ngFor="let tyreactivity of tyre.activityList; let j = index;">
                                                 <b>{{j + 1}}: </b>{{tyreactivity.activity}} for vehicle {{tyreactivity.attrs.regNo}} on
                                                 {{tyreactivity.date | date}} odometer reading:{{tyreactivity.odometerReading}}  location:{{tyreactivity.location}}
@@ -215,8 +177,7 @@
                                             </div>
                                         </td>
                                         <td style="width: 180px!important;">
-                                            <button type="button"  [routerLink]="['addTyreActivity/' + tyre.id]" title="Installation Tyre">
-                                                <i class="fa fa-download"></i></button>&nbsp;&nbsp;&nbsp;
+                                            &nbsp;&nbsp;
                                             <!--                        <a href="" ng-click="">Add Comment</a>-->
                                             <button type="button" class="btn btn-xs btn-success mr-1" [routerLink]="['editTyres/' + tyre.id]" 
                                                     title="Edit Tyre">

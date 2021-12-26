@@ -29,6 +29,13 @@ export class OfficeExpensesComponent implements OnInit {
     pageSizes: [],
     sort: this.sortOrder + ',' + this.orderBy,
   };
+  public payLaterQuery: any = {
+    page: 1,
+    size: 10,
+    count: 0,
+    pageSizes: [],
+    sort: this.sortOrder + ',' + this.orderBy,
+  };
   public searchQuery: any = {
     page: 1,
     size: 10,
@@ -45,7 +52,9 @@ export class OfficeExpensesComponent implements OnInit {
   public countPending: any;
   public pendingList: Array<any> = [];
   public ApprovedList: Array<any> = [];
+  public paylaterContent: Array<any> = [];
   public countApproved: any;
+  public countPaylater: any;
   public searchExpenseList: any;
   public startDate = new Date();
   public endDate = new Date();
@@ -84,6 +93,15 @@ export class OfficeExpensesComponent implements OnInit {
     });
   }
 
+  getSearchCount(): void{
+    this.apiService.get(this.apiUrls.searchExpensesCount).subscribe((res: any) => {
+      if (res >= 0){
+        this.countPending = res;
+        OnlynumberDirective.pagination(res, this.searchQuery);
+        this.getAllPending();
+      }
+    });
+  }
   getAllPending(): void{
     this.apiService.get(this.apiUrls.allPending + '?page=' + this.pendingQuery.page +
         '&size=' + this.pendingQuery.size + '&sort=' + this.pendingQuery.sort).subscribe((res: any) => {
@@ -93,26 +111,18 @@ export class OfficeExpensesComponent implements OnInit {
     });
   }
 
-  getApprovedCount(): void{
-    this.apiService.get(this.apiUrls.approvedCount).subscribe((res: any) => {
-      if (res >= 0){
-        this.countApproved = res;
-        OnlynumberDirective.pagination(res, this.approvedQuery);
-        this.getAllApproved();
-      }
-    });
-  }
-
-  getAllApproved(): void{
-    this.apiService.get(this.apiUrls.allApproves + '?page=' + this.approvedQuery.page +
-        '&size=' + this.approvedQuery.size + '&sort=' + this.approvedQuery.sort).subscribe((res: any) => {
-      if (res){
-        this.ApprovedList = res.content;
-      }
-    });
-  }
-
   searchExpenses(): void{
+    this.apiService.getAll(this.apiUrls.searchExpense + '?page=' + this.searchQuery.page +
+        '&size=' + this.searchQuery.size + '&sort=' + this.searchQuery.sort, this.searchQuery).subscribe((res: any) => {
+      if (res){
+        if (res){
+          this.searchExpenseList = res.content;
+          this.searchQuery.count = res.totalElements;
+        }
+      }
+    });
+  }
+  searchExpensesOld(): void{
     this.apiService.getAll(this.apiUrls.searchExpense, this.searchQuery).subscribe((res: any) => {
       if (res){
         if (res){
@@ -123,6 +133,43 @@ export class OfficeExpensesComponent implements OnInit {
       }
     });
   }
+  getApprovedCount(): void{
+    this.apiService.get(this.apiUrls.approvedCount).subscribe((res: any) => {
+      if (res >= 0){
+        this.countApproved = res;
+        OnlynumberDirective.pagination(res, this.approvedQuery);
+        this.getAllApproved();
+      }
+    });
+  }
+
+  getPayLaterCount(): void{
+    this.apiService.get(this.apiUrls.paylaterCount).subscribe((res: any) => {
+      if (res >= 0){
+        this.countPaylater = res;
+        OnlynumberDirective.pagination(res, this.payLaterQuery);
+        this.getAllPayLater();
+      }
+    });
+  }
+
+  getAllPayLater(): void{
+    this.apiService.get(this.apiUrls.allPaylater + '?page=' + this.payLaterQuery.page +
+        '&size=' + this.payLaterQuery.size + '&sort=' + this.payLaterQuery.sort).subscribe((res: any) => {
+      if (res){
+        this.paylaterContent = res.content;
+      }
+    });
+  }
+  getAllApproved(): void{
+    this.apiService.get(this.apiUrls.allApproved + '?page=' + this.approvedQuery.page +
+        '&size=' + this.approvedQuery.size + '&sort=' + this.approvedQuery.sort).subscribe((res: any) => {
+      if (res){
+        this.ApprovedList = res.content;
+      }
+    });
+  }
+
   branchOfficeNames(): void{
     this.apiService.get(this.apiUrls.branchOfficeNames).subscribe((res: any) => {
       if (res){
@@ -153,9 +200,9 @@ export class OfficeExpensesComponent implements OnInit {
     });
   }
   getVehicles(): void {
-    this.apiService.getAll(this.apiUrls.vehiclesList, {}).subscribe((res: any) => {
+    this.apiService.getAll(this.apiUrls.vehicleNumbersList, {}).subscribe((res: any) => {
       if (res) {
-        this.vehicles = res.content;
+        this.vehicles = res;
       }
     });
   }
@@ -175,6 +222,10 @@ export class OfficeExpensesComponent implements OnInit {
         this.searchExpenses();
         this.getSuppliers();
         this.getVehicles();
+        break;
+      case 4:
+        this.getPayLaterCount();
+        break;
     }
   }
 
@@ -266,7 +317,74 @@ export class OfficeExpensesComponent implements OnInit {
     this.searchExpenses();
   }
 
+  payLater(id: any): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Pay this later',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes!',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value){
+        console.log('paying later');
+        this.apiService.update(this.apiUrls.payLater + id, {}).subscribe((res: any) => {
+          Swal.fire(
+              'Disable!',
+              'successfully disable!',
+              'success'
+          );
+          this.getPendingCount();
+        });
+      }
+    });
+  }
 
+  payNow(id: any): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Pay Now',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes!',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value){
+        console.log('paying later');
+        this.apiService.update(this.apiUrls.payNow + id, {}).subscribe((res: any) => {
+          Swal.fire(
+              'Paid!',
+              'successfully disable!',
+              'success'
+          );
+          this.getPayLaterCount();
+        });
+      }
+    });
+  }
+
+  reject(id: any): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Reject this payment',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes!',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.value){
+        console.log('paying later');
+        this.apiService.update(this.apiUrls.reject + id, {}).subscribe((res: any) => {
+          Swal.fire(
+              'Rejected!',
+              'successfully disable!',
+              'success'
+          );
+          this.getPayLaterCount();
+        });
+      }
+    });
+  }
   deleteOfficeExpense(id: any): void {
     Swal.fire({
       title: 'Are you sure?',
@@ -319,7 +437,7 @@ export class OfficeExpensesComponent implements OnInit {
     this.searchExpenses();
   }
 
-    viewImages(url: any): void{
-        this.modalService.open(this.viewImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
-    }
+  viewImages(url: any): void{
+     this.modalService.open(this.viewImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
+  }
 }

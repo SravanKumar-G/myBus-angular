@@ -83,8 +83,12 @@
                                     <th>From</th>
                                     <th>To</th>
                                     <th>Vehicle</th>
-                                    <th>Staff</th>
-                                    <th>Cash/NetIncome</th>
+                                    <th>Driver1</th>
+                                    <th>Driver2</th>
+                                    <th>Cleaner</th>
+                                    <th>Conductor</th>
+                                    <th>CashIncome</th>
+                                    <th>NetIncome</th>
                                     <th>Status</th>
                                     <th>SubmittedBy</th>
                                 </tr>
@@ -97,8 +101,12 @@
                                     <td>{{ service.source }}</td>
                                     <td>{{ service.destination }}</td>
                                     <td><a class="cus-a" (click)="goToServiceReport(service)">{{ service.vehicleRegNumber }}</a></td>
-                                    <td><li *ngFor="let staff of service.staffDetails; let s =index;">{{staff.name}} - {{staff.contactNumber}} </li></td>
-                                    <td>{{ service.netCashIncome | number }}/{{ service.netIncome | number}}</td>
+                                    <td><span *ngIf="service.driver1">{{service.driver1.name}} - {{service.driver1.contactNumber}}</span></td>
+                                    <td><span *ngIf="service.driver2">{{service.driver2.name}} - {{service.driver2.contactNumber}}</span></td>
+                                    <td><span *ngIf="service.cleaner">{{service.cleaner.name}} - {{service.cleaner.contactNumber}}</span></td>
+                                    <td><span *ngIf="service.conductor">{{service.conductor.name}} - {{service.conductor.contactNumber}}</span></td>
+                                    <td>{{ service.netCashIncome | number }}</td>
+                                    <td>{{ service.netIncome | number}}</td>
                                     <td>{{ service.status || '--'}}</td>
                                     <td>{{service.attrs.submittedBy || '--'}}</td>
                                 </tr>

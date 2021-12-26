@@ -58,6 +58,7 @@
                                         <th>S No</th>
                                         <th>Inventory</th>
                                         <th>Vehicle</th>
+                                        <th>Type</th>
                                         <th>Mileage</th>
                                         <th>Job Date</th>
                                         <th>Description & Location</th>
@@ -71,6 +72,7 @@
                                             <td>{{(pendingpagination.page-1) * pendingpagination.size + i + 1}}</td>
                                             <td>{{job.attrs.inventory }}</td>
                                             <td>{{job.attrs.RegNo }}</td>
+                                            <td>{{job.attrs.type }}</td>
                                             <td>{{job.mileage}}</td>
                                             <td>{{job.jobDate | date}}</td>
                                             <td>Description : {{job.jobDescription}} - Location :{{job.serviceLocation}}</td>
