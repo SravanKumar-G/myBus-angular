@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
@@ -67,6 +67,7 @@ export class OfficeExpensesComponent implements OnInit {
   public approvedAndRejected: any;
   public suppliersList: Array<any> = [];
   public vehicles: Array<any> = [];
+  @ViewChild('viewImageModal') viewImageModal: any;
 
   constructor(private router: Router,
               public apiService: ApiServiceService,
@@ -436,5 +437,7 @@ export class OfficeExpensesComponent implements OnInit {
     this.searchExpenses();
   }
 
-
+  viewImages(url: any): void{
+     this.modalService.open(this.viewImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
+  }
 }
