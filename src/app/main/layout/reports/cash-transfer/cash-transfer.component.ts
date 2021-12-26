@@ -15,6 +15,7 @@ export class CashTransferComponent implements OnInit {
     public tab = 1;
     public currentPageOfPendingCashTransfers: any;
     public currentPageOfApprovedCashTransfers: any;
+    public myCashTransfers: any;
     public searchExpenses: any;
     public userId: any;
     public branchOffices: Array<any> = [];
@@ -23,6 +24,7 @@ export class CashTransferComponent implements OnInit {
     public errorMessage: any;
     public pendingCashTransfersCount: any;
     public approvedCashTransfersCount: any;
+    public myCashTransfersCount: any;
     public pendingCashTransfers: any = [];
     public approvedCashTransfers: any = [];
     public titleHeader: any;
@@ -36,6 +38,15 @@ export class CashTransferComponent implements OnInit {
     sortOrder = 'createdAt';
     orderBy = 'desc';
     public cashTransferQuery: any = {
+        page: 1,
+        size: 10,
+        count: 0,
+        pageSizes: [],
+        orderBy: 'desc',
+        sortOrder: 'createdAt',
+        sort: this.sortOrder + ',' + this.orderBy,
+    };
+    public myTransferQuery: any = {
         page: 1,
         size: 10,
         count: 0,
@@ -91,6 +102,12 @@ export class CashTransferComponent implements OnInit {
             // this.searchPayments();
                 this.loadBranchOffice();
                 this.getUsers();
+                break;
+            case 4:
+                this.getMyTransfersCount();
+                this.loadBranchOffice();
+                this.getUsers();
+                break;
         }
     }
 
@@ -192,41 +209,61 @@ export class CashTransferComponent implements OnInit {
             }
         });
     }
-
+    getMyTransfersCount(): void {
+        this.apiService.getAll(this.apiUrls.nonPendingCount, {}).subscribe((res: any) => {
+            if (res || res === 0) {
+                this.approvedCashTransfersCount = res;
+                OnlynumberDirective.pagination(res, this.myTransferQuery);
+                this.getMyTransfers();
+            }
+        });
+    }
+    getMyTransfers(): void {
+        this.apiService.get(this.apiUrls.getMyTransfers + '?page=' + this.myTransferQuery.page +
+            '&size=' + this.myTransferQuery.size + '&sort=' + this.myTransferQuery.sort).subscribe((res: any) => {
+            if (res) {
+                this.userNamesMap();
+                this.myCashTransfers = res.content;
+                for (const ap of this.myCashTransfers) {
+                    ap.attrs.createdBy = this.userNames[ap.createdBy];
+                }
+                this.myCashTransfersCount = res.totalElements;
+            }
+        });
+    }
     exportExcel(): void {
     }
 
     save(cashTransfer: any): void {
-        this.cashTransfer.fromUserId = this.currentUser.id;
-        if (!this.cashTransfer.amount) {
+        if (!cashTransfer.amount) {
             this.errorMessage = 'Please Enter Amount';
         }else {
-        if (this.cashTransferId) {
-            this.apiService.update(this.apiUrls.saveOrUpdate, cashTransfer).subscribe((res: any) => {
-                if (res) {
-                    this.addCashTransferQuery = res;
-                }
-                Swal.fire('Great', 'Successfully updated', 'success');
-                this.closeModal();
-                this.getCount();
-                this.cashTransfer = {date: new Date()};
-            }, error => {
-                this.errorMessage = error.message;
-            });
-        } else {
-            this.apiService.create(this.apiUrls.saveOrUpdate, this.cashTransfer).subscribe((res: any) => {
-                if (res) {
-                    // this.addCashTransferQuery = res;
-                    Swal.fire('Great', 'Saved successfully', 'success');
+            if (cashTransfer.id) {
+                this.apiService.update(this.apiUrls.saveOrUpdate, cashTransfer).subscribe((res: any) => {
+                    if (res) {
+                        this.addCashTransferQuery = res;
+                    }
+                    Swal.fire('Great', 'Successfully updated', 'success');
                     this.closeModal();
                     this.getCount();
-                    this.cashTransfer = {date: new Date()};
-                }
-            }, error => {
-                this.errorMessage = error.message;
-            });
+                    this.apiService.getLoggedInUserData();
+                }, error => {
+                    this.errorMessage = error.message;
+                });
+            } else {
+                this.apiService.create(this.apiUrls.saveOrUpdate, cashTransfer).subscribe((res: any) => {
+                    if (res) {
+                        // this.addCashTransferQuery = res;
+                        Swal.fire('Great', 'Saved successfully', 'success');
+                        this.closeModal();
+                        this.getCount();
+                        this.apiService.getLoggedInUserData();
+                    }
+                }, error => {
+                    this.errorMessage = error.message;
+                });
+            }
         }
-    }
     }
     Edit(addEditCashTransferModal: any, id: any): void{
         console.log(this.addCashTransferQuery, this.cashTransfer);
@@ -274,7 +311,6 @@ export class CashTransferComponent implements OnInit {
         }
         this.save(cashTransfer);
         Swal.fire('Great', 'cashTransfer is updated', 'success');
-        // });
     }
 
     date(): void{
@@ -341,10 +377,19 @@ export class CashTransferComponent implements OnInit {
         this.getNonPendingCount();
     }
 
+    changeMyTransfersPage($event: number): void {
+        this.myTransferQuery.page = $event;
+        this.getMyTransfersCount();
+    }
     handleApprovedPageSizeChange(size: any): void {
         this.cashTransferQuery.size = size;
         this.cashTransferQuery.page = 1;
         this.getNonPendingCount();
+    }
+    handleMyTransferesPageSizeChange(size: any): void {
+        this.myTransferQuery.size = size;
+        this.myTransferQuery.page = 1;
+        this.getMyTransfersCount();
     }
     clickSorting(event: any): void {
         OnlynumberDirective.clickSorting(event, this.pendingCashTransferQuery);

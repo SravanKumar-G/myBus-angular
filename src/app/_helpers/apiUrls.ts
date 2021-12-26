@@ -292,6 +292,8 @@ export class ApiUrls {
     userNamesMap = 'api/v1/userNamesMap';
     nonPendingCount = 'api/v1/cashTransfer/nonpending/count';
     getAllNonPending = 'api/v1/cashTransfer/nonpending/all';
+    getMyTransfersCount = 'api/v1/cashTransfer/myTransferes/count';
+    getMyTransfers = 'api/v1/cashTransfer/myTransferes/all';
     saveOrUpdate = 'api/v1/cashTransfer/';
     cashTransferSearch = 'api/v1/cashTransfer/search';
 

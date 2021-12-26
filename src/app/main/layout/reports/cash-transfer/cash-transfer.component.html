@@ -20,6 +20,9 @@
         <li class="nav-item disabled-tab-nav" (click)="changeCashTransferTab(3)">
             <a class="nav-link" [ngClass]="{active:tab==3}">Search</a>
         </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeCashTransferTab(4)">
+            <a class="nav-link" [ngClass]="{active:tab==3}">My Transfers</a>
+        </li>
     </ul>
 
     <div class="row">
@@ -384,6 +387,109 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 4">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row form-group"></div>
+                        <div class="row">
+                            <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                                <table class="table table-hover dataTable text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th [ngClass]="myTransferQuery.sortOrder == 'date'? 'headActive' : ''"
+                                            accessKey="date" (click)="approvedClickSorting($event)">Date
+                                            <i *ngIf="myTransferQuery.sortOrder != 'date'" class="fa fa-sort"></i>
+                                            <i *ngIf="myTransferQuery.sortOrder == 'date'" class="fa"
+                                               [ngClass]="myTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="myTransferQuery.sortOrder == 'fromBranchId'? 'headActive' : ''"
+                                            accessKey="fromBranchId" (click)="approvedClickSorting($event)">From User
+                                            <i *ngIf="myTransferQuery.sortOrder != 'fromBranchId'" class="fa fa-sort"></i>
+                                            <i *ngIf="myTransferQuery.sortOrder == 'fromBranchId'" class="fa"
+                                               [ngClass]="myTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th [ngClass]="myTransferQuery.sortOrder == 'toBranchId'? 'headActive' : ''"
+                                            accessKey="toBranchId" (click)="approvedClickSorting($event)">To User/Branch
+                                            <i *ngIf="myTransferQuery.sortOrder != 'toBranchId'" class="fa fa-sort"></i>
+                                            <i *ngIf="myTransferQuery.sortOrder == 'toBranchId'" class="fa"
+                                               [ngClass]="myTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Description</th>
+                                        <th [ngClass]="myTransferQuery.sortOrder == 'amount'? 'headActive' : ''"
+                                            accessKey="amount" (click)="approvedClickSorting($event)">Amount
+                                            <i *ngIf="myTransferQuery.sortOrder != 'amount'" class="fa fa-sort"></i>
+                                            <i *ngIf="myTransferQuery.sortOrder == 'amount'" class="fa"
+                                               [ngClass]="myTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <th>Created By</th>
+                                        <th [ngClass]="myTransferQuery.sortOrder == 'status'? 'headActive' : ''"
+                                            accessKey="status" (click)="approvedClickSorting($event)">Status
+                                            <i *ngIf="myTransferQuery.sortOrder != 'status'" class="fa fa-sort"></i>
+                                            <i *ngIf="myTransferQuery.sortOrder == 'status'" class="fa"
+                                               [ngClass]="myTransferQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
+                                        </th>
+                                        <!--                                        <th>Actions</th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let cashTransfer of myCashTransfers; let i = index">
+                                        <td>{{(myTransferQuery.page - 1) * myTransferQuery.size + i + 1}}</td>
+                                        <td>{{cashTransfer.date | date}}</td>
+                                        <td>{{cashTransfer.attrs.fromUser || 'NA'}}</td>
+                                        <td>{{cashTransfer.attrs.toUser || 'NA'}}</td>
+                                        <td>
+                                            <a *ngIf="cashTransfer.serviceFormId" href="#!/serviceform/{{cashTransfer.serviceFormId}}">{{cashTransfer.description}}</a>
+                                            <span *ngIf="!cashTransfer.serviceFormId">{{cashTransfer.description || 'NA'}}</span>
+                                        </td>
+                                        <td>{{cashTransfer.amount || 'NA'}}</td>
+                                        <td>{{cashTransfer.attrs.createdBy || 'NA'}}</td>
+                                        <td><span *ngIf="cashTransfer.status">
+                                            {{cashTransfer.status || 'NA'}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!myCashTransfers || myCashTransfers.length === 0">
+                                        <td colspan="10" style="text-align: center">No Records exist.</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr *ngIf="myCashTransfers != 0 || myCashTransfers">
+                                        <th colspan="12">
+                                            <div class="pull-right">
+                                                Total Count : {{myCashTransfersCount || 0}}
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="form-group">
+                                    <div class="list-row">
+                                        <ngb-pagination *ngIf="myCashTransfers|| myCashTransfers != 0"
+                                                        [(page)]="myTransferQuery.page"
+                                                        [pageSize]="myTransferQuery.size"
+                                                        [collectionSize]="myCashTransfersCount"
+                                                        [boundaryLinks]="true"
+                                                        (pageChange)="changeMyTransfersPage($event)"
+                                                        [maxSize]="5">
+                                        </ngb-pagination>
+                                        <ul class="pagination pull-right" style="margin-top: -37px !important;"
+                                            *ngIf="myCashTransfersCount || myCashTransfersCount !== 0">
+                                            <li class="page-item" [ngClass]="size == myTransferQuery.size ? 'active' : ''"
+                                                *ngFor="let size of myTransferQuery.pageSizes" (click)="handleMyTransferesPageSizeChange(size)">
+                                                <button class="page-link"> {{ size }}
+                                                    <span class="sr-only">(current)</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

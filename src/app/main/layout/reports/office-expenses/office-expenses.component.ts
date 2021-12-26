@@ -326,14 +326,14 @@ export class OfficeExpensesComponent implements OnInit {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.value){
-        console.log('paying later');
         this.apiService.update(this.apiUrls.payLater + id, {}).subscribe((res: any) => {
           Swal.fire(
-              'Disable!',
-              'successfully disable!',
+              'Moved to pay later bucket!',
+              'Moved to pay later bucket!',
               'success'
           );
           this.getPendingCount();
+          this.apiService.getLoggedInUserData();
         });
       }
     });
@@ -349,7 +349,6 @@ export class OfficeExpensesComponent implements OnInit {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.value){
-        console.log('paying later');
         this.apiService.update(this.apiUrls.payNow + id, {}).subscribe((res: any) => {
           Swal.fire(
               'Paid!',
@@ -357,6 +356,8 @@ export class OfficeExpensesComponent implements OnInit {
               'success'
           );
           this.getPayLaterCount();
+          console.log("paying now get current user details");
+          this.apiService.getLoggedInUserData();
         });
       }
     });
@@ -372,7 +373,6 @@ export class OfficeExpensesComponent implements OnInit {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.value){
-        console.log('paying later');
         this.apiService.update(this.apiUrls.reject + id, {}).subscribe((res: any) => {
           Swal.fire(
               'Rejected!',
@@ -380,6 +380,7 @@ export class OfficeExpensesComponent implements OnInit {
               'success'
           );
           this.getPayLaterCount();
+          this.apiService.getLoggedInUserData();
         });
       }
     });
@@ -420,6 +421,7 @@ export class OfficeExpensesComponent implements OnInit {
     this.apiService.getAll(this.apiUrls.approveOrRejectStatus + status, this.selectedOfficeExpenses).subscribe((res: any) => {
       if (res){
         this.approvedAndRejected = res.data;
+        this.selectedOfficeExpenses = [];
         this.apiService.getLoggedInUserData();
         this.changeOfficeExpenseTab(2);
       }
