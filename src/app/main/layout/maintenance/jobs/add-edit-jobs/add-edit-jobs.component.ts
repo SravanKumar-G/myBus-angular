@@ -24,7 +24,7 @@ export class AddEditJobsComponent implements OnInit {
   odometerReading = 0;
   jobId: any;
   errorMessage: any;
-  public listOfTyres: any;
+  public latestJobs: any;
 
   constructor(private apiService: ApiServiceService,
               private apiUrls: ApiUrls,
@@ -55,6 +55,7 @@ export class AddEditJobsComponent implements OnInit {
                 this.job = data;
                 this.job.jobDate = new Date(this.job.jobDate);
                 this.getOdometerReading();
+                this.getLatestJobsToTable();
             });
         }
     });
@@ -88,11 +89,6 @@ export class AddEditJobsComponent implements OnInit {
   }
 
   save(): void{
-    /*if (this.job.inventories.length === 0) {
-         swal("Error", "Please Select a Inventory", "error");
-     } else if (!this.job.vehicleId) {
-         swal("Error", "Please select a Vehicle", "error");
-     } else {*/
      if (this.jobId) {
       this.apiService.update(this.apiUrls.updateJob, this.job).subscribe((response: any) => {
         if (response){
@@ -119,43 +115,42 @@ export class AddEditJobsComponent implements OnInit {
 
 
   addJobInventories(): void{
-  if (!this.job.inventories){
-      this.job.inventories = [];
-  }
-  for (let i = 0; i < this.job.inventories.length; i++) {
-      if (!this.job.inventories[i].inventoryId ||
-          !this.job.inventories[i].quantity) {
-          Swal.fire('Error', 'Please select values for inventory and quantity', 'error');
-          return;
+      if (!this.job.inventories){
+          this.job.inventories = [];
       }
+      for (let i = 0; i < this.job.inventories.length; i++) {
+          if (!this.job.inventories[i].inventoryId ||
+              !this.job.inventories[i].quantity) {
+              Swal.fire('Error', 'Please select values for inventory and quantity', 'error');
+              return;
+          }
+      }
+      this.job.inventories.push({
+          inventoryId: undefined,
+          quantity: undefined,
+          unitCost: 0
+      });
   }
-  this.job.inventories.push({
-      inventoryId: undefined,
-      quantity: undefined,
-      unitCost: 0
-  });
-}
 
-calculateTotal(): void{
-  let total = 0;
-  for (let i = 0; i < this.job.inventories.length; i++){
-      total += (this.job.inventories[i].unitCost * this.job.inventories[i].quantity);
-  }
-  total += this.job.additionalCost;
-  this.job.totalCost = total;
-}
+    calculateTotal(): void{
+      let total = 0;
+      for (let i = 0; i < this.job.inventories.length; i++){
+          total += (this.job.inventories[i].unitCost * this.job.inventories[i].quantity);
+      }
+      total += this.job.additionalCost;
+      this.job.totalCost = total;
+    }
 
-
-deleteJobInventory(index: any): void{
-  if (this.job.inventories.length > 0) {
-      this.job.inventories.splice(index, 1);
-  }
-}
+    deleteJobInventory(index: any): void{
+      if (this.job.inventories.length > 0) {
+          this.job.inventories.splice(index, 1);
+      }
+    }
 
     getLatestJobsToTable(): void{
       this.apiService.get(this.apiUrls.getLatestJobs + this.job.vehicleId).subscribe(( res: any) => {
           if (res){
-              this.listOfTyres = res;
+              this.latestJobs = res;
           }
       });
 

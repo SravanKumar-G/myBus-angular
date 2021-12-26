@@ -170,7 +170,7 @@ export class LoadingSheetComponent implements OnInit {
     }
 
     loadVehicle(truckId: any, modal: any): void {
-        if (!truckId.id) {
+       if (!truckId.id) {
             Swal.fire('Error', 'Please select a vehicle number to load', 'error');
             return;
         }
@@ -193,7 +193,6 @@ export class LoadingSheetComponent implements OnInit {
                this.tripSheets = res;
                this.vehicleRegNo  = truckId;
                this.modalService.open(modal, {size: 'lg'});
-               this.selectedBookings = [];
                // this.getLoadingSheetData();
            }
         }, error => {
@@ -202,11 +201,12 @@ export class LoadingSheetComponent implements OnInit {
     }
 
     selectTripSheet(id: any): void {
-        this.apiService.create(this.apiUrls.addBookingsToTripSheet + id, this.selectedBookings).subscribe((res: any) => {
+        this.apiService.create(this.apiUrls.loadToTripSheet + id, this.selectedBookings).subscribe((res: any) => {
             if (res) {
                 this.modalService.dismissAll();
                 this.getLoadingSheetData();
                 Swal.fire('Success', 'Successfully Loaded', 'success');
+                this.selectedBookings = [];
             }
         }, error => {
             Swal.fire('Error loading bookings to Tripsheet', error.message, 'error');

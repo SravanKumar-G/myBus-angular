@@ -124,7 +124,7 @@ export class ApiUrls {
     // Cargo Loading Sheet
     getBookingsForLoading = 'api/v1/shipment/search/loading';
     loadToVehicle = 'api/v1/shipment/assignVehicle/';
-    addBookingsToTripSheet = 'api/v1/shipment/loadToTripSheet/';
+    loadToTripSheet = 'api/v1/shipment/loadToTripSheet/';
     createTripSheet = 'api/v1/shipment/createTripSheet/';
 
     // Unloading Sheet
