@@ -143,7 +143,7 @@
                                             <div class="flex-container">
                                                 Comments:
                                                 <div *ngFor="let comment of escalation.escalationComments; let i = index;" class="service-card">
-                                                    {{comment.comment}} <span style="color: initial"><i><b>- {{comment.addedBy}} - {{comment.addedOn}}</b></i></span>
+                                                    {{comment.comment}} <span style="color: initial"><i><b>- {{comment.addedBy}} - {{comment.addedOn | date:'shortTime'}}</b></i></span>
                                                     <br/>
                                                 </div>
                                             </div>
