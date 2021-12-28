@@ -10,6 +10,7 @@ import { ViewjobsbyinventoriesComponent } from './inventories/viewjobsbyinventor
 import { AddtyresComponent } from './tyres/addtyres/addtyres.component';
 import { AddEditTyreActivityComponent } from './tyres/add-edit-tyre-activity/add-edit-tyre-activity.component';
 import { AddEditJobsComponent } from './jobs/add-edit-jobs/add-edit-jobs.component';
+import {JobRemindersComponent} from './job-reminders/job-reminders.component';
 
 const routes: Routes = [
   {
@@ -67,6 +68,10 @@ const routes: Routes = [
   {
     path: 'inventories/viewJobsByInventory/:id',
     component: ViewjobsbyinventoriesComponent
+  },
+  {
+    path: 'jobReminders',
+    component: JobRemindersComponent
   }
 ];
 

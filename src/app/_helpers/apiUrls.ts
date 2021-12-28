@@ -8,7 +8,7 @@ import {environment} from 'src/environments/environment';
 
 export class ApiUrls {
     // mainUrl = 'http://localhost:8091/';
-    // mainUrl = 'http://qacargo.srikrishnatravels.in/';
+    // mainUrl = 'http://qacargo.srikrishnatravels.in/'
     // mainUrl = 'http://cargo.srikrishnatravels.in/';
     mainUrl = environment.testPath;
 
@@ -329,4 +329,7 @@ export class ApiUrls {
     haltedServices = 'api/v1/serviceReport/haltedServices';
     filterHaltedServices = 'api/v1/serviceReport/filterHaltedServices';
 
+    // Job Reminders
+    pendingGetUpcoming = 'api/v1/reminders/getUpcoming';
+    getAllCollectedData = 'api/v1/reminders/getAll';
 }

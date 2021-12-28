@@ -395,6 +395,13 @@
                             <i class="icon fa fa-clock-o" aria-hidden="true"></i>Reminders
                         </a>
                     </li>
+                    <li class="waves-effect waves-light" *ngIf="canAccessModule('reminders')">
+                        <a class="treeView-item" [routerLink]="['maintenance/jobReminders']" [routerLinkActive]="['active']">
+                            <i class="icon fa fa-clock-o" aria-hidden="true"></i>Job Reminders
+                        </a>
+                    </li>
+
+                    <li class="waves-effect waves-light" *ngIf="canAccessModule('staffcomplaints')">
                     <li class="waves-effect waves-light">
                         <a class="treeView-item" [routerLink]="['maintenance/staffComplaints']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-comment-o" aria-hidden="true"></i>Staff Complaints
