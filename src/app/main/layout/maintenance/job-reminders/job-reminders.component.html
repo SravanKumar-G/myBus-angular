@@ -1,0 +1,159 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="row">
+            <h1>
+                <i class="fa fa-book fa-lg" aria-hidden="true"></i> Job Reminders
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <xng-breadcrumb></xng-breadcrumb>
+        </ul>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item pending-users-tab" (click)="changeJobRemindersTab(1)">
+            <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeJobRemindersTab(2)">
+            <a class="nav-link" [ngClass]="{active:tab==2}">Collected</a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 1">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row">
+                        <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                            <table class="table table-hover dataTable text-center">
+                                <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Date</th>
+                                    <th>Vehicle Number</th>
+                                    <th>Remarks</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let pa of pendingData; let i = index">
+                                    <td>{{pa + 1}}</td>
+                                    <td>{{pa.date | date}}</td>
+                                    <td>{{pa.vehilceNumber}}</td>
+                                    <td>{{pa.remarks}}</td>
+                                    <td>{{pa.description}}</td>
+                                </tr>
+                                <tr *ngIf="pendingData === 0 || !pendingData">
+                                    <td colspan="6">No Records</td>
+                                </tr>
+                                </tbody>
+<!--                                <tfoot>-->
+<!--                                <tr *ngIf="data.count === 0 || data.count !=0">-->
+<!--                                    <th colspan="5">-->
+<!--                                        <div class="pull-right">-->
+<!--                                            Total Count : {{data.count || 0}}-->
+<!--                                        </div>-->
+<!--                                    </th>-->
+<!--                                </tr>-->
+<!--                                </tfoot>-->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 2">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-3 form-group">
+                                <label class="control-label">From Date </label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm" placeholder=" Enter From Date"
+                                           [(ngModel)]="data.fromDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           #dp1="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center',  isAnimated: true }"
+                                           bsDatepicker required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm"
+                                                style="border: 1px solid #ced4da;"
+                                                (click)="dp1.show()"
+                                                [attr.aria-expanded]="dp1.isOpen">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label class="control-label">To Date</label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm" placeholder=" Enter To Date"
+                                           [(ngModel)]="data.toDate"
+                                           [ngModelOptions]="{standalone: true}"
+                                           #dp1="bsDatepicker"
+                                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center',  isAnimated: true }"
+                                           bsDatepicker required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light btn-sm"
+                                                style="border: 1px solid #ced4da;"
+                                                (click)="dp1.show()"
+                                                [attr.aria-expanded]="dp1.isOpen">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            <div class="col-sm-3 form-group">-->
+<!--                                <ng-select-->
+<!--                                        [(ngModel)]="job.vehicleId"-->
+<!--                                        [ngModelOptions]="{standalone: true}"-->
+<!--                                        bindValue="id"-->
+<!--                                        bindLabel="regNo"-->
+<!--                                        placeholder="Enter Vehicle Number"-->
+<!--                                        (ngModelChange)="getLatestJobsToTable()"-->
+<!--                                        [clearable]="false">-->
+<!--                                    <ng-option value="">&#45;&#45;Select Vehicle&#45;&#45;</ng-option>-->
+<!--                                    <ng-option *ngFor="let vehicle of allVehicles"-->
+<!--                                               [value]="vehicle.id">{{vehicle.regNo}}</ng-option>-->
+<!--                                </ng-select>-->
+<!--                            </div>-->
+                            <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                                <table class="table table-hover dataTable text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Date</th>
+                                        <th>Vehicle Number</th>
+                                        <th>Remarks</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let cl of collectedData; let i = index">
+                                        <td>{{cl + 1}}</td>
+                                        <td>{{cl.date | date}}</td>
+                                        <td>{{cl.vehilceNumber}}</td>
+                                        <td>{{cl.remarks}}</td>
+                                        <td>{{cl.description}}</td>
+                                    </tr>
+                                    <tr *ngIf="!data.count || data.count === 0">
+                                        <th colspan="6" style="text-align: center">No Records exist.</th>
+                                    </tr>
+                                    </tbody>
+<!--                                    <tfoot>-->
+<!--                                    <tr *ngIf="data.count === 0 || data.count !=0">-->
+<!--                                        <th colspan="5">-->
+<!--                                            <div class="pull-right">-->
+<!--                                                Total Count : {{data.count || 0}}-->
+<!--                                            </div>-->
+<!--                                        </th>-->
+<!--                                    </tr>-->
+<!--                                    </tfoot>-->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

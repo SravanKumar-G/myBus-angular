@@ -16,6 +16,8 @@ import { AddtyresComponent } from './tyres/addtyres/addtyres.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AddEditTyreActivityComponent } from './tyres/add-edit-tyre-activity/add-edit-tyre-activity.component';
 import { AddEditJobsComponent } from './jobs/add-edit-jobs/add-edit-jobs.component';
+import { JobRemindersComponent } from './job-reminders/job-reminders.component';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { AddEditJobsComponent } from './jobs/add-edit-jobs/add-edit-jobs.compone
     ViewjobsbyinventoriesComponent,
     AddtyresComponent,
     AddEditTyreActivityComponent,
-    AddEditJobsComponent
+    AddEditJobsComponent,
+    JobRemindersComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,7 @@ import { AddEditJobsComponent } from './jobs/add-edit-jobs/add-edit-jobs.compone
     NgSelectModule,
     FormsModule,
     BsDatepickerModule,
+    BreadcrumbModule,
   ],
   providers: [
     DatePipe
