@@ -331,4 +331,7 @@ export class ApiUrls {
     haltedServices = 'api/v1/serviceReport/haltedServices';
     filterHaltedServices = 'api/v1/serviceReport/filterHaltedServices';
 
+    // Job Reminders
+    pendingGetUpcoming = 'api/v1/reminders/getUpcoming';
+    getAllCollectedData = 'api/v1/reminders/getAll';
 }

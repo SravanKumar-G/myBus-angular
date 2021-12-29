@@ -45,7 +45,7 @@ export class AddEditJobsComponent implements OnInit {
     this.router.navigate(['maintenance/jobs']);
   }
 
-  getVehicles() {
+  getVehicles(): void{
     this.apiService.getAll(this.apiUrls.getAllVehicles, {}).subscribe((res: any) => {
         this.allVehicles = res.content;
         // $rootScope.$broadcast('vehicles', this.allVehicles);
