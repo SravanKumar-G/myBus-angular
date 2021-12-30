@@ -94,7 +94,7 @@ export class AddEditOfficeExpenseComponent implements OnInit {
     getVehicles(): void {
         this.apiService.getAll(this.apiUrls.vehicleNumbersList, {}).subscribe((res: any) => {
             if (res) {
-                this.vehicles = res.content;
+                this.vehicles = res;
             }
         });
     }

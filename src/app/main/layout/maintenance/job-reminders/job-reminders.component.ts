@@ -14,7 +14,7 @@ export class JobRemindersComponent implements OnInit {
 tab = 1;
   pendingData: any;
   collectedData: any;
-  // allVehicles: any = [];
+  allVehicles: any = [];
   public sortOrder = 'createdAt';
   public orderBy = 'desc';
   data: any = {
@@ -33,6 +33,13 @@ tab = 1;
 
   ngOnInit(): void {
     this.changeJobRemindersTab( '');
+  }
+  getVehicles(): void {
+    this.apiService.getAll(this.apiUrls.vehicleNumbersList, {}).subscribe((res: any) => {
+      if (res) {
+        this.allVehicles = res;
+      }
+    });
   }
   pendingGetUpcoming(): void{
     this.apiService.get(this.apiUrls.pendingGetUpcoming).subscribe((res: any) => {
