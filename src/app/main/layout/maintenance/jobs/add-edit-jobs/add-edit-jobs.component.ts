@@ -46,8 +46,8 @@ export class AddEditJobsComponent implements OnInit {
   }
 
   getVehicles(): void{
-    this.apiService.getAll(this.apiUrls.getAllVehicles, {}).subscribe((res: any) => {
-        this.allVehicles = res.content;
+    this.apiService.getAll(this.apiUrls.vehicleNumbersList, {}).subscribe((res: any) => {
+        this.allVehicles = res;
         // $rootScope.$broadcast('vehicles', this.allVehicles);
         if (this.jobId){
             this.titleName = 'Edit Job';
