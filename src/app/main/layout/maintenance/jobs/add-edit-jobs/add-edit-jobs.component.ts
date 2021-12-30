@@ -54,6 +54,7 @@ export class AddEditJobsComponent implements OnInit {
             this.apiService.get(this.apiUrls.getJob + this.jobId).subscribe((data: any) => {
                 this.job = data;
                 this.job.jobDate = new Date(this.job.jobDate);
+                this.job.reminderDate = new Date(this.job.reminderDate);
                 this.getOdometerReading();
                 this.getLatestJobsToTable();
             });
