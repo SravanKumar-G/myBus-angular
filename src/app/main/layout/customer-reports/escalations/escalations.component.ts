@@ -37,6 +37,8 @@ export class EscalationsComponent implements OnInit {
 
     ngOnInit(): void {
         this.tabChange(this.tab);
+        this.listOfRoutes = ['All', 'A.S.Peta', 'Bangalore', 'Chennai', 'chirala', 'Hyderabad', 'Nellore', 'Ongole', 'Pamuru',
+            'Srikakulam', 'Tirupathi', 'Vijayawada', 'Visakhapatnam' ];
     }
 
     tabChange(tabKey: any): void {
