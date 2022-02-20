@@ -105,6 +105,7 @@
                                     <th>To-Pay Delivered (C)</th>
                                     <th>On-Account Booking (D)</th>
                                     <th>Cancelled Amount (E)</th>
+                                    <th>Total Collection(A + c )</th>
                                     <th>Total Bookings(A +B )</th>
                                 </tr>
                                 </thead>
@@ -119,6 +120,7 @@
                                     <td>{{branch.topayBookingsDeliveredTotal}}</td>
                                     <td>{{branch.onAccountBookingsTotal}}</td>
                                     <td>{{branch.canceledBookingsTotal}}</td>
+                                    <td>{{branch.paidBookingsTotal + branch.topayBookingsDeliveredTotal}}</td>
                                     <td>{{branch.paidBookingsTotal + branch.topayBookingsTotal}}</td>
                                 </tr>
                                 <tr class="font-weight-bold">
@@ -129,13 +131,17 @@
                                     <td>{{summaryData.onAccountBookingsTotal}}</td>
                                     <td>{{summaryData.cancelledTotal}}</td>
                                     <td></td>
+                                    <td>{{summaryData.paidBookingsTota + summaryData.toPayDeliveryTotal}}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" class="text-right">(A + B + D - E) : {{summaryData.paidBookingsTotal +
+                                    <td colspan="3" class="text-right">(A + C) : {{summaryData.paidBookingsTotal +
+                                    summaryData.toPayDeliveryTotal}}
+                                    </td>
+                                    <td colspan="3" class="text-right">(A + B + D - E) : {{summaryData.paidBookingsTotal +
                                     summaryData.toPayBookingsTotal + summaryData.onAccountBookingsTotal -
                                     summaryData.cancelledTotal}}
                                     </td>
-                                    <td colspan="4" class="text-right">(A + C - E) : {{summaryData.paidBookingsTotal +
+                                    <td colspan="3" class="text-right">(A + C - E) : {{summaryData.paidBookingsTotal +
                                     summaryData.toPayDeliveryTotal - summaryData.cancelledTotal}}
                                     </td>
                                 </tr>
