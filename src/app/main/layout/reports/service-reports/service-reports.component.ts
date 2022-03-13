@@ -77,6 +77,13 @@ export class ServiceReportsComponent implements OnInit {
             this.downloadPassengerReport();
         }
     }
+    reloadReportsByDate(): void {
+        if (new Date(this.currentDate) > new Date()) {
+            Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
+        } else {
+            this.reloadReports();
+        }
+    }
 
     // will return date in YYYY-M-D format
     getDate(date: any): any {
@@ -134,7 +141,7 @@ export class ServiceReportsComponent implements OnInit {
             this.currentUser.userName + '_ServiceReports', '', '');
     }
 
-    public downloadPassengerReport(): void {
+    downloadPassengerReport(): void {
         const date = this.apiService.getYYYYMMDD(this.currentDate);
         this.apiService.get(this.apiUrls.downloadPassengerReport + date).subscribe((res: any) => {
             if (res) {
@@ -143,6 +150,20 @@ export class ServiceReportsComponent implements OnInit {
                 this.loading = false;
                 this.downloadedOn = res.downloadedOn;
 
+            }
+        }, error => {
+            Swal.fire('Oops...', error.message, 'error');
+        });
+    }
+
+    reloadReports(): void {
+        const date = this.apiService.getYYYYMMDD(this.currentDate);
+        this.apiService.get(this.apiUrls.reloadReportsByDate + date).subscribe((res: any) => {
+            if (res) {
+                this.allReports = res;
+                this.downloaded = res.downloaded;
+                this.loading = false;
+                this.downloadedOn = res.downloadedOn;
             }
         }, error => {
             Swal.fire('Oops...', error.message, 'error');

@@ -245,6 +245,8 @@ export class ApiUrls {
     loadServiceReports = 'api/v1/serviceReport/loadReports?travelDate=';
     downloadPassengerReport = 'api/v1/serviceReport/download?travelDate=';
 
+    reloadReportsByDate = 'api/v1/serviceReport/reload?travelDate=';
+
     // invoices
     searchInvoice = 'api/v1/invoice/search';
 

@@ -55,6 +55,9 @@
                             <button class="btn btn-sm btn-success" (click)="loadReportsByDate()">
                                 Download Passenger Report
                             </button>
+                            <button class="btn btn-sm btn-warning" (click)="reloadReportsByDate()">
+                                Refresh Reports
+                            </button>
                         </div>
                         <div class="col-sm-6 mt-auto mb-auto text-left" *ngIf="downloaded">
                           <span>The report was downloaded on {{downloadedOn}}</span>

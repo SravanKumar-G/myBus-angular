@@ -272,7 +272,7 @@
                         <div class="row">
                             <div class="col-sm-12 p-0">
                                 <div class="row">
-                                    <div class="col-sm-3 col-12 form-group">
+                                    <div class="col-sm-2 col-12 form-group">
                                         <label>Branch Office Names</label>
                                         <div>
                                             <select class="form-control form-control-sm"
@@ -285,8 +285,21 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3 col-12 form-group">
-                                        <label>User Names </label>
+                                    <div class="col-sm-2 col-12 form-group">
+                                        <label>From user </label>
+                                        <div>
+                                            <select class="form-control form-control-sm"
+                                                    [(ngModel)]="filterObj.fromUserId"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                <option value="" selected>--Select User--</option>
+                                                <option *ngFor="let us of users" value="{{us.id}}">
+                                                    {{us.fullName}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-12 form-group">
+                                        <label>To User </label>
                                         <div>
                                             <select class="form-control form-control-sm"
                                                     [(ngModel)]="filterObj.toUserId"
@@ -300,7 +313,7 @@
                                     </div>
 <!--                                </div>-->
 <!--                                <div class="row">-->
-                                    <div class="col-sm-3 col-12 form-group">
+                                    <div class="col-sm-2 col-12 form-group">
                                         <label>Start Date</label>
                                         <div class="input-group">
                                             <input class="form-control form-control-sm"
@@ -320,7 +333,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3 col-12 form-group">
+                                    <div class="col-sm-2 col-12 form-group">
                                         <label>End Date</label>
                                         <div class="input-group">
                                             <input class="form-control form-control-sm"
@@ -340,12 +353,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3 col-12 form-group">
+                                    <div class="col-sm-2 col-12 form-group">
                                         <button class="btn btn-success btn-sm" (click)="search()">Search Cah Transfer</button>
                                     </div>
-<!--                                    <div class="col-sm-3 col-12 form-group">-->
-<!--                                        <button class="btn btn-primary btn-sm">Excel Export</button>-->
-<!--                                    </div>-->
                                 </div>
                                 <div class="row" *ngIf="SearchError"  style="text-align: center">
                                     <div class="col-md-12" role="alert">
