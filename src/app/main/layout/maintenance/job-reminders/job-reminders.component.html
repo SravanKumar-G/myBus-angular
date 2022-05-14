@@ -103,20 +103,20 @@
                                     </div>
                                 </div>
                             </div>
-<!--                            <div class="col-sm-3 form-group">-->
-<!--                                <ng-select-->
-<!--                                        [(ngModel)]="job.vehicleId"-->
-<!--                                        [ngModelOptions]="{standalone: true}"-->
-<!--                                        bindValue="id"-->
-<!--                                        bindLabel="regNo"-->
-<!--                                        placeholder="Enter Vehicle Number"-->
-<!--                                        (ngModelChange)="getLatestJobsToTable()"-->
-<!--                                        [clearable]="false">-->
-<!--                                    <ng-option value="">&#45;&#45;Select Vehicle&#45;&#45;</ng-option>-->
-<!--                                    <ng-option *ngFor="let vehicle of allVehicles"-->
-<!--                                               [value]="vehicle.id">{{vehicle.regNo}}</ng-option>-->
-<!--                                </ng-select>-->
-<!--                            </div>-->
+                            <div class="col-sm-3 form-group">
+                                <ng-select
+                                        [(ngModel)]="data.vehicleId"
+                                        [ngModelOptions]="{standalone: true}"
+                                        bindValue="id"
+                                        bindLabel="regNo"
+                                        placeholder="Enter Vehicle Number"
+                                        (ngModelChange)="getAllCollected()"
+                                        [clearable]="false">
+                                    <ng-option value="">--Select Vehicle--</ng-option>
+                                    <ng-option *ngFor="let vehicle of allVehicles"
+                                               [value]="vehicle.id">{{vehicle.regNo}}</ng-option>
+                                </ng-select>
+                            </div>
                             <div class="col-sm-12 pl-0 pr-0 table-responsive">
                                 <table class="table table-hover dataTable text-center">
                                     <thead>
