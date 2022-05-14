@@ -4,6 +4,7 @@ import {LayoutComponent} from './layout.component';
 import {CargoDashboardComponent} from './cargo/cargo-dashboard/cargo-dashboard.component';
 import {FuelExpenseReportsModule} from './reports/fuel-expense-reports/fuel-expense-reports.module';
 import {HaltReportsComponent} from './Check-List/halt-reports/halt-reports.component';
+import {WhatsupAppConversationsModule} from './customer-reports/whatsup-app-conversations/whatsup-app-conversations.module';
 
 const layOutRoutes: Routes = [
     {
@@ -193,6 +194,11 @@ const layOutRoutes: Routes = [
                 path: 'escalations',
                 loadChildren: () => import('./customer-reports/escalations/escalations.module')
                     .then(m => m.EscalationsModule)
+            },
+            {
+                path: 'WhatsUpAppConversations',
+                loadChildren: () => import('./customer-reports/whatsup-app-conversations/whatsup-app-conversations.module')
+                    .then(m => m.WhatsupAppConversationsModule)
             },
             {
                 path: 'fuelExpenseReports/:date',
