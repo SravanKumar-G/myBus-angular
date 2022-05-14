@@ -10,9 +10,16 @@
           <xng-breadcrumb></xng-breadcrumb>
         </ul>
     </div>
-
+    <ul class="nav nav-tabs">
+        <li class="nav-item disabled-tab-nav" (click)=" changeDueReportsTab(1)">
+            <a class="nav-link" [ngClass]="{active:tab === 1}">Office DueReports</a>
+        </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeDueReportsTab(2)">
+            <a class="nav-link" [ngClass]="{active:tab === 2}">Due ReportsByDate</a>
+        </li>
+    </ul>
     <div class="row">
-        <div class="col-lg-12 col-md-12">
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 1">
             <div class="tile">
                 <div class="tile-body">
                     <div class="col-sm-12 mb-2 mt-2">
@@ -48,6 +55,105 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 2">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row form-group">
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th scope="col" [appFrentendSort]="dueByDateList"
+                                            data-order="desc" data-name="bookingTotal">Total Due<i class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="dueByDateList"
+                                            data-order="desc" data-name="_id">Date<i class="fa fa-sort"></i></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let dueByDate of dueByDateList; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{ dueByDate.bookingTotal }}</td>
+                                        <td><a class="cus-a" (click)="dueReportsBDateView(dueByDate._id)"> {{dueByDate._id}}</a></td>
+                                    </tr>
+                                    <tr *ngIf="!dueByDateList || dueByDateList.length === 0">
+                                        <td colspan="3">No reports exist. </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
+
+<ng-template #myModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <div class="" style="width: 100%;">
+            <div class="row">
+                <div class="col-sm-4 mt-auto mb-auto">
+                    <h5 class="modal-title form-head-line-style" style="color: #45a3c5">
+                        DueReport Date: <b>{{dueReportDate}}</b></h5>
+                </div>
+                <div class="col-sm-8 text-right m-auto" *ngIf="selectedBookings.length > 0">
+                    <app-show-due-payment-summary [selectedBookings] = selectedBookings></app-show-due-payment-summary>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered table-hover text-center">
+            <thead>
+            <tr>
+                <th>S No</th>
+                <th>BookedBy</th>
+                <th>PNR</th>
+                <th>Passenger</th>
+                <th>Seat</th>
+                <th>Service#</th>
+                <th>Route</th>
+                <th>JourneyDate</th>
+                <th>BookedOn</th>
+                <th>Due</th>
+                <th>Pay</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let dueByDate of dueByDateListView; let i = index;">
+                <th>{{i + 1}}</th>
+                <td>{{dueByDate.bookedBy}}</td>
+                <td>{{dueByDate.ticketNo}}</td>
+                <td>{{dueByDate.name}} {{dueByDate.phoneNo}}</td>
+                <td>{{dueByDate.seats }}</td>
+                <td>{{dueByDate.serviceNumber }}</td>
+                <td>{{dueByDate.source}} - {{dueByDate.destination}} - {{dueByDate.serviceName}})</td>
+                <td>{{dueByDate.jdate }}</td>
+                <td>{{dueByDate.bookedDate || '--' }}</td>
+                <td>{{ dueByDate.netAmt | number }}</td>
+                <td>
+                    <input
+                            type="checkbox"
+                            name="selectedBookings[]"
+                            value="{{dueByDate.id}}"
+                            (click)="toggleBookingSelection(dueByDate.id)"/>
+                </td>
+
+            </tr>
+            </tbody>
+            <tr *ngIf="!dueByDateListView || dueByDateListView.length === 0">
+                <td colspan="10">No Bookings found</td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm btn-all-shadow waves-effect waves-light"
+                (click)="close()">
+            Close
+        </button>
+    </div>
+</ng-template>

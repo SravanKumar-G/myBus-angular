@@ -46,14 +46,15 @@ export class AddEditJobsComponent implements OnInit {
   }
 
   getVehicles(): void{
-    this.apiService.getAll(this.apiUrls.getAllVehicles, {}).subscribe((res: any) => {
-        this.allVehicles = res.content;
+    this.apiService.getAll(this.apiUrls.vehicleNumbersList, {}).subscribe((res: any) => {
+        this.allVehicles = res;
         // $rootScope.$broadcast('vehicles', this.allVehicles);
         if (this.jobId){
             this.titleName = 'Edit Job';
             this.apiService.get(this.apiUrls.getJob + this.jobId).subscribe((data: any) => {
                 this.job = data;
                 this.job.jobDate = new Date(this.job.jobDate);
+                this.job.reminderDate = new Date(this.job.reminderDate);
                 this.getOdometerReading();
                 this.getLatestJobsToTable();
             });

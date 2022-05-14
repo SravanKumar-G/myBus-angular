@@ -1,0 +1,91 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                WhatsUpAppConversations
+            </h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+        </ul>
+    </div>
+    <div class="row">
+       <div class="col-sm-12">
+           <div class="tile">
+               <div class="tile-body">
+                   <div class="container-fluid">
+                       <div class="row">
+                           <div class="col-sm-12 pl-0 pr-0 table-responsive">
+                               <table class="table table-hover dataTable" aria-describedby="sampleTable_info">
+                                 <tr class="odd table-btn-hover animate-repeat"  *ngFor="let whatsAppConversation of currentPageOfWhatsAppConversations; let i= index">
+                                     <td class="whatapp-conversations">
+                                         <div class="row">
+                                             <div class="col-12">
+                                                 <p>
+                                                     <label class="control-label ls text-600 font-weight-semi-bold"></label><b><u>To : </u></b> {{whatsAppConversation.toName || 'No-Data'}}
+                                                     ( {{whatsAppConversation.toNumber || 'No-Data'}} ),
+                                                     <label class="control-label ls text-600 font-weight-semi-bold"><b><u>Type : </u></b></label> {{whatsAppConversation.type || 'No-Data'}},
+                                                     <label class="control-label ls text-600 font-weight-semi-bold"><b><u>Sent By : </u></b></label> {{whatsAppConversation.sentBy || 'No-Data'}},
+                                                     <label class="control-label ls text-600 font-weight-semi-bold"><b><u>Sent On : </u></b></label> {{whatsAppConversation.sentOn || 'No-Data'}},
+                                                     <label class="control-label ls text-600 font-weight-semi-bold"><b><u>Last Reply : </u></b></label> {{whatsAppConversation.lastReplyAt || 'No-Data'}}
+                                                 </p>
+                                                 <ul style="list-style: none; padding-left: 0px">
+<!--                                                     <li class="from-chart-left-box"-->
+<!--                                                         *ngIf="whatsAppConversation.messageBody">-->
+<!--                                                         <div>-->
+<!--                                                             <p style="padding: 6px 12px; margin-bottom: 0">-->
+<!--                                                                 <label class="control-label ls text-600 font-weight-semi-bold"><b><u>Message : </u></b></label>-->
+<!--                                                                 {{whatsAppConversation.messageBody}}-->
+<!--                                                                 <span class="from-chart-right-box"-->
+<!--                                                                       style="float: right; margin-bottom: 0px; padding: 4px 10px;">-->
+<!--                                                                    <small>{{whatsAppConversation.createdAt | date: 'd/M/yy h:mm a'}}</small>-->
+<!--                                                                    <i class="fa"-->
+<!--                                                                       [ngClass]="{'fa-circle': whatsAppConversation.pendingReply === false, 'fa-dot-circle-o': whatsAppConversation.pendingReply === true}"></i>-->
+<!--                                                                </span>-->
+<!--                                                             </p>-->
+
+<!--                                                         </div>-->
+<!--                                                     </li>-->
+                                                     <li class="" *ngFor="let replyData of whatsAppConversation.sendWhatsMessage" [ngClass]="{'from-chart-right-box': replyData.incoming === true, 'from-chart-left-box': replyData.incoming !== true, 'from-chart-failed-box': replyData.status === 'failed'}">
+                                                         <div>
+                                                             <p style="padding: 6px 12px; margin-bottom: 0">
+                                                                 {{replyData.message}}
+                                                                 <span class="from-chart-right-box"
+                                                                       style="float: right; margin-bottom: 0px; padding: 4px 10px;">
+                                                                    <small>{{replyData.time}}</small>
+                                                                    <i class="fa"
+                                                                       [ngClass]="{'fa-circle': replyData.incoming === false, 'fa-dot-circle-o': replyData.incoming === true}"></i>
+                                                                </span>
+                                                             </p>
+
+                                                         </div>
+                                                     </li>
+                                                    <li class="text-right">
+                                                       <hr>
+                                                       <div class="row">
+                                                           <div class="col-sm-1"></div>
+                                                           <div class="col-sm-8">
+                                                               <textarea rows="2" class="form-control" placeholder="Type a message"  [(ngModel)]="whatsAppConversation.sendWhatsMessage.sendData">
+                                                               </textarea>
+                                                           </div>
+                                                           <div class="col-sm-2">
+                                                               <button class="btn btn-secondary" type="button" (click)="replyMessage(whatsAppConversation.sendWhatsMessage.sendData,i, whatsAppConversation)">
+                                                                   Reply
+                                                               </button>
+                                                           </div>
+                                                       </div>
+                                                    </li>
+                                                 </ul>
+                                             </div>
+                                         </div>
+                                     </td>
+                                 </tr>
+                               </table>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+</div>

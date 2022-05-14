@@ -260,6 +260,7 @@ export class ApiUrls {
     officeDuesByDate = 'api/v1/dueReport/office/';
     officeDuesByService = 'api/v1/dueReport/dueBookingByService/';
     officeDuesByAgent = 'api/v1/dueReport/officeDuesByAgent/';
+    getAllDuesByDate = 'api/v1/dueReport/getAllDuesByDate';
 
     // Update Password
     updatePassword = 'api/v1/user/updatePassword';
@@ -334,4 +335,5 @@ export class ApiUrls {
     // Job Reminders
     pendingGetUpcoming = 'api/v1/reminders/getUpcoming';
     getAllCollectedData = 'api/v1/reminders/getAll';
+
 }
