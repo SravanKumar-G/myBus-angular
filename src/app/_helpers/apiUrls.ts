@@ -72,6 +72,7 @@ export class ApiUrls {
     // Vehicles API's
     getVehiclesCount = 'api/v1/vehicle/count';
     getAllVehicles = 'api/v1/vehicles';
+    getAllVehicleNumbers = 'api/v1/vehicleNumbers';
     saveVehicle = 'api/v1/vehicle';
     updateVehicle = 'api/v1/vehicle/';
     getVehicleById = 'api/v1/vehicle/';

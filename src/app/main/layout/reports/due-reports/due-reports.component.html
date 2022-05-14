@@ -74,8 +74,8 @@
                                     <tbody>
                                     <tr *ngFor="let dueByDate of dueByDateList; let i = index;">
                                         <td>{{i + 1}}</td>
-                                        <td>{{ dueByDate.bookingTotal }}</td>
                                         <td><a class="cus-a" (click)="dueReportsBDateView(dueByDate._id)"> {{dueByDate._id}}</a></td>
+                                        <td>{{ dueByDate.bookingTotal }}</td>
                                     </tr>
                                     <tr *ngIf="!dueByDateList || dueByDateList.length === 0">
                                         <td colspan="3">No reports exist. </td>

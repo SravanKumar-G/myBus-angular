@@ -99,9 +99,9 @@ export class ServiceReportComponent implements OnInit {
     }
 
     getAllVehicles(): void {
-        this.apiService.getAll(this.apiUrls.getAllVehicles, {}).subscribe((res: any) => {
+        this.apiService.get(this.apiUrls.getAllVehicleNumbers).subscribe((res: any) => {
             if (res) {
-                this.vehicles = res.content;
+                this.vehicles = res;
             }
         });
     }
@@ -349,6 +349,10 @@ export class ServiceReportComponent implements OnInit {
     }
 
     haltService(status: string): any {
+        if (!this.serviceReportDetails.vehicleRegNumber) {
+            Swal.fire('Error', 'Please select Vehicle', 'error');
+            return;
+        }
         this.serviceReportDetails.status = status;
         this.submitReport(status);
     }
@@ -386,6 +390,7 @@ export class ServiceReportComponent implements OnInit {
         // console.log(this.serviceReportDetails);
         if (!this.serviceReportDetails.vehicleRegNumber) {
             Swal.fire('Error', 'Please select Vehicle', 'error');
+            return;
         } else {
             Swal.fire({
                 title: 'Are you sure?',
