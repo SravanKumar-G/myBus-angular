@@ -88,11 +88,14 @@ export class JobsComponent implements OnInit {
     }
   }
 
-  getVehicles() {
-    this.apiService.getAll(this.apiUrls.getAllVehicles, {}).subscribe((res: any) => {
-        this.allVehicles = res.content;
-    });
-  };
+
+    getVehicles(): void {
+        this.apiService.get(this.apiUrls.getAllVehicleNumbers).subscribe((res: any) => {
+            if (res) {
+                this.allVehicles = res;
+            }
+        });
+    }
   
 
   loadPending(): void{
