@@ -5,6 +5,7 @@ import {CargoDashboardComponent} from './cargo/cargo-dashboard/cargo-dashboard.c
 import {FuelExpenseReportsModule} from './reports/fuel-expense-reports/fuel-expense-reports.module';
 import {HaltReportsComponent} from './Check-List/halt-reports/halt-reports.component';
 import {WhatsupAppConversationsModule} from './customer-reports/whatsup-app-conversations/whatsup-app-conversations.module';
+import {ServiceStaffAllocationsModule} from './reports/service-staff-allocations/service-staff-allocations.module';
 
 const layOutRoutes: Routes = [
     {
@@ -219,6 +220,11 @@ const layOutRoutes: Routes = [
                 path: 'haltReports',
                 loadChildren: () => import('./Check-List/halt-reports/halt-reports.module')
                     .then( m => m.HaltReportsModule)
+            },
+            {
+                path: 'ServiceStaffAllocation/:date',
+                loadChildren: () => import('./reports/service-staff-allocations/service-staff-allocations.module')
+                    .then(m => m.ServiceStaffAllocationsModule)
             }
         ]
     },
