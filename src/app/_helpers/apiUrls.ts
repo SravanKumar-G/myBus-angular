@@ -336,4 +336,8 @@ export class ApiUrls {
     pendingGetUpcoming = 'api/v1/reminders/getUpcoming';
     getAllCollectedData = 'api/v1/reminders/getAll';
 
+    // service Staff Allocations
+    staffAllocation = 'api/v1/serviceReport/staffAllocation/download';
+    findStaffAllocation = 'api/v1/serviceReport/findStaffAllocation';
+
 }
