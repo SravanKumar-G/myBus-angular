@@ -38,8 +38,24 @@ export class ServiceStaffAllocationsComponent implements OnInit {
     this.apiService.get(this.apiUrls.staffAllocation + '?travelDate=' + Date).subscribe((res: any) => {
       if (res){
         this.staffAllocationList = res;
+        // for (const re of res) {
+        //     re.driverone = '';
+        //     re.driverTwo = '';
+        //     re.cleanerName = '';
+        //     re.conductorName = '';
+        //       for (const data of re.staffDetails) {
+        //           if (data.type === 'Driver') {
+        //               re.driverOne = data.name;
+        //           }else if (data.type === 'DRIVER') {
+        //               re.driverTwo = data.name;
+        //           }else if (data.type === 'Cleaner' || data.type === 'CLEANER') {
+        //               re.cleanerName = data.name;
+        //           }else if (data.type === 'CONDUCTOR' || data.type ===  'Conductor') {
+        //               re.conductorName = data.name;
+        //           }
+        //       }
+        //   }
       }
     });
   }
-
 }
