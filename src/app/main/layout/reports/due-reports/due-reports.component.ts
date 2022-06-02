@@ -96,4 +96,8 @@ export class DueReportsComponent implements OnInit {
             this.selectedBookings.push(bookingId);
         }
     }
+
+    dueReportExportToExcel(): void {
+        this.apiService.exportExcel('dueReportExcelData', 'dueReportByDate', '', '');
+    }
 }

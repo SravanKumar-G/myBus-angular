@@ -8,8 +8,8 @@ import {environment} from 'src/environments/environment';
 
 export class ApiUrls {
     // mainUrl = 'http://localhost:8091/';
-    // mainUrl = 'http://qacargo.srikrishnatravels.in/'
-    // mainUrl = 'http://cargo.srikrishnatravels.in/';
+    // mainUrl = 'http://qacargo.srikrishnatravels.in/';
+    // mainUrl = 'http://lrapi.srikrishnatravels.in/';
     mainUrl = environment.testPath;
 
 
@@ -338,5 +338,9 @@ export class ApiUrls {
     // Job Reminders
     pendingGetUpcoming = 'api/v1/reminders/getUpcoming';
     getAllCollectedData = 'api/v1/reminders/getAll';
+
+    // service Staff Allocations
+    staffAllocation = 'api/v1/serviceReport/staffAllocation/download';
+    findStaffAllocation = 'api/v1/serviceReport/findStaffAllocation';
 
 }

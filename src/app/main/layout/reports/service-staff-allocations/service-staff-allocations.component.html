@@ -1,0 +1,91 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-file-o" aria-hidden="true"></i>
+                Service Staff Allocations
+            </h1>
+        </div>
+
+        <ul class="">
+            <xng-breadcrumb></xng-breadcrumb>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input class="form-control form-control-sm"
+                                       placeholder=""
+                                       name="permit"
+                                       [(ngModel)]="currentDate"
+                                       [ngModelOptions]="{standalone: true}"
+                                       (ngModelChange)="serviceReportStaffAllocation()"
+                                       bsDatepicker
+                                       #dt="bsDatepicker"
+                                       [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                            (click)="dt.show()"
+                                            [attr.aria-expanded]="dt.isOpen" type="button">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2" (click)="serviceReportStaffAllocation()">
+                            <h3><i class="fa fa-refresh"></i></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                            <table class="table table-bordered table-hover text-center" id="serviceReports">
+                                <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th>Service#</th>
+                                    <th>Type</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Vehicle</th>
+                                    <th>Staff Details</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let service of staffAllocationList; let i =index;">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{ service.serviceNumber || '-----'}}</td>
+                                    <td>{{ service.busType || '-----'}}</td>
+                                    <td>{{ service.from || '-----' }}</td>
+                                    <td>{{ service.to || '-----'}}</td>
+                                    <td>{{ service.vehicleRegNumber || '-----' }}</td>
+                                    <td>
+                                        <ul>
+                                            <li *ngFor="let data of service.staffDetails"><b>{{data.type}}</b>&nbsp;&nbsp; - &nbsp;{{data.name || '-----'}}({{data.contactNumber}})
+                                            </li>
+                                        </ul>
+                                    </td>
+<!--                                    <td *ngFor="let s of service.staffDetails">-->
+<!--                                        {{s.type === 'Driver'? s.name :s.type === 'DRIVER'? s.name: s.type === 'CLEANER' || s.type === 'Cleaner'? s.name: s.type === 'CONDUCTOR'? s.name : 'NA'}} - -->
+<!--                                        {{s.type === 'Driver'? s.contactNumber :s.type === 'DRIVER'? s.contactNumber: s.type === 'CLEANER'? s.contactNumber: s.type === 'CONDUCTOR'? s.contactNumber : 'NA'}}-->
+<!--                                    </td>-->
+<!--                                    <td>{{service.driverOne || '&#45;&#45;'}}</td>-->
+<!--                                    <td>{{service.driverTwo || '&#45;&#45;'}}</td>-->
+<!--                                    <td>{{service.cleanerName || '&#45;&#45;'}}</td>-->
+<!--                                    <td>{{service.conductorName || '&#45;&#45;'}}</td>-->
+                                <tr *ngIf="!staffAllocationList || staffAllocationList.length === 0">
+                                    <td colspan="10">No reports exist. </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
