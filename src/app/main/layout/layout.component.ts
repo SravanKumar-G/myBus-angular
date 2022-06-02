@@ -50,29 +50,16 @@ export class LayoutComponent implements OnInit {
                 });
 
                 // Activate sidebar treeView toggle
-                $('[data-toggle=\'treeView\']').click((event: { preventDefault: () => void; }) => {
+                $('[data-toggle=\'treeView\']').click(function(event: any) {
                     event.preventDefault();
-                    console.log(event, '==>');
                     if (!$(this).parent().hasClass('is-expanded')) {
                         treeViewMenu.find('[data-toggle=\'treeView\']').parent().removeClass('is-expanded');
                     }
-                    console.log($.fn.init());
                     $(this).parent().toggleClass('is-expanded');
-                });
-
-                $('[data-toggle=\'treeView-child\']').click((event: { preventDefault: () => void; }) => {
-                    event.preventDefault();
-                    if (!$(this).parent().hasClass('is-expanded')) {
-                        treeViewMenuChild.find('[data-toggle=\'treeView-child\']').parent().removeClass('is-expanded');
-                    }
-                    $(this).parent().toggleClass('is-expanded');
-                    console.log( $(this).parent().toggleClass('is-expanded'));
                 });
 
                 // Set initial active toggle
                 $('[data-toggle=\'treeView.\'].is-expanded').parent().toggleClass('is-expanded');
-
-                $('[data-toggle=\'treeView-child.\'].is-expanded').parent().toggleClass('is-expanded');
 
                 $('[data-toggle=\'tooltip\']').tooltip();
 
