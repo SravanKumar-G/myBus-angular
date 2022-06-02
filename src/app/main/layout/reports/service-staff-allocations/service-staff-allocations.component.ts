@@ -4,6 +4,7 @@ import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe, Location} from '@angular/common';
 import {AuthenticationService} from '../../../../services/authentication.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-service-staff-allocations',
@@ -38,24 +39,28 @@ export class ServiceStaffAllocationsComponent implements OnInit {
     this.apiService.get(this.apiUrls.staffAllocation + '?travelDate=' + Date).subscribe((res: any) => {
       if (res){
         this.staffAllocationList = res;
-        // for (const re of res) {
-        //     re.driverone = '';
-        //     re.driverTwo = '';
-        //     re.cleanerName = '';
-        //     re.conductorName = '';
-        //       for (const data of re.staffDetails) {
-        //           if (data.type === 'Driver') {
-        //               re.driverOne = data.name;
-        //           }else if (data.type === 'DRIVER') {
-        //               re.driverTwo = data.name;
-        //           }else if (data.type === 'Cleaner' || data.type === 'CLEANER') {
-        //               re.cleanerName = data.name;
-        //           }else if (data.type === 'CONDUCTOR' || data.type ===  'Conductor') {
-        //               re.conductorName = data.name;
-        //           }
-        //       }
-        //   }
       }
     });
+  }
+
+  previousDate(): void {
+    const currentDate = new Date(this.currentDate);
+    const date = currentDate.setTime(currentDate.getTime() - 24 * 60 * 60 * 1000);
+    this.currentDate = new Date(date);
+    this.serviceReportStaffAllocation();
+  }
+
+  nextDate(): void {
+    const currentDate = new Date(this.currentDate);
+    const todaydate: any = new Date();
+    todaydate.setDate(todaydate.getDate() - 1);
+    const date = currentDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
+    if (new Date(date) <= todaydate) {
+      this.currentDate = currentDate;
+      console.log('rt', this.currentDate, currentDate);
+      this.serviceReportStaffAllocation();
+    } else {
+      Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
+    }
   }
 }
