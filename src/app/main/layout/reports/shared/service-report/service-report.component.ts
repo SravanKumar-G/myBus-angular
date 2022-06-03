@@ -35,7 +35,7 @@ export class ServiceReportComponent implements OnInit {
     public serviceReports: Array<any> = [];
     public indexCount = 0;
     private currentDate: any;
-
+    public statusReports: any;
     constructor(
         private apiService: ApiServiceService,
         private apiUrls: ApiUrls,
@@ -47,6 +47,8 @@ export class ServiceReportComponent implements OnInit {
     ) {
         this.serviceId = this.actRoute.snapshot.params.id || '';
         this.indexCount = this.actRoute.snapshot.params.index || 0;
+        this.statusReports = this.actRoute.snapshot.params.reportsToBeReviewedStatus;
+        console.log('df', this.statusReports);
     }
 
     ngOnInit(): void {
@@ -350,11 +352,11 @@ export class ServiceReportComponent implements OnInit {
 
     haltService(status: string): any {
         this.serviceReportDetails.status = status;
-        this.submitReport(status);
+        this.submitReport(status, '');
     }
 
-    submit(status: string): any {
-        this.submitReport(status);
+    submit(status: string, index: any): any {
+        this.submitReport(status, index);
     }
 
     requireVerification(): any {
@@ -382,7 +384,7 @@ export class ServiceReportComponent implements OnInit {
 
     }
 
-    submitReport(status: any): void {
+    submitReport(status: any, index: string): void {
         // console.log(this.serviceReportDetails);
         if (!this.serviceReportDetails.vehicleRegNumber) {
             Swal.fire('Error', 'Please select Vehicle', 'error');
@@ -402,7 +404,11 @@ export class ServiceReportComponent implements OnInit {
                             Swal.fire('Great', 'The report successfully submitted for' + res.serviceNumber, 'success');
                             // this.getServiceReport();
                             this.apiService.getLoggedInUserData();
-                            this.goToReportsPage();
+                            if (index === 'reportsReviewedData'){
+                                this.goToReviewedPage();
+                            } else if (index === 'reportsData'){
+                                this.goToReportsPage();
+                            }
                         }
                     }, error => {
                         this.serviceReportDetails.status = null;
@@ -461,6 +467,10 @@ export class ServiceReportComponent implements OnInit {
 
     public goToReportsPage(): void {
         this.router.navigate(['serviceReports/' + this.actRoute.snapshot.params.date] );
+    }
+
+    public goToReviewedPage(): void {
+        this.router.navigate(['reportsToBeReviewed'] );
     }
 
     nextAndPreviousService(status: any): void {

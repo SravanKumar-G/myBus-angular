@@ -92,9 +92,9 @@ export class ServiceReportsComponent implements OnInit {
 
     goToServiceReport(service: any): void {
         if (service.attrs.formId) {
-            this.router.navigate(['serviceReports/' + this.currentDate + '/serviceForm/' + service.attrs.formId]);
+            this.router.navigate(['serviceReports/' + this.currentDate + '/serviceForm/' + service.attrs.formId + '/reportsData']);
         } else {
-            this.router.navigate(['serviceReports/' + this.currentDate + '/serviceReport/' + service.id]);
+            this.router.navigate(['serviceReports/' + this.currentDate + '/serviceReport/' + service.id + '/reportsData']);
         }
     }
 

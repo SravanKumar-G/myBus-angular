@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-reports-to-be-reviewed',
@@ -23,9 +23,11 @@ export class ReportsToBeReviewedComponent implements OnInit {
     sort: this.sortOrder + ',' + this.orderBy,
   };
 
+
   constructor(public apiService: ApiServiceService,
               private apiUrls: ApiUrls,
-              private router: Router, ) { }
+              private actRoute: ActivatedRoute,
+              private router: Router, ) {}
 
   ngOnInit(): void {
     this.getReports();
@@ -40,9 +42,9 @@ export class ReportsToBeReviewedComponent implements OnInit {
   }
   goToServiceReport(service: any): void{
     if (service.attrs.formId) {
-      this.router.navigate(['serviceform/' + service.attrs.formId]);
+      this.router.navigate(['reportsToBeReviewed/serviceForm/' + service.attrs.formId + '/reportsReviewedData']);
     } else {
-      this.router.navigate(['servicereport/' + service.id]);
+      this.router.navigate(['reportsToBeReviewed/serviceReport/' + service.id + '/reportsReviewedData']);
     }
   }
   exportExcel(): void{

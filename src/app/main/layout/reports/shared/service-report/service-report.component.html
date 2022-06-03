@@ -560,11 +560,11 @@
                                     *ngIf="!serviceReportDetails.invalid && !serviceReportDetails.status">
                                 <span class="glyphicon"></span> Halted Service
                             </button>
-                            <button type="button" class="btn btn-sm btn-warning mr-2" (click)="submit('SUBMITTED')"
+                            <button type="button" class="btn btn-sm btn-warning mr-2" (click)="submit('SUBMITTED', '')"
                                     *ngIf="requireVerification()">
                                 <span class="glyphicon"></span> Submit For Verification
                             </button>
-                            <button type="button" class="btn btn-sm btn-success mr-2" (click)="submit('SUBMITTED')"
+                            <button type="button" class="btn btn-sm btn-success mr-2" (click)="submit('SUBMITTED', statusReports)"
                                     *ngIf="canSubmit() || !isDisabled()">
                                 <span class="glyphicon"></span> Submit Report
                             </button>
