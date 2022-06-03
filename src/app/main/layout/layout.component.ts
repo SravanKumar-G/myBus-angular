@@ -50,7 +50,7 @@ export class LayoutComponent implements OnInit {
                 });
 
                 // Activate sidebar treeView toggle
-                $('[data-toggle=\'treeView\']').click(function(event: any) {
+                $('[data-toggle=\'treeView\']').click((event: any) => {
                     event.preventDefault();
                     if (!$(this).parent().hasClass('is-expanded')) {
                         treeViewMenu.find('[data-toggle=\'treeView\']').parent().removeClass('is-expanded');
