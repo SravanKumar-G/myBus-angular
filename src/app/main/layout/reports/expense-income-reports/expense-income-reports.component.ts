@@ -102,8 +102,7 @@ export class ExpenseIncomeReportsComponent implements OnInit {
         this.totalExpense = 0;
         this.totalIncome = 0;
         const date = this.apiService.getExpenesDate(this.currentDate);
-        this.apiService.get(this.apiUrls.expenseIncomeReportsData + 'date=' + date + '&page=' + this.expenseAndIncomeQuery.page +
-            '&size=' + this.expenseAndIncomeQuery.size + '&sort=' + this.expenseAndIncomeQuery.sort).subscribe((res: any) => {
+        this.apiService.get(this.apiUrls.expenseIncomeReportsData + 'date=' + date + '&sort=' + this.expenseAndIncomeQuery.sort).subscribe((res: any) => {
             if (res) {
                 this.expenseIncomeList = res.content;
                 this.count = res.totalElements;

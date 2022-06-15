@@ -83,6 +83,8 @@
                             <table class="table table-bordered table-hover text-center" id="expenseIncomesReports">
                                 <thead>
                                 <tr (click)="clickSorting($event)">
+                                    <th>S.No
+                                    </th>
                                     <th [ngClass]="expenseAndIncomeQuery.sortOrder == 'createdAt'? 'headActive' : ''"
                                         accessKey="createdAt">Created On
                                         <i *ngIf="expenseAndIncomeQuery.sortOrder != 'createdAt'" class="fa fa-sort"></i>
@@ -135,6 +137,7 @@
                                 </thead>
                                 <tbody>
                                 <tr *ngFor="let expenseAndReports of expenseIncomeList;let i = index">
+                                    <td>{{i +1}}</td>
                                     <td>{{expenseAndReports.createdAt | date}}</td>
                                     <td>{{expenseAndReports.date | date}}</td>
                                     <td>
@@ -152,12 +155,12 @@
                                     <td>{{expenseAndReports.status}}</td>
                                 </tr>
                                 <tr *ngIf="count === 0 || !count">
-                                    <td colspan="8">No Payments</td>
+                                    <td colspan="9">No Payments</td>
                                 </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr *ngIf="count != 0 || count">
-                                    <th colspan="8">
+                                    <th colspan="9">
                                         <div class="pull-right">
                                             Total Count : {{count || 0}}
                                         </div>

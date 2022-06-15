@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  testPath : 'http://qacargo.srikrishnatravels.in/'
+  testPath : 'http://localhost:8091/'
 };
 
 /*
