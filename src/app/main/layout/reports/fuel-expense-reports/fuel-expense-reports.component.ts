@@ -117,8 +117,14 @@ export class FuelExpenseReportsComponent implements OnInit {
 
   getDate(date: any): any {
     const dateObj = date;
-    const month = dateObj.getMonth() + 1;
-    const day = ('0' + dateObj.getDate()).slice(-2);
+    let month = dateObj.getMonth() + 1;
+    if (month < 10 ){
+      month = '0' + month;
+    }
+    let day = dateObj.getDate();
+    if (day < 10 ){
+      day = '0' + day;
+    }
     const year = dateObj.getFullYear();
     this.currentDate = year + '-' + month + '-' + day;
     this.getAllByDate();
