@@ -54,7 +54,7 @@
                         <div class="col-sm-3 mt-auto mb-auto text-left" *ngIf="!downloaded">
                             <button class="btn btn-sm btn-success" (click)="loadReportsByDate()">
                                 Download Passenger Report
-                            </button>
+                            </button>&nbsp;&nbsp;
                             <button class="btn btn-sm btn-warning" (click)="reloadReportsByDate()">
                                 Refresh Reports
                             </button>
@@ -83,8 +83,10 @@
                                     <th>S No</th>
                                     <th>Service#</th>
                                     <th>Type</th>
-                                    <th>From</th>
-                                    <th>To</th>
+                                    <th scope="col" [appFrentendSort]="allReports"
+                                        data-order="desc" data-name="source">From<i class="fa fa-sort"></i></th>
+                                    <th scope="col" [appFrentendSort]="allReports"
+                                        data-order="desc" data-name="destination">To<i class="fa fa-sort"></i></th>
                                     <th>Vehicle</th>
                                     <th>Driver1</th>
                                     <th>Driver2</th>
@@ -92,7 +94,8 @@
                                     <th>Conductor</th>
                                     <th>CashIncome</th>
                                     <th>NetIncome</th>
-                                    <th>Status</th>
+                                    <th scope="col" [appFrentendSort]="allReports"
+                                        data-order="desc" data-name="status">Status<i class="fa fa-sort"></i></th>
                                     <th>SubmittedBy</th>
                                 </tr>
                                 </thead>
@@ -114,7 +117,7 @@
                                     <td>{{service.attrs.submittedBy || '--'}}</td>
                                 </tr>
                                 <tr *ngIf="!allReports || allReports.length === 0">
-                                    <td colspan="9">No reports exist. </td>
+                                    <td colspan="14">No reports exist. </td>
                                 </tr>
                                 </tbody>
                             </table>
