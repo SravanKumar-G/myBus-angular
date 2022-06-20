@@ -59,8 +59,6 @@ export class ServiceStaffAllocationsComponent implements OnInit {
       this.currentDate = currentDate;
       console.log('rt', this.currentDate, currentDate);
       this.serviceReportStaffAllocation();
-    } else {
-      Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
     }
   }
 }
