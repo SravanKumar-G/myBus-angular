@@ -11,12 +11,12 @@ const routes: Routes = [
     data: {breadcrumb:  'Service Reports' }
   },
   {
-    path: 'serviceReport/:id',
+    path: 'serviceReport/:id/:reportsToBeReviewedStatus',
     data: {breadcrumb: 'Service Report'},
     component: ServiceReportComponent
   },
   {
-    path: 'serviceForm/:id',
+    path: 'serviceForm/:id/:reportsToBeReviewedStatus',
     data: {breadcrumb: 'Service Form'},
     component: ServiceFormComponent
   },
