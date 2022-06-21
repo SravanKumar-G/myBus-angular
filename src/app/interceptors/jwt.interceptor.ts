@@ -20,7 +20,7 @@ export class JwtInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${currentUser.accessToken}`,
-          domainName: 'localhost'
+          domainName: window.location.hostname
         }
       });
     }
