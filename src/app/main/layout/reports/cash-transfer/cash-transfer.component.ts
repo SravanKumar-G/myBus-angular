@@ -249,6 +249,7 @@ export class CashTransferComponent implements OnInit {
                     this.apiService.getLoggedInUserData();
                 }, error => {
                     this.errorMessage = error.message;
+                    Swal.fire('Error',  error.message, 'error');
                 });
             } else {
                 this.apiService.create(this.apiUrls.saveOrUpdate, cashTransfer).subscribe((res: any) => {
@@ -260,7 +261,7 @@ export class CashTransferComponent implements OnInit {
                         this.apiService.getLoggedInUserData();
                     }
                 }, error => {
-                    this.errorMessage = error.message;
+                    Swal.fire('Error',  error.message, 'error');
                 });
             }
         }
@@ -310,7 +311,6 @@ export class CashTransferComponent implements OnInit {
             cashTransfer.status = 'Rejected';
         }
         this.save(cashTransfer);
-        Swal.fire('Great', 'cashTransfer is updated', 'success');
     }
 
     date(): void{
