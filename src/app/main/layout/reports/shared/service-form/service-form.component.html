@@ -128,7 +128,7 @@
                                             <tr *ngFor="let booking of serviceReportDetails.bookings; let i = index;">
                                                 <td>{{i + 1}}</td>
                                                 <td>{{booking.bookedBy}}</td>
-                                                <td>{{booking.ticketNo}}</td>
+                                                <td>{{booking.ticketNo}}- {{booking.name}}</td>
                                                 <td>{{booking.seatsCount}}</td>
                                                 <td>{{booking.basicAmount + booking.serviceTax | number}}</td>
                                                 <td>{{booking.netAmt | number}}
