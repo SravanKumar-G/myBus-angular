@@ -82,6 +82,7 @@ export class CashTransferComponent implements OnInit {
 
     ngOnInit(): void {
         this.currentUser = JSON.parse(localStorage.getItem('currentUserDetails') as string);
+        this.userId = this.currentUser.id;
         this.loadBranchOffice();
         this.getUsers();
         this.changeCashTransferTab(1);
