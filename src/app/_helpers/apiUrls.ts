@@ -203,7 +203,7 @@ export class ApiUrls {
     addAgent = 'api/v1/agent/addAgent';
     editAgent = 'api/v1/agent/';
     updateAgent = 'api/v1/agent/update';
-
+    updateAgentBranch = 'api/v1/agent/updateBranchOffice';
     // Staff API's
     getStaffList = 'api/v1/staff';
     getStaffCount = 'api/v1/staff/count';

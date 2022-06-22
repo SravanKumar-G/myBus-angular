@@ -27,7 +27,7 @@
                             </button>
                         </div>
                         <div class="col-sm-12 text-right" style="font-size: 14px;">
-                             <span *ngIf="serviceReportDetails.status" style="color:red"> Service report has been submitted on {{serviceReportDetails.updatedAt|date}}
+                             <span *ngIf="serviceReportDetails.status === 'SUBMITTED'" style="color:red"> Service report has been submitted on {{serviceReportDetails.updatedAt|date}}
                                  by {{serviceReportDetails.attrs.submittedBy}}</span>
                         </div>
                     </div>
@@ -192,7 +192,7 @@
                                         [ngClass]="{changedRate: rateToBeVerified(booking)}">
                                         <td>
                                             <span *ngIf="booking.id != null" title="{{booking.seats}}">
-                                                 {{ booking.seats}}
+                                                 {{ booking.seats}} - v {{booking.requireVerification}}
                                             </span>
                                             <span *ngIf="booking.id == null">
                                                  <input [(ngModel)]="booking.seats" class="form-control form-control-sm"
@@ -565,10 +565,10 @@
                                 <span class="glyphicon"></span> Submit For Verification
                             </button>
                             <button type="button" class="btn btn-sm btn-success mr-2" (click)="submit('SUBMITTED', statusReports)"
-                                    *ngIf="canSubmit() || !isDisabled()">
+                                    *ngIf="canSubmit()">
                                 <span class="glyphicon"></span> Submit Report
                             </button>
-                            <span *ngIf="serviceReportDetails.status" style="color:red"> Service report has been submitted on {{serviceReportDetails.updatedAt|date}}
+                            <span *ngIf="serviceReportDetails.status === 'SUBMITTED'" style="color:red"> Service report has been submitted on {{serviceReportDetails.updatedAt|date}}
                                 by {{serviceReportDetails.attrs.submittedBy}}</span>
                             <span *ngIf="serviceReportDetails.invalid" style="color:red;">Please assign branch offices to agents <a
                                     (click)="launchAgents()">here</a></span>

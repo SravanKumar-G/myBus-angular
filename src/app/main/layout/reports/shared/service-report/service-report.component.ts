@@ -142,7 +142,10 @@ export class ServiceReportComponent implements OnInit {
     }
 
     rateToBeVerified(booking: any): any {
-        return booking.requireVerification || (booking.netAmt < (booking.originalCost * this.differenceAmountRatio / 100));
+        if (booking.netAmt < (booking.originalCost * this.differenceAmountRatio / 100)){
+            booking.requireVerification = true;
+        }
+        return booking.requireVerification;
     }
 
     isCashBooking(booking: any): any {
@@ -202,7 +205,12 @@ export class ServiceReportComponent implements OnInit {
             const bookingsToBeVerified = _.find(this.serviceReportDetails.bookings, (booking: { requireVerification: boolean; }) => {
                 return booking.requireVerification;
             });
-            this.serviceReportDetails.requiresVerification = bookingsToBeVerified != null;
+            this.serviceReportDetails.requiresVerification = (bookingsToBeVerified != null);
+            if (this.serviceReportDetails.requiresVerification){
+                this.serviceReportDetails.status = 'REQUIRE_VERIFICATION';
+            } else {
+                this.serviceReportDetails.status = null;
+            }
         }
         let i;
         for (i = 0; i < this.serviceReportDetails.bookings.length; i++) {
@@ -364,24 +372,32 @@ export class ServiceReportComponent implements OnInit {
     }
 
     requireVerification(): any {
+        if (this.currentUser.canVerifyRates) {
+            return false;
+        }
         return !this.serviceReportDetails.invalid &&
             this.serviceReportDetails.requiresVerification &&
             this.serviceReportDetails.status !== 'SUBMITTED';
     }
 
     canSubmit(): any {
+        let canSubm = false;
         // if (this.operatorAccount.skipAgentValidity === true) {
         //     this.serviceReportDetails.invalid = false;
         //     return true;
         // }
+        console.log("status " + this.serviceReportDetails.status);
         if (this.serviceReportDetails.status === 'REQUIRE_VERIFICATION') {
             if (this.currentUser.canVerifyRates) {
-                return true;
+                console.log("383");
+                canSubm = true;
             }
         } else if (!this.serviceReportDetails.requiresVerification) {
-            return (!this.serviceReportDetails.invalid && !this.serviceReportDetails.status);
+            console.log("387 " + this.serviceReportDetails.invalid +"  " + this.serviceReportDetails.status);
+            canSubm =  (!this.serviceReportDetails.invalid && !this.serviceReportDetails.status);
         }
-        return false;
+        console.log("can submit " + canSubm);
+        return canSubm;
     }
 
     launchAgents(): any {
@@ -438,7 +454,7 @@ export class ServiceReportComponent implements OnInit {
 
     updateAgent(): void {
         if (this.agent.id) {
-            this.apiService.update(this.apiUrls.updateAgent, this.agent).subscribe((res: any) => {
+            this.apiService.update(this.apiUrls.updateAgentBranch, this.agent).subscribe((res: any) => {
                 if (res) {
                     Swal.fire('success', 'Agent updated successfully..!', 'success');
                     this.modalService.dismissAll();

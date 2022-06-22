@@ -595,3 +595,7 @@ input.input100 {
     background: #333;
     color: #fff
 }
+
+.changedRate {
+    background-color: orange;
+}
