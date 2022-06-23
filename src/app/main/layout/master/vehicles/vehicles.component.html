@@ -78,6 +78,7 @@
                                 <th>Insurance Expiry</th>
                                 <th>Auth Expiry</th>
                                 <th>Pollution Expiry</th>
+                                <th>AITP Expiry</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -87,11 +88,12 @@
                                 <td>{{vehicle.vehicleType}}</td>
                                 <td>{{vehicle.regNo}}</td>
                                 <td>{{vehicle.chasisNumber}}</td>
-                                <td>{{vehicle.permitExpiry | date}}</td>
-                                <td>{{vehicle.fitnessExpiry | date}}</td>
-                                <td>{{vehicle.insuranceExpiry | date}}</td>
-                                <td>{{vehicle.authExpiry | date}}</td>
-                                <td>{{vehicle.pollutionExpiry | date}}</td>
+                                <td>{{vehicle.permitExpiry | date}} <span *ngIf="vehicle.basePermitExpiring" style="color:red">expiring</span></td>
+                                <td>{{vehicle.fitnessExpiry | date}} <span *ngIf="vehicle.fitnessExpiring" style="color:red">expiring</span></td>
+                                <td>{{vehicle.insuranceExpiry | date}} <span *ngIf="vehicle.insuranceExpiring" style="color:red">expiring</span></td>
+                                <td>{{vehicle.authExpiry | date}} <span *ngIf="vehicle.authorizatioExpiring" style="color:red">expiring</span></td>
+                                <td>{{vehicle.pollutionExpiry | date}} <span *ngIf="vehicle.pollutionExpiring" style="color:red">expiring</span></td>
+                                <td>{{vehicle.aitpExpiry | date}} <span *ngIf="vehicle.aitpexpiring" style="color:red">expiring</span></td>
                                 <td class="td-active">
                                     <button type="button"
                                             class="action-icon-style waves-effect waves-blue edit-user-button"
@@ -113,12 +115,12 @@
                                 </td>
                             </tr>
                             <tr *ngIf="vehicles.length === 0 || !vehicles">
-                                <td colspan="10" style="text-align: center">No Records exist.</td>
+                                <td colspan="11" style="text-align: center">No Records exist.</td>
                             </tr>
                             </tbody>
                             <tfoot>
                             <tr *ngIf="vehicles.length > 0">
-                                <th colspan="10">
+                                <th colspan="11">
                                     <div class="pull-right">
                                         Total Count : {{vehiclesCount || 0}}
                                     </div>
