@@ -17,6 +17,9 @@
         <li class="nav-item disabled-tab-nav" (click)="changeDueReportsTab(2)">
             <a class="nav-link" [ngClass]="{active:tab === 2}">Due ReportsByDate</a>
         </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeDueReportsTab(3)">
+            <a class="nav-link" [ngClass]="{active:tab === 3}">CashCollection Reports</a>
+        </li>
     </ul>
     <div class="row">
         <div class="col-lg-12 col-md-12" *ngIf="tab === 1">
@@ -85,6 +88,58 @@
                                         <td>{{ dueByDate.bookingTotal }}</td>
                                     </tr>
                                     <tr *ngIf="!dueByDateList || dueByDateList.length === 0">
+                                        <td colspan="3">No reports exist. </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 3">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="offset-10 text-right  p-3" style="align-items: center;">
+                        <div class="row text-right">
+<!--                            <div *ngFor="let data of array">-->
+<!--                                <button class="btn btn-sm btn-default"  [ngClass]="data === 0 ? {'color':'green'}: {'color':'red'}" (click)="getCashCollectionByDate(data)">-->
+<!--                                    {{data}}-->
+<!--                                </button>-->
+<!--                            </div>-->
+                            <li class="page-item" [ngClass]="data == size ? 'active' : ''"
+                                *ngFor="let data of array" (click)="getCashCollectionByDate(data)">
+                                <button class="page-link"> {{ data }}
+                                    <span class="sr-only">(current)</span>
+                                </button>
+                            </li>
+                            &nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-sm btn-primary" (click)="ExportToExcel()">Export To
+                                Excel
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row form-group">
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table table-bordered table-hover text-center" id="cashCollectionReportExcelData">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th scope="col" [appFrentendSort]="cashCollectionList"
+                                            data-order="desc" data-name="_id">Date<i class="fa fa-sort"></i></th>
+                                        <th scope="col" [appFrentendSort]="cashCollectionList"
+                                            data-order="desc" data-name="bookingTotal">Total Due<i class="fa fa-sort"></i></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let data of cashCollectionList; let i = index;">
+                                        <td>{{i + 1}}</td>
+                                        <td><a class="cus-a" [routerLink]="['CashCollectionReports']">{{data._id}}</a></td>
+                                        <td><a class="cus-a" [routerLink]="['CashCollectionReports']">{{data.bookingTotal}}</a></td>
+                                    </tr>
+                                    <tr *ngIf="!cashCollectionList || cashCollectionList.length === 0">
                                         <td colspan="3">No reports exist. </td>
                                     </tr>
                                     </tbody>
