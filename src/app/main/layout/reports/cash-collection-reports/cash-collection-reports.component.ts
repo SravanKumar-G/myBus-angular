@@ -19,8 +19,9 @@ export class CashCollectionReportsComponent implements OnInit {
   public cashBookingList: Array<any> = [];
   public name = 'Select All';
   public branchOffices: Array<any> = [];
-  public branchOffice: any;
+  public branchOfficeId: any;
   public duplicateCashBookingList: Array<any> = [];
+  public bookingTotal: any = 0;
 
   constructor( private apiService: ApiServiceService,
                private apiUrls: ApiUrls,
@@ -32,6 +33,7 @@ export class CashCollectionReportsComponent implements OnInit {
     this.currentDate = new Date();
     this.currentDate.setDate(this.currentDate.getDate() - 1);
     this.officeId = this.actRoute.snapshot.params._id || '';
+    this.bookingTotal = 0;
   }
 
   ngOnInit(): void {
@@ -41,10 +43,15 @@ export class CashCollectionReportsComponent implements OnInit {
 
   getCashBookingForADate(): void{
     const date = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
+    let total = 0;
     this.apiService.get(this.apiUrls.getCashBookingForADate + date).subscribe((res: any) => {
       if (res){
           this.cashBookingList = res;
           this.duplicateCashBookingList = res;
+          _.each(this.duplicateCashBookingList, function(b: any){
+            total += b.netAmt;
+          });
+          this.bookingTotal = total;
       }
     });
   }
@@ -82,13 +89,18 @@ export class CashCollectionReportsComponent implements OnInit {
     this.apiService.exportExcel('CashCollectionReportExcelData', 'CashCollectionReportExcelDate', '', '');
   }
 
-  bookingByFilter(name: any): void {
-    if (name === 'All') {
+  bookingByFilter(branchOfficeId: any): void {
+    let total = 0;
+    if (branchOfficeId === 'All') {
       this.cashBookingList = this.duplicateCashBookingList;
     } else {
       this.cashBookingList = _.filter(this.duplicateCashBookingList, (item: any) => {
-        return item.destination === name;
+        return item.branchOfficeId === branchOfficeId;
       });
     }
+    _.each(this.cashBookingList, function(b: any){
+      total += b.netAmt;
+    });
+    this.bookingTotal = total;
   }
 }

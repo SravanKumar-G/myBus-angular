@@ -52,13 +52,13 @@
                                         [multiple]="false"
                                         bindLabel="name"
                                         [closeOnSelect]="true"
-                                        bindValue="name"
+                                        bindValue="id"
                                         placeholder="Select Branch"
-                                        [(ngModel)]="branchOffice"
-                                        [ngModelOptions]="{standalone: true}" (ngModelChange)="bookingByFilter(branchOffice)">
+                                        [(ngModel)]="branchOfficeId"
+                                        [ngModelOptions]="{standalone: true}" (ngModelChange)="bookingByFilter(branchOfficeId)">
                                 </ng-select>
                             </div>
-                            <div class="col-sm-3"></div>
+                            <div class="col-sm-3">Total: {{bookingTotal}}</div>
                             <div class="col-sm-3 text-right">
                                 <button type="button" class="btn btn-sm btn-primary" (click)="cashCollectionReportExportToExcel()">Export To
                                     Excel
@@ -89,9 +89,6 @@
                                             data-order="desc" data-name="jdate">JourneyDate<i class="fa fa-sort"></i>
                                         </th>
                                         <th scope="col" [appFrentendSort]="cashBookingList"
-                                            data-order="desc" data-name="bookedDate">BookedOn<i class="fa fa-sort"></i>
-                                        </th>
-                                        <th scope="col" [appFrentendSort]="cashBookingList"
                                             data-order="desc" data-name="netAmt">Due<i class="fa fa-sort"></i></th>
                                     </tr>
                                     </thead>
@@ -105,7 +102,6 @@
                                         <td>{{booking.serviceNumber }}</td>
                                         <td>{{booking.source}} - {{booking.destination}} - {{booking.serviceName}})</td>
                                         <td>{{booking.jdate }}</td>
-                                        <td>{{booking.bookedDate || '--' }}</td>
                                         <td>{{ booking.netAmt | number }}</td>
                                     </tr>
                                     </tbody>
