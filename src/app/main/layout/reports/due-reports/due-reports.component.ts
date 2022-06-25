@@ -20,6 +20,9 @@ export class DueReportsComponent implements OnInit {
     @ViewChild('myModal') myModal: any;
     public dueReportDate: string | undefined;
     public selectedBookings: Array<any> = [];
+    public cashCollectionList: Array<any> = [];
+    public array: number[] = [0, 1];
+    public size: number | undefined;
 
     constructor(
         private apiService: ApiServiceService,
@@ -70,6 +73,9 @@ export class DueReportsComponent implements OnInit {
             case 2:
                 this.getAllDuesByDate();
                 break;
+            case 3:
+                this.getCashCollectionByDate(this.array[0]);
+                break;
         }
     }
 
@@ -99,5 +105,23 @@ export class DueReportsComponent implements OnInit {
 
     dueReportExportToExcel(): void {
         this.apiService.exportExcel('dueReportExcelData', 'dueReportByDate', '', '');
+    }
+    ExportToExcel(): void {
+        this.apiService.exportExcel('cashCollectionReportExcelData', 'cashCollectionReportExcelDate', '', '');
+    }
+
+    getCashCollectionByDate(page: string | number): void{
+            if (page === 0){
+                this.array[0] = (page === 0 ) ? this.array[0] : 0;
+                this.size = this.array[0];
+            } else if (page === 1){
+                this.array[1] = (page === 1 ) ? this.array[1] : 1;
+                this.size = this.array[1];
+            }
+            this.apiService.get(this.apiUrls.getCashCollectionByDate + page).subscribe((res: any) => {
+           if (res){
+               this.cashCollectionList = res;
+           }
+        });
     }
 }

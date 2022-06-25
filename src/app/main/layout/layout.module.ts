@@ -22,7 +22,6 @@ import { HaltReportsComponent } from './Check-List/halt-reports/halt-reports.com
 
 
 
-
 @NgModule({
     declarations: [
         LayoutComponent,
