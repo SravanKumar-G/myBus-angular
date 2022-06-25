@@ -48,14 +48,17 @@
                             </div>
                             <div class="col-sm-3">
                                 <ng-select
-                                        [items]="branchOffices"
+
                                         [multiple]="false"
                                         bindLabel="name"
                                         [closeOnSelect]="true"
                                         bindValue="id"
                                         placeholder="Select Branch"
                                         [(ngModel)]="branchOfficeId"
-                                        [ngModelOptions]="{standalone: true}" (ngModelChange)="bookingByFilter(branchOfficeId)">
+                                        (ngModelChange)="bookingByFilter(branchOfficeId)">
+                                        <ng-option value="All" selected>All</ng-option>
+                                        <ng-option *ngFor="let branchOffice of branchOffices"
+                                               [value]="branchOffice.id">{{branchOffice.name}}</ng-option>
                                 </ng-select>
                             </div>
                             <div class="col-sm-3">Total: {{bookingTotal}}</div>
