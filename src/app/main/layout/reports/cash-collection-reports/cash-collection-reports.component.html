@@ -48,7 +48,6 @@
                             </div>
                             <div class="col-sm-3">
                                 <ng-select
-
                                         [multiple]="false"
                                         bindLabel="name"
                                         [closeOnSelect]="true"
@@ -68,6 +67,45 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="row form-group">
+                            <div class="col-sm-6 table-responsive">
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th scope="col">Branch Office</th>
+                                        <th scope="col">Total Collection</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let branchBooking of cashBookingTotals.branchBookingTotals; let i = index;">
+                                        <th>{{i + 1}}</th>
+                                        <td>{{branchBooking.name}}</td>
+                                        <td>{{branchBooking.total | number}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--div class="col-sm-5 table-responsive">
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>S No</th>
+                                        <th scope="col">Branch Office</th>
+                                        <th scope="col">Total Collection</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let branchBooking of cashBookingTotals.agentBookingTotals; let i = index;">
+                                        <th>{{i + 1}}</th>
+                                        <td>{{branchBooking.name}}</td>
+                                        <td>{{branchBooking.total | number}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div -->
+                        </div>
+
                         <div class="row form-group">
                             <div class="col-sm-12 table-responsive">
                                 <table class="table table-bordered table-hover text-center" id="CashCollectionReportExcelData">

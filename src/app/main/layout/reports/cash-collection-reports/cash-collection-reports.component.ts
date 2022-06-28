@@ -20,7 +20,10 @@ export class CashCollectionReportsComponent implements OnInit {
   public name = 'Select All';
   public branchOffices: Array<any> = [];
   public branchOfficeId: any;
+  public cashBookingTotals: any;
   public duplicateCashBookingList: Array<any> = [];
+  public branchOfficeTotals: Array<any> = [];
+
   public bookingTotal: any = 0;
 
   constructor( private apiService: ApiServiceService,
@@ -46,8 +49,10 @@ export class CashCollectionReportsComponent implements OnInit {
     let total = 0;
     this.apiService.get(this.apiUrls.getCashBookingForADate + date).subscribe((res: any) => {
       if (res){
-          this.cashBookingList = res;
-          this.duplicateCashBookingList = res;
+          this.cashBookingList = res.bookings;
+          this.cashBookingTotals = res;
+          console.log("bookings " + this.cashBookingTotals);
+          this.duplicateCashBookingList = res.bookings;
           _.each(this.duplicateCashBookingList, function(b: any){
             total += b.netAmt;
           });
