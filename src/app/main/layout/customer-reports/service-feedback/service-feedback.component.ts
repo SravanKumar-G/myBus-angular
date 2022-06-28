@@ -49,7 +49,7 @@ export class ServiceFeedbackComponent implements OnInit {
             d = day;
         }
         const year = dateObj.getFullYear();
-        const date = d + '-' + m + '-' + year;
+        const date = year + '-' + m + '-' + d;
         this.location.replaceState('/serviceFeedback/' + date);
         this.apiService.get(this.apiUrls.serviceFeedbackSearch + date).subscribe((res: any) => {
             if (res) {
