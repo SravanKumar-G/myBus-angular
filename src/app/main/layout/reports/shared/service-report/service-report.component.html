@@ -192,7 +192,7 @@
                                         [ngClass]="{changedRate: rateToBeVerified(booking)}">
                                         <td>
                                             <span *ngIf="booking.id != null" title="{{booking.seats}}">
-                                                 {{ booking.seats}} - v {{booking.requireVerification}}
+                                                 {{ booking.seats}}
                                             </span>
                                             <span *ngIf="booking.id == null">
                                                  <input [(ngModel)]="booking.seats" class="form-control form-control-sm"
@@ -222,7 +222,7 @@
                                         </td>
                                         <td>
                                             <span *ngIf="booking.id != null" title="{{booking.name}}">
-                                                 {{ booking.name}}
+                                                 {{ booking.name}} <a class="cus-a" *ngIf=" isCashBooking(booking) && currentUser.id === '5c9a67cff261696ef9c2174f'" (click)="editBookingName(booking.id)">Update</a>
                                             </span>
                                             <span *ngIf="booking.id == null">
                                                 <input [(ngModel)]="booking.name" class="form-control form-control-sm"

@@ -424,7 +424,7 @@ export class OfficeExpensesComponent implements OnInit {
         this.approvedAndRejected = res.data;
         this.selectedOfficeExpenses = [];
         this.apiService.getLoggedInUserData();
-        this.changeOfficeExpenseTab(2);
+        this.changeOfficeExpenseTab(1);
       }
     });
   }

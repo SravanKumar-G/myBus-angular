@@ -386,7 +386,11 @@ export class PaymentsComponent implements OnInit {
         this.approvedAndRejected = res.data;
         this.apiService.getLoggedInUserData();
         this.changePaymentsTab(2);
+      } else {
+        console.log('erorr...');
       }
+    }, error => {
+      Swal.fire('Error', error.message, 'error');
     });
   }
 

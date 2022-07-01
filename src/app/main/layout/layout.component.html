@@ -242,9 +242,19 @@
                             <i class="icon fa fa-university" aria-hidden="true"></i>Service Reports
                         </a>
                     </li>
+                    <li class="waves-effect waves-light" >
+                        <a class="treeView-item" [routerLink]="['dueReports']" [routerLinkActive]="['active']">
+                            <i class="icon fa fa-bus" aria-hidden="true"></i>Due Reports
+                        </a>
+                    </li>
+                    <li class="waves-effect waves-light" >
+                        <a class="treeView-item" [routerLink]="['cashTransfer']" [routerLinkActive]="['active']">
+                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Cash Transfers
+                        </a>
+                    </li>
                     <li class="waves-effect waves-light">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
-                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Agent Booking Report
+                        <a class="treeView-item" [routerLink]="['officeExpenses']" [routerLinkActive]="['active']">
+                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Office Expenses
                         </a>
                     </li>
                     <li class="waves-effect waves-light">
@@ -255,16 +265,6 @@
                     <li class="waves-effect waves-light">
                         <a class="treeView-item" [routerLink]="['ServiceStaffAllocation/' + apiService.newDate]" [routerLinkActive]="['active']">
                             <i class="icon fa fa-search" aria-hidden="true"></i>Service Staff Allocation
-                        </a>
-                    </li>
-                    <li class="waves-effect waves-light">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
-                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Service Expense Report
-                        </a>
-                    </li>
-                    <li class="waves-effect waves-light">
-                        <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">
-                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Service PL Reports
                         </a>
                     </li>
                     <li class="waves-effect waves-light" >
@@ -282,16 +282,7 @@
                             <i class="icon fa fa-users" aria-hidden="true"></i>Fuel Expense Reports
                         </a>
                     </li>
-                    <li class="waves-effect waves-light" >
-                        <a class="treeView-item" [routerLink]="['dueReports']" [routerLinkActive]="['active']">
-                            <i class="icon fa fa-bus" aria-hidden="true"></i>Due Reports
-                        </a>
-                    </li>
-                    <li class="waves-effect waves-light" >
-                        <a class="treeView-item" [routerLink]="['cashTransfer']" [routerLinkActive]="['active']">
-                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Cash Transfers
-                        </a>
-                    </li>
+
                     <li class="waves-effect waves-light" >
                         <a class="treeView-item" [routerLink]="['payments']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Payments
@@ -303,11 +294,7 @@
                         </a>
                     </li>
 <!--                    "officeexpenses"  officeExpenses-->
-                    <li class="waves-effect waves-light">
-                        <a class="treeView-item" [routerLink]="['officeExpenses']" [routerLinkActive]="['active']">
-                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Office Expenses
-                        </a>
-                    </li>
+
                     <li class="waves-effect waves-light">
                         <a class="treeView-item" [routerLink]="['expensesIncomeReports/' + apiService.newDate]" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Expenses Income Reports

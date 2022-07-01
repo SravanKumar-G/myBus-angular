@@ -165,6 +165,9 @@ export class ServiceReportComponent implements OnInit {
             Swal.fire('error', 'Select agent', 'error');
         }
     }
+    editBookingName(bookingId: any): void {
+        console.log("editing bookingId "+ bookingId) ;
+    }
 
     countSeats(): void {
         let seatsCount = 0;
