@@ -228,7 +228,7 @@ const layOutRoutes: Routes = [
                     .then(m => m.ServiceStaffAllocationsModule)
             },
             {
-                path: 'CashCollectionReports',
+                path: 'CashCollectionReports/:date',
                 loadChildren: () => import('./reports/cash-collection-reports/cash-collection-reports.module')
                     .then(m => m.CashCollectionReportsModule)
             }
