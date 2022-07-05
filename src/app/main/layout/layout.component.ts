@@ -39,7 +39,6 @@ export class LayoutComponent implements OnInit {
 
     ngOnInit(): void {
         (($) => {
-            // tslint:disable-next-line:typedef
             $(document).ready(() => {
                 const treeViewMenu = $('.app-menu');
                 const treeViewMenuChild = $('.app-menu-child');
@@ -53,9 +52,11 @@ export class LayoutComponent implements OnInit {
                 // tslint:disable-next-line:typedef
                 $('[data-toggle=\'treeView\']').click(function(event: any) {
                     event.preventDefault();
+                    // @ts-ignore
                     if (!$(this).parent().hasClass('is-expanded')) {
                         treeViewMenu.find('[data-toggle=\'treeView\']').parent().removeClass('is-expanded');
                     }
+                    // @ts-ignore
                     $(this).parent().toggleClass('is-expanded');
                 });
 
