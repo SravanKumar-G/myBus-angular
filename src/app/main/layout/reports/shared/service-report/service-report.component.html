@@ -201,7 +201,8 @@
                                             </span>
                                         </td>
                                         <td>{{ booking.ticketNo }}</td>
-                                        <td [ngStyle]="isCashBooking(booking) && !booking.hasValidAgent && {'background-color':'red'}">
+<!--                                        <td [ngStyle]="isCashBooking(booking) && !booking.hasValidAgent && {'background-color':'red'}">-->
+                                        <td>
                                            <span *ngIf="booking.id != null">
                                                  {{ booking.bookedBy}}
                                             </span>
