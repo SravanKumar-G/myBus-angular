@@ -80,7 +80,7 @@
                                     <tbody>
                                     <tr *ngFor="let branchBooking of cashBookingTotals.branchBookingTotals; let i = index;">
                                         <th>{{i + 1}}</th>
-                                        <td>{{branchBooking.name}}</td>
+                                        <td><a class="cus-a" (click)="branchBookingData(branchBooking)">{{branchBooking.name}}</a></td>
                                         <td>{{branchBooking.total | number}}</td>
                                     </tr>
                                     </tbody>
@@ -159,3 +159,51 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #branchBookingModal>
+    <div class="modal-header">
+            <div class="col-sm-12 row">
+                <div class="col-sm-5">
+                    <h5 class="modal-title form-head-line-style" style="color: #45a3c5">{{branchBookingName}} - AgentBooking List</h5>
+                </div>
+                <div class="col-sm-4">
+                    <h5>Total Count : {{bookingTotalAmount}}</h5>
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-sm btn-primary" (click)="agentsBookingExportToExcel()">Export To
+                        Excel
+                    </button>
+                </div>
+            </div>
+    </div>
+    <div class="modal-body">
+        <div class="tile">
+            <div class="tile-body row">
+                   <div class="col-sm-12 table-responsive">
+                       <table class="table table-bordered table-hover text-center" id="AgentsBookingExcelData">
+                           <thead>
+                           <tr>
+                               <th>S No</th>
+                               <th scope="col">Branch Office</th>
+                               <th scope="col">Total Collection</th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           <tr *ngFor="let branchBooking of cashBookingTotals.agentBookingTotals; let i = index;">
+                               <th>{{i + 1}}</th>
+                               <td>{{branchBooking.name}}</td>
+                               <td>{{branchBooking.total | number}}</td>
+                           </tr>
+                           </tbody>
+                       </table>
+                   </div>
+                </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-sm btn-all-shadow waves-effect waves-light" (click)="close()">
+            Close
+        </button>
+    </div>
+</ng-template>

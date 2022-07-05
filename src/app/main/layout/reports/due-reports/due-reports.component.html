@@ -136,7 +136,7 @@
                                     <tbody>
                                     <tr *ngFor="let data of cashCollectionList; let i = index;">
                                         <td>{{i + 1}}</td>
-                                        <td><a class="cus-a" [routerLink]="['CashCollectionReports']">{{data._id}}</a></td>
+                                        <td><a class="cus-a" [routerLink]="['CashCollectionReports/' + data._id]">{{data._id}}</a></td>
                                         <td><a class="cus-a" [routerLink]="['CashCollectionReports']">{{data.bookingTotal}}</a></td>
                                     </tr>
                                     <tr *ngIf="!cashCollectionList || cashCollectionList.length === 0">

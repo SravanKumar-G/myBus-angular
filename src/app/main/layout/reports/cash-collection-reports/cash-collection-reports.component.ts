@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -25,6 +25,10 @@ export class CashCollectionReportsComponent implements OnInit {
   public branchOfficeTotals: Array<any> = [];
 
   public bookingTotal: any = 0;
+  @ViewChild('branchBookingModal') branchBookingModal: any;
+  public modalRef: any;
+  public bookingTotalAmount: any;
+  public branchBookingName: any;
 
   constructor( private apiService: ApiServiceService,
                private apiUrls: ApiUrls,
@@ -33,6 +37,7 @@ export class CashCollectionReportsComponent implements OnInit {
                private  datePipe: DatePipe,
                private ngModalService: NgbModal) {
     this.currentDate = this.actRoute.snapshot.params.date || '';
+    console.log('h',  this.currentDate);
     this.currentDate = new Date();
     this.currentDate.setDate(this.currentDate.getDate() - 1);
     this.officeId = this.actRoute.snapshot.params._id || '';
@@ -40,6 +45,7 @@ export class CashCollectionReportsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentDate = this.actRoute.snapshot.params.date || '';
     this.getCashBookingForADate();
     this.loadBranchOffices();
   }
@@ -107,5 +113,19 @@ export class CashCollectionReportsComponent implements OnInit {
       total += b.netAmt;
     });
     this.bookingTotal = total;
+  }
+
+    branchBookingData(branchBooking: any): void {
+      this.bookingTotalAmount  = branchBooking.total;
+      this.branchBookingName = branchBooking.name;
+      this.modalRef = this.ngModalService.open(this.branchBookingModal, {size: 'lg', backdrop: 'static', keyboard: false});
+    }
+
+  close(): void {
+    this.ngModalService.dismissAll(this.modalRef);
+  }
+
+  agentsBookingExportToExcel(): void {
+    this.apiService.exportExcel('AgentsBookingExcelData', 'AgentsBookingExcelData', '', '');
   }
 }
