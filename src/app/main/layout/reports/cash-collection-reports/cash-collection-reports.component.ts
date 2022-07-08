@@ -37,7 +37,6 @@ export class CashCollectionReportsComponent implements OnInit {
                private  datePipe: DatePipe,
                private ngModalService: NgbModal) {
     this.currentDate = this.actRoute.snapshot.params.date || '';
-    console.log('h',  this.currentDate);
     this.currentDate = new Date();
     this.currentDate.setDate(this.currentDate.getDate() - 1);
     this.officeId = this.actRoute.snapshot.params._id || '';
@@ -57,7 +56,6 @@ export class CashCollectionReportsComponent implements OnInit {
       if (res){
           this.cashBookingList = res.bookings;
           this.cashBookingTotals = res;
-          console.log("bookings " + this.cashBookingTotals);
           this.duplicateCashBookingList = res.bookings;
           _.each(this.duplicateCashBookingList, function(b: any){
             total += b.netAmt;

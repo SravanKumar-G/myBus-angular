@@ -135,7 +135,7 @@ const layOutRoutes: Routes = [
                     .then(m => m.StaffModule)
             },
             {
-                path: 'officeExpenses',
+                path: 'officeExpenses/:date',
                 loadChildren: () => import('./reports/office-expenses/office-expenses.module').
                 then(m => m.OfficeExpensesModule)
             },
