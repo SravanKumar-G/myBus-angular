@@ -216,6 +216,7 @@ export class ApiUrls {
     allPending = 'api/v1/officeExpenses/pending';
     approvedCount = 'api/v1/officeExpenses/count/approved';
     allApproved = 'api/v1/officeExpenses/approved';
+    searchByDate = 'api/v1/officeExpenses/searchByDate';
 
     paylaterCount = 'api/v1/officeExpenses/count/paylater';
     allPaylater = 'api/v1/officeExpenses/paylater';

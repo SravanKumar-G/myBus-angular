@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 
 import { OfficeExpensesRoutingModule } from './office-expenses-routing.module';
 import {OfficeExpensesComponent} from './office-expenses.component';
@@ -25,6 +25,7 @@ import {BreadcrumbModule} from 'xng-breadcrumb';
         AngularFileUploaderModule,
         LayoutModule,
         BreadcrumbModule
-    ]
+    ],
+    providers: [ DatePipe]
 })
 export class OfficeExpensesModule { }

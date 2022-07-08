@@ -1,10 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {OnlynumberDirective} from '../../../../customDirectives/directives/onlynumber.directive';
 import Swal from 'sweetalert2';
+import {DatePipe, Location} from "@angular/common";
 
 @Component({
   selector: 'app-office-expenses',
@@ -16,6 +17,13 @@ export class OfficeExpensesComponent implements OnInit {
   public sortOrder = 'createdAt';
   public orderBy = 'desc';
   public pendingQuery: any = {
+    page: 1,
+    size: 10,
+    count: 0,
+    pageSizes: [],
+    sort: this.sortOrder + ',' + this.orderBy,
+  };
+  public byDate: any = {
     page: 1,
     size: 10,
     count: 0,
@@ -68,15 +76,24 @@ export class OfficeExpensesComponent implements OnInit {
   public suppliersList: Array<any> = [];
   public vehicles: Array<any> = [];
   @ViewChild('viewImageModal') viewImageModal: any;
+  public byDateList: Array<any> = [];
+  public currentDate: any;
 
   constructor(private router: Router,
               public apiService: ApiServiceService,
               private apiUrls: ApiUrls,
-              private modalService: NgbModal) { }
+              private location: Location,
+              private actRoute: ActivatedRoute,
+              private modalService: NgbModal,
+              private  datePipe: DatePipe) {
+    this.currentDate = this.actRoute.snapshot.params.date || '';
+    this.currentDate = new Date();
+  }
 
   ngOnInit(): void {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser') as string);
     this.changeOfficeExpenseTab(1);
+    // this.currentDate = new Date(this.currentDate);
   }
 
   goToDashboard(): void {
@@ -128,7 +145,6 @@ export class OfficeExpensesComponent implements OnInit {
         if (res){
           this.searchExpenseList = res;
           this.searchQuery.count = res.totalElements;
-          console.log('dsd', this.searchQuery.count );
         }
       }
     });
@@ -226,6 +242,9 @@ export class OfficeExpensesComponent implements OnInit {
       case 4:
         this.getPayLaterCount();
         break;
+      case 5:
+        this.officeExpenseSearchByDate();
+        break;
     }
   }
 
@@ -278,6 +297,9 @@ export class OfficeExpensesComponent implements OnInit {
     this.date();
     this.apiService.exportExcel( 'officeExpenseExcel', this.currentUser.userName + '_officeExpenseExcel' + '(' + this.searchQuery.startDate + ' to ' +
         this.searchQuery.endDate + ')',   '',  '');
+  }
+  exportToExcelByDate(): void{
+    this.apiService.exportExcel('exportToExcelByDate', this.currentUser.userName + '_exportToExcelByDate', '', '');
   }
   pendingClickSorting($event: MouseEvent): void {
     OnlynumberDirective.clickSorting($event, this.pendingQuery);
@@ -357,7 +379,6 @@ export class OfficeExpensesComponent implements OnInit {
               'success'
           );
           this.getPayLaterCount();
-          console.log("paying now get current user details");
           this.apiService.getLoggedInUserData();
         });
       }
@@ -441,5 +462,35 @@ export class OfficeExpensesComponent implements OnInit {
 
   viewImages(url: any): void{
      this.modalService.open(this.viewImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
+  }
+
+  previousDate(): void {
+    const currentDate = new Date(this.currentDate);
+    const date = currentDate.setTime(currentDate.getTime() - 24 * 60 * 60 * 1000);
+    this.currentDate = new Date(date);
+    this.officeExpenseSearchByDate();
+  }
+
+  nextDate(): void {
+    const currentDate = new Date(this.currentDate);
+    const todaydate: any = new Date();
+    todaydate.setDate(todaydate.getDate() - 1);
+    const date = currentDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
+    if (new Date(date) <= todaydate) {
+      this.currentDate = currentDate;
+    } else {
+      Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
+    }
+    this.officeExpenseSearchByDate();
+  }
+
+  officeExpenseSearchByDate(): void{
+    const date = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
+    this.location.replaceState('/officeExpenses/' + date);
+    this.apiService.getAll(this.apiUrls.searchByDate + '/' + date, {}).subscribe((res: any) => {
+      if (res){
+        this.byDateList = res;
+      }
+    });
   }
 }
