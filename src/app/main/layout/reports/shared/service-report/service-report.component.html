@@ -27,7 +27,7 @@
                             </button>
                         </div>
                         <div class="col-sm-12 text-right" style="font-size: 14px;">
-                             <span *ngIf="serviceReportDetails.status === 'SUBMITTED'" style="color:red"> Service report has been submitted on {{serviceReportDetails.updatedAt|date}}
+                             <span *ngIf="serviceReportDetails.status === 'SUBMITTED' || serviceReportDetails.status === 'REQUIRE_VERIFICATION'" style="color:red"> Service report has been submitted on {{serviceReportDetails.updatedAt|date}}
                                  by {{serviceReportDetails.attrs.submittedBy}}</span>
                         </div>
                     </div>
