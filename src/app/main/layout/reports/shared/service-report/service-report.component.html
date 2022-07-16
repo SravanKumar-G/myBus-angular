@@ -569,7 +569,7 @@
                                     *ngIf="canSubmit()">
                                 <span class="glyphicon"></span> Submit Report
                             </button>
-                            <span *ngIf="serviceReportDetails.status === 'SUBMITTED'" style="color:red"> Service report has been submitted on {{serviceReportDetails.updatedAt|date}}
+                            <span *ngIf="serviceReportDetails.status === 'SUBMITTED' || serviceReportDetails.status === 'REQUIRE_VERIFICATION'" style="color:red"> Service report has been submitted on {{serviceReportDetails.updatedAt|date}}
                                 by {{serviceReportDetails.attrs.submittedBy}}</span>
                             <span *ngIf="serviceReportDetails.invalid" style="color:red;">Please assign branch offices to agents <a
                                     (click)="launchAgents()">here</a></span>
