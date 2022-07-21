@@ -51,7 +51,7 @@ export class VehiclesComponent implements OnInit {
 
     private getVehiclesCount(): void {
         this.apiService.getAll(this.apiUrls.getVehiclesCount, this.vehiclesQuery).subscribe((res: any) => {
-            if (res !== 0) {
+            if (res || res === 0) {
                 this.vehiclesCount = res;
                 OnlynumberDirective.pagination(res, this.vehiclesQuery);
                 this.getVehicles();

@@ -19,6 +19,7 @@ export class AddEditVehicleComponent implements OnInit {
         fitnessExpiry: new Date(),
         pollutionExpiry: new Date(),
         authExpiry: new Date(),
+        aitpExpiry: new Date(),
         taxPayments: [{state: '', paymentDate: new Date()}]
     };
     public errorMessage: any;
@@ -51,6 +52,7 @@ export class AddEditVehicleComponent implements OnInit {
                 this.vehicle.insuranceExpiry = new Date(vehicle.insuranceExpiry);
                 this.vehicle.fitnessExpiry = new Date(vehicle.fitnessExpiry);
                 this.vehicle.permitExpiry = new Date(vehicle.permitExpiry);
+                this.vehicle.aitpExpiry = new Date(vehicle.aitpExpiry);
                 if (vehicle.taxPayments != null){
                     for (let i = 0; i < vehicle.taxPayments.length; i++){
                         this.vehicle.taxPayments[i].paymentDate = new Date(vehicle.taxPayments[i].paymentDate);
