@@ -4,7 +4,6 @@ import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {Router} from '@angular/router';
 import {OnlynumberDirective} from '../../../../customDirectives/directives/onlynumber.directive';
 import Swal from 'sweetalert2';
-import {data} from 'jquery';
 
 @Component({
     selector: 'app-escalations',
@@ -71,9 +70,9 @@ export class EscalationsComponent implements OnInit {
 
 
     public getAllEscalations(): void {
-        this.apiService.getAll(this.apiUrls.getAllEscalations, this.filterObj).subscribe((data: any) => {
-            if (data) {
-                this.listOfEscalations = data.content;
+        this.apiService.getAll(this.apiUrls.getAllEscalations, this.filterObj).subscribe((res: any) => {
+            if (res) {
+                this.listOfEscalations = res.content;
             }
         }, error => {
             Swal.fire('Error', error.message, 'error');
@@ -127,13 +126,13 @@ export class EscalationsComponent implements OnInit {
             confirmButtonText: 'Add Comment',
             confirmButtonColor: 'green',
             showLoaderOnConfirm: true,
-            preConfirm: (data) => {
-                if (!data) {
+            preConfirm: (result) => {
+                if (!result) {
                     Swal.showValidationMessage(
                         'Enter comment'
                     );
                 } else {
-                    this.apiService.update(this.apiUrls.addCommentToBooking +  id, {comments: data} )
+                    this.apiService.update(this.apiUrls.addCommentToBooking +  id, {comments: result} )
                         .subscribe((response: any) => {
                             if (response) {
                                 Swal.fire('Great!', 'Booking feedback status is successfully updated..!', 'success');
@@ -201,6 +200,7 @@ export class EscalationsComponent implements OnInit {
             Swal.fire('Error', 'Booking feedback status update failed', 'error');
         });
     }
+
     // sendThankYouMessage(feedback: any): void {
     //     this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels.' +
     //         ' Can you please take a moment to rate our service on ' + feedback.bookedBy +
@@ -211,6 +211,7 @@ export class EscalationsComponent implements OnInit {
     //         'We apologize for the issue caused to you.' +
     //         ' We will investigate further on this and take necessar action. ');
     // }
+
     sendCargoIntro(feedback: any): void {
         this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + ' garu, thank you for travelling in Sri Krishna Travels. ' +
             'We also have cargo services. You can send packages to your loved ones easily through our buses. Please call on 9246460533 for further details.');

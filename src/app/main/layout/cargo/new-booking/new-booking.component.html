@@ -13,12 +13,12 @@
 
 
     <div class="row">
-        <div class="col-lg-10 col-md-10 col-12 mx-auto">
+        <div class="col-lg-10 col-sm-12 col-xs-12 col-12 mx-auto">
             <div class="tile">
                 <div class="tile-body">
                     <app-cargo-look-up></app-cargo-look-up>
                     <div class="row mt-4">
-                        <div class="col-sm-4 col-12 form-group">
+                        <div class="col-md-6 col-lg-4 col-sm-6 col-12 form-group">
                             <label class="control-label">From Branch Office <span
                                     class="mandatory-field">*</span></label>
                             <select class="form-control form-control-sm"
@@ -40,7 +40,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-sm-4 col-12 form-group">
+                        <div class="col-md-6 col-lg-4 col-sm-6 col-12 form-group">
                             <label>To Branch Office <span class="mandatory-field">*</span></label>
                             <select class="form-control form-control-sm" [(ngModel)]="newBooking.toBranchId"
                                     [ngModelOptions]="{standalone: true}">
@@ -49,7 +49,7 @@
                                         value="{{toBranch.id}}">{{toBranch.name}}</option>
                             </select>
                         </div>
-                        <div class="col-sm-4 col-12 form-group">
+                        <div class="col-md-6 col-lg-4 col-sm-6 col-12 form-group">
                             <label>LR Type<span class="mandatory-field">*</span></label>
                             <select class="form-control form-control-sm"
                                     [(ngModel)]="newBooking.paymentType"
@@ -59,7 +59,7 @@
                                         value="{{type.shipmentType}}">{{type.shipmentType}}</option>
                             </select>
                         </div>
-                        <div class="col-sm-4 col-12 form-group">
+                        <div class="col-md-6 col-lg-4 col-sm-6 col-12 form-group">
                             <span *ngIf="currentUser.admin">
                             <label>For User</label>
                             <select class="form-control form-control-sm"
@@ -71,14 +71,14 @@
                             </select>
                             </span>
                         </div>
-                        <div class="col-sm-4 col-12 form-group">
+                        <div class="col-md-6 col-lg-4 col-sm-6 col-12 form-group">
                             <label>Way Bill No</label>
                             <input type="text" class="form-control form-control-sm"
                                    placeholder="Enter Way Bill Number"
                                    [(ngModel)]="newBooking.wayBillNo"
                                    [ngModelOptions]="{standalone: true}"/>
                         </div>
-                        <div class="col-sm-4 col-12 form-group">
+                        <div class="col-md-6 col-lg-4 col-sm-6 col-12 form-group">
                             <label>Dispatch Date</label>
                             <div class="input-group">
                                 <input class="form-control form-control-sm"
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 col-12 form-group">
+                        <div class="col-md-6 col-lg-4 col-sm-6 col-12 form-group">
                             <label>Remarks</label>
                             <textarea class="form-control form-control-sm"
                                       [(ngModel)]="newBooking.remarks"
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6 col-12 form-group">
+                        <div class="col-sm-12 col-12 col-lg-6 form-group">
                             <div class="card">
                                 <div class="card-header">
                                     Sender Details
@@ -159,7 +159,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-12 form-group">
+                        <div class="col-sm-12 col-12 col-lg-6 form-group">
                             <div class="card">
                                 <div class="card-header" style="display: flex;justify-content: space-between;">
                                     <div> Receiver Details</div>
@@ -218,7 +218,7 @@
                     </div>
                     <div class="row">
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
+                            <table class="table table-hover table-bordered mob-res">
                                 <thead>
                                 <tr>
                                     <th>S No</th>
