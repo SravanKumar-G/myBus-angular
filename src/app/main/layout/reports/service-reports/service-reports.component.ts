@@ -20,6 +20,8 @@ export class ServiceReportsComponent implements OnInit {
     public downloaded: any;
     public loading = true;
     public downloadedOn: any;
+    public totalCashIncome = 0;
+    public totalNetIncome = 0;
 
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
@@ -64,6 +66,10 @@ export class ServiceReportsComponent implements OnInit {
                         }
                     }
                 }
+                this.allReports.forEach((item) => {
+                  this.totalCashIncome = this.totalCashIncome + item.cashIncome;
+                  this.totalNetIncome = this.totalNetIncome + item.netIncome;
+                });
             }
         }, error => {
             Swal.fire('Oops...', error.message, 'error');

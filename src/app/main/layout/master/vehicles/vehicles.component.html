@@ -139,7 +139,7 @@
                                                 [maxSize]="5">
                                 </ngb-pagination>
                             </div>
-                            <ul class="pagination pull-right" *ngIf="vehiclesQuery || vehiclesQuery !== 0">
+                            <ul class="pagination pull-right" *ngIf="vehiclesCount || vehiclesCount !== 0">
                                 <li class="page-item" [ngClass]="size == vehiclesQuery.size ? 'active' : ''"
                                     *ngFor="let size of vehiclesQuery.pageSizes" (click)="handlePageSizeChange(size)">
                                     <button class="page-link"> {{ size }}
