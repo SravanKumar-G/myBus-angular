@@ -345,5 +345,10 @@ export class ApiUrls {
     // service Staff Allocations
     staffAllocation = 'api/v1/serviceReport/staffAllocation/download';
     findStaffAllocation = 'api/v1/serviceReport/findStaffAllocation';
+    getEmployees = 'api/v1/employee/getEmployees';
+    addEmployee = 'api/v1/employee/addEmployee';
+    getEmployee = 'api/v1/employee/getEmployee/';
+    deleteEmployee = 'api/v1/employee/delete/';
+    updateEmployee = 'api/v1/employee/update';
 
 }
