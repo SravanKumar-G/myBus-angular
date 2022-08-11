@@ -304,9 +304,9 @@
                                        [multiple]="false"
                                        bindLabel="regNo"
                                        [closeOnSelect]="true"
-                                       bindValue="regNo"
+                                       bindValue="id"
                                        placeholder="Select Vehicle"
-                                       [(ngModel)]="searchQuery.vehicleRegNumber"
+                                       [(ngModel)]="searchQuery.vehicleId" (ngModelChange)="searchData()"
                                         [ngModelOptions]="{standalone: true}">
                             </ng-select>
                         </div>
