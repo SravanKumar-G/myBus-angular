@@ -183,6 +183,7 @@
                             <label>SMS:</label>
                             <div>{{cargoDetails.attrs.SMS || '--'}}</div>
                         </div>
+                        <br/>
                         <div class="col-sm-12 text-left" *ngIf="cargoDetails.cargoTransitStatus === 'DELIVERED' ">
                             <b>Delivered by : {{cargoDetails.deliveredBy}} on {{cargoDetails.deliveredOn| date: "medium"}} - {{cargoDetails.deliveryNotes}}</b>
                         </div>

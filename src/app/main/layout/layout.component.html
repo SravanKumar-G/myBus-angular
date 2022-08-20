@@ -142,7 +142,7 @@
                     <i class="treeView-indicator fa fa-angle-right"></i>
                 </a>
                 <ul class="treeView-menu">
-                    <li class="waves-effect waves-light" *ngIf="canAccessModule('agents')">
+                    <li class="waves-effect waves-light">
                         <a class="treeView-item" [routerLink]="['agents']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Agents
                         </a>
@@ -322,7 +322,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="treeView" *ngIf="canAccessModule('checklist')">
+            <li class="treeView">
                 <a class="app-menu__item" href="" data-toggle="treeView" [routerLinkActive]="['active']">
                     <i class="fa fa-check-circle-o fa-lg"></i>
                     <span class="app-menu__label">Check List</span>
