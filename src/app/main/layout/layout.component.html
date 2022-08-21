@@ -143,6 +143,11 @@
                 </a>
                 <ul class="treeView-menu">
                     <li class="waves-effect waves-light">
+                        <a class="treeView-item" [routerLink]="['employee']" [routerLinkActive]="['active']">
+                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Employee
+                        </a>
+                    </li>
+                    <li class="waves-effect waves-light">
                         <a class="treeView-item" [routerLink]="['agents']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Agents
                         </a>
@@ -152,11 +157,6 @@
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Amenities
                         </a>
                     </li>
-                    <!--          <li class="waves-effect waves-light"  *ngIf="canAccessModule('banks')">-->
-                    <!--            <a class="treeView-item" [routerLink]="['plans']" [routerLinkActive]="['active']">-->
-                    <!--              <i class="icon fa fa-university" aria-hidden="true"></i>Banks-->
-                    <!--            </a>-->
-                    <!--          </li>-->
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('branchoffices')">
                         <a class="treeView-item" [routerLink]="['branchOffices']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Branch Offices

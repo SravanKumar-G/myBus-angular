@@ -20,7 +20,7 @@ export class FuelExpenseReportsComponent implements OnInit {
   };
   public searchQuery: any = {
     page: 1,
-    size: 10,
+    size: 50,
     pageSizes: [],
   };
   public SearchError: any;

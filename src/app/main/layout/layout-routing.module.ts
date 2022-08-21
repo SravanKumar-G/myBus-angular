@@ -7,6 +7,7 @@ import {HaltReportsComponent} from './Check-List/halt-reports/halt-reports.compo
 import {WhatsupAppConversationsModule} from './customer-reports/whatsup-app-conversations/whatsup-app-conversations.module';
 import {ServiceStaffAllocationsModule} from './reports/service-staff-allocations/service-staff-allocations.module';
 import {CashCollectionReportsModule} from "./reports/cash-collection-reports/cash-collection-reports.module";
+import {EmployeeModule} from './employee/employee.module';
 
 const layOutRoutes: Routes = [
     {
@@ -231,6 +232,11 @@ const layOutRoutes: Routes = [
                 path: 'CashCollectionReports/:date',
                 loadChildren: () => import('./reports/cash-collection-reports/cash-collection-reports.module')
                     .then(m => m.CashCollectionReportsModule)
+            },
+            {
+                path: 'employee',
+                loadChildren: () => import('./employee/employee.module')
+                    .then(m => m.EmployeeModule)
             }
         ]
     },

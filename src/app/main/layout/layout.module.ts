@@ -19,6 +19,7 @@ import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {BreadcrumbModule} from 'xng-breadcrumb';
 import { HaltReportsComponent } from './Check-List/halt-reports/halt-reports.component';
+import { EmployeeComponent } from './employee/employee.component';
 
 
 
@@ -34,6 +35,7 @@ import { HaltReportsComponent } from './Check-List/halt-reports/halt-reports.com
         FilesUploadComponent,
         FileUploadComponent,
         CashTransferComponent,
+        EmployeeComponent,
     ],
     imports: [
         CommonModule,
