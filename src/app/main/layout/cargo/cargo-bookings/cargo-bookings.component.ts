@@ -22,22 +22,24 @@ export class CargoBookingsComponent implements OnInit {
         bookedBy: '',
         status: '',
         paymentType: '',
-        startDate: new Date(),
-        endDate: new Date()
+        startDate: '',
+        endDate: '',
     };
     sortOrder = 'createdAt';
     orderBy = 'desc';
+
     pagination: any = {
         count: 0,
         size: 100,
         page: 1,
-        pageSizes: [10, 100],
+        pageSizes: [],
         sortOrder: 'desc',
         orderBy: 'createdAt',
         sort: this.sortOrder + ',' + this.orderBy,
     };
     public errorMessage: any;
     public currentUser: any;
+    public cargoPagination: boolean | undefined;
 
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
@@ -53,22 +55,27 @@ export class CargoBookingsComponent implements OnInit {
     }
 
     loadCargoBookingsCount(data: any): void {
+        console.log('fd', data);
         for (const [key, value] of Object.entries(data)) {
-            if (value === null || value === undefined || value === '') {
+            if (value === null || value === undefined || value === '' ) {
                 delete data[key];
             }
         }
         this.apiService.getAll(this.apiUrls.cargoBookingsCount, data).subscribe((count: any) => {
-            if (count > 0) {
+            if (count >= 0) {
                 this.cargoBookingsCount = count;
-                OnlynumberDirective.pagination(count, this.pagination);
                 this.getAllCargoBookings(data);
+                if (this.pagination){
+                    OnlynumberDirective.pagination(count, this.pagination);
+                }
+                if (data){
+                    OnlynumberDirective.pagination(count, data);
+                }
             } else {
                 Swal.fire('error', 'There are no Cargo Bookings', 'error');
             }
         });
     }
-
     getAllCargoBookings(data: any): void {
         this.apiService.getAll(this.apiUrls.cargoBookings, data).subscribe((shipments: any) => {
             if (shipments) {
@@ -194,13 +201,45 @@ export class CargoBookingsComponent implements OnInit {
 
     handlePageChange($event: number): void {
         this.pagination.page = $event;
-        this.loadCargoBookingsCount(this.pagination);
+        const paginationObject = {
+            fromBranchId: this.filterObj.fromBranchId,
+            toBranchId: this.filterObj.toBranchId,
+            bookedBy: this.filterObj.bookedBy,
+            status: this.filterObj.status,
+            paymentType: this.filterObj.paymentType,
+            startDate: this.filterObj.startDate,
+            endDate: this.filterObj.endDate,
+            count: 0,
+            size: this.pagination.size ,
+            page:  this.pagination.page ,
+            pageSizes: this.pagination.pageSizes,
+            sortOrder: 'desc',
+            orderBy: 'createdAt',
+            sort: this.sortOrder + ',' + this.orderBy,
+        };
+        this.loadCargoBookingsCount(paginationObject);
     }
 
     handlePageSizeChange(size: any): void {
-        this.pagination.size = size;
-        this.pagination.page = 1;
-        this.loadCargoBookingsCount(this.pagination);
+       this.pagination.size = size;
+       this.pagination.page = 1;
+       const paginationObject = {
+            fromBranchId: this.filterObj.fromBranchId,
+            toBranchId: this.filterObj.toBranchId,
+            bookedBy: this.filterObj.bookedBy,
+            status: this.filterObj.status,
+            paymentType: this.filterObj.paymentType,
+            startDate: this.filterObj.startDate,
+            endDate: this.filterObj.endDate,
+            count: 0,
+            size: this.pagination.size ,
+            page:  this.pagination.page ,
+            pageSizes: this.pagination.pageSizes,
+            sortOrder: 'desc',
+            orderBy: 'createdAt',
+            sort: this.sortOrder + ',' + this.orderBy,
+        };
+       this.loadCargoBookingsCount(paginationObject);
     }
 
     clickSorting($event: any): void {
