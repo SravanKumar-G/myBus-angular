@@ -307,11 +307,25 @@
                                             [multiple]="false"
                                             bindLabel="fullName"
                                             [closeOnSelect]="true"
-                                            bindValue="fullName"
+                                            bindValue="id"
                                             placeholder="Select User"
                                             [(ngModel)]="deliveredObj.deliveredBy"
                                             [ngModelOptions]="{standalone: true}">
                                     </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 form-group col-12">
+                                <label>LR Type</label>
+                                <div>
+                                    <select class="form-control form-control-sm"
+                                            [(ngModel)]="deliveredObj.paymentType"
+                                            [ngModelOptions]="{standalone: true}">
+                                        <option value="" selected>--Select Payment type--</option>
+                                        <option label="ToPay" value="ToPay">ToPay</option>
+                                        <option label="Paid" value="Paid">Paid</option>
+                                        <option label="Free" value="Free">Free</option>
+                                        <option label="OnAccount" value="OnAccount">OnAccount</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-2 mt-auto mb-auto">
