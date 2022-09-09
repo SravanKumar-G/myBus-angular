@@ -403,9 +403,9 @@
                                                     <i class="fa fa-bullhorn fa-1x" aria-hidden="true"
                                                        style="color: indianred"></i> Escalate
                                                 </a>
-                                                <a class="btn btn-primary btn-sm" (click)="sendThankYouMessage(escalation)" title="Thank you">
+                                                <a class="btn btn-primary btn-sm" (click)="sendThankYouMessage(escalation.pnr)" title="Thank you">
                                                     <i class="fa fa-whatsapp">ThankYou</i>
-                                                </a>
+                                                </a>{{escalation.pnr}}
                                                 <a class="btn btn-primary btn-sm m-2" (click)="sendApologies(escalation)" title="Send Apologies">
                                                     <i class="fa fa-whatsapp">Sorry</i>
                                                 </a>

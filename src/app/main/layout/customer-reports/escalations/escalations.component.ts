@@ -87,6 +87,14 @@ export class EscalationsComponent implements OnInit {
            }
         });
     }
+    sendThankYouMessage(pnr: any): void{
+        console.log(pnr);
+        this.apiService.getAll(this.apiUrls.sendBookingConfirmation + pnr.pnr, {}).subscribe((res: any) => {
+            if (res){
+
+            }
+        });
+    }
     handlePageChange(event: any): void {
         this.filterObj.page = event;
         this.loadCountOfEscalations('Escalated');
@@ -187,11 +195,11 @@ export class EscalationsComponent implements OnInit {
             Swal.fire('Error', 'Booking feedback status update failed', 'error');
         });
     }
-    sendThankYouMessage(feedback: any): void {
-        this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels.' +
-            ' Can you please take a moment to rate our service on ' + feedback.bookedBy +
-            '?. You will get an email and WhatsApp message with a link to give us rating  ');
-    }
+    // sendThankYouMessage(feedback: any): void {
+    //     this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels.' +
+    //         ' Can you please take a moment to rate our service on ' + feedback.bookedBy +
+    //         '?. You will get an email and WhatsApp message with a link to give us rating  ');
+    // }
     sendApologies(feedback: any): void {
         this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels. ' +
             'We apologize for the issue caused to you.' +

@@ -45,7 +45,8 @@ body, html {
 }
 
 a {
-    font-family: Poppins-Regular;
+    /*font-family: Poppins-Regular;*/
+    text-decoration: none;
     font-size: 14px;
     line-height: 1.7;
     color: #666;
