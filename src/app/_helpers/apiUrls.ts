@@ -318,6 +318,7 @@ export class ApiUrls {
     escalationResolve = 'api/v1/bookingFeedback/resolve/';
     sendEmail = 'api/v1/bookingFeedback/sendEmailWithMessage/?';
     searchComplaints = 'api/v1/bookingFeedback/searchComplaints';
+    sendBookingConfirmation = 'api/v1/whatsApp/sendBookingConfirmation/';
 
     // fuelExpenseReport
     getAllByDate = 'api/v1/FuelExpense/getAllByDate';
