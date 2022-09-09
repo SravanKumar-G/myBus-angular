@@ -278,12 +278,18 @@ export class DeliverySheetComponent implements OnInit {
     countOfDeliveredBookings(): void {
         this.deliveredObj.startDate = this.apiService.getDate(this.startDate);
         this.deliveredObj.endDate = this.apiService.getDate(this.endDate);
+        for (const [key, value] of Object.entries(this.deliveredObj)) {
+            if (value === null || value === undefined || value === '' ) {
+                delete this.deliveredObj[key];
+            }
+        }
         this.apiService.getAll(this.apiUrls.countDeliveredBookings, this.deliveredObj).subscribe((count: any) => {
-            if (count > 0) {
+            // if (count) {
                 this.deliveredBookingsCount = count;
                 OnlynumberDirective.pagination(count, this.deliveredObj);
+                // this.cargoBookings = [];
                 this.loadDeliveredBookings();
-            }
+            // }
         });
     }
 
