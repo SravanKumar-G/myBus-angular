@@ -9,65 +9,82 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./whatsup-app-conversations.component.css']
 })
 export class WhatsupAppConversationsComponent implements OnInit {
-  currentPageOfWhatsAppConversations: any = [
-    {
-      toNumber: '9765678934',
-      toName: 'Sireesha',
-      type: 'gdfh',
-      sentBy: 'siri ',
-      sentOn: '3/5/1998',
-      lastReplyAt: '2:67 AM',
-      id: 1,
-      status: 'failed',
-      sendWhatsMessage: [
-
-      ]
-    },
-    {
-      toNumber: '8974567834',
-      toName: 'trip',
-      type: 'hdf',
-      sentBy: 'siri Hari',
-      sentOn: '2/6/1988',
-      lastReplyAt: '2:56 PM',
-      id: 2,
-      sendWhatsMessage: [
-
-      ]
-    }
-    ];
-  public sendWhatsMessage: any = [];
-  sendData: any;
+  currentPageOfWhatsAppConversations: any = [{}];
+  public listOfRoutes: Array<any> = [];
+  data: any = {
+    phoneNumber: '',
+    message: ''
+  };
+  public currentPageOfWhatsAppConversationsList: any;
+  // @ts-ignore
+  public conversationData: boolean;
+  singleConversationList: any;
+  name: any;
+  phoneNumber: any;
 
   constructor(public apiService: ApiServiceService,
               private apiUrls: ApiUrls,
               private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    // this.whatsupdetails();
+    this.listOfRoutes = ['All', 'A.S.Peta', 'Bangalore', 'Chennai', 'chirala', 'Hyderabad', 'Nellore', 'Ongole', 'Pamuru',
+      'Srikakulam', 'Tirupathi', 'Vijayawada', 'Visakhapatnam' ];
+    this.getAll();
   }
-
-  whatsupdetails(): void{
-    this.httpClient.get('http://localhost:3000/userDetails').subscribe((res: any) => {
+// getAll(): void{
+//     console.log(this.data.phoneNumber);
+//     this.apiService.getAll(this.apiUrls.getAllConversations + this.data.phoneNumber, {}).subscribe((res: any) =>{
+//       if (res){
+//         this.currentPageOfWhatsAppConversations = res;
+//         this.conversationData = false;
+//         console.log(this.currentPageOfWhatsAppConversations, '========>');
+//       }
+//     });
+// }
+  getAll(): void{
+    this.apiService.getAll(this.apiUrls.getAllConversations, {phoneOrPnrNumber: this.data.phoneOrPnrNumber, from: this.data.from, to: this.data.to}).subscribe((res: any) => {
       if (res){
         this.currentPageOfWhatsAppConversations = res;
+        this.conversationData = false;
       }
     });
   }
+  // replyMessage1(): void{
+  //   // this.singleConversationList.push({
+  //   //   inComing: false,
+  //   //   message: this.data.message,
+  //   //   response: null,
+  //   //   sentAt: 1663069391927,
+  //   //   sentBy: '584bdac177c88b7456bfd5f2',
+  //   // });
+  //   this.apiService.getAll(this.apiUrls.replyWhastappMessage, {phoneNumber: '91' + this.phoneNumber, message: this.data.message}).subscribe((res: any) => {
+  //     // if (res){
+  //     this.currentPageOfWhatsAppConversationsList = res;
+  //     this.data.message = '';
+  //       // this.getAll();
+  //     this.getMessageByNum({phoneNumber: this.phoneNumber});
+  //     // }
+  //   });
+  // }
+  replyMessage(): void{
+    this.apiService.getAll(this.apiUrls.replyOneMessge, {phoneNumber: '91' + this.phoneNumber, message: this.data.message}).subscribe((res: any) => {
+      // if (res){
+      this.currentPageOfWhatsAppConversationsList = res;
+      this.data.message = '';
+      this.getMessageByNum({phoneNumber: this.phoneNumber});
+      this.getAll();
+      // }
+    });
+  }
 
-  replyMessage(sendData: any, i: number, whatsAppConversation: { toNumber: any; id: any; }): void {
-    if (sendData){
-      const data = {
-        message: sendData,
-        time: new Date().getTime(),
-        incoming: true,
-      };
-      const data1 = {
-        message: sendData,
-        time: new Date().getTime(),
-        incoming: false
-      };
-      this.currentPageOfWhatsAppConversations[i].sendWhatsMessage.push(data, data1);
-    }
+  getMessageByNum(item: any): void{
+    this.name = item.name;
+    this.phoneNumber = item.phoneNumber;
+    this.apiService.getAll(this.apiUrls.getConversations + item.phoneNumber, {}).subscribe((res: any) => {
+      if (res){
+        this.singleConversationList = res;
+        this.conversationData = true;
+      }
+    });
   }
 }

@@ -87,9 +87,15 @@ export class EscalationsComponent implements OnInit {
            }
         });
     }
-    sendThankYouMessage(pnr: any): void{
-        console.log(pnr);
-        this.apiService.getAll(this.apiUrls.sendBookingConfirmation + pnr.pnr, {}).subscribe((res: any) => {
+    sendThankYouMessage(item: any): void{
+        this.apiService.getAll(this.apiUrls.sendBookingConfirmation + item.pnr, {}).subscribe((res: any) => {
+            if (res){
+
+            }
+        });
+    }
+    sendApologies(query: any): void{
+        this.apiService.getAll(this.apiUrls.sendQuickButtonReply + query.pnr, {}).subscribe((res: any) => {
             if (res){
 
             }
@@ -200,11 +206,11 @@ export class EscalationsComponent implements OnInit {
     //         ' Can you please take a moment to rate our service on ' + feedback.bookedBy +
     //         '?. You will get an email and WhatsApp message with a link to give us rating  ');
     // }
-    sendApologies(feedback: any): void {
-        this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels. ' +
-            'We apologize for the issue caused to you.' +
-            ' We will investigate further on this and take necessar action. ');
-    }
+    // sendApologies(feedback: any): void {
+    //     this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels. ' +
+    //         'We apologize for the issue caused to you.' +
+    //         ' We will investigate further on this and take necessar action. ');
+    // }
     sendCargoIntro(feedback: any): void {
         this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + ' garu, thank you for travelling in Sri Krishna Travels. ' +
             'We also have cargo services. You can send packages to your loved ones easily through our buses. Please call on 9246460533 for further details.');
