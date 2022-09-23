@@ -360,6 +360,6 @@ export class ApiUrls {
     replyWhastappMessage = 'api/noauth/inComingWhatsAppReplyForTest';
     replyOneMessge = 'api/v1/whatsApp/oneToOneConversation';
     getAllConversations = 'api/v1/whatsApp/getConversations';
-    getConversations = 'api/v1/whatsApp/getConversationMessages/';
+    getConversationsByNum = 'api/v1/whatsApp/getConversationMessages/';
 
 }

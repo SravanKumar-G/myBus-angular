@@ -80,7 +80,7 @@ export class WhatsupAppConversationsComponent implements OnInit {
   getMessageByNum(item: any): void{
     this.name = item.name;
     this.phoneNumber = item.phoneNumber;
-    this.apiService.getAll(this.apiUrls.getConversations + item.phoneNumber, {}).subscribe((res: any) => {
+    this.apiService.getAll(this.apiUrls.getConversationsByNum + item.phoneNumber, {}).subscribe((res: any) => {
       if (res){
         this.singleConversationList = res;
         this.conversationData = true;
