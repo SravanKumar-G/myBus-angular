@@ -117,7 +117,7 @@ export class AddEditFuelExpenseReportsComponent implements OnInit {
             this.router.navigate(['fuelExpenseReports/' +  this.addFuelExpenseQuery.journeyDate]);
           }
         }, error => {
-          this.errorMessage = error.message;
+          this.errorMessage.push(error.message);
         });
       } else {
         // for (const [key, value] of Object.entries(this.addFuelExpenseQuery)) {
@@ -134,7 +134,7 @@ export class AddEditFuelExpenseReportsComponent implements OnInit {
             this.router.navigate(['fuelExpenseReports/' +  this.addFuelExpenseQuery.journeyDate]);
           }
         }, error => {
-          this.errorMessage = error.message;
+          this.errorMessage.push(error.message);
         });
       }
     }
