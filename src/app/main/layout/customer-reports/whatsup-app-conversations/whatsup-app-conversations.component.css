@@ -25,3 +25,86 @@
      border: 1px solid #f5f4fb;
      border-radius: 2px
  }
+.all-chat-boxes{
+    align-items: center;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 8px 4px;
+    background-color: #fff;
+    border-radius: 6px;
+    color: #707595; display: flex;
+}
+.whatsapp-search{
+    border-right: 0;
+    background: white;
+    border-radius: 0;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding: 10px
+}
+.card-body .user-name{
+    font-size: 18px;
+    font-weight: bold;
+}
+ .card-header .user-name{
+     font-size: 16px;
+     font-weight: bold;
+ }
+ .card-body .user-number{
+    font-size: 13px;
+    font-weight: 600;
+}
+.card-body ul li:nth-child(n){
+    margin-bottom: 10px;
+
+}
+.from-chart-box-time{
+    float: right;
+    padding-right: 10px;
+    font-size: 12px;
+}
+ .from-chart-box-right-time{
+     font-size: 12px !important;
+     float: right;
+ }
+.user-active{
+    background: #e68221;
+    color: white;
+    border-radius: 5px;
+}
+.incoming-mesg-left::before {
+    width: 0;
+    height: 0;
+    /*border-bottom: 100px solid red;*/
+    /*border-left: 100px solid transparent;*/
+    content: '';
+    /*width: 0;*/
+    /*height: 0;*/
+    border-bottom: 15px solid #fae6d2 !important;
+    border-left: 16px solid transparent;
+    /*content: '';*/
+    transform: rotate( 64deg );
+    display: block;
+    position: relative;
+    right: 14px;
+    top: -10px;
+}
+ .outgng-message-right::before {
+     width: 0;
+     height: 0;
+     content: '';
+     border-bottom: 13px solid #ccebcc !important;
+     border-left: 20px solid transparent;
+     transform: rotate( 12deg );
+     display: block;
+     position: relative;
+     /* right: 64px; */
+     top: -8px;
+     left: 625px;
+ }
+.display-mesg-cust{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 290px
+}

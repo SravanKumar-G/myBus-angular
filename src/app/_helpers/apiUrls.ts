@@ -319,6 +319,7 @@ export class ApiUrls {
     sendEmail = 'api/v1/bookingFeedback/sendEmailWithMessage/?';
     searchComplaints = 'api/v1/bookingFeedback/searchComplaints';
     sendBookingConfirmation = 'api/v1/whatsApp/sendBookingConfirmation/';
+    sendQuickButtonReply = 'api/v1/whatsApp/sendQuickButtonReply/';
 
     // fuelExpenseReport
     getAllByDate = 'api/v1/FuelExpense/getAllByDate';
@@ -351,5 +352,14 @@ export class ApiUrls {
     getEmployee = 'api/v1/employee/getEmployee/';
     deleteEmployee = 'api/v1/employee/delete/';
     updateEmployee = 'api/v1/employee/update';
+
+   // What's App Conversation Screen
+
+   // For Local Testing
+
+    replyWhastappMessage = 'api/noauth/inComingWhatsAppReplyForTest';
+    replyOneMessge = 'api/v1/whatsApp/oneToOneConversation';
+    getAllConversations = 'api/v1/whatsApp/getConversations';
+    getConversations = 'api/v1/whatsApp/getConversationMessages/';
 
 }
