@@ -90,6 +90,10 @@ export class ServiceFeedbackReportComponent implements OnInit {
         this.location.back();
     }
 
+    requestFeedback(feedback: any): void {
+        this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels.' +
+            ' How did you like our bus service yesterday?');
+    }
     sendThankYouMessage(feedback: any): void {
         this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels.' +
             ' How did you like our bus service yesterday?');

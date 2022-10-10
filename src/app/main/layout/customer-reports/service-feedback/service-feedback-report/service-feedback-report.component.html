@@ -75,6 +75,9 @@
                                         </td>
                                         <td data-title="'CalledBy'"  class="clickable-item col-xs-2 col-md-2" >
                                             {{feedback.calledBy || '---'}} <br />
+                                            <button class="btn btn-primary btn-sm" (click)="requestFeedback(feedback)" title="Thank you">
+                                                <i class="fa fa-whatsapp">Request Feedback</i>
+                                            </button>
                                             <button class="btn btn-primary btn-sm" (click)="sendThankYouMessage(feedback)" title="Thank you">
                                                 <i class="fa fa-whatsapp">ThankYou</i>
                                             </button>
