@@ -38,10 +38,10 @@ export class AddEditUserComponent implements OnInit {
             this.getUserDetails();
         }
         this.addUserForm = this.fb.group({
-            userName: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(4)]],
-            firstName: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(4),
+            userName: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]],
+            firstName: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2),
                 Validators.pattern('^[a-zA-Z0-9\\s]*$')]],
-            lastName: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(4),
+            lastName: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(2),
                 Validators.pattern('^[a-zA-Z0-9\\s]*$')]],
             password: ['', Validators.required],
             confirmPassword: ['', Validators.required],
@@ -78,7 +78,7 @@ export class AddEditUserComponent implements OnInit {
     }
 
     save(): void {
-        console.log(this.addUserForm.valid);
+        console.log("this.addUserForm.valid "+ this.addUserForm.valid);
         if (this.addUserForm.valid) {
             this.user = {
                 userName: this.addUserForm.value.userName,
