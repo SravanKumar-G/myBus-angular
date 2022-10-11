@@ -292,6 +292,7 @@ export class ApiUrls {
     serviceFeedbackReports = 'api/v1/serviceFeedback/feedbackReport/?&reportId=';
     serviceFeedbackStatusUpdate = 'api/v1/serviceFeedback/updateStatus/';
     bookingFeedbackStatusUpdate = 'api/v1/serviceFeedback/bookingFeedback/';
+    sendBulkWhatsAppMessages = 'api/v1/whatsApp/sendBulkWhatsAppMessages';
 
     // Cash Transfer API's
     cashTransferPendingCount = 'api/v1/cashTransfer/pending/count';
