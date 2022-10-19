@@ -45,6 +45,7 @@ export class ApiUrls {
     updateBranchOffice = 'api/v1/branchOffice/';
     getBranchOffice = 'api/v1/branchOffice/';
     loadBranchNames = 'api/v1/branchOffice/names';
+    loadBranchNamesForCargo = 'api/v1/branchOffice/namesForCargo';
 
     // Roles API's
     getRolesCount = 'api/v1/roles/count';

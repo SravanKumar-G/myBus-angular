@@ -57,7 +57,7 @@ export class NewBookingComponent implements OnInit {
     }
 
     loadBranchOffice(): void {
-        this.apiService.get(this.apiUrls.loadBranchNames).subscribe((res: any) => {
+        this.apiService.get(this.apiUrls.loadBranchNamesForCargo).subscribe((res: any) => {
             if (res) {
                 this.branchOffices = res;
                 this.newBooking.fromBranchId = this.currentUser.branchOfficeId;
