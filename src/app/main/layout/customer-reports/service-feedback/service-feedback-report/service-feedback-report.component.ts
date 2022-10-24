@@ -16,6 +16,11 @@ export class ServiceFeedbackReportComponent implements OnInit {
     public errorMessage: any;
     public index: any;
     public errorCommentMessage: any;
+    public ids: any = [];
+    public  bookings: any = {
+        idsList: this.ids,
+        selection: '',
+    };
 
     constructor(
         public apiService: ApiServiceService,
@@ -36,6 +41,10 @@ export class ServiceFeedbackReportComponent implements OnInit {
         this.apiService.get(this.apiUrls.serviceFeedbackReports + this.serviceId).subscribe((res: any) => {
             if (res) {
                 this.serviceFeedback = res;
+                res.bookingFeedbacks.forEach((data: any) => {
+                  this.ids.push(data.id);
+                });
+                // this.pnrNumberList = res.
                 if (this.serviceFeedback.status === null) {
                     this.serviceFeedback.status = '';
                 }
@@ -105,5 +114,21 @@ export class ServiceFeedbackReportComponent implements OnInit {
     sendCargoIntro(feedback: any): void {
         this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + ' garu, thank you for travelling in Sri Krishna Travels. ' +
             'We also have cargo services. You can send packages to your loved ones easily through our buses. Please call on 9246460533 for further details.');
+    }
+
+ /*   sendFeedBackRequestToRedbusBookings(): void{
+        this.apiService.getAll(this.apiUrls.pnrList, {bookingIds: this.ids} ).subscribe((res: any) => {
+        });
+    }*/
+
+    sendMessageForBulkBookings(): void{
+        this.apiService.getAll(this.apiUrls.sendBulkWhatsAppMessages, this.bookings).subscribe((res: any) => {
+            console.log('hsd', res);
+            if (res === true) {
+                Swal.fire('Great', 'WhatsApp Messages for selected bookings successfully sent', 'success');
+            }
+        }, error => {
+            Swal.fire('Error', 'Failed', 'error');
+        });
     }
 }
