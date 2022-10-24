@@ -21,13 +21,6 @@
 
                                 <div class="col-sm-6 col-12 form-group">
                                     <label>Vehicle:<span class="mandatory-field">*</span></label>
-<!--                                    <select class="form-control" [(ngModel)]="job.vehicleId"-->
-<!--                                            (ngModelChange)="getLatestJobsToTable()"-->
-<!--                                            id="vehicle" ng-change="getOdometerReading(vehicle)">-->
-<!--                                        <option value="" selected>&#45;&#45;Select Vehicle&#45;&#45;</option>-->
-<!--                                        <option *ngFor="let vehicle of allVehicles"-->
-<!--                                                [value]="vehicle.id">{{vehicle.regNo}}</option>-->
-<!--                                    </select>-->
 
                                     <ng-select
                                             [(ngModel)]="job.vehicleId"
@@ -127,21 +120,7 @@
                             </table>
                         </div>
                     </div>
-                    <!-- <div class="col-sm-6 col-12 form-group">
-                        <label>Unit Cost:<span class="mandatory-field">*</span></label>
-                        <input type="text" class="form-control form-control-sm"
-                               placeholder="Unit Cost"
-                               [(ngModel)]="inventory.unitCost"
-                               [ngModelOptions]="{standalone: true}"/>
-                    </div>
-                    <div class="col-sm-6 col-12 form-group">
-                        <label class="form-check-label" for="skipAgentValidity">Paid :</label>
-                        <div class="form-check ml-2" style="display: inline;">
-                            <input type="checkbox" class="form-check-input" id="skipAgentValidity"
-                                   [(ngModel)]="inventory.paid"
-                                   [ngModelOptions]="{standalone: true}">
-                        </div>
-                    </div> -->
+
                     <div class="row">
                         <div class="form-group">
                             <div style="font-size: 20px;" class="float-right" (click)="addJobInventories()">

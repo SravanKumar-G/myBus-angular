@@ -14,7 +14,8 @@ export class JobsComponent implements OnInit {
 
   query:any = {
     vehicleId: '',
-    inventoryId: ''
+    inventoryId: '',
+    typeId: ''
   };
   total = 0;
   pendingCount = 0;
@@ -29,6 +30,7 @@ export class JobsComponent implements OnInit {
   public completedJobs: Array<any> = [];
   public searchResults:Array<any> = [];
   public allVehicles:Array<any> = [];
+  public jobCategories: any = [];
   public currentUser:any;
   pendingpagination: any = {
     count: 0,
@@ -69,11 +71,11 @@ export class JobsComponent implements OnInit {
     this.apiService.get(this.apiUrls.getAllInventories).subscribe((response: any) => {
       this.inventories = response.content;
     });
-    this.changePaymentsTab(this.tab);
+    this.changeTab(this.tab);
   }
 
 
-  changePaymentsTab(tabkey: any): void {
+    changeTab(tabkey: any): void {
     this.tab = tabkey ? tabkey : 1;
     switch (this.tab){
       case 1:
@@ -84,7 +86,9 @@ export class JobsComponent implements OnInit {
         break;
       case 3:
         this.loadsearchJobs();
-        this.getVehicles();
+          this.getVehicles();
+          this.getAllJobCategories();
+
     }
   }
 
@@ -96,8 +100,12 @@ export class JobsComponent implements OnInit {
             }
         });
     }
-  
 
+    getAllJobCategories() {
+        this.apiService.get(this.apiUrls.getAllJobCategories).subscribe((res: any) => {
+            this.jobCategories = res;
+        });
+    }
   loadPending(): void{
     this.apiService.getAll(this.apiUrls.getCountForJobs, {"completed":false}).subscribe((count: any) => {
       if (count) {
@@ -199,6 +207,7 @@ deleteJob(id:any): void {
 
 // /* For Job search */
 loadsearchJobs(): void{
+    console.log("query " + JSON.stringify(this.query));
     this.query.page = this.searchpagination.page-1;
     this.query.sort = this.searchpagination.sort;
     this.query.size = this.searchpagination.size;
@@ -207,7 +216,7 @@ loadsearchJobs(): void{
         Swal.fire("Error", "End Date should be greater than Start date", "error");
     }else {
       if(!this.query.inventoryId && !this.query.vehicleId){
-        this.query = {};
+        //this.query = {};
         this.query.page = this.searchpagination.page-1;
         this.query.sort = this.searchpagination.sort;
         this.query.size = this.searchpagination.size;

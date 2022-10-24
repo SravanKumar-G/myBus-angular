@@ -13,13 +13,13 @@
     </div>
 
     <ul class="nav nav-tabs">
-        <li class="nav-item pending-users-tab" (click)="changePaymentsTab(1)">
+        <li class="nav-item pending-users-tab" (click)="changeTab(1)">
             <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
         </li>
-        <li class="nav-item disabled-tab-nav" (click)="changePaymentsTab(2)">
+        <li class="nav-item disabled-tab-nav" (click)="changeTab(2)">
             <a class="nav-link" [ngClass]="{active:tab==2}">Completed</a>
         </li>
-        <li class="nav-item disabled-tab-nav" (click)="changePaymentsTab(3)">
+        <li class="nav-item disabled-tab-nav" (click)="changeTab(3)">
             <a class="nav-link" [ngClass]="{active:tab==3}">Search</a>
         </li>
     </ul>
@@ -62,6 +62,7 @@
                                         <th>Mileage</th>
                                         <th>Job Date</th>
                                         <th>Description & Location</th>
+                                        <th>Type</th>
                                         <th>Remainder Date</th>
                                         <th>Cost</th>
                                         <th>Actions</th>
@@ -76,6 +77,7 @@
                                             <td>{{job.mileage}}</td>
                                             <td>{{job.jobDate | date}}</td>
                                             <td>Description : {{job.jobDescription}} - Location :{{job.serviceLocation}}</td>
+                                            <td>{{job.attrs.type}}</td>
                                             <td>{{job.reminderDate | date}}</td>
                                             <td>{{job.totalCost}}</td>
                                             <td>
@@ -215,8 +217,8 @@
                     <!-- <div class="col-sm-12 mb-2 mt-2"> -->
                         <div class="row">
                             <!-- <div class="col-sm- form-group"> -->
-                                <label class="col-sm-2 control-label ml-3 mb-3">Start Date:</label>
-                                <div class="col-sm-3 mb-3">
+
+                                <div class="col-sm-4 mb-4">
                                     <!-- <my-datepicker ng-model="query.startDate" name="fromDate"></my-datepicker> -->
                                     <div class="input-group">
                                         <input class="form-control form-control-sm"
@@ -236,10 +238,7 @@
                                         </div>
                                     </div>
                                 </div>
-                
-                                <label class="col-sm-2 control-label ml-3 mb-3">End Date:</label>
-                                <div class="col-sm-3 mb-3">
-                                    <!-- <my-datepicker ng-model="query.endDate"></my-datepicker> -->
+                                <div class="col-sm-4 mb-4">
                                     <div class="input-group">
                                         <input class="form-control form-control-sm"
                                                placeholder="End Date"
@@ -259,23 +258,38 @@
                                     </div>
                                 </div>
                             <!-- </div> -->
-                            <!-- <div class="col-xs-12 form-group"> -->
-                                <label class="control-label col-sm-2 ml-3 mb-3">Vehicle:</label>
+
                                 <div class="col-sm-3 mb-3">
-                                    <select class="form-control"
+                                    <select class="form-control" placeholder="Vehicle"
                                     [(ngModel)]="query.vehicleId" id="vehicle" name="vehicleId">
                                         <option value="" selected>&#45;&#45;Select Vehicle&#45;&#45;</option>
                                         <option *ngFor="let vehicle of allVehicles" [value]="vehicle.id">{{vehicle.regNo}}</option>
                                     </select>
                                 </div>
-                                <label class="control-label col-sm-2 ml-3 mb-3">Inventory:</label>
+
                                 <div class="col-sm-3 mb-3">
                                     <select class="form-control"
-                                    [(ngModel)]="query.inventoryId" id="inventory" name="vehicleId">
+                                    [(ngModel)]="query.inventoryId" id="inventory" name="vehicleId"
+                                            bindLabel="vehicle number"
+                                            placeholder="vehicle number">
                                         <option value="" selected>&#45;&#45;Select Inventory&#45;&#45;</option>
                                         <option *ngFor="let inventory of inventories" [value]="inventory.id">{{inventory.name}}</option>
                                     </select>
                                 </div>
+                            <div class="col-sm-3 mb-3">
+                                <ng-select
+                                        [(ngModel)]="query.typeId"
+                                        [ngModelOptions]="{standalone: true}"
+                                        bindValue="id"
+                                        bindLabel="job type"
+                                        placeholder="job type"
+                                        [clearable]="false">
+                                    <ng-option value="">--Select Type--</ng-option>
+                                    <ng-option *ngFor="let type of jobCategories"
+                                               [value]="type.id">{{type.name}}</ng-option>
+                                </ng-select>
+
+                            </div>
                             <!-- </div> -->
                             <!-- <div class="col-xs-12 form-group"> -->
                                 <div class="col-sm-4">
@@ -290,24 +304,7 @@
                                 </div>
                             <!-- </div> -->
                         </div>
-                        <!-- <div class="row p-3" style="align-items:center;">
-                            <div class="col-sm-2">
-                                <label class="ls text-uppercase text-600 font-weight-semi-bold">Total
-                                    Count: </label> {{pendingCount || '0'}}
-                            </div>
-                            <div class="col-sm-4">
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="col-sm-12 text-right">
-                                    <a class="btn btn-sm btn-primary" [routerLink]="['add-inventories']">
-                                        <span class="fa fa-plus"></span> Add Jobs</a>&nbsp;&nbsp;&nbsp; -->
-                                    <!-- <button type="button" class="btn btn-sm btn-primary" (click)="exportExcel()">Export
-                                        Excel
-                                    </button> --
-                                </div>
-                            </div>
-                        </div>
-                    <!-- </div> -->
+
                     <div class="row">
                         <div class="col-sm-12"> 
                             <div class="table-responsive"  id="jobSearchTable1">
@@ -316,6 +313,7 @@
                                     <tr>
                                         <th>S No</th>
                                         <th>Inventory</th>
+                                        <th>Type</th>
                                         <th>Vehicle</th>
                                         <th>Cost</th>
                                         <th>Mileage</th>
@@ -329,6 +327,7 @@
                                         <tr *ngFor="let job of searchResults; let i = index;">
                                             <td>{{(searchpagination.page-1) * searchpagination.size + i + 1}}</td>
                                             <td>{{job.attrs.inventory }}</td>
+                                            <td>{{job.attrs.type }}</td>
                                             <td>{{job.attrs.RegNo }}</td>
                                             <td>{{job.totalCost}}</td>
                                             <td>{{job.mileage}}</td>
