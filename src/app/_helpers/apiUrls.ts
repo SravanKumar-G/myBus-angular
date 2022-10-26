@@ -345,6 +345,7 @@ export class ApiUrls {
     // Job Reminders
     pendingGetUpcoming = 'api/v1/reminders/getUpcoming';
     getAllCollectedData = 'api/v1/reminders/getAll';
+    updateJobReminder = 'api/v1/reminders/updateReminder';
 
     // service Staff Allocations
     staffAllocation = 'api/v1/serviceReport/staffAllocation/download';
@@ -361,7 +362,8 @@ export class ApiUrls {
 
     replyWhastappMessage = 'api/noauth/inComingWhatsAppReplyForTest';
     replyOneMessge = 'api/v1/whatsApp/oneToOneConversation';
-    getAllConversations = 'api/v1/whatsApp/getConversations';
+    getAllConversations = 'api/v1/whatsApp/getAllConversations';
+    getConversations = 'api/v1/whatsApp/getConversations';
     getConversationsByNum = 'api/v1/whatsApp/getConversationMessages/';
 
 }
