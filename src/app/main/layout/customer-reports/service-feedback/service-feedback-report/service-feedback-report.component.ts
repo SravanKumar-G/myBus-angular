@@ -100,8 +100,11 @@ export class ServiceFeedbackReportComponent implements OnInit {
     }
 
     requestFeedback(feedback: any): void {
-        this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels.' +
-            ' How did you like our bus service yesterday?');
+        this.apiService.create(this.apiUrls.sendQuickButtonReply + feedback.pnr,{ }).subscribe((res: any) => {
+            if (res) {
+                Swal.fire('Great', 'Booking feedback reguest has been sent', 'success');
+            };
+        });
     }
     sendThankYouMessage(feedback: any): void {
         this.apiService.sendWhatsApp(feedback.phone, 'Hi ' + feedback.name + '(' + feedback.pnr + ')' + ' garu, thank you for travelling in Sri Krishna Travels.' +

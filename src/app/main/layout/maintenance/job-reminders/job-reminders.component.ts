@@ -4,6 +4,7 @@ import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {subscribeOn} from 'rxjs/operators';
 import {DatePipe} from '@angular/common';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-job-reminders',
@@ -70,5 +71,43 @@ tab = 1;
         this.pendingGetUpcoming();
         break;
     }
+  }
+
+  updateReminder(reminder: any) : void {
+    Swal.fire({
+      title: '<h4> Job Completed </h4>',
+      html: 'Please provide comment:',
+      input: 'text',
+      inputPlaceholder: 'Add Comment',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      inputValue: reminder.remarks,
+      showCancelButton: true,
+      confirmButtonText: 'Add Comment',
+      confirmButtonColor: 'green',
+      showLoaderOnConfirm: true,
+      preConfirm: (remarksText) => {
+        if (!remarksText) {
+          Swal.showValidationMessage(
+              'Enter comment'
+          );
+        } else {
+          reminder.remarks = remarksText;
+          this.apiService.update(this.apiUrls.updateJobReminder, reminder)
+              .subscribe((response: any) => {
+                if (response) {
+                  Swal.fire('Great!', 'Comment added Successfully..!', 'success');
+                  this.pendingGetUpcoming();
+                }
+              }, (error) => {
+                Swal.showValidationMessage(
+                    `Enter comment :` + error
+                );
+              });
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    });
   }
 }

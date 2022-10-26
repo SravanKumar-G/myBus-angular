@@ -14,7 +14,7 @@
             <a class="nav-link" [ngClass]="{active:tab==1}">Pending</a>
         </li>
         <li class="nav-item disabled-tab-nav" (click)="changeJobRemindersTab(2)">
-            <a class="nav-link" [ngClass]="{active:tab==2}">Collected</a>
+            <a class="nav-link" [ngClass]="{active:tab==2}">Completed</a>
         </li>
     </ul>
     <div class="row">
@@ -29,17 +29,20 @@
                                     <th>S.No</th>
                                     <th>Date</th>
                                     <th>Vehicle Number</th>
-                                    <th>Remarks</th>
                                     <th>Description</th>
+                                    <th>Remarks</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr *ngFor="let pa of pendingData; let i = index">
-                                    <td>{{pa + 1}}</td>
-                                    <td>{{pa.date | date}}</td>
-                                    <td>{{pa.vehilceNumber}}</td>
-                                    <td>{{pa.remarks}}</td>
-                                    <td>{{pa.description}}</td>
+                                <tr *ngFor="let reminder of pendingData; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{reminder.reminderDate | date}}</td>
+                                    <td>{{reminder.attrs.vehicleNumber}}</td>
+                                    <td>{{reminder.description}}</td>
+                                    <td>{{reminder.remarks}}</td>
+                                    <td><a class="cus-a"
+                                           (click)="updateReminder(reminder)">Add Comment</a></td>
                                 </tr>
                                 <tr *ngIf="pendingData === 0 || !pendingData">
                                     <td colspan="6">No Records</td>

@@ -157,7 +157,7 @@
                             <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Amenities
                         </a>
                     </li>
-                    <li class="waves-effect waves-light" *ngIf="canAccessModule('branchoffices')" >
+                    <li class="waves-effect waves-light" *ngIf="canAccessModule('branchoffices')">
                        <a class="treeView-item" [routerLink]="['branchOffices']" [routerLinkActive]="['active']">
                            <i class="icon fa fa-product-hunt" aria-hidden="true"></i>Branch Offices
                        </a>
@@ -375,11 +375,6 @@
                     <li class="waves-effect waves-light">
                         <a class="treeView-item" [routerLink]="['maintenance/jobs']" [routerLinkActive]="['active']">
                             <i class="icon fa fa-tasks" aria-hidden="true"></i>Jobs
-                        </a>
-                    </li>
-                    <li class="waves-effect waves-light">
-                        <a class="treeView-item" [routerLink]="['maintenance/reminders']" [routerLinkActive]="['active']">
-                            <i class="icon fa fa-clock-o" aria-hidden="true"></i>Reminders
                         </a>
                     </li>
                     <li class="waves-effect waves-light" *ngIf="canAccessModule('reminders')">
