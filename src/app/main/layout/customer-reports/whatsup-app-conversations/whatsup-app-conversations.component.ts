@@ -21,6 +21,7 @@ export class WhatsupAppConversationsComponent implements OnInit {
   singleConversationList: any;
   name: any;
   phoneNumber: any;
+  public travelDatesData: Array<any> = [];
 
   constructor(public apiService: ApiServiceService,
               private apiUrls: ApiUrls,
@@ -78,6 +79,7 @@ export class WhatsupAppConversationsComponent implements OnInit {
   }
 
   getMessageByNum(item: any): void{
+    this.travelDatesData = item.travelDates;
     this.name = item.name;
     this.phoneNumber = item.phoneNumber;
     this.apiService.getAll(this.apiUrls.getConversationsByNum + item.phoneNumber, {}).subscribe((res: any) => {

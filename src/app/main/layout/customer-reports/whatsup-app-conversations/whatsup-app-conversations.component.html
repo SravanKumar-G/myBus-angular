@@ -80,7 +80,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-7">
                                             <div class="card mt-0"  *ngIf="conversationData">
                                                 <div>
                                                     <div class="card-header" style="background: #e68221; color: #FFFFFF">
@@ -89,7 +89,7 @@
                                                     </div>
                                                     <div class="card-body"
                                                          style="overflow-y: auto; height: 71vh;">
-                                                        <div class="row">
+                                                        <div class="">
                                                             <div class="col-sm-12">
                                                                 <ul style="padding-right: 16px">
                                                                     <li *ngFor="let mesg of singleConversationList">
@@ -129,6 +129,16 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="card m-0">
+                                                <div class="card-header" style="font-size: 18px">Travel Dates</div>
+                                                <div class="card-body" *ngIf="conversationData" style="overflow-y: auto; height: 80vh;">
+                                                    <ul >
+                                                        <li *ngFor="let data of travelDatesData" style="list-style-type: decimal; font-size: 14px; padding: 10px 5px">{{data}}</li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
