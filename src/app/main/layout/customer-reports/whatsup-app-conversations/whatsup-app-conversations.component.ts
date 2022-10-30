@@ -21,6 +21,9 @@ export class WhatsupAppConversationsComponent implements OnInit {
   singleConversationList: any;
   name: any;
   phoneNumber: any;
+  serviceNumber: any;
+  isReplyPending: boolean = false;
+  isComplaint: boolean = false;
   public travelDatesData: Array<any> = [];
 
   constructor(public apiService: ApiServiceService,
@@ -43,7 +46,11 @@ export class WhatsupAppConversationsComponent implements OnInit {
 //     });
 // }
   getAll(): void{
-    this.apiService.getAll(this.apiUrls.getAllConversations, {phoneOrPnrNumber: this.data.phoneOrPnrNumber, from: this.data.from, to: this.data.to}).subscribe((res: any) => {
+    this.apiService.getAll(this.apiUrls.getAllConversations, {phoneOrPnrNumber: this.data.phoneOrPnrNumber,
+      serviceNumber: this.data.serviceNumber,
+      isReplyPending: this.data.isReplyPending,
+      isComplaint: this.data.isComplaint,
+      from: this.data.from, to: this.data.to}).subscribe((res: any) => {
       if (res){
         this.currentPageOfWhatsAppConversations = res;
         this.conversationData = false;

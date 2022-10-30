@@ -1,13 +1,30 @@
 <div class="app-content">
-    <div class="app-title">
-        <div class="">
+    <div class="app-title row">
+        <div class="col-sm-3">
             <h1>
                 <i class="fa fa-whatsapp" aria-hidden="true"></i>
                 WhatsAppConversations
             </h1>
         </div>
-        <ul class="app-breadcrumb breadcrumb">
-        </ul>
+        <div class="col-sm-3 input-group mb-3">
+            <input type="text" class="form-control" placeholder="Mobile Number"
+                   aria-label="Mobile Number" aria-describedby="basic-addon1" [(ngModel)]="this.data.phoneOrPnrNumber" (ngModelChange)="getAll()"
+                   style="border-left: 0">
+            &nbsp;
+        </div>
+        <div class="col-sm-3 input-group mb-3">
+            <input type="text" class="form-control" placeholder="Service Number"
+                   aria-label="Service Number" aria-describedby="basic-addon1" [(ngModel)]="this.data.serviceNumber" (ngModelChange)="getAll()"
+                   style="border-left: 0">
+        </div>
+        <div class="col-sm-3 input-group mb-3">
+            <input type="checkbox" class="form-control" placeholder="Is Complaint"
+                   aria-label="Is Complaint" aria-describedby="basic-addon1" [(ngModel)]="this.data.isComplaint" (ngModelChange)="getAll()"
+                   style="border-left: 0">
+            <input type="checkbox" class="form-control" placeholder="Is Reply Pending"
+                   aria-label="Is Complaint" aria-describedby="basic-addon1" [(ngModel)]="this.data.isReplyPending" (ngModelChange)="getAll()"
+                   style="border-left: 0">
+        </div>
     </div>
     <div class="row">
         <div class="col-sm-12">
@@ -20,19 +37,8 @@
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <div class="tile">
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                <span class="input-group-text whatsapp-search" id="basic-addon1">
-                                                    <i class="fa fa-search"></i>
-                                                </span>
-                                                    </div>
-                                                    <input type="text" class="form-control" placeholder="Mobile Number"
-                                                           aria-label="Mobile Number" aria-describedby="basic-addon1" [(ngModel)]="this.data.phoneOrPnrNumber" (ngModelChange)="getAll()"
-                                                           style="border-left: 0">
-                                                </div>
                                                 <div class="row mb-2">
                                                 <div class="col-sm-6 col-12">
-                                                    <label>Select From</label>
                                                     <ng-select
                                                             [items]="listOfRoutes"
                                                             [multiple]="false"
@@ -46,7 +52,6 @@
                                                     </ng-select>
                                                 </div>
                                                 <div class="col-sm-6 col-12">
-                                                    <label>Select To</label>
                                                     <ng-select
                                                             [items]="listOfRoutes"
                                                             [multiple]="false"
