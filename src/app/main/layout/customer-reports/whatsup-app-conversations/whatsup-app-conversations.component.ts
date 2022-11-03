@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {HttpClient} from '@angular/common/http';
+import {Observable, Subscription, timer} from 'rxjs';
 
 @Component({
   selector: 'app-whatsup-app-conversations',
   templateUrl: './whatsup-app-conversations.component.html',
   styleUrls: ['./whatsup-app-conversations.component.css']
 })
-export class WhatsupAppConversationsComponent implements OnInit {
+export class WhatsupAppConversationsComponent implements OnInit, OnDestroy {
   currentPageOfWhatsAppConversations: any = [{}];
   public listOfRoutes: Array<any> = [];
   data: any = {
     phoneNumber: '',
-    message: ''
+    message: '',
+    serviceNumbers: []
   };
+  listOfServiceNumber: Array<any> = [];
   public currentPageOfWhatsAppConversationsList: any;
   // @ts-ignore
   public conversationData: boolean;
@@ -25,7 +28,9 @@ export class WhatsupAppConversationsComponent implements OnInit {
   isReplyPending: boolean = false;
   isComplaint: boolean = false;
   public travelDatesData: Array<any> = [];
-
+  public sub: any = Subscription;
+  everyFiveSec: Observable<number> = timer(0, 30000);
+  public index: any = 0;
   constructor(public apiService: ApiServiceService,
               private apiUrls: ApiUrls,
               private httpClient: HttpClient) { }
@@ -33,8 +38,23 @@ export class WhatsupAppConversationsComponent implements OnInit {
   ngOnInit(): void {
     this.listOfRoutes = ['All', 'A.S.Peta', 'Bangalore', 'Chennai', 'chirala', 'Hyderabad', 'Nellore', 'Ongole', 'Pamuru',
       'Srikakulam', 'Tirupathi', 'Vijayawada', 'Visakhapatnam' ];
-    this.getAll();
+    this.getAll(false);
+    // this.conversationData = false;
+    this.getServiceReports();
+    this.timerFun();
   }
+
+  timerFun(): void{
+    console.log('timer');
+    this.sub = this.everyFiveSec.subscribe(() => {
+      this.getAll(true);
+      this.getMessageByNum(this.currentPageOfWhatsAppConversations[this.index], this.index);
+    });
+  }
+  ngOnDestroy(): void{
+    this.sub.unsubscribe();
+  }
+
 // getAll(): void{
 //     console.log(this.data.phoneNumber);
 //     this.apiService.getAll(this.apiUrls.getAllConversations + this.data.phoneNumber, {}).subscribe((res: any) =>{
@@ -45,15 +65,15 @@ export class WhatsupAppConversationsComponent implements OnInit {
 //       }
 //     });
 // }
-  getAll(): void{
+  getAll(booleanVa: any): void{
     this.apiService.getAll(this.apiUrls.getAllConversations, {phoneOrPnrNumber: this.data.phoneOrPnrNumber,
-      serviceNumber: this.data.serviceNumber,
+      serviceNumbers: this.data.serviceNumbers,
       isReplyPending: this.data.isReplyPending,
       isComplaint: this.data.isComplaint,
       from: this.data.from, to: this.data.to}).subscribe((res: any) => {
       if (res){
         this.currentPageOfWhatsAppConversations = res;
-        this.conversationData = false;
+        this.conversationData = booleanVa;
       }
     });
   }
@@ -79,13 +99,15 @@ export class WhatsupAppConversationsComponent implements OnInit {
       // if (res){
       this.currentPageOfWhatsAppConversationsList = res;
       this.data.message = '';
-      this.getMessageByNum({phoneNumber: this.phoneNumber});
-      this.getAll();
+      this.getMessageByNum({phoneNumber: this.phoneNumber}, '');
+      this.getAll('');
       // }
     });
   }
 
-  getMessageByNum(item: any): void{
+  getMessageByNum(item: any, index: any): void{
+    console.log(item, index);
+    this.index = index;
     this.travelDatesData = item.travelDates;
     this.name = item.name;
     this.phoneNumber = item.phoneNumber;
@@ -93,6 +115,13 @@ export class WhatsupAppConversationsComponent implements OnInit {
       if (res){
         this.singleConversationList = res;
         this.conversationData = true;
+      }
+    });
+  }
+  getServiceReports(): void{
+    this.apiService.get(this.apiUrls.getServiceReport).subscribe((res: any) => {
+      if (res){
+        this.listOfServiceNumber = res;
       }
     });
   }
