@@ -3,6 +3,7 @@ import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {HttpClient} from '@angular/common/http';
 import {Observable, Subscription, timer} from 'rxjs';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-whatsup-app-conversations',
@@ -124,5 +125,18 @@ export class WhatsupAppConversationsComponent implements OnInit, OnDestroy {
         this.listOfServiceNumber = res;
       }
     });
+  }
+
+  escalateTicket(travelDateInfo: any): void {
+    console.log(travelDateInfo);
+    /*this.apiService.update(this.apiUrls.bookingFeedbackStatusUpdate + id,
+        {
+          serviceFeedbackId: id,
+          status: 'Escalated'
+        }).subscribe((res: any) => {
+      Swal.fire('Great', 'Booking feedback status is successfully updated', 'success');
+    }, error => {
+      Swal.fire('Error', 'Booking feedback status update failed', 'error');
+    });*/
   }
 }

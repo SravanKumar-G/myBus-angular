@@ -185,7 +185,11 @@
                                              style="overflow-y: auto; height: 80vh;">
                                             <ul>
                                                 <li *ngFor="let data of travelDatesData"
-                                                    style="list-style-type: decimal; font-size: 14px; padding: 10px 5px">{{data}}</li>
+                                                    style="list-style-type: decimal; font-size: 14px; padding: 10px 5px">{{data}}
+                                                    <a class="cus-a mr-2" title="Escalate" (click)="escalateTicket(data)">
+                                                        <i class="fa fa-bullhorn fa-1x" aria-hidden="true" style="color: indianred"></i>
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
