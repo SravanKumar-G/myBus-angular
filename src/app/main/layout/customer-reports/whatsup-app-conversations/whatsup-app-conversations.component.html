@@ -6,24 +6,69 @@
                 WhatsAppConversations
             </h1>
         </div>
-        <div class="col-sm-3 input-group mb-3">
-            <input type="text" class="form-control" placeholder="Mobile Number"
-                   aria-label="Mobile Number" aria-describedby="basic-addon1" [(ngModel)]="this.data.phoneOrPnrNumber" (ngModelChange)="getAll()"
-                   style="border-left: 0">
-            &nbsp;
+        <div class="col-sm-3">
+            <input type="text" class="form-control form-control-sm" placeholder="Mobile Number"
+                   aria-label="Mobile Number" aria-describedby="basic-addon1" [(ngModel)]="this.data.phoneOrPnrNumber"
+                   (ngModelChange)="getAll(false)">
         </div>
-        <div class="col-sm-3 input-group mb-3">
-            <input type="text" class="form-control" placeholder="Service Number"
-                   aria-label="Service Number" aria-describedby="basic-addon1" [(ngModel)]="this.data.serviceNumber" (ngModelChange)="getAll()"
-                   style="border-left: 0">
+        <div class="col-sm-3">
+            <ng-select
+                    [multiple]="true"
+                    bindLabel="serviceNumber"
+                    [closeOnSelect]="false"
+                    placeholder="Select Service Number"
+                    [(ngModel)]="data.serviceNumbers"
+                    [ngModelOptions]="{standalone: true}"
+                    [items]="listOfServiceNumber"
+                    (ngModelChange)="getAll(false)">
+                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                    <div class="ng-value" *ngFor="let item of items | slice:0:1"
+                         [hidden]="items.length > 1">
+                        <span class="ng-value-label">{{$any(item).serviceNumber}}</span>
+                        <span class="ng-value-icon right" (click)="clear(item)"
+                              aria-hidden="true">×</span>
+                    </div>
+                    <div class="ng-value" *ngIf="items.length > 1">
+                        <span class="ng-value-label">{{items.length}} Options Selected...</span>
+                    </div>
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}-query-regionIds-2" type="checkbox"
+                           [ngModel]="item$.selected"
+                           [ngModelOptions]="{standalone: true}"/> {{item.serviceNumber}}
+                </ng-template>
+                <ng-template ng-footer-tmp>
+                    <small class="p-1 flex-fill text-center">Selections
+                        Made: {{data.serviceNumbers ? data.serviceNumbers.length : 0}}</small>
+                    <small class="p-1 flex-fill text-center">Options: {{listOfServiceNumber.length - data.serviceNumbers.length}}</small>
+                </ng-template>
+            </ng-select>
         </div>
-        <div class="col-sm-3 input-group mb-3">
-            <input type="checkbox" class="form-control" placeholder="Is Complaint"
-                   aria-label="Is Complaint" aria-describedby="basic-addon1" [(ngModel)]="this.data.isComplaint" (ngModelChange)="getAll()"
-                   style="border-left: 0">
-            <input type="checkbox" class="form-control" placeholder="Is Reply Pending"
-                   aria-label="Is Complaint" aria-describedby="basic-addon1" [(ngModel)]="this.data.isReplyPending" (ngModelChange)="getAll()"
-                   style="border-left: 0">
+        <div class="col-sm-1 input-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value=""
+                       id="isComplaint"
+                       [(ngModel)]="data.isComplaint"
+                       [ngModelOptions]="{standalone: true}"
+                       style="margin-top: 0.2rem !important;"
+                       (ngModelChange)="getAll(false)">
+                <label class="form-check-label" for="isComplaint">
+                    Is Complaint
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value=""
+                       id="isReplyPending"
+                       [(ngModel)]="data.isReplyPending"
+                       [ngModelOptions]="{standalone: true}"
+                       style="margin-top: 0.2rem !important;"
+                       (ngModelChange)="getAll(false)">
+                <label class="form-check-label" for="isReplyPending">
+                    Reply Pending
+                </label>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -31,194 +76,121 @@
             <div class="">
                 <div class="tile-body">
                     <div class="container-fluid">
-<!--                        <div class="">-->
-<!--                            <div class="">-->
-                                <div class="col-sm-12">
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <div class="tile">
-                                                <div class="row mb-2">
-                                                <div class="col-sm-6 col-12">
-                                                    <ng-select
-                                                            [items]="listOfRoutes"
-                                                            [multiple]="false"
-                                                            bindLabel="name"
-                                                            [closeOnSelect]="true"
-                                                            bindValue="name"
-                                                            placeholder="Select From"
-                                                            [(ngModel)]="data.from"
-                                                            (ngModelChange)="getAll()"
-                                                            [ngModelOptions]="{standalone: true}">
-                                                    </ng-select>
-                                                </div>
-                                                <div class="col-sm-6 col-12">
-                                                    <ng-select
-                                                            [items]="listOfRoutes"
-                                                            [multiple]="false"
-                                                            bindLabel="name"
-                                                            [closeOnSelect]="true"
-                                                            bindValue="name"
-                                                            placeholder="Select to"
-                                                            [(ngModel)]="data.to"
-                                                            (ngModelChange)="getAll()"
-                                                            [ngModelOptions]="{standalone: true}">
-                                                    </ng-select>
-                                                </div>
-                                                </div>
-                                                <div style="overflow-y: auto; height: 70vh">
-                                                    <div class="card m-1"
-                                                         *ngFor="let data of currentPageOfWhatsAppConversations; let i = index">
-                                                        <div class="card-body"
-                                                             [ngClass]="{'user-active': data.phoneNumber === phoneNumber}"
-                                                             style="padding: 5px 10px; cursor: pointer"
-                                                             (click)="getMessageByNum(data)">
-                                                            <div>
-                                                                <span class="user-name">{{data.name || 'NA'}}</span><br/>
-                                                                <span class="user-number">{{data.phoneNumber || 'NA'}}</span><br/>
-                                                                <div style="justify-content: space-between; display: flex; align-items: end">
-                                                                    <span class="display-mesg-cust">{{data.lastMessage || 'NA'}}</span>
-                                                                    <small>{{data.lastMessageDateTime | date:  'HH:mma'}}</small>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="tile">
+                                        <div class="row mb-2">
+                                            <div class="col-sm-6 col-12">
+                                                <ng-select
+                                                        [items]="listOfRoutes"
+                                                        [multiple]="false"
+                                                        bindLabel="name"
+                                                        [closeOnSelect]="true"
+                                                        bindValue="name"
+                                                        placeholder="Select From"
+                                                        [(ngModel)]="data.from"
+                                                        (ngModelChange)="getAll(false)"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                </ng-select>
+                                            </div>
+                                            <div class="col-sm-6 col-12">
+                                                <ng-select
+                                                        [items]="listOfRoutes"
+                                                        [multiple]="false"
+                                                        bindLabel="name"
+                                                        [closeOnSelect]="true"
+                                                        bindValue="name"
+                                                        placeholder="Select to"
+                                                        [(ngModel)]="data.to"
+                                                        (ngModelChange)="getAll(false)"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                </ng-select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-7">
-                                            <div class="card mt-0"  *ngIf="conversationData">
-                                                <div>
-                                                    <div class="card-header" style="background: #e68221; color: #FFFFFF">
-                                                        <span class="user-name">{{name || 'NA'}}</span><br/>
-                                                        <small>{{phoneNumber || 'NA'}}</small>
-                                                    </div>
-                                                    <div class="card-body"
-                                                         style="overflow-y: auto; height: 71vh;">
-                                                        <div class="">
-                                                            <div class="col-sm-12">
-                                                                <ul style="padding-right: 16px">
-                                                                    <li *ngFor="let mesg of singleConversationList">
-                                                                        <div class="row">
-                                                                            <div class="col-sm-7 from-chart-left-box incoming-mesg-left"
-                                                                                 *ngIf="mesg.inComing === true">
-                                                                                <p>{{mesg.message}}</p>
-                                                                                <small class="from-chart-box-time">{{mesg.sentAt | date:'dd-MM-yyyy / HH:mma'}}</small>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row">
-                                                                            <div class="offset-5 col-sm-7 from-chart-right-box outgng-message-right"
-                                                                                 *ngIf="mesg.inComing !== true">
-                                                                                <p>{{mesg.message}}</p>
-                                                                                <small class="from-chart-box-time">{{mesg.sentAt | date:'dd-MM-yyyy / HH:mma'}}</small>
-                                                                                <!--                                                                    <small [ngClass]="{'from-chart-box-time': mesg.inComing === true, 'from-chart-right-box': mesg.inComing !== true, 'from-chart-failed-box': mesg.status === 'failed'}">{{mesg.sentAt | date:'HH:mma'}}</small></p>-->
-                                                                            </div>
-                                                                        </div>
-                                                                        <!--                                                                <div >-->
-                                                                        <!--&lt;!&ndash;                                                                <small>{{mesg.sentAt | date:'MMM dd, yyyy'}}</small>&ndash;&gt;-->
-                                                                        <!--                                                                <p  [ngClass]="{'from-chart-left-box': mesg.inComing === true, 'from-chart-right-box': mesg.inComing !== true, 'from-chart-failed-box': mesg.status === 'failed'}">-->
-                                                                        <!--                                                                    {{mesg.message}}-->
-                                                                        <!--                                                                    <small [ngClass]="{'from-chart-box-time': mesg.inComing === true, 'from-chart-right-box': mesg.inComing !== true, 'from-chart-failed-box': mesg.status === 'failed'}">{{mesg.sentAt | date:'HH:mma'}}</small></p>-->
-                                                                        <!--                                                                </div>-->
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
+                                        <div style="overflow-y: auto; height: 70vh">
+                                            <div class="card m-1"
+                                                 *ngFor="let data of currentPageOfWhatsAppConversations; let i = index">
+                                                <div class="card-body"
+                                                     [ngClass]="{'user-active': data.phoneNumber === phoneNumber}"
+                                                     style="padding: 5px 10px; cursor: pointer"
+                                                     (click)="getMessageByNum(data, i)">
+                                                    <div>
+                                                        <span class="user-name">{{data.name || 'NA'}}</span><br/>
+                                                        <span class="user-number">{{data.phoneNumber || 'NA'}}</span><br/>
+                                                        <div style="justify-content: space-between; display: flex; align-items: end">
+                                                            <span class="display-mesg-cust">{{data.lastMessage || 'NA'}}</span>
+                                                            <small>{{data.lastMessageDateTime | date:  'HH:mma'}}</small>
                                                         </div>
                                                     </div>
-                                                    <div class="card-footer" style="background-color: #FFFFFF">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-sm-7">
-                                                            <textarea type="text" class="form-control" placeholder="type Message" [(ngModel)]="data.message"></textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                            <button class="btn btn-sm btn-primary" style="float: right" (click)="replyMessage()">send</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <div class="card m-0">
-                                                <div class="card-header" style="font-size: 18px">Travel Dates</div>
-                                                <div class="card-body" *ngIf="conversationData" style="overflow-y: auto; height: 80vh;">
-                                                    <ul >
-                                                        <li *ngFor="let data of travelDatesData" style="list-style-type: decimal; font-size: 14px; padding: 10px 5px">{{data}}</li>
-                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-<!--                            </div>-->
-<!--                            <div class="col-sm-12 pl-0 pr-0 table-responsive">-->
-<!--                                <table class="table table-hover dataTable" aria-describedby="sampleTable_info">-->
-<!--                                    <tr class="odd table-btn-hover animate-repeat"-->
-<!--                                        *ngFor="let whatsAppConversation of currentPageOfWhatsAppConversations; let i= index">-->
-<!--                                        <td class="whatapp-conversations">-->
-<!--                                            <div class="row">-->
-<!--                                                <div class="col-12">-->
-<!--                                                    <p>-->
-<!--                                                        <label class="control-label ls text-600 font-weight-semi-bold"></label><b><u>To-->
-<!--                                                        : </u></b> {{whatsAppConversation.name || 'No-Data'}}-->
-<!--                                                        ( {{whatsAppConversation.phoneNumber || 'No-Data'}} ),-->
-<!--                                                        <label class="control-label ls text-600 font-weight-semi-bold"><b><u>Type-->
-<!--                                                            : </u></b></label> {{whatsAppConversation.type || 'No-Data'}}-->
-<!--                                                        ,-->
-<!--                                                        <label class="control-label ls text-600 font-weight-semi-bold"><b><u>Sent-->
-<!--                                                            By-->
-<!--                                                            : </u></b></label> {{whatsAppConversation.sentBy || 'No-Data'}}-->
-<!--                                                        ,-->
-<!--                                                        <label class="control-label ls text-600 font-weight-semi-bold"><b><u>Sent-->
-<!--                                                            On-->
-<!--                                                            : </u></b></label> {{whatsAppConversation.sentOn || 'No-Data'}}-->
-<!--                                                        ,-->
-<!--                                                        <label class="control-label ls text-600 font-weight-semi-bold"><b><u>Last-->
-<!--                                                            Reply-->
-<!--                                                            : </u></b></label> {{whatsAppConversation.lastReplyAt || 'No-Data'}}-->
-<!--                                                    </p>-->
-<!--                                                    <ul style="list-style: none; padding-left: 0px">-->
-<!--                                                        <li class=""-->
-<!--                                                            *ngFor="let replyData of whatsAppConversation.messages"-->
-<!--                                                            [ngClass]="{'from-chart-left-box': replyData.inComing === true, 'from-chart-right-box': replyData.inComing !== true, 'from-chart-failed-box': replyData.status === 'failed'}">-->
-<!--                                                            <div>-->
-<!--                                                                <p style="padding: 6px 12px; margin-bottom: 0">-->
-<!--                                                                    {{replyData.message}}-->
-<!--                                                                    <span class="from-chart-right-box"-->
-<!--                                                                          style="float: right; margin-bottom: 0px; padding: 4px 10px;">-->
-<!--                                                                    <small>{{replyData.sentAt | date:'MMM dd, yyyy HH:mma'}}</small>-->
-<!--                                                                    <i class="fa"-->
-<!--                                                                       [ngClass]="{'fa-circle': replyData.incoming === false, 'fa-dot-circle-o': replyData.incoming === true}"></i>-->
-<!--                                                                </span>-->
-<!--                                                                </p>-->
-
-<!--                                                            </div>-->
-<!--                                                        </li>-->
-<!--                                                        <li class="text-right">-->
-<!--                                                            <hr>-->
-<!--                                                            <div class="row">-->
-<!--                                                                <div class="col-sm-1"></div>-->
-<!--                                                                <div class="col-sm-8">-->
-<!--                                                               <textarea rows="2" class="form-control"-->
-<!--                                                                         placeholder="Type a message"-->
-<!--                                                                         [(ngModel)]="whatsAppConversation.sendWhatsMessage">-->
-<!--                                                               </textarea>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="col-sm-2">-->
-<!--&lt;!&ndash;                                                                    <button class="btn btn-secondary" type="button"&ndash;&gt;-->
-<!--&lt;!&ndash;                                                                            (click)="replyMessage1(whatsAppConversation)">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                                        Reply&ndash;&gt;-->
-<!--&lt;!&ndash;                                                                    </button>&ndash;&gt;-->
-<!--                                                                </div>-->
-<!--                                                            </div>-->
-<!--                                                        </li>-->
-<!--                                                    </ul>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
-<!--                                </table>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                                <div class="col-sm-7">
+                                    <div class="card mt-0" *ngIf="conversationData">
+                                        <div>
+                                            <div class="card-header" style="background: #e68221; color: #FFFFFF">
+                                                <span class="user-name">{{name || 'NA'}}</span><br/>
+                                                <small>{{phoneNumber || 'NA'}}</small>
+                                            </div>
+                                            <div class="card-body"
+                                                 style="overflow-y: auto; height: 71vh;">
+                                                <div class="">
+                                                    <div class="col-sm-12">
+                                                        <ul style="padding-right: 16px">
+                                                            <li *ngFor="let mesg of singleConversationList">
+                                                                <div class="row">
+                                                                    <div class="col-sm-7 from-chart-left-box incoming-mesg-left"
+                                                                         *ngIf="mesg.inComing === true">
+                                                                        <p>{{mesg.message}}</p>
+                                                                        <small class="from-chart-box-time">{{mesg.sentAt | date:'dd-MM-yyyy / HH:mma'}}</small>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="offset-5 col-sm-7 from-chart-right-box outgng-message-right"
+                                                                         *ngIf="mesg.inComing !== true">
+                                                                        <p>{{mesg.message}}</p>
+                                                                        <small class="from-chart-box-time">{{mesg.sentAt | date:'dd-MM-yyyy / HH:mma'}}</small>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer" style="background-color: #FFFFFF">
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-7">
+                                                        <textarea type="text" class="form-control"
+                                                                  placeholder="type Message"
+                                                                  [(ngModel)]="data.message"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-sm btn-primary" style="float: right"
+                                                                (click)="replyMessage()">send
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="card m-0">
+                                        <div class="card-header" style="font-size: 18px; background-color: ">Travel Dates</div>
+                                        <div class="card-body" *ngIf="conversationData"
+                                             style="overflow-y: auto; height: 80vh;">
+                                            <ul>
+                                                <li *ngFor="let data of travelDatesData"
+                                                    style="list-style-type: decimal; font-size: 14px; padding: 10px 5px">{{data}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

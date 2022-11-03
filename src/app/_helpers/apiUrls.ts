@@ -365,5 +365,6 @@ export class ApiUrls {
     getAllConversations = 'api/v1/whatsApp/getAllConversations';
     getConversations = 'api/v1/whatsApp/getConversations';
     getConversationsByNum = 'api/v1/whatsApp/getConversationMessages/';
+    getServiceReport = 'api/v1/serviceReport/serviceNumbers';
 
 }
