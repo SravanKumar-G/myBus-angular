@@ -66,13 +66,8 @@ export class WhatsupAppConversationsComponent implements OnInit, OnDestroy {
 //     });
 // }
   getAll(booleanVa: any): void{
-    const serviceNumberArr = [];
-    console.log(this.data.serviceNumbers);
-    for (const data of this.data.serviceNumbers) {
-      serviceNumberArr.push(data.serviceNumber);
-    }
     this.apiService.getAll(this.apiUrls.getAllConversations, {phoneOrPnrNumber: this.data.phoneOrPnrNumber,
-      serviceNumbers: serviceNumberArr,
+      serviceNumbers: this.data.serviceNumbers,
       isReplyPending: this.data.isReplyPending,
       isComplaint: this.data.isComplaint,
       from: this.data.from, to: this.data.to}).subscribe((res: any) => {
