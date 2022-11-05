@@ -30,7 +30,7 @@ export class WhatsupAppConversationsComponent implements OnInit, OnDestroy {
   isComplaint: boolean = false;
   public travelDatesData: Array<any> = [];
   public sub: any = Subscription;
-  everyFiveSec: Observable<number> = timer(0, 30000);
+  everyFiveSec: Observable<number> = timer(0, 70000);
   public index: any = 0;
   constructor(public apiService: ApiServiceService,
               private apiUrls: ApiUrls,
