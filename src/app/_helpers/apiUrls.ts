@@ -293,7 +293,8 @@ export class ApiUrls {
     serviceFeedbackReports = 'api/v1/serviceFeedback/feedbackReport/?&reportId=';
     serviceFeedbackStatusUpdate = 'api/v1/serviceFeedback/updateStatus/';
     bookingFeedbackStatusUpdate = 'api/v1/serviceFeedback/bookingFeedback/';
-    sendBulkWhatsAppMessages = 'api/v1/whatsApp/sendBulkWhatsAppMessages';
+    sendBulkWhatsAppMessages = 'api/v1/whatsApp/sendBulkWhatsAppMessages/';
+    sendFeedbackRequestMessages = 'api/v1/whatsApp/sendFeedbackRequestMessages/';
 
     // Cash Transfer API's
     cashTransferPendingCount = 'api/v1/cashTransfer/pending/count';
@@ -362,6 +363,7 @@ export class ApiUrls {
 
     replyWhastappMessage = 'api/noauth/inComingWhatsAppReplyForTest';
     replyOneMessge = 'api/v1/whatsApp/oneToOneConversation';
+    sendDiscountInfo = 'api/v1/whatsApp/sendDiscountInfo/';
     getAllConversations = 'api/v1/whatsApp/getAllConversations';
     getConversations = 'api/v1/whatsApp/getConversations';
     getConversationsByNum = 'api/v1/whatsApp/getConversationMessages/';

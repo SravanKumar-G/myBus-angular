@@ -91,4 +91,11 @@ export class ServiceFeedbackComponent implements OnInit {
     routeToReport(id: any): void {
         this.router.navigate(['serviceFeedback/' + this.currentDate + '/serviceFeedbackReport/' + id]);
     }
+
+    requestFeedbackFromRedbus(serviceFeedBackId: any) {
+        console.log("serviceReportId " + serviceFeedBackId);
+        this.apiService.get(this.apiUrls.sendFeedbackRequestMessages + serviceFeedBackId +"/redbus").subscribe((res: any) => {
+                this.getDailyReports();
+        });
+    }
 }

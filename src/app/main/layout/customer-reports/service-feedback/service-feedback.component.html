@@ -57,11 +57,7 @@
                                         <th scope="col" [appFrentendSort]="dailyReports"
                                             data-order="desc" data-name="serviceNumber">Service#<i class="fa fa-sort"></i> </th>
                                         <th scope="col" [appFrentendSort]="dailyReports"
-                                            data-order="desc" data-name="busType">Type<i class="fa fa-sort"></i></th>
-                                        <th scope="col" [appFrentendSort]="dailyReports"
-                                            data-order="desc" data-name="source">Route<i class="fa fa-sort"></i></th>
-                                        <th scope="col" [appFrentendSort]="dailyReports"
-                                            data-order="desc" data-name="vehicleRegNumber">Vehicle<i class="fa fa-sort"></i></th>
+                                            data-order="desc" data-name="busType">Service<i class="fa fa-sort"></i></th>
                                         <th scope="col" [appFrentendSort]="dailyReports"
                                             data-order="desc" data-name="status">Status<i class="fa fa-sort"></i></th>
                                         <th scope="col" [appFrentendSort]="dailyReports"
@@ -72,10 +68,11 @@
                                     <tr *ngFor="let service of dailyReports; let i = index;">
                                         <td>{{ i + 1}}</td>
                                         <td><a class="cus-a" (click)="routeToReport(service.id)">{{ service.serviceNumber }}</a></td>
-                                        <td>{{ service.busType }}</td>
-                                        <td>{{ service.source }} - {{ service.destination }}</td>
-                                        <td>{{ service.vehicleRegNumber }}</td>
-                                        <td>{{service.status}} - {{service.lastUpdatedBy}}</td>
+                                        <td>{{ service.source }} - {{ service.destination }}<br/> {{ service.busType }} <br/>{{ service.vehicleRegNumber }}</td>
+                                        <td><img *ngIf="service.redbusFeedbackRequested  !== true" src="assets/images/redbs-logo.png"  (click)="requestFeedbackFromRedbus(service.id)"  height="25x" width="25px" title="request feedback from redbus customers"/>
+                                           <br/> {{service.status}} - {{service.lastUpdatedBy}}
+                                           <br/> {{service.history}}
+                                        </td>
                                         <td class="text-left"> Not Attempted - {{service.notAttempted}} <br/> Good - {{service.good}}
                                             <br/> Not Answered - {{service.unansweredCalls}} <br/> Escalations - {{service.escalations}}
                                         </td>

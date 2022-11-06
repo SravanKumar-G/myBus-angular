@@ -139,4 +139,11 @@ export class WhatsupAppConversationsComponent implements OnInit, OnDestroy {
       Swal.fire('Error', 'Booking feedback status update failed', 'error');
     });*/
   }
+
+  sendDiscountMessage() : void{
+    console.log(this.apiUrls.sendDiscountInfo + "  discount");
+    this.apiService.get(this.apiUrls.sendDiscountInfo + this.phoneNumber).subscribe((res: any) => {
+      this.getMessageByNum({phoneNumber: this.phoneNumber}, '');
+    });
+  }
 }
