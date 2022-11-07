@@ -360,9 +360,9 @@ export class ApiUrls {
    // What's App Conversation Screen
 
    // For Local Testing
-
     replyWhastappMessage = 'api/noauth/inComingWhatsAppReplyForTest';
     replyOneMessge = 'api/v1/whatsApp/oneToOneConversation';
+    addCommentToWhatsappMessage = 'api/v1/whatsApp/addComment/';
     sendDiscountInfo = 'api/v1/whatsApp/sendDiscountInfo/';
     getAllConversations = 'api/v1/whatsApp/getAllConversations';
     getConversations = 'api/v1/whatsApp/getConversations';

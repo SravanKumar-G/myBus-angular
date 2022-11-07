@@ -145,14 +145,16 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-7 from-chart-left-box incoming-mesg-left"
                                                                          *ngIf="mesg.inComing === true">
-                                                                        <p>{{mesg.message}}</p>
+                                                                        <p>{{mesg.message}}
+                                                                        </p>
                                                                         <small class="from-chart-box-time">{{mesg.sentAt | date:'dd-MM-yyyy / HH:mma'}}</small>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="offset-5 col-sm-7 from-chart-right-box outgng-message-right"
                                                                          *ngIf="mesg.inComing !== true">
-                                                                        <p>{{mesg.message}}</p>
+                                                                        <p><span *ngIf="mesg.comment" style="color: red;">C</span>{{mesg.message}}</p>
+
                                                                         <small class="from-chart-box-time">{{mesg.sentByUserName}} {{mesg.sentAt | date:'dd-MM-yyyy / HH:mma'}}</small>
                                                                     </div>
                                                                 </div>
@@ -177,7 +179,11 @@
                                                         &nbsp;<button class="btn btn-sm btn-primary" style="float: right"
                                                                 (click)="sendDiscountMessage()">Discount
                                                         </button>
+                                                        &nbsp;&nbsp;<button class="btn btn-sm btn-primary" style="float: right"
+                                                                      (click)="addComment()">C
+                                                    </button>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>

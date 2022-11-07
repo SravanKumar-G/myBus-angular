@@ -96,15 +96,22 @@ export class WhatsupAppConversationsComponent implements OnInit, OnDestroy {
   //   });
   // }
   replyMessage(): void{
-    this.apiService.getAll(this.apiUrls.replyOneMessge, {phoneNumber: '91' + this.phoneNumber, message: this.data.message}).subscribe((res: any) => {
-      // if (res){
-      this.currentPageOfWhatsAppConversationsList = res;
-      this.data.message = '';
-      this.getMessageByNum({phoneNumber: this.phoneNumber}, '');
-      this.getAll('');
-      // }
-    });
+    if(this.data.message.trim().length > 0) {
+      this.apiService.getAll(this.apiUrls.replyOneMessge, {
+        phoneNumber: '91' + this.phoneNumber,
+        message: this.data.message
+      }).subscribe((res: any) => {
+        // if (res){
+        this.currentPageOfWhatsAppConversationsList = res;
+        this.data.message = '';
+        this.getMessageByNum({phoneNumber: this.phoneNumber}, '');
+        this.getAll('');
+        // }
+      });
+    }
   }
+
+
 
   getMessageByNum(item: any, index: any): void{
     console.log(item, index);
@@ -141,9 +148,16 @@ export class WhatsupAppConversationsComponent implements OnInit, OnDestroy {
   }
 
   sendDiscountMessage() : void{
-    console.log(this.apiUrls.sendDiscountInfo + "  discount");
     this.apiService.get(this.apiUrls.sendDiscountInfo + this.phoneNumber).subscribe((res: any) => {
       this.getMessageByNum({phoneNumber: this.phoneNumber}, '');
     });
+  }
+
+  addComment(): void{
+    if(this.data.message.trim().length > 0) {
+      this.apiService.getAll(this.apiUrls.addCommentToWhatsappMessage + this.phoneNumber, {phoneNumber: '91' + this.phoneNumber, message: this.data.message}).subscribe((res: any) => {
+        this.getMessageByNum({phoneNumber: this.phoneNumber}, '');
+      });
+    }
   }
 }
