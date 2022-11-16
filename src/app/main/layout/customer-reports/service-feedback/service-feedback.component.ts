@@ -93,7 +93,7 @@ export class ServiceFeedbackComponent implements OnInit {
     }
 
     requestFeedbackFromRedbus(serviceFeedBackId: any) {
-        console.log("serviceReportId " + serviceFeedBackId);
+
         this.apiService.get(this.apiUrls.sendFeedbackRequestMessages + serviceFeedBackId +"/redbus").subscribe((res: any) => {
                 this.getDailyReports();
         });

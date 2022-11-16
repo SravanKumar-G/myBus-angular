@@ -49,7 +49,6 @@ export class AddtyresComponent implements OnInit {
         if (response) {
             this.tyre = response;
             this.tyre.purchaseDateString = new Date(this.tyre.purchaseDate);
-            console.log(this.tyre);
         }
       })
     } else {

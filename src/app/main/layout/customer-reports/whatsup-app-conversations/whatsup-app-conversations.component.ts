@@ -46,7 +46,6 @@ export class WhatsupAppConversationsComponent implements OnInit, OnDestroy {
   }
 
   timerFun(): void{
-    console.log('timer');
     this.sub = this.everyFiveSec.subscribe(() => {
       this.getAll(true);
       this.getMessageByNum(this.currentPageOfWhatsAppConversations[this.index], this.index);
@@ -114,7 +113,6 @@ export class WhatsupAppConversationsComponent implements OnInit, OnDestroy {
 
 
   getMessageByNum(item: any, index: any): void{
-    console.log(item, index);
     this.index = index;
     this.travelDatesData = item.travelDates;
     this.name = item.name;
@@ -135,7 +133,6 @@ export class WhatsupAppConversationsComponent implements OnInit, OnDestroy {
   }
 
   escalateTicket(travelDateInfo: any): void {
-    console.log(travelDateInfo);
     /*this.apiService.update(this.apiUrls.bookingFeedbackStatusUpdate + id,
         {
           serviceFeedbackId: id,

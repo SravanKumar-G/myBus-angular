@@ -164,7 +164,7 @@ export class PaymentsComponent implements OnInit {
         }
       });
     } else {
-      console.log(paymentId);
+
     }
   }
 

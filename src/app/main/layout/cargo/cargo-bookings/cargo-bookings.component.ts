@@ -55,7 +55,6 @@ export class CargoBookingsComponent implements OnInit {
     }
 
     loadCargoBookingsCount(data: any): void {
-        console.log('fd', data);
         for (const [key, value] of Object.entries(data)) {
             if (value === null || value === undefined || value === '' ) {
                 delete data[key];

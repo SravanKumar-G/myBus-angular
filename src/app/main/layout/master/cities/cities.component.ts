@@ -121,7 +121,7 @@ export class CitiesComponent implements OnInit {
                 }
             });
         } else {
-            console.log(cityId);
+
         }
     }
 

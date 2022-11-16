@@ -27,7 +27,6 @@ export class OfficeDueReportByAgentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.agentName);
     if (this.agentName) {
       this.loadOfficeDuesByAgent();
     } else {

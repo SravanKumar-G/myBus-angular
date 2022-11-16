@@ -60,7 +60,6 @@ export class ServiceIncomeReportByServiceComponent implements OnInit {
   }
 
   goToServiceReport(reports: any): void {
-    console.log(this.actRoute.snapshot);
     if (reports.attrs.formId) {
       this.router.navigate(['/serviceIncomeReport/serviceReportByService/' + this.serviceId + '/serviceForm/' + reports.attrs.formId]);
     }else{

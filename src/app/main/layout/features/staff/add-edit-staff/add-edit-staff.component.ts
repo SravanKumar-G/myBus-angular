@@ -28,7 +28,6 @@ export class AddEditStaffComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.staffId) {
-            console.log('this.vendorExpenseId', this.staffId);
             this.staffTitle = 'Edit Staff';
             this.getDetails();
         } else {

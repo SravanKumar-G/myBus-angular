@@ -30,7 +30,7 @@
                                 Manager: <b class="pl-1">{{officeDues.managerName}}</b>
                             </div>
                             <div class="col-sm-3">
-                                <label>Booked By Filter</label>
+                                <label>Booked By</label>
                                 <ng-select
                                         [items]="agentNames"
                                         [multiple]="false"
@@ -44,7 +44,7 @@
                                 </ng-select>
                             </div>
                             <div class="col-sm-3 text-right m-auto" *ngIf="selectedBookings.length > 0">
-                                <app-show-due-payment-summary [selectedBookings] = selectedBookings></app-show-due-payment-summary>
+                                <app-show-due-payment-summary [selectedBookings] = selectedBookings> </app-show-due-payment-summary>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -95,7 +95,7 @@
                                                     type="checkbox"
                                                     name="selectedBookings[]"
                                                     value="{{booking.id}}"
-                                                    (click)="toggleBookingSelection(booking.id)"/>
+                                                    (click)="toggleBookingSelection(booking)"/>
                                         </td>
 
                                     </tr>

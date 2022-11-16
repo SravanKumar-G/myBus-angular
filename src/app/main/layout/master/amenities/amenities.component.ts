@@ -117,7 +117,6 @@ export class AmenitiesComponent implements OnInit {
                 }
             });
         } else {
-            console.log(amenityId);
         }
     }
 

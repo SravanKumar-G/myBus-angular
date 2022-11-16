@@ -22,6 +22,7 @@ export class OfficeDueReportByDateComponent implements OnInit {
     public agentNames: Array<any> = [];
     bookedBy = 'Select All';
     public selectedBookings: Array<any> = [];
+    public selectedTotal = 0;
 
     constructor(private location: Location,
                 private actRoute: ActivatedRoute,
@@ -58,13 +59,17 @@ export class OfficeDueReportByDateComponent implements OnInit {
         StorageServiceService.setTabValue(1);
     }
 
-    toggleBookingSelection(bookingId: any): void {
+    toggleBookingSelection(booking: any): void {
+        let bookingId = booking.id;
         const idx = this.selectedBookings.indexOf(bookingId);
         if (idx > -1) {
             this.selectedBookings.splice(idx, 1);
+            this.selectedTotal -= booking.netAmt;
         } else {
             this.selectedBookings.push(bookingId);
+            this.selectedTotal += booking.netAmt;
         }
+        console.log("this.selectedBookings " + this.selectedBookings + "   " + this.selectedTotal);
     }
 
     bookingByFilter(bookedBy: any): void {

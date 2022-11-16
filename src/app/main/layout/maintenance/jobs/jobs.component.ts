@@ -207,7 +207,6 @@ deleteJob(id:any): void {
 
 // /* For Job search */
 loadsearchJobs(): void{
-    console.log("query " + JSON.stringify(this.query));
     this.query.page = this.searchpagination.page-1;
     this.query.sort = this.searchpagination.sort;
     this.query.size = this.searchpagination.size;

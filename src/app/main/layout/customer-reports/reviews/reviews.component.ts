@@ -140,7 +140,6 @@ export class ReviewsComponent implements OnInit {
 
     handleFileInput(listOfFiles: any): void {
         const files = listOfFiles.target.files;
-        console.log(files);
         this.files = files;
         for (const file of files) {
             if (file.type === 'application/pdf' || file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || file.type === 'text/csv') {

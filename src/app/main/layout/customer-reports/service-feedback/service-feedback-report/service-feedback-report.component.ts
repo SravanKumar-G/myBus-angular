@@ -126,7 +126,7 @@ export class ServiceFeedbackReportComponent implements OnInit {
 
     sendMessageForBulkBookings(): void{
         this.apiService.getAll(this.apiUrls.sendBulkWhatsAppMessages, this.bookings).subscribe((res: any) => {
-            console.log('hsd', res);
+
             if (res === true) {
                 Swal.fire('Great', 'WhatsApp Messages for selected bookings successfully sent', 'success');
             }

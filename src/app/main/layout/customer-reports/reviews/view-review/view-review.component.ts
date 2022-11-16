@@ -21,7 +21,7 @@ export class ViewReviewComponent implements OnInit {
     }
 
     ngOnInit(): void {
-      console.log(this.reviewId);
+
     }
 
     routingToBack(): void {
