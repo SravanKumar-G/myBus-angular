@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // testPath : 'http://localhost:8091/',
-  testPath : 'http://192.168.29.224:8091/'
+  testPath : 'http://localhost:8091/',
+  // testPath : 'http://192.168.29.224:8091/'
 };
 
 /*
