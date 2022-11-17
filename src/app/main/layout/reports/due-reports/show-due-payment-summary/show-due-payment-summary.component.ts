@@ -20,7 +20,7 @@ export class ShowDuePaymentSummaryComponent implements OnInit {
     public totalPaidAmount = 0;
 
     @Input() selectedBookings: any;
-    @Input() selectedTotal: any;
+    @Input() selectedTotal: any = 0;
 
     constructor(public modalService: NgbModal,
                 private apiService: ApiServiceService,
@@ -57,11 +57,14 @@ export class ShowDuePaymentSummaryComponent implements OnInit {
                     });
                 }
             });
+        }else{
+          this.selectedTotal = 0;
         }
     }
 
   closeModal(): void {
     this.modalService.dismissAll();
     location.reload();
+    this.selectedTotal = 0;
   }
 }

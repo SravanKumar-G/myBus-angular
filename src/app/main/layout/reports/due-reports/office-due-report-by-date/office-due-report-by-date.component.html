@@ -44,7 +44,10 @@
                                 </ng-select>
                             </div>
                             <div class="col-sm-3 text-right m-auto" *ngIf="selectedBookings.length > 0">
-                                <app-show-due-payment-summary [selectedBookings] = selectedBookings> </app-show-due-payment-summary>
+                                <app-show-due-payment-summary
+                                  [selectedBookings] = selectedBookings
+                                  [selectedTotal] = selectedTotal>
+                                </app-show-due-payment-summary>
                             </div>
                         </div>
                         <div class="row form-group">

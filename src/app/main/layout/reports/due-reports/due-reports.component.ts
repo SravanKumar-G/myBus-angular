@@ -23,6 +23,7 @@ export class DueReportsComponent implements OnInit {
     public cashCollectionList: Array<any> = [];
     public array: number[] = [0, 1];
     public size: number | undefined;
+  public selectedTotal: any = 0;
 
     constructor(
         private apiService: ApiServiceService,
@@ -60,7 +61,7 @@ export class DueReportsComponent implements OnInit {
         this.apiService.get(this.apiUrls.getAllDuesByDate).subscribe((res: any) => {
            if (res){
               this.dueByDateList = res;
-           };
+           }
         });
     }
 
@@ -85,22 +86,28 @@ export class DueReportsComponent implements OnInit {
             if (res){
                 this.dueByDateListView = res;
                 this.modalRef = this.ngModalService.open(this.myModal, {size: 'xl', backdrop: 'static', keyboard: false});
-            };
+            }
         });
     }
 
     close(): void {
         this.ngModalService.dismissAll(this.modalRef);
+        this.selectedTotal = 0;
+        this.selectedBookings = [];
     }
 
 
-    toggleBookingSelection(bookingId: string): void {
-        const idx = this.selectedBookings.indexOf(bookingId);
-        if (idx > -1) {
-            this.selectedBookings.splice(idx, 1);
-        } else {
-            this.selectedBookings.push(bookingId);
-        }
+    toggleBookingSelection(booking: any): void {
+      const bookingId = booking.id;
+      const idx = this.selectedBookings.indexOf(bookingId);
+      if (idx > -1) {
+        this.selectedBookings.splice(idx, 1);
+        this.selectedTotal -= booking.netAmt;
+      } else {
+        this.selectedBookings.push(bookingId);
+        this.selectedTotal += booking.netAmt;
+      }
+      console.log('this.selectedBookings ' + this.selectedBookings + '   ' + this.selectedTotal);
     }
 
     dueReportExportToExcel(): void {

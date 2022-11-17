@@ -27,7 +27,10 @@
                                 Service Number: <b class="pl-1">{{serviceId}}</b>
                             </div>
                             <div class="col-sm-9 text-right m-auto" *ngIf="selectedBookings.length > 0">
-                                <app-show-due-payment-summary [selectedBookings] = selectedBookings></app-show-due-payment-summary>
+                                <app-show-due-payment-summary
+                                  [selectedBookings] = selectedBookings
+                                  [selectedTotal]= selectedTotal>
+                                </app-show-due-payment-summary>
                             </div>
                         </div>
                         <div class="row form-group">
@@ -78,7 +81,7 @@
                                                     type="checkbox"
                                                     name="selectedBookings[]"
                                                     value="{{booking.id}}"
-                                                    (click)="toggleBookingSelection(booking.id)"/>
+                                                    (click)="toggleBookingSelection(booking)"/>
                                         </td>
 
                                     </tr>
