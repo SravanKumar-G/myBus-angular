@@ -3358,25 +3358,10 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
     .app-content {
         margin-left: 240px;
     }
+  h5{
+    font-size: 1rem;
+  }
 }
-
-/*.frame {*/
-/*    height: 200px;*/
-/*    width: 200px;*/
-/*    overflow: hidden;*/
-/*}*/
-/*.zoomin img {*/
-/*    height: 200px;*/
-/*    width: 200px;*/
-/*    -webkit-transition: all 2s ease;*/
-/*    -moz-transition: all 2s ease;*/
-/*    -ms-transition: all 2s ease;*/
-/*    transition: all 2s ease;*/
-/*}*/
-/*.zoomin img:hover {*/
-/*    width: 300px;*/
-/*    height: 300px;*/
-/*}*/
 
 @media (min-width: 768px) {
     .sidebar-mini.sidenav-toggled .app-sidebar__user-name,
@@ -3559,6 +3544,15 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
     .app-header {
         background-color: #7e1619 !important;
     }
+  h5{
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 990px){
+  .mob-res{
+    width: 1000px !important;
+  }
 }
 
 /*@media (max-width: 768px) {*/

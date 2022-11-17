@@ -1,52 +1,58 @@
-Total : {{selectedTotal}}
-<button type="button" class="btn btn-sm btn-success" (click)="payBookings(paidSummaryModal)" >
-    Pay Bookings
-</button>
+<div class="row">
+  <div class="col-sm-6 m-auto modal-title form-head-line-style" style="font-size: 18px;">
+    Total : <b>{{selectedTotal}}</b>
+  </div>
+  <div class="col-sm-6">
+    <button type="button" class="btn btn-sm btn-success" (click)="payBookings(paidSummaryModal)">
+      Pay Bookings
+    </button>
+  </div>
+</div>
 
 <!--Paid Summary Modal-->
 <ng-template #paidSummaryModal>
-    <div class="modal-header">
-        <h4 class="modal-title form-head-line-style">Booking Payments</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+  <div class="modal-header">
+    <h4 class="modal-title form-head-line-style">Booking Payments</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-sm-12 table-responsive">
-                <table class="table table-hover table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Ticket No</th>
-                        <th>BookedBy</th>
-                        <th>Route</th>
-                        <th>JourneyDate</th>
-                        <th>Amount</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let booking of paidSummary">
-                        <td>{{booking.ticketNo}}</td>
-                        <td>{{booking.bookedBy}}</td>
-                        <td>{{booking.source}} - {{booking.destination}} - {{booking.serviceName}})</td>
-                        <td>{{booking.jdate }}</td>
-                        <td>{{ booking.netAmt }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="4"><span class="pull-right"> Total paid</span></td>
-                        <td>{{totalPaidAmount}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-12 table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+          <tr>
+            <th>Ticket No</th>
+            <th>BookedBy</th>
+            <th>Route</th>
+            <th>JourneyDate</th>
+            <th>Amount</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let booking of paidSummary">
+            <td>{{booking.ticketNo}}</td>
+            <td>{{booking.bookedBy}}</td>
+            <td>{{booking.source}} - {{booking.destination}} - {{booking.serviceName}})</td>
+            <td>{{booking.jdate }}</td>
+            <td>{{ booking.netAmt }}</td>
+          </tr>
+          <tr>
+            <td colspan="4"><span class="pull-right"> Total paid</span></td>
+            <td>{{totalPaidAmount}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="modal-footer">
-        <div class="col-sm-12 text-right p-0">
-            <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">
-                <i class="fa fa-fw fa-times-circle"></i> Close
-            </button>
-        </div>
+  </div>
+  <div class="modal-footer">
+    <div class="col-sm-12 text-right p-0">
+      <button type="button" class="btn btn-danger btn-sm" (click)="closeModal()">
+        <i class="fa fa-fw fa-times-circle"></i> Close
+      </button>
     </div>
+  </div>
 </ng-template>

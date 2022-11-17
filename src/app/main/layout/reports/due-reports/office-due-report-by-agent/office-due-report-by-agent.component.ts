@@ -17,6 +17,8 @@ export class OfficeDueReportByAgentComponent implements OnInit {
   public dueBookings: Array<any> = [];
   public officeDues: any = {};
   public selectedBookings: Array<any> = [];
+  public selectedTotal = 0;
+
 
   constructor(private location: Location,
               private actRoute: ActivatedRoute,
@@ -48,12 +50,15 @@ export class OfficeDueReportByAgentComponent implements OnInit {
     StorageServiceService.setTabValue(3);
   }
 
-  toggleBookingSelection(bookingId: any): void {
+  toggleBookingSelection(booking: any): void {
+    const bookingId = booking.id;
     const idx = this.selectedBookings.indexOf(bookingId);
     if (idx > -1) {
       this.selectedBookings.splice(idx, 1);
+      this.selectedTotal -= booking.netAmt;
     } else {
       this.selectedBookings.push(bookingId);
+      this.selectedTotal += booking.netAmt;
     }
   }
 

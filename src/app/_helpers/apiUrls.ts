@@ -9,7 +9,7 @@ import {environment} from 'src/environments/environment';
 export class ApiUrls {
     // mainUrl = 'http://localhost:8091/';
     // mainUrl = 'http://qacargo.srikrishnatravels.in/';
-    // mainUrl = 'https://lrapi.srikrishnatravels.in/';
+    // mainUrl = 'http://lrapi.srikrishnatravels.in/';
     mainUrl = environment.testPath;
 
 
@@ -160,7 +160,7 @@ export class ApiUrls {
     addInventory = 'api/v1/inventory/addInventory';
     deleteInventory = 'api/v1/inventory/delete/';
 
-    //Job categories API
+    // Job categories API
     getAllJobCategories = 'api/v1/jobCategory/all';
 
 
@@ -315,7 +315,7 @@ export class ApiUrls {
     reviewFileUpload = 'api/v1/review/upload';
 
     // Escalations API's
-    countOfEscalations = 'api/v1/bookingFeedback/count/';
+    countOfEscalations = 'api/v1/bookingFeedback/count';
     getAllEscalations = 'api/v1/bookingFeedback/get';
     addCommentToBooking = 'api/v1/bookingFeedback/addComment/';
     escalationResolve = 'api/v1/bookingFeedback/resolve/';
