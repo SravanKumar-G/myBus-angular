@@ -101,6 +101,8 @@ export class OfficeExpensesComponent implements OnInit {
   }
 
   getPendingCount(): void{
+    const date = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
+    this.location.replaceState('/officeExpenses/' + date);
     this.apiService.get(this.apiUrls.pendingCount).subscribe((res: any) => {
       if (res >= 0){
         this.countPending = res;
@@ -150,6 +152,8 @@ export class OfficeExpensesComponent implements OnInit {
     });
   }
   getApprovedCount(): void{
+    const date = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
+    this.location.replaceState('/officeExpenses/' + date);
     this.apiService.get(this.apiUrls.approvedCount).subscribe((res: any) => {
       if (res >= 0){
         this.countApproved = res;
