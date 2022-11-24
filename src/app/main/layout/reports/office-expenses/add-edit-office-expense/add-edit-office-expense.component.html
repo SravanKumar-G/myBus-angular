@@ -21,7 +21,7 @@
                                 <label class="control-label">Date<span class="mandatory-field">*</span></label>
                                 <div class="input-group">
                                     <input name="startDate" class="form-control form-control-sm"
-                                           [(ngModel)]="addExpenseQuery.date"
+                                           [(ngModel)]="officeExpense.date"
                                            placeholder="Enter Date"
                                            readonly type="text"
                                            #date1="bsDatepicker"
@@ -40,20 +40,20 @@
                             <div class="col-sm-6 col-12 form-group">
                                 <label>Description:<span class="mandatory-field">*</span></label>
                                 <input type="text" class="form-control form-control-sm"
-                                       placeholder="Enter Description" [(ngModel)]="addExpenseQuery.description"
+                                       placeholder="Enter Description" [(ngModel)]="officeExpense.description"
                                        [ngModelOptions]="{standalone: true}"
                                 />
                             </div>
                             <div class="col-sm-6 col-12 form-group">
                                 <label>Amount:<span class="mandatory-field">*</span></label>
                                 <input type="text" class="form-control form-control-sm" numbersOnly
-                                       placeholder="Enter Amount" [(ngModel)]="addExpenseQuery.amount"
+                                       placeholder="Enter Amount" [(ngModel)]="officeExpense.amount"
                                        [ngModelOptions]="{standalone: true}"
                                 />
                             </div>
                             <div class="col-sm-6 col-12 form-group">
                                 <label>Branch</label>
-                                <ng-select [(ngModel)]="addExpenseQuery.branchOfficeId"
+                                <ng-select [(ngModel)]="officeExpense.branchOfficeId"
                                            [ngModelOptions]="{standalone: true}"
                                            bindValue="id"
                                            bindLabel="name"
@@ -66,7 +66,7 @@
 <!--                            <div class="col-sm-6 col-12 form-group"></div>-->
                             <div class="col-sm-6 col-12 form-group">
                                 <label class="control-label">Select ExpenseType</label>
-                                <ng-select [(ngModel)]="addExpenseQuery.expenseType"
+                                <ng-select [(ngModel)]="officeExpense.expenseType"
                                            [ngModelOptions]="{standalone: true}"
                                            bindValue="expenseList"
                                            bindLabel="expenseList"
@@ -80,7 +80,7 @@
                             <div class="col-sm-6 col-12 form-group"
                                  >
                                 <label class=" control-label">select vehicle</label>
-                                <ng-select [(ngModel)]="addExpenseQuery.vehicleId"
+                                <ng-select [(ngModel)]="officeExpense.vehicleId"
                                            [ngModelOptions]="{standalone: true}"
                                            bindValue="id"
                                            bindLabel="regNo"
@@ -90,11 +90,11 @@
                                                [value]="vehicle.id">{{vehicle.regNo}}</ng-option>
                                 </ng-select>
                             </div>
-                            <div class="col-sm-6 col-12 form-group" *ngIf="addExpenseQuery.expenseType == 'SALARY'">
+                            <div class="col-sm-6 col-12 form-group" *ngIf="officeExpense.expenseType == 'SALARY'">
                                 <label class=" control-label">From Date</label>
                                 <div class="input-group">
                                     <input name="startDate" class="form-control form-control-sm"
-                                           [(ngModel)]="addExpenseQuery.fromDate"
+                                           [(ngModel)]="officeExpense.fromDate"
                                            placeholder="Enter Date"
                                            readonly type="text"
                                            #date1="bsDatepicker"
@@ -110,11 +110,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-12 form-group" *ngIf="addExpenseQuery.expenseType == 'SALARY'">
+                            <div class="col-sm-6 col-12 form-group" *ngIf="officeExpense.expenseType == 'SALARY'">
                                 <label class=" control-label">To Date</label>
                                 <div class="input-group">
                                     <input name="startDate" class="form-control form-control-sm"
-                                           [(ngModel)]="addExpenseQuery.toDate"
+                                           [(ngModel)]="officeExpense.toDate"
                                            placeholder="Enter Date"
                                            readonly type="text"
                                            #date1="bsDatepicker"
@@ -133,7 +133,7 @@
 <!--                            *ngIf="addExpenseQuery.expenseType === 'DIESEL'"-->
                             <div class="col-sm-6 col-12 form-group" >
                                 <label class="control-label">Supplier</label>
-                                <ng-select [(ngModel)]="addExpenseQuery.supplierId"
+                                <ng-select [(ngModel)]="officeExpense.supplierId"
                                            [ngModelOptions]="{standalone: true}"
                                            bindValue="id"
                                            bindLabel="name"
@@ -144,7 +144,25 @@
                                 </ng-select>
                             </div>
                             <div class="col-sm-6 col-12 form-group" *ngIf="officeExpenseId">
-                                <app-files-upload [refId]="officeExpenseId" [type]="'ExpenseType'"></app-files-upload>
+                                <app-files-upload [refId]="officeExpenseId" [type]="'OfficeExpense'"></app-files-upload>
+                                <div class="table-responsive mt-3" *ngIf="officeExpense.uploads && officeExpense.uploads.length > 0">
+                                    <table class="table table-bordered table-hover" style="margin-bottom: 0 !important;">
+                                        <tbody>
+                                        <tr *ngFor="let upload of officeExpense.uploads; let i = index;">
+                                            <td>{{i + 1}}</td>
+                                            <td><a href="{{upload.url}}" target="_blank">{{upload.displayName}}</a></td>
+                                            <td>
+                                                <a class="cus-a"
+                                                   (click)="deleteUpload(officeExpenseId, upload.fileName)"><i
+                                                        class="fa fa-trash" style="color: red;"></i> </a>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="!officeExpense.uploads || officeExpense.uploads.length === 0">
+                                            <td colspan="3">No Images found</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </form>

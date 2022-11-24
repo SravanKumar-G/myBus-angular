@@ -23,7 +23,6 @@ export class FilesUploadComponent implements OnInit {
     // get the data from (A) component
     @Input() refId: any;
     @Input() type: any;
-
     // return the data to (A) component
     @Output() imageToEmitToUpload = new EventEmitter<object>();
     public multiple: any;
@@ -78,7 +77,11 @@ export class FilesUploadComponent implements OnInit {
 
 
     fileUpload(): void {
-        this.apiService.FileUpload(this.apiUrls.fileUpload, this.files, this.refId, this.type).subscribe((res: any) => {
+        let uploadUrl = this.apiUrls.fileUpload;
+        if (this.type === 'OfficeExpense' ) {
+            uploadUrl = 'api/v1/officeExpense/uploadFiles/' + this.refId;
+        }
+        this.apiService.fileUpload(uploadUrl, this.files, this.refId, this.type).subscribe((res: any) => {
             if (res) {
                 this.getUploads(this.refId);
                 Swal.fire('Wow!', 'File uploaded Successfully', 'success');

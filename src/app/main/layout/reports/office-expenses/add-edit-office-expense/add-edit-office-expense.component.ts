@@ -14,7 +14,7 @@ export class AddEditOfficeExpenseComponent implements OnInit {
 
     public xlsxFile: any;
     public lastInvalids: any;
-    public addExpenseQuery: any = {
+    public officeExpense: any = {
         date: new Date(),
         branchOfficeId: '',
         expenseType: '',
@@ -61,8 +61,8 @@ export class AddEditOfficeExpenseComponent implements OnInit {
     getExpenseDetails(): void {
         this.apiService.get(this.apiUrls.getExpense + this.officeExpenseId).subscribe((res: any) => {
             if (res) {
-                this.addExpenseQuery = res;
-                this.addExpenseQuery.date = new Date(res.date);
+                this.officeExpense = res;
+                this.officeExpense.date = new Date(res.date);
             }
         });
     }
@@ -99,23 +99,30 @@ export class AddEditOfficeExpenseComponent implements OnInit {
             }
         });
     }
-
+    deleteUpload(officeExpenseId: string, fileName: string): void {
+        console.log(this.apiUrls.deleteBillUpload);
+        this.apiService.delete( "api/v1/officeExpense/deleteBillUpload/" + officeExpenseId + "/" + fileName).subscribe((res: any) => {
+            if (res) {
+                this.router.navigate(['/officeExpenses/NaN/editOfficeExpense/' + officeExpenseId]);
+            }
+        });
+    }
     dateFunction(): void {
-        if (this.addExpenseQuery.date) {
-            const CDate = new Date(this.addExpenseQuery.date);
+        if (this.officeExpense.date) {
+            const CDate = new Date(this.officeExpense.date);
             const startYear = CDate.getFullYear();
             const startMonth: any = CDate.getMonth() + 1;
             const startDay: any = CDate.getDate();
-            this.addExpenseQuery.date = startYear + '-' + startMonth + '-' + startDay;
+            this.officeExpense.date = startYear + '-' + startMonth + '-' + startDay;
         }
 
     }
 
     save(): void {
         if (this.officeExpenseId) {
-            this.apiService.update(this.apiUrls.editExpense, this.addExpenseQuery).subscribe((res: any) => {
+            this.apiService.update(this.apiUrls.editExpense, this.officeExpense).subscribe((res: any) => {
                 if (res) {
-                    this.addExpenseQuery = res;
+                    this.officeExpense = res;
                     this.apiService.getLoggedInUserData();
                     this.router.navigate(['officeExpenses']);
                 }
@@ -123,9 +130,9 @@ export class AddEditOfficeExpenseComponent implements OnInit {
                 this.errorMessage = error.message;
             });
         } else {
-            this.apiService.getAll(this.apiUrls.addExpense, this.addExpenseQuery).subscribe((res: any) => {
+            this.apiService.getAll(this.apiUrls.addExpense, this.officeExpense).subscribe((res: any) => {
                 if (res) {
-                    this.addExpenseQuery = res;
+                    this.officeExpense = res;
                     this.apiService.getLoggedInUserData();
                     this.router.navigate(['officeExpenses']);
                 }

@@ -99,7 +99,7 @@ export class ApiServiceService {
         return this.http.post(this.Apiurls.mainUrl + subUrl, formData);
     }
 
-    public FileUpload = (subUrl: any, files: any, id: any, type: any) => {
+    public fileUpload = (subUrl: any, files: any, id: any, type: any) => {
         const formData: FormData = new FormData();
         formData.append('id', id);
         formData.append('type', type);

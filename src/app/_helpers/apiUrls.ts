@@ -47,6 +47,7 @@ export class ApiUrls {
     loadBranchNames = 'api/v1/branchOffice/names';
     loadBranchNamesForCargo = 'api/v1/branchOffice/namesForCargo';
 
+
     // Roles API's
     getRolesCount = 'api/v1/roles/count';
     getAllRoles = 'api/v1/roles';
@@ -240,6 +241,8 @@ export class ApiUrls {
     vehicleNumbersList = 'api/v1/vehicleNumbers';
     fileUpload = 'api/v1/fileUpload';
     getFile = 'api/v1/getUploads/';
+    uploadBill = 'api/v1/officeExpense/uploadFiles/{expenseId}';
+    deleteBillUpload = 'api/v1/officeExpense/deleteBillUpload'; //api/v1/officeExpense/deleteBillUpload/{expenseId}/{fileName}
 
     // Cash Balance
     getCashBalances = 'api/v1/user/cashBalances';
@@ -281,7 +284,7 @@ export class ApiUrls {
 
     // Image related APIs
     getUploads = 'api/v1/getUploads/?id=';
-    removeImage = '/api/v1/deleteUpload';
+    removeImage = 'api/v1/deleteUpload';
 
     // Salary Reports API's
     getSalaryReportsCount = 'api/v1/dailyTrips/getSalaryReportsCount';
