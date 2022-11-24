@@ -124,7 +124,7 @@ export class AddEditOfficeExpenseComponent implements OnInit {
                 if (res) {
                     this.officeExpense = res;
                     this.apiService.getLoggedInUserData();
-                    this.router.navigate(['officeExpenses']);
+                    this.router.navigate(['officeExpenses/:date']);
                 }
             }, error => {
                 this.errorMessage = error.message;
@@ -134,7 +134,7 @@ export class AddEditOfficeExpenseComponent implements OnInit {
                 if (res) {
                     this.officeExpense = res;
                     this.apiService.getLoggedInUserData();
-                    this.router.navigate(['officeExpenses']);
+                    this.router.navigate(['officeExpenses/:date']);
                 }
             }, error => {
                 this.errorMessage = error.message;
@@ -143,6 +143,6 @@ export class AddEditOfficeExpenseComponent implements OnInit {
     }
 
     close(): void {
-        this.router.navigate(['officeExpenses']);
+        this.router.navigate(['officeExpenses/:date']);
     }
 }
