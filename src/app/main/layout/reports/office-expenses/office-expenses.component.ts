@@ -76,6 +76,7 @@ export class OfficeExpensesComponent implements OnInit {
   public suppliersList: Array<any> = [];
   public vehicles: Array<any> = [];
   @ViewChild('viewImageModal') viewImageModal: any;
+  @ViewChild('viewApprovedImageModal') viewApprovedImageModal: any;
   public byDateList: Array<any> = [];
   public currentDate: any;
 
@@ -466,6 +467,9 @@ export class OfficeExpensesComponent implements OnInit {
 
   viewImages(url: any): void{
      this.modalService.open(this.viewImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
+  }
+  viewIApprovedmages(url: any): void{
+    this.modalService.open(this.viewApprovedImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
   }
 
   previousDate(): void {

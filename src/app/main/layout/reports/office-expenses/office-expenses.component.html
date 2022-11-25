@@ -260,6 +260,7 @@
                                             <i *ngIf="pendingQuery.sortOrder == 'date'" class="fa"
                                                [ngClass]="pendingQuery.orderBy == 'asc'? 'fa-sort-asc' : 'fa-sort-desc'"></i>
                                         </th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -275,6 +276,14 @@
                                         <td><span *ngIf="approved.status != 'Auto'">{{approved.attrs ? approved.attrs.updatedBy : 'NA'}}</span></td>
                                         <td>{{approved.amount}}</td>
                                         <td>{{approved.status}}</td>
+                                        <td class="td-active">
+                                            <div style="display: flex;justify-content: center;">
+                                                <button class="action-icon-style waves-effect waves-light" title="View Bill" *ngIf="approved.uploads !== null"
+                                                        (click)="viewIApprovedmages(approved)">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr *ngIf="countApproved === 0 || !countApproved">
                                         <td colspan="12">No OfficeExpenses</td>
@@ -824,6 +833,20 @@
     </div>
     <div class="modal-body">
 <!--        <img alt=" Image" src="{{pendingList.billUrl}}" class="card-img-top" width="" height="100px">-->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Close</button>
+    </div>
+</ng-template>
+<ng-template #viewApprovedImageModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View Bill</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!--        <img alt=" Image" src="{{approvedList.billUrl}}" class="card-img-top" width="" height="100px">-->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Close</button>
