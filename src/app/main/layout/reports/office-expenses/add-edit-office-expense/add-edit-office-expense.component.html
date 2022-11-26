@@ -144,7 +144,7 @@
                                 </ng-select>
                             </div>
                             <div class="col-sm-6 col-12 form-group" *ngIf="officeExpenseId">
-                                <app-files-upload [refId]="officeExpenseId" [type]="'OfficeExpense'"></app-files-upload>
+                                <app-files-upload [refId]="officeExpenseId" [type]="'OfficeExpense'" (imageToEmitToUpload) = "imageToEmitToUpload($event)"></app-files-upload>
                                 <div class="table-responsive mt-3" *ngIf="officeExpense.uploads && officeExpense.uploads.length > 0">
                                     <table class="table table-bordered table-hover" style="margin-bottom: 0 !important;">
                                         <tbody>

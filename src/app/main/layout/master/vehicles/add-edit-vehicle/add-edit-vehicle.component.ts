@@ -128,4 +128,8 @@ export class AddEditVehicleComponent implements OnInit {
             Swal.fire('error', error.message, 'error');
         });
     }
+
+    imageToEmitToUpload(event: any): void{
+        this.getVehicleDetailsById();
+    }
 }

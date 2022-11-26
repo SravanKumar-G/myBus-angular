@@ -101,9 +101,10 @@ export class AddEditOfficeExpenseComponent implements OnInit {
     }
     deleteUpload(officeExpenseId: string, fileName: string): void {
         console.log(this.apiUrls.deleteBillUpload);
-        this.apiService.delete( "api/v1/officeExpense/deleteBillUpload/" + officeExpenseId + "/" + fileName).subscribe((res: any) => {
+        this.apiService.delete( 'api/v1/officeExpense/deleteBillUpload/' + officeExpenseId + '/' + fileName).subscribe((res: any) => {
             if (res) {
-                this.router.navigate(['/officeExpenses/NaN/editOfficeExpense/' + officeExpenseId]);
+                // this.router.navigate(['/officeExpenses/NaN/editOfficeExpense/' + officeExpenseId]);
+                this.getExpenseDetails();
             }
         });
     }
@@ -144,5 +145,11 @@ export class AddEditOfficeExpenseComponent implements OnInit {
 
     close(): void {
         this.router.navigate(['officeExpenses/:date']);
+    }
+
+    imageToEmitToUpload(event: any): void{
+        if (event === 200){
+            this.getExpenseDetails();
+        }
     }
 }
