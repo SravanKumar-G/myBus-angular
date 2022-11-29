@@ -138,8 +138,8 @@
                                          </td>
                                          <td class="td-active">
                                              <div style="display: flex;justify-content: center;">
-                                                 <button class="action-icon-style waves-effect waves-light" title="View Bill"
-                                                 (click)="viewImages(pending)">
+                                                 <button class="action-icon-style waves-effect waves-light" title="View Bill" *ngIf="pending.uploads"
+                                                 (click)="viewImages(pending.id)">
                                                      <i class="fa fa-eye"></i>
                                                  </button>
                                                  <button class="action-icon-style waves-effect waves-light"
@@ -278,8 +278,8 @@
                                         <td>{{approved.status}}</td>
                                         <td class="td-active">
                                             <div style="display: flex;justify-content: center;">
-                                                <button class="action-icon-style waves-effect waves-light" title="View Bill" *ngIf="approved.uploads !== null"
-                                                        (click)="viewIApprovedmages(approved)">
+                                                <button class="action-icon-style waves-effect waves-light" title="View Bill" *ngIf="approved.uploads"
+                                                        (click)="viewApprovedImages(approved.id)">
                                                     <i class="fa fa-eye"></i>
                                                 </button>
                                             </div>
@@ -490,6 +490,7 @@
                                         </th>
                                         <th>Created By</th>
                                         <th>Approved By</th>
+                                        <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -505,6 +506,14 @@
                                         <td>{{searchExpense.amount}}</td>
                                         <td>{{searchExpense.attrs ? searchExpense.attrs.createdBy : ''}}</td>
                                         <td><span *ngIf="searchExpense.status != 'Auto'">{{searchExpense.attrs ? searchExpense.attrs.updatedBy : ''}}</span></td>
+                                        <td class="td-active">
+                                        <div style="display: flex;justify-content: center;">
+                                            <button class="action-icon-style waves-effect waves-light" title="View Bill" *ngIf="searchExpense.uploads"
+                                                    (click)="viewSearchExpenseImages(searchExpense.id)">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        </td>
                                     </tr>
                                     <tr *ngIf="searchQuery.count === 0 || !searchQuery.count">
                                         <td colspan="11">No OfficeExpenses</td>
@@ -784,6 +793,7 @@
                                             data-order="desc" data-name="attrs.createdBy">Created By</th>
                                         <th>Amount</th>
                                         <th>Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -800,6 +810,14 @@
                                         <td>{{data.amount.toFixed(2)}}</td>
                                         <td>
                                             {{data.status || 'NA'}}
+                                        </td>
+                                        <td class="td-active">
+                                            <div style="display: flex;justify-content: center;">
+                                                <button class="action-icon-style waves-effect waves-light" title="View Bill" *ngIf="data.uploads"
+                                                        (click)="viewByDateImages(data.id)">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr *ngIf="byDateList.length === 0 || !byDateList">
@@ -831,8 +849,25 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body">
-<!--        <img alt=" Image" src="{{pendingList.billUrl}}" class="card-img-top" width="" height="100px">-->
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item" [ngClass]="i === 0 ? 'active' : ''"
+                 *ngFor="let img of pendingViewImageData.uploads; let i = index;"> <b>{{i + 1  +'/' + pendingImgIndex}}</b>
+                <img class="d-block w-100" src="{{img.attrs.url}}" alt="First slide">
+                <div class="carousel-caption carousel-caption-custom">
+                    <a class="btn-link cust-prev-next-button" href="{{img.attrs.url}}" title="Download Image" style="font-size: 18px">
+                        Download<i class="fa fa-arrow-circle-down" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="fa fa-arrow-circle-left cust-prev-next-button" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="fa fa-arrow-circle-right cust-prev-next-button" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Close</button>
@@ -846,7 +881,92 @@
         </button>
     </div>
     <div class="modal-body">
-        <!--        <img alt=" Image" src="{{approvedList.billUrl}}" class="card-img-top" width="" height="100px">-->
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item" [ngClass]="i === 0 ? 'active' : ''"
+                     *ngFor="let img of viewImageData.uploads; let i = index;"> <b>{{i + 1  +'/' + imgIndex}}</b>
+                  <img class="d-block w-100" src="{{img.attrs.url}}" alt="First slide">
+                    <div class="carousel-caption carousel-caption-custom">
+                        <a class="btn-link cust-prev-next-button" href="{{img.attrs.url}}" title="Download Image" style="font-size: 18px">
+                            Download<i class="fa fa-arrow-circle-down" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="fa fa-arrow-circle-left cust-prev-next-button" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="fa fa-arrow-circle-right cust-prev-next-button" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Close</button>
+    </div>
+</ng-template>
+<ng-template #viewSearchExpenseImageModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View Bill</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item" [ngClass]="i === 0 ? 'active' : ''"
+                     *ngFor="let img of viewSearchImageData.uploads; let i = index;"> <b>{{i + 1  +'/' + imgIndexForSearch}}</b>
+                  <img class="d-block w-100" src="{{img.attrs.url}}" alt="First slide">
+                    <div class="carousel-caption carousel-caption-custom">
+                        <a class="btn-link cust-prev-next-button" href="{{img.attrs.url}}" title="Download Image" style="font-size: 18px">
+                            Download<i class="fa fa-arrow-circle-down" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="fa fa-arrow-circle-left cust-prev-next-button" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="fa fa-arrow-circle-right cust-prev-next-button" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Close</button>
+    </div>
+</ng-template>
+<ng-template #viewByDateImageModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">View Bill</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item" [ngClass]="i === 0 ? 'active' : ''"
+                     *ngFor="let img of viewByDateImageData.uploads; let i = index;"> <b>{{i + 1  +'/' + imgIndexForByDate}}</b>
+                  <img class="d-block w-100" src="{{img.attrs.url}}" alt="First slide">
+                    <div class="carousel-caption carousel-caption-custom">
+                        <a class="btn-link cust-prev-next-button" href="{{img.attrs.url}}" title="Download Image" style="font-size: 18px">
+                            Download<i class="fa fa-arrow-circle-down" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="fa fa-arrow-circle-left cust-prev-next-button" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="fa fa-arrow-circle-right cust-prev-next-button" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Close</button>

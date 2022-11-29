@@ -77,8 +77,18 @@ export class OfficeExpensesComponent implements OnInit {
   public vehicles: Array<any> = [];
   @ViewChild('viewImageModal') viewImageModal: any;
   @ViewChild('viewApprovedImageModal') viewApprovedImageModal: any;
+  @ViewChild('viewSearchExpenseImageModal') viewSearchExpenseImageModal: any;
+  @ViewChild('viewByDateImageModal') viewByDateImageModal: any;
   public byDateList: Array<any> = [];
   public currentDate: any;
+  public viewImageData: any;
+  public imgIndex: any;
+  public pendingViewImageData: any;
+  public pendingImgIndex: any;
+  public viewSearchImageData: any;
+  public imgIndexForSearch: any;
+  public viewByDateImageData: any;
+  public imgIndexForByDate: any;
 
   constructor(private router: Router,
               public apiService: ApiServiceService,
@@ -465,11 +475,41 @@ export class OfficeExpensesComponent implements OnInit {
     this.searchExpenses();
   }
 
-  viewImages(url: any): void{
-     this.modalService.open(this.viewImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
+  viewImages(id: any): void{
+    this.apiService.get(this.apiUrls.getExpense + id).subscribe((res: any) => {
+      if (res){
+        this.pendingViewImageData = res;
+        this.pendingImgIndex = res.uploads.length;
+        this.modalService.open(this.viewImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
+      }
+    });
   }
-  viewIApprovedmages(url: any): void{
-    this.modalService.open(this.viewApprovedImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
+  viewApprovedImages(id: any): void{
+    this.apiService.get(this.apiUrls.getExpense + id).subscribe((res: any) => {
+      if (res) {
+        this.viewImageData = res;
+        this.imgIndex = res.uploads.length;
+        this.modalService.open(this.viewApprovedImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
+      }
+    });
+  }
+  viewSearchExpenseImages(id: any): void{
+    this.apiService.get(this.apiUrls.getExpense + id).subscribe((res: any) => {
+      if (res) {
+        this.viewSearchImageData = res;
+        this.imgIndexForSearch = res.uploads.length;
+        this.modalService.open(this.viewSearchExpenseImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
+      }
+    });
+  }
+  viewByDateImages(id: any): void{
+    this.apiService.get(this.apiUrls.getExpense + id).subscribe((res: any) => {
+      if (res) {
+        this.viewByDateImageData = res;
+        this.imgIndexForByDate = res.uploads.length;
+        this.modalService.open(this.viewByDateImageModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backDropClass'});
+      }
+    });
   }
 
   previousDate(): void {

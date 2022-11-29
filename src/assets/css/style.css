@@ -4331,3 +4331,10 @@ ul.uib-datepicker-popup.dropdown-menu.ng-scope {
 .xng-breadcrumb-trail{
     color: rgb(149 139 139 / 90%) !important;
 }
+.cust-prev-next-button{
+    font-size: 35px;
+    color: red;
+}
+.carousel-caption-custom{
+    bottom: -26px !important;
+}
