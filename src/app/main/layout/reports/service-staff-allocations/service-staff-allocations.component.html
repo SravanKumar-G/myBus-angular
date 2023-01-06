@@ -29,7 +29,7 @@
                                        name="permit"
                                        [(ngModel)]="currentDate"
                                        [ngModelOptions]="{standalone: true}"
-                                       (ngModelChange)="serviceReportStaffAllocation()"
+                                       (ngModelChange)="serviceReportStaffAllocation('')"
                                        bsDatepicker
                                        #dt="bsDatepicker"
                                        [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
@@ -47,8 +47,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-2" (click)="serviceReportStaffAllocation()">
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control form-control-sm" placeholder="search by vehicle number / phonenumber" [(ngModel)]="vehicleNumber" (ngModelChange)="serviceReportStaffAllocation(vehicleNumber)" />
+                        </div>
+                        <div class="col-sm-1" (click)="serviceReportStaffAllocation('')">
                             <h3><i class="fa fa-refresh"></i></h3>
+                        </div>
+                        <div class="col-sm-1 offset-5 text-right" >
+                            <button type="button" class="btn-primary btn btn-sm" (click)="add()">Add</button>
                         </div>
                     </div>
                     <div class="row">
@@ -58,27 +64,59 @@
                                 <tr>
                                     <th>S No</th>
                                     <th>Service#</th>
-                                    <th>Type</th>
-                                    <th>From</th>
-                                    <th>To</th>
+                                    <th>Trip</th>
+<!--                                    <th>From</th>-->
+<!--                                    <th>To</th>-->
                                     <th>Vehicle</th>
-                                    <th>Staff Details</th>
+                                    <th>Driver 1</th>
+                                    <th>Driver 2</th>
+<!--                                    <th>Driver 3</th>-->
+                                    <th>Cleaner</th>
+                                    <th>Conductor</th>
+                                    <th>Fuel Quantity</th>
+                                    <th>Fuel Cost</th>
+                                    <th>Cash Collection</th>
+<!--                                    <th>Staff Details</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr *ngFor="let service of staffAllocationList; let i =index;">
                                     <td>{{i + 1}}</td>
                                     <td>{{ service.serviceNumber || '-----'}}</td>
-                                    <td>{{ service.busType || '-----'}}</td>
-                                    <td>{{ service.from || '-----' }}</td>
-                                    <td>{{ service.to || '-----'}}</td>
+                                    <td>
+                                        <b>From: </b><span>{{service.from || '-----'}}</span><br />
+                                        <b>T0: </b><span>{{service.to || '-----'}}</span> <br />
+                                        <b>Type: </b><span>{{service.busType || '-----'}}</span> <br />
+                                    </td>
+<!--                                    <td>{{ service.busType || '-&#45;&#45;&#45;&#45;'}}</td>-->
+<!--                                    <td>{{ service.from || '-&#45;&#45;&#45;&#45;' }}</td>-->
+<!--                                    <td>{{ service.to || '-&#45;&#45;&#45;&#45;'}}</td>-->
                                     <td>{{ service.vehicleRegNumber || '-----' }}</td>
                                     <td>
-                                        <ul>
-                                            <li *ngFor="let data of service.staffDetails"><b>{{data.type}}</b>&nbsp;&nbsp; - &nbsp;{{data.name || '-----'}}({{data.contactNumber}})
-                                            </li>
-                                        </ul>
+                                        <b>Name: </b> <span> {{ service.driver1 != null ? service.driver1.name : 'NA'}}</span> <br />
+                                        <b>Mobile: </b> <span> {{ service.driver1 != null ? service.driver1.contactNumber : 'NA'}} </span>
                                     </td>
+                                    <td>
+                                        <b>Name: </b> <span> {{service.driver2 != null ? service.driver2.name : 'NA'}}</span> <br />
+                                        <b>Mobile: </b> <span> {{service.driver2 != null ?service.driver2.contactNumber : 'NA'}} </span>
+                                    </td>
+                                    <td>
+                                        <b>Name: </b> <span> {{ service.cleaner != null ? service.cleaner.name :'NA'}}</span> <br />
+                                        <b>Mobile: </b> <span> {{service.cleaner != null ? service.cleaner.contactNumber : 'NA'}} </span>
+                                    </td>
+                                    <td>
+                                        <b>Name: </b> <span> {{service.conductor != null ? service.conductor.name : 'NA'}}</span> <br />
+                                        <b>Mobile: </b> <span> {{service.conductor != null ? service.conductor.contactNumber : 'NA'}} </span>
+                                    </td>
+                                    <td>{{service.fuelQuantity || '-----'}}</td>
+                                    <td>{{service.fuelCost || '-----'}}</td>
+                                    <td>{{service.cashCollection || '-----'}}</td>
+<!--                                    <td>-->
+<!--                                        <ul>-->
+<!--                                            <li *ngFor="let data of service.staffDetails"><b>{{data.type}}</b>&nbsp;&nbsp; - &nbsp;{{data.name || '-&#45;&#45;&#45;&#45;'}}({{data.contactNumber}})-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--                                    </td>-->
 <!--                                    <td *ngFor="let s of service.staffDetails">-->
 <!--                                        {{s.type === 'Driver'? s.name :s.type === 'DRIVER'? s.name: s.type === 'CLEANER' || s.type === 'Cleaner'? s.name: s.type === 'CONDUCTOR'? s.name : 'NA'}} - -->
 <!--                                        {{s.type === 'Driver'? s.contactNumber :s.type === 'DRIVER'? s.contactNumber: s.type === 'CLEANER'? s.contactNumber: s.type === 'CONDUCTOR'? s.contactNumber : 'NA'}}-->
@@ -99,3 +137,140 @@
         </div>
     </div>
 </div>
+
+<ng-template #addStaffModal class="viewExpensePop" let-c="close" let-d="dismiss">
+    <div class="modal-header" style="width: 100%;">
+        Add Staff
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-4 form-group">
+                <label class="control-label">Trip Date<span class="mandatory-field">*</span></label>
+                <div class="input-group">
+                    <input name="startDate" class="form-control"
+                           [(ngModel)]="query.journeyDate"
+                           placeholder="Enter Date"
+                           readonly type="text"
+                           #date1="bsDatepicker"
+                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-green', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                           bsDatepicker/>
+                    <div class="input-group-append">
+                        <button class="btn btn-light btn-sm" type="button"
+                                style="border: 1px solid #ced4da;"
+                                (click)="date1.show()"
+                                [attr.aria-expanded]="date1.isOpen">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 form-group" >
+                <label class="control-label">Select Vehicle <span class="mandatory-field">*</span></label>
+                <ng-select [(ngModel)]="query.vehicleRegNumber"
+                           [ngModelOptions]="{standalone: true}"
+                           bindValue="vehicle"
+                           bindLabel="vehicleId"
+                           [clearable]="false">
+                    <ng-option value="" selected>Select Option</ng-option>
+                    <ng-option *ngFor="let vehicle of allVehicles"
+                               [value]="vehicle.regNo">{{vehicle.regNo}}</ng-option>
+                </ng-select>
+            </div>
+            <div class="col-sm-4 form-group" >
+                <label class="control-label">Supplier</label>
+                <ng-select [(ngModel)]="query.supplier"
+                           [ngModelOptions]="{standalone: true}"
+                           bindValue=""
+                           bindLabel="name"
+                           [clearable]="false">
+                    <ng-option value="" selected>Select Option</ng-option>
+                    <ng-option *ngFor="let supplier of suppliersList"
+                               [value]="supplier">{{supplier.name}}</ng-option>
+                </ng-select>
+            </div>
+            <div class="col-sm-3 form-group" >
+                <label class="control-label">Driver One <span class="mandatory-field">*</span></label>
+                <ng-select [(ngModel)]="query.driver1"
+                           [ngModelOptions]="{standalone: true}"
+                           bindValue=""
+                           bindLabel="name"
+                           (ngModelChange)="removedDriverFun(query.driver1, 1)"
+                           [clearable]="false">
+                    <ng-option value="" selected>Select Option</ng-option>
+                    <ng-option *ngFor="let staff of driverOne"
+                               [value]="staff">{{staff.name}}</ng-option>
+                </ng-select>
+            </div>
+            <div class="col-sm-3 form-group" >
+                <label class="control-label">Driver Two</label>
+                <ng-select [(ngModel)]="query.driver2"
+                           [ngModelOptions]="{standalone: true}"
+                           bindValue=""
+                           bindLabel="name"
+                           (ngModelChange)="removedDriverFun(query.driver2, 2)"
+                           [clearable]="false">
+                    <ng-option value="" selected>Select Option</ng-option>
+                    <ng-option *ngFor="let staff of driverTwo"
+                               [value]="staff">{{staff.name}}</ng-option>
+                </ng-select>
+            </div>
+            <div class="col-sm-3 form-group" >
+                <label class="control-label">Conductor</label>
+                <ng-select [(ngModel)]="query.conductor"
+                           [ngModelOptions]="{standalone: true}"
+                           bindValue=""
+                           bindLabel="name"
+                           [clearable]="false">
+                    <ng-option value="" selected>Select Option</ng-option>
+                    <ng-option *ngFor="let con of conductor"
+                               [value]="con">{{con.name}}</ng-option>
+                </ng-select>
+            </div>
+            <div class="col-sm-3 form-group" >
+                <label class="control-label">Cleaner</label>
+                <ng-select [(ngModel)]="query.cleaner"
+                           [ngModelOptions]="{standalone: true}"
+                           bindValue=""
+                           bindLabel="name"
+                           [clearable]="false">
+                    <ng-option value="" selected>Select Option</ng-option>
+                    <ng-option *ngFor="let cln of cleaner"
+                               [value]="cln">{{cln.name}}</ng-option>
+                </ng-select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 form-group">
+                <label class="control-label">Fuel Quantity</label>
+                <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.fuelQuantity" [ngModelOptions]="{standalone: true}" placeholder="Enter fuel quantity" />
+            </div>
+            <div class="col-sm-4 form-group">
+                <label class="control-label">Fuel Cost</label>
+                <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.fuelCost" [ngModelOptions]="{standalone: true}" placeholder="Enter fuel cost" />
+            </div>
+            <div class="col-sm-4 form-group">
+                <label class="control-label">Cash Collection</label>
+                <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.cashCollection" [ngModelOptions]="{standalone: true}" placeholder="Enter Cash" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger col-md-12" role="alert" *ngIf="allError.length">
+                    <ul>
+                        <li *ngFor="let error of allError">{{error}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-sm btn-all-shadow waves-effect waves-light"
+                (click)="save()">
+            Save
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm btn-all-shadow waves-effect waves-light"
+                (click)="close()">
+            Close
+        </button>
+    </div>
+</ng-template>

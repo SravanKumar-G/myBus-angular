@@ -6,17 +6,19 @@ import {ServiceStaffAllocationsComponent} from './service-staff-allocations.comp
 import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {BreadcrumbModule} from 'xng-breadcrumb';
+import {NgSelectModule} from "@ng-select/ng-select";
 
 
 @NgModule({
   declarations: [ServiceStaffAllocationsComponent],
-  imports: [
-    CommonModule,
-    ServiceStaffAllocationsRoutingModule,
-    FormsModule,
-    BsDatepickerModule,
-    BreadcrumbModule
-  ],
+    imports: [
+        CommonModule,
+        ServiceStaffAllocationsRoutingModule,
+        FormsModule,
+        BsDatepickerModule,
+        BreadcrumbModule,
+        NgSelectModule
+    ],
   providers: [ DatePipe]
 })
 export class ServiceStaffAllocationsModule { }

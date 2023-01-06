@@ -359,6 +359,7 @@ export class ApiUrls {
     getEmployee = 'api/v1/employee/getEmployee/';
     deleteEmployee = 'api/v1/employee/delete/';
     updateEmployee = 'api/v1/employee/update';
+    addServiceStaff = 'api/v1/serviceReport/addServiceStaff';
 
    // What's App Conversation Screen
 
