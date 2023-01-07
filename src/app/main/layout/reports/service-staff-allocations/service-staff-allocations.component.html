@@ -76,6 +76,7 @@
                                     <th>Fuel Quantity</th>
                                     <th>Fuel Cost</th>
                                     <th>Cash Collection</th>
+                                    <th>Action</th>
 <!--                                    <th>Staff Details</th>-->
                                 </tr>
                                 </thead>
@@ -111,6 +112,30 @@
                                     <td>{{service.fuelQuantity || '-----'}}</td>
                                     <td>{{service.fuelCost || '-----'}}</td>
                                     <td>{{service.cashCollection || '-----'}}</td>
+                                    <td class="td-active">
+                                        <button type="button"
+                                                *ngIf=" service.verified === false"
+                                                class="action-icon-style waves-effect waves-blue edit-user-button"
+                                                title="Edit Trip" (click)="editStaff(service.id)">
+                                            <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+                                        </button>&nbsp;&nbsp;&nbsp;
+                                        <button type="button"
+                                                *ngIf=" service.verified === true"
+                                                [ngClass]="service.verified === true ? 'inactive' : ''"
+                                                class="action-icon-style waves-effect waves-blue edit-user-button"
+                                                title="Verified" (click)="editStaff(service.id)">
+                                            <i class="fa fa-check-circle fa-2x cgreen" aria-hidden="true"></i>
+                                        </button> &nbsp;&nbsp;&nbsp;
+
+                                        <button type="button" *ngIf="service.verified === false"
+                                                class=" waves-effect btn btn-sm btn-success"
+                                                title="Verify Trip" (click)="verifyTrip(service.id)">Verify
+                                        </button>
+                                        <button type="button" *ngIf="service.verified === true"
+                                                class=" waves-effect btn btn-sm btn-danger"
+                                                title="Verify Trip" >Verified
+                                        </button>
+                                    </td>
 <!--                                    <td>-->
 <!--                                        <ul>-->
 <!--                                            <li *ngFor="let data of service.staffDetails"><b>{{data.type}}</b>&nbsp;&nbsp; - &nbsp;{{data.name || '-&#45;&#45;&#45;&#45;'}}({{data.contactNumber}})-->
@@ -140,7 +165,7 @@
 
 <ng-template #addStaffModal class="viewExpensePop" let-c="close" let-d="dismiss">
     <div class="modal-header" style="width: 100%;">
-        Add Staff
+        {{ staffId ? 'Edit Staff' : 'Add Staff' }}
     </div>
     <div class="modal-body">
         <div class="row">
@@ -151,11 +176,13 @@
                            [(ngModel)]="query.journeyDate"
                            placeholder="Enter Date"
                            readonly type="text"
+                           [ngClass]=" staffId ? 'inactive' : ''"
                            #date1="bsDatepicker"
                            [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-green', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
                            bsDatepicker/>
                     <div class="input-group-append">
                         <button class="btn btn-light btn-sm" type="button"
+                                [ngClass]=" staffId ? 'inactive' : ''"
                                 style="border: 1px solid #ced4da;"
                                 (click)="date1.show()"
                                 [attr.aria-expanded]="date1.isOpen">
@@ -170,6 +197,7 @@
                            [ngModelOptions]="{standalone: true}"
                            bindValue="vehicle"
                            bindLabel="vehicleId"
+                           [ngClass]=" staffId ? 'inactive' : ''"
                            [clearable]="false">
                     <ng-option value="" selected>Select Option</ng-option>
                     <ng-option *ngFor="let vehicle of allVehicles"
@@ -178,64 +206,65 @@
             </div>
             <div class="col-sm-4 form-group" >
                 <label class="control-label">Supplier</label>
-                <ng-select [(ngModel)]="query.supplier"
+                <ng-select [(ngModel)]="query.supplierId"
                            [ngModelOptions]="{standalone: true}"
-                           bindValue=""
+                           bindValue="id"
                            bindLabel="name"
+                           [ngClass]=" staffId ? 'inactive' : ''"
                            [clearable]="false">
                     <ng-option value="" selected>Select Option</ng-option>
                     <ng-option *ngFor="let supplier of suppliersList"
-                               [value]="supplier">{{supplier.name}}</ng-option>
+                               [value]="supplier.id">{{supplier.name}}</ng-option>
                 </ng-select>
             </div>
-            <div class="col-sm-3 form-group" >
+            <div class="col-sm-5 form-group" >
                 <label class="control-label">Driver One <span class="mandatory-field">*</span></label>
-                <ng-select [(ngModel)]="query.driver1"
+                <ng-select [(ngModel)]="query.driver1Id"
                            [ngModelOptions]="{standalone: true}"
-                           bindValue=""
+                           bindValue="id"
                            bindLabel="name"
-                           (ngModelChange)="removedDriverFun(query.driver1, 1)"
+                           (ngModelChange)="removedDriverFun(query.driver1Id, 1)"
                            [clearable]="false">
                     <ng-option value="" selected>Select Option</ng-option>
                     <ng-option *ngFor="let staff of driverOne"
-                               [value]="staff">{{staff.name}}</ng-option>
+                               [value]="staff.id">{{staff.name}}</ng-option>
                 </ng-select>
             </div>
-            <div class="col-sm-3 form-group" >
+            <div class="col-sm-5 form-group" >
                 <label class="control-label">Driver Two</label>
-                <ng-select [(ngModel)]="query.driver2"
+                <ng-select [(ngModel)]="query.driver2Id"
                            [ngModelOptions]="{standalone: true}"
-                           bindValue=""
+                           bindValue="id"
                            bindLabel="name"
-                           (ngModelChange)="removedDriverFun(query.driver2, 2)"
+                           (ngModelChange)="removedDriverFun(query.driver2Id, 2)"
                            [clearable]="false">
                     <ng-option value="" selected>Select Option</ng-option>
                     <ng-option *ngFor="let staff of driverTwo"
-                               [value]="staff">{{staff.name}}</ng-option>
+                               [value]="staff.id">{{staff.name}}</ng-option>
                 </ng-select>
             </div>
-            <div class="col-sm-3 form-group" >
+            <div class="col-sm-5 form-group" >
                 <label class="control-label">Conductor</label>
-                <ng-select [(ngModel)]="query.conductor"
+                <ng-select [(ngModel)]="query.conductorId"
                            [ngModelOptions]="{standalone: true}"
-                           bindValue=""
+                           bindValue="id"
                            bindLabel="name"
                            [clearable]="false">
                     <ng-option value="" selected>Select Option</ng-option>
                     <ng-option *ngFor="let con of conductor"
-                               [value]="con">{{con.name}}</ng-option>
+                               [value]="con.id">{{con.name}}</ng-option>
                 </ng-select>
             </div>
-            <div class="col-sm-3 form-group" >
+            <div class="col-sm-5 form-group" >
                 <label class="control-label">Cleaner</label>
-                <ng-select [(ngModel)]="query.cleaner"
+                <ng-select [(ngModel)]="query.cleanerId"
                            [ngModelOptions]="{standalone: true}"
-                           bindValue=""
+                           bindValue="id"
                            bindLabel="name"
                            [clearable]="false">
                     <ng-option value="" selected>Select Option</ng-option>
                     <ng-option *ngFor="let cln of cleaner"
-                               [value]="cln">{{cln.name}}</ng-option>
+                               [value]="cln.id">{{cln.name}}</ng-option>
                 </ng-select>
             </div>
         </div>
@@ -252,6 +281,15 @@
                 <label class="control-label">Cash Collection</label>
                 <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.cashCollection" [ngModelOptions]="{standalone: true}" placeholder="Enter Cash" />
             </div>
+            <div class="col-sm-2 form-group mb-0">
+                <div class="animated-checkbox">
+                    <label class="text-uppercase text-600 font-weight-semi-bold">
+                        <input type="checkbox" [(ngModel)]="query.verified" value="false"
+                               [ngModelOptions]="{standalone:true}">
+                        <span class="label-text ls">Verify</span>
+                    </label>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -265,8 +303,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-success btn-sm btn-all-shadow waves-effect waves-light"
-                (click)="save()">
-            Save
+                (click)="save()">{{ staffId ? 'Update' : 'Save'}}
         </button>
         <button type="button" class="btn btn-secondary btn-sm btn-all-shadow waves-effect waves-light"
                 (click)="close()">

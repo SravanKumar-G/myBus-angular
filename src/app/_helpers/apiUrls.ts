@@ -360,6 +360,9 @@ export class ApiUrls {
     deleteEmployee = 'api/v1/employee/delete/';
     updateEmployee = 'api/v1/employee/update';
     addServiceStaff = 'api/v1/serviceReport/addServiceStaff';
+    updateServiceStaff = 'api/v1/serviceReport/updateServiceStaff';
+    getServiceStaff = 'api/v1/serviceReport/getServiceStaff/';
+    verifyTrip = 'api/v1/serviceReport/verify/';
 
    // What's App Conversation Screen
 
