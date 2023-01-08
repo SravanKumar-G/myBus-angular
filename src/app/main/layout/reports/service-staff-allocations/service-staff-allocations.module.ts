@@ -6,11 +6,12 @@ import {ServiceStaffAllocationsComponent} from './service-staff-allocations.comp
 import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {BreadcrumbModule} from 'xng-breadcrumb';
-import {NgSelectModule} from "@ng-select/ng-select";
+import {NgSelectModule} from '@ng-select/ng-select';
+import { AddEditServiceStaffAllocationsComponent } from './add-edit-service-staff-allocations/add-edit-service-staff-allocations.component';
 
 
 @NgModule({
-  declarations: [ServiceStaffAllocationsComponent],
+  declarations: [ServiceStaffAllocationsComponent, AddEditServiceStaffAllocationsComponent],
     imports: [
         CommonModule,
         ServiceStaffAllocationsRoutingModule,

@@ -1,0 +1,185 @@
+<div class="app-content">
+    <div class="app-title">
+        <div class="">
+            <h1>
+                <i class="fa fa-file-o" aria-hidden="true"></i>
+                Service Staff Allocations
+            </h1>
+        </div>
+
+        <ul class="">
+            <xng-breadcrumb></xng-breadcrumb>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 col-sm-12">
+            <div class="tile">
+                <h3 class="tile-title form-head-line-style">{{staffTitle}}
+                </h3>
+                <hr>
+                <div class="tile-body">
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-5 form-group">
+                            <label class="control-label">Trip Date<span class="mandatory-field">*</span></label>
+                            <div class="input-group">
+                                <input name="startDate" class="form-control"
+                                       [(ngModel)]="query.journeyDate"
+                                       placeholder="Enter Date"
+                                       readonly type="text"
+                                       [ngClass]=" staffId ? 'inactive' : ''"
+                                       #date1="bsDatepicker"
+                                       [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-green', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                                       bsDatepicker/>
+                                <div class="input-group-append">
+                                    <button class="btn btn-light btn-sm" type="button"
+                                            [ngClass]=" staffId ? 'inactive' : ''"
+                                            style="border: 1px solid #ced4da;"
+                                            (click)="date1.show()"
+                                            [attr.aria-expanded]="date1.isOpen">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 form-group" >
+                            <label class="control-label">Select Vehicle <span class="mandatory-field">*</span></label>
+                            <ng-select [(ngModel)]="query.vehicleRegNumber"
+                                       [ngModelOptions]="{standalone: true}"
+                                       bindValue="vehicle"
+                                       bindLabel="vehicleId"
+                                       [ngClass]=" staffId ? 'inactive' : ''"
+                                       [clearable]="false">
+                                <ng-option value="" selected>Select Option</ng-option>
+                                <ng-option *ngFor="let vehicle of allVehicles"
+                                           [value]="vehicle.regNo">{{vehicle.regNo}}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-5 form-group" >
+                            <label class="control-label">Supplier</label>
+                            <ng-select [(ngModel)]="query.supplierId"
+                                       [ngModelOptions]="{standalone: true}"
+                                       bindValue="id"
+                                       bindLabel="name"
+                                       [ngClass]=" staffId ? 'inactive' : ''"
+                                       [clearable]="false">
+                                <ng-option value="" selected>Select Option</ng-option>
+                                <ng-option *ngFor="let supplier of suppliersList"
+                                           [value]="supplier.id">{{supplier.name}}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-5 form-group" >
+                            <label class="control-label">Driver One <span class="mandatory-field">*</span></label>
+                            <ng-select [(ngModel)]="query.driver1Id"
+                                       [ngModelOptions]="{standalone: true}"
+                                       bindValue="id"
+                                       bindLabel="name"
+                                       (change)="removedDriverFun(query.driver1Id, 1)"
+                                       [clearable]="false">
+                                <ng-option value="" selected>Select Option</ng-option>
+                                <ng-option *ngFor="let staff of driverOne"
+                                           [value]="staff.id">{{staff.name}}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-5 form-group" >
+                            <label class="control-label">Driver Two</label>
+                            <ng-select [(ngModel)]="query.driver2Id"
+                                       [ngModelOptions]="{standalone: true}"
+                                       bindValue="id"
+                                       bindLabel="name"
+                                       (change)="removedDriverFun(query.driver2Id, 2)"
+                                       [clearable]="false">
+                                <ng-option value="" selected>Select Option</ng-option>
+                                <ng-option *ngFor="let staff of driverTwo"
+                                           [value]="staff.id">{{staff.name}}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-5 form-group" >
+                            <label class="control-label">Conductor</label>
+                            <ng-select [(ngModel)]="query.conductorId"
+                                       [ngModelOptions]="{standalone: true}"
+                                       bindValue="id"
+                                       bindLabel="name"
+                                       [clearable]="false">
+                                <ng-option value="" selected>Select Option</ng-option>
+                                <ng-option *ngFor="let con of conductor"
+                                           [value]="con.id">{{con.name}}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-5 form-group" >
+                            <label class="control-label">Cleaner</label>
+                            <ng-select [(ngModel)]="query.cleanerId"
+                                       [ngModelOptions]="{standalone: true}"
+                                       bindValue="id"
+                                       bindLabel="name"
+                                       [clearable]="false">
+                                <ng-option value="" selected>Select Option</ng-option>
+                                <ng-option *ngFor="let cln of cleaner"
+                                           [value]="cln.id">{{cln.name}}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-5 form-group">
+                            <label class="control-label">Fuel Quantity</label>
+                            <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.fuelQuantity" [ngModelOptions]="{standalone: true}" placeholder="Enter fuel quantity" />
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-5 form-group">
+                            <label class="control-label">Fuel Cost</label>
+                            <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.fuelCost" [ngModelOptions]="{standalone: true}" placeholder="Enter fuel cost" />
+                        </div>
+                        <div class="col-sm-5 form-group">
+                            <label class="control-label">Cash Collection</label>
+                            <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.cashCollection" [ngModelOptions]="{standalone: true}" placeholder="Enter Cash" />
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-5 form-group mb-0">
+                            <div class="animated-checkbox">
+                                <label class="text-uppercase text-600 font-weight-semi-bold">
+                                    <input type="checkbox" [(ngModel)]="query.verified" value="false"
+                                           [ngModelOptions]="{standalone:true}">
+                                    <span class="label-text ls">Verify</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tile-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger col-md-12" role="alert" *ngIf="allError.length">
+                                <ul>
+                                    <li *ngFor="let error of allError">{{error}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-3">
+                            <div class="pull-right">
+                                <button class="btn btn-sm btn-all-shadow waves-effect waves-light btn-info save-city-button"
+                                        (click)="save()">
+                                    <i class="fa fa-fw fa-check-circle"></i>{{staffId ? 'Update' : 'Save'}}
+                                </button>
+                                &nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-sm btn-all-shadow waves-effect waves-light btn-dark cancel-city-button"
+                                        (click)="cancel()">
+                                    <i class="fa fa-fw fa-times-circle"></i>
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
