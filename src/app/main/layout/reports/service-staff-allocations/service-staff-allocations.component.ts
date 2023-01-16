@@ -7,6 +7,7 @@ import {AuthenticationService} from '../../../../services/authentication.service
 import Swal from 'sweetalert2';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {error} from "protractor";
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-service-staff-allocations',
@@ -15,17 +16,17 @@ import {error} from "protractor";
 })
 export class ServiceStaffAllocationsComponent implements OnInit {
   public staffAllocationList: Array<any> = [];
-  public currentServerDate: Date| undefined;
+  public currentServerDate: Date | undefined;
   public currentUser: any;
   public currentDate: any;
   public newDate: any = new Date();
-  public allVehicles: Array <any> = [];
+  public allVehicles: Array<any> = [];
   public suppliersList: Array<any> = [];
   public listOfStaff: Array<any> = [];
   public driverOne: Array<any> = [];
-  public  driverOneSelection: any;
+  public driverOneSelection: any;
   public driverTwo: Array<any> = [];
-  public  driverTwoSelection: any;
+  public driverTwoSelection: any;
   public cleaner: Array<any> = [];
   public conductor: Array<any> = [];
   public removedDriver: any = {};
@@ -44,7 +45,7 @@ export class ServiceStaffAllocationsComponent implements OnInit {
   };
   public vehicleNumber: '' | undefined;
   public allError = [];
-  @ViewChild('addStaffModal')addStaffModal: any;
+  @ViewChild('addStaffModal') addStaffModal: any;
   public staffId: any;
 
   constructor(private apiService: ApiServiceService,
@@ -53,22 +54,23 @@ export class ServiceStaffAllocationsComponent implements OnInit {
               private authService: AuthenticationService,
               private actRoute: ActivatedRoute,
               private location: Location,
-              private  datePipe: DatePipe,
+              private datePipe: DatePipe,
               private ngModalService: NgbModal) {
     this.currentDate = this.actRoute.snapshot.params.date || '';
     this.currentDate = new Date();
     this.currentDate.setDate(this.currentDate.getDate() - 1);
     this.staffId = this.actRoute.snapshot.paramMap.get('id') || '';
+    console.log(this.actRoute);
   }
 
   ngOnInit(): void {
     this.serviceReportStaffAllocation('');
   }
 
-  serviceReportStaffAllocation(vehicleNum: any): void{
+  serviceReportStaffAllocation(vehicleNum: any): void {
     const Date = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
     this.apiService.get(this.apiUrls.staffAllocation + '?travelDate=' + Date + '&vehicleNumber=' + vehicleNum).subscribe((res: any) => {
-      if (res){
+      if (res) {
         this.staffAllocationList = res;
         // for (let a of this.staffAllocationList){
         //   let itemsOfstaffDetails: any = {
@@ -123,6 +125,7 @@ export class ServiceStaffAllocationsComponent implements OnInit {
       this.serviceReportStaffAllocation('');
     }
   }
+
   getVehicles(): void {
     this.apiService.get(this.apiUrls.getAllVehicleNumbers).subscribe((res: any) => {
       if (res) {
@@ -130,6 +133,7 @@ export class ServiceStaffAllocationsComponent implements OnInit {
       }
     });
   }
+
   getSuppliers(): void {
     this.apiService.get(this.apiUrls.suppliers).subscribe((res: any) => {
       if (res) {
@@ -137,17 +141,18 @@ export class ServiceStaffAllocationsComponent implements OnInit {
       }
     });
   }
+
   getStaffList(): void {
     this.apiService.getAll(this.apiUrls.getStaffList, {}).subscribe((res: any) => {
       if (res) {
         this.listOfStaff = res.content;
-        for (const item of this.listOfStaff){
-          if (!(item.type === null) && item.type.toUpperCase() === 'DRIVER'){
+        for (const item of this.listOfStaff) {
+          if (!(item.type === null) && item.type.toUpperCase() === 'DRIVER') {
             this.driverOne.push(item);
             this.driverTwo.push(item);
-          }else if (!(item.type === null) && item.type.toUpperCase() === 'CLEANER'){
+          } else if (!(item.type === null) && item.type.toUpperCase() === 'CLEANER') {
             this.cleaner.push(item);
-          }else if (!(item.type === null) && item.type.toUpperCase() === 'CONDUCTOR'){
+          } else if (!(item.type === null) && item.type.toUpperCase() === 'CONDUCTOR') {
             this.conductor.push(item);
           }
         }
@@ -155,15 +160,21 @@ export class ServiceStaffAllocationsComponent implements OnInit {
       }
     });
   }
-  add(): void{
+
+  add(): void {
     this.getStaffList();
     this.getVehicles();
     this.getSuppliers();
     this.close();
-    this.ngModalService.open(this.addStaffModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backdropClass'});
+    this.ngModalService.open(this.addStaffModal, {
+      size: 'lg',
+      backdrop: 'static',
+      keyboard: false,
+      backdropClass: 'backdropClass'
+    });
   }
 
-  close(): void{
+  close(): void {
     this.ngModalService.dismissAll();
     this.query = {
       journeyDate: new Date(),
@@ -182,13 +193,11 @@ export class ServiceStaffAllocationsComponent implements OnInit {
     this.allError = [];
   }
 
-  save(): void{
+  save(): void {
     this.allError = [];
-    if (this.staffId){
-      console.log(this.staffId);
-      console.log(this.query);
+    if (this.staffId) {
       this.apiService.update(this.apiUrls.updateServiceStaff, this.query).subscribe((res: any) => {
-        if (res){
+        if (res) {
           Swal.fire('Success', 'Staff Updated Successfully', 'success');
           this.serviceReportStaffAllocation('');
           this.close();
@@ -196,9 +205,9 @@ export class ServiceStaffAllocationsComponent implements OnInit {
       }, err => {
         this.allError = err;
       });
-    }else {
+    } else {
       this.apiService.getAll(this.apiUrls.addServiceStaff, this.query).subscribe((res: any) => {
-        if (res){
+        if (res) {
           Swal.fire('Success', 'Staff Added Successfully', 'success');
           this.serviceReportStaffAllocation('');
           this.close();
@@ -211,58 +220,79 @@ export class ServiceStaffAllocationsComponent implements OnInit {
   }
 
   removedDriverFun(item: any, i: any): void {
-    if (i === 1){
+    if (i === 1) {
       let item2Object;
-      for (const a of this.driverTwo){
-        if (a.id === item){
+      for (const a of this.driverTwo) {
+        if (a.id === item) {
           item2Object = a;
         }
       }
       const data = this.driverTwo.indexOf(item2Object);
       this.driverTwo.splice(data, 1);
-      if ( !(this.driverOneSelection === undefined) && !(item2Object === this.driverOneSelection)){
+      if (!(this.driverOneSelection === undefined) && !(item2Object === this.driverOneSelection)) {
         this.driverOne.push(this.driverOneSelection);
         this.driverTwo.push(this.driverOneSelection);
       }
       this.driverOneSelection = item2Object;
-    }else {
+    } else {
       let item2Object;
-      for (const a of this.driverTwo){
-        if (a.id === item){
+      for (const a of this.driverTwo) {
+        if (a.id === item) {
           item2Object = a;
         }
       }
       const data = this.driverOne.indexOf(item2Object);
       this.driverOne.splice(data, 1);
-      if (!(this.driverTwoSelection === undefined) && !(item2Object === this.driverTwoSelection)){
+      if (!(this.driverTwoSelection === undefined) && !(item2Object === this.driverTwoSelection)) {
         this.driverOne.push(this.driverTwoSelection);
         this.driverTwo.push(this.driverTwoSelection);
       }
       this.driverTwoSelection = item2Object;
     }
   }
-  editStaff(id: any): void{
+
+  editStaff(id: any): void {
     this.staffId = id;
     console.log(this.staffId);
-    this.apiService.get(this.apiUrls.getServiceStaff + this.staffId ).subscribe((res: any) => {
-      if (res){
+    this.apiService.get(this.apiUrls.getServiceStaff + this.staffId).subscribe((res: any) => {
+      if (res) {
         this.query = res;
         this.getVehicles();
         this.getStaffList();
         this.getSuppliers();
         console.log(this.query);
         this.query.journeyDate = new Date(res.journeyDate);
-        this.ngModalService.open(this.addStaffModal, {size: 'lg', backdrop: 'static', keyboard: false, backdropClass: 'backdropClass'});
+        this.ngModalService.open(this.addStaffModal, {
+          size: 'lg',
+          backdrop: 'static',
+          keyboard: false,
+          backdropClass: 'backdropClass'
+        });
       }
     });
   }
 
-  verifyTrip(id: any): void {
-    console.log(id);
-    this.apiService.update(this.apiUrls.verifyTrip + id, {}).subscribe((res: any) => {
-      if (res){
-        this.serviceReportStaffAllocation('');
+  verifyTrip(id: any, item: any): void {
+    swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to  Verify ' + item.vehicleRegNumber,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Verify it!',
+      confirmButtonColor: '#248D1CFF',
+    }).then((result) => {
+      if (result.value) {
+        this.apiService.update(this.apiUrls.verifyTrip + id, {}).subscribe((res: any) => {
+          Swal.fire(
+              'Verified',
+              'Verified successfully for ' + item.vehicleRegNumber,
+              'success'
+          );
+          if (res) {
+            this.serviceReportStaffAllocation('');
 
+          }
+        });
       }
     });
   }
