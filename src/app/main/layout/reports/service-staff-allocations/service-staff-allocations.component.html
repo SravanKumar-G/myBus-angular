@@ -57,109 +57,8 @@
                             <button type="button" class="btn-primary btn btn-sm" [routerLink]="['addServiceStaffAllocation']">Add</button>
                         </div>
                     </div>
-<!--                    <div class="row">-->
-<!--                        <div class="col-sm-12 table-responsive">-->
-<!--                            <table class="table table-bordered table-hover text-center" id="serviceReports">-->
-<!--                                <thead>-->
-<!--                                <tr>-->
-<!--                                    <th>S No</th>-->
-<!--                                    <th>Service#</th>-->
-<!--                                    <th>Trip</th>-->
-<!--&lt;!&ndash;                                    <th>From</th>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <th>To</th>&ndash;&gt;-->
-<!--                                    <th>Vehicle</th>-->
-<!--                                    <th>Driver 1</th>-->
-<!--                                    <th>Driver 2</th>-->
-<!--&lt;!&ndash;                                    <th>Driver 3</th>&ndash;&gt;-->
-<!--                                    <th>Cleaner</th>-->
-<!--                                    <th>Conductor</th>-->
-<!--                                    <th>Fuel Quantity</th>-->
-<!--                                    <th>Fuel Cost</th>-->
-<!--                                    <th>Cash Collection</th>-->
-<!--                                    <th>Action</th>-->
-<!--&lt;!&ndash;                                    <th>Staff Details</th>&ndash;&gt;-->
-<!--                                </tr>-->
-<!--                                </thead>-->
-<!--                                <tbody>-->
-<!--                                <tr *ngFor="let service of staffAllocationList; let i =index;">-->
-<!--                                    <td>{{i + 1}}</td>-->
-<!--                                    <td>{{ service.serviceNumber || '-&#45;&#45;&#45;&#45;'}}</td>-->
-<!--                                    <td>-->
-<!--                                        <b>From: </b><span>{{service.from || '-&#45;&#45;&#45;&#45;'}}</span><br />-->
-<!--                                        <b>T0: </b><span>{{service.to || '-&#45;&#45;&#45;&#45;'}}</span> <br />-->
-<!--                                        <b>Type: </b><span>{{service.busType || '-&#45;&#45;&#45;&#45;'}}</span> <br />-->
-<!--                                    </td>-->
-<!--&lt;!&ndash;                                    <td>{{ service.busType || '-&#45;&#45;&#45;&#45;'}}</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <td>{{ service.from || '-&#45;&#45;&#45;&#45;' }}</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <td>{{ service.to || '-&#45;&#45;&#45;&#45;'}}</td>&ndash;&gt;-->
-<!--                                    <td>{{ service.vehicleRegNumber || '-&#45;&#45;&#45;&#45;' }}</td>-->
-<!--                                    <td>-->
-<!--                                        <b>Name: </b> <span> {{ service.driver1 != null ? service.driver1.name : 'NA'}}</span> <br />-->
-<!--                                        <b>Mobile: </b> <span> {{ service.driver1 != null ? service.driver1.contactNumber : 'NA'}} </span>-->
-<!--                                    </td>-->
-<!--                                    <td>-->
-<!--                                        <b>Name: </b> <span> {{service.driver2 != null ? service.driver2.name : 'NA'}}</span> <br />-->
-<!--                                        <b>Mobile: </b> <span> {{service.driver2 != null ?service.driver2.contactNumber : 'NA'}} </span>-->
-<!--                                    </td>-->
-<!--                                    <td>-->
-<!--                                        <b>Name: </b> <span> {{ service.cleaner != null ? service.cleaner.name :'NA'}}</span> <br />-->
-<!--                                        <b>Mobile: </b> <span> {{service.cleaner != null ? service.cleaner.contactNumber : 'NA'}} </span>-->
-<!--                                    </td>-->
-<!--                                    <td>-->
-<!--                                        <b>Name: </b> <span> {{service.conductor != null ? service.conductor.name : 'NA'}}</span> <br />-->
-<!--                                        <b>Mobile: </b> <span> {{service.conductor != null ? service.conductor.contactNumber : 'NA'}} </span>-->
-<!--                                    </td>-->
-<!--                                    <td>{{service.fuelQuantity || '-&#45;&#45;&#45;&#45;'}}</td>-->
-<!--                                    <td>{{service.fuelCost || '-&#45;&#45;&#45;&#45;'}}</td>-->
-<!--                                    <td>{{service.cashCollection || '-&#45;&#45;&#45;&#45;'}}</td>-->
-<!--                                    <td class="td-active">-->
-<!--                                        <button type="button"-->
-<!--                                                *ngIf=" service.verified === false"-->
-<!--                                                class="action-icon-style waves-effect waves-blue edit-user-button"-->
-<!--                                                title="Edit Trip" (click)="editStaff(service.id)">-->
-<!--                                            <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>-->
-<!--                                        </button>&nbsp;&nbsp;&nbsp;-->
-<!--                                        <button type="button"-->
-<!--                                                *ngIf=" service.verified === true"-->
-<!--                                                [ngClass]="service.verified === true ? 'inactive' : ''"-->
-<!--                                                class="action-icon-style waves-effect waves-blue edit-user-button"-->
-<!--                                                title="Verified" (click)="editStaff(service.id)">-->
-<!--                                            <i class="fa fa-check-circle fa-2x cgreen" aria-hidden="true"></i>-->
-<!--                                        </button> &nbsp;&nbsp;&nbsp;-->
-
-<!--                                        <button type="button" *ngIf="service.verified === false"-->
-<!--                                                class=" waves-effect btn btn-sm btn-success"-->
-<!--                                                title="Verify Trip" (click)="verifyTrip(service.id)">Verify-->
-<!--                                        </button>-->
-<!--                                        <button type="button" *ngIf="service.verified === true"-->
-<!--                                                class=" waves-effect btn btn-sm btn-danger"-->
-<!--                                                title="Verify Trip" >Verified-->
-<!--                                        </button>-->
-<!--                                    </td>-->
-<!--&lt;!&ndash;                                    <td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <ul>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <li *ngFor="let data of service.staffDetails"><b>{{data.type}}</b>&nbsp;&nbsp; - &nbsp;{{data.name || '-&#45;&#45;&#45;&#45;'}}({{data.contactNumber}})&ndash;&gt;-->
-<!--&lt;!&ndash;                                            </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        </ul>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <td *ngFor="let s of service.staffDetails">&ndash;&gt;-->
-<!--&lt;!&ndash;                                        {{s.type === 'Driver'? s.name :s.type === 'DRIVER'? s.name: s.type === 'CLEANER' || s.type === 'Cleaner'? s.name: s.type === 'CONDUCTOR'? s.name : 'NA'}} - &ndash;&gt;-->
-<!--&lt;!&ndash;                                        {{s.type === 'Driver'? s.contactNumber :s.type === 'DRIVER'? s.contactNumber: s.type === 'CLEANER'? s.contactNumber: s.type === 'CONDUCTOR'? s.contactNumber : 'NA'}}&ndash;&gt;-->
-<!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <td>{{service.driverOne || '&#45;&#45;'}}</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <td>{{service.driverTwo || '&#45;&#45;'}}</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <td>{{service.cleanerName || '&#45;&#45;'}}</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <td>{{service.conductorName || '&#45;&#45;'}}</td>&ndash;&gt;-->
-<!--                                <tr *ngIf="!staffAllocationList || staffAllocationList.length === 0">-->
-<!--                                    <td colspan="10">No reports exist. </td>-->
-<!--                                </tr>-->
-<!--                                </tbody>-->
-<!--                            </table>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
                     <div class="row">
-                        <div class="col-sm-9">
+                        <div class="col-sm-12">
                             <div class="card" *ngFor="let service of staffAllocationList; let i =index;" style="margin: 15px 0;">
                                 <div class="card-header" style="align-items: center;padding: 8px 15px !important;">
                                     <div class="flex-container">
@@ -185,20 +84,20 @@
                                     <div class="flex-container">
                                         <div class="service-card">
                                             <label>Driver One:</label>
-                                            <span> {{ service.driver1 != null ? service.driver1.name : 'NA'}} - {{ service.driver1 != null ? service.driver1.contactNumber : 'NA'}}</span>
+                                            <span> {{ service.attrs.driver1 != null ? service.attrs.driver1 : 'NA'}}</span>
                                         </div>
                                         <div class="service-card">
-                                            <label>Driver Tow:</label>
-                                            <span> {{ service.driver2 != null ? service.driver2.name : 'NA'}} - {{ service.driver2 != null ? service.driver2.contactNumber : 'NA'}}</span>
+                                            <label>Driver Two:</label>
+                                            <span> {{ service.attrs.driver2 != null ? service.attrs.driver2 : 'NA'}}</span>
                                         </div>
 
                                         <div class="service-card">
                                             <label>Cleaner:</label>
-                                            <span> {{ service.cleaner != null ? service.cleaner.name : 'NA'}} - {{service.cleaner != null ? service.cleaner.contactNumber : 'NA'}}</span>
+                                            <span> {{ service.attrs.cleaner != null ? service.attrs.cleaner : 'NA'}}</span>
                                         </div>
                                         <div class="service-card">
                                             <label>Conductor:</label>
-                                            <span> {{ service.conductor != null ? service.conductor.name : 'NA'}} - {{service.conductor != null ? service.conductor.contactNumber : 'NA'}}  </span>
+                                            <span> {{ service.attrs.conductor != null ? service.attrs.conductor : 'NA'}} </span>
                                         </div>
                                         <div class="service-card">
                                             <label>Fuel Quantity:</label>
@@ -222,12 +121,6 @@
                                                title="Edit Trip" [routerLink]="['editServiceStaffAllocation/' + service.id]">
                                                 <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
                                             </a>
-<!--                                            <a class="btn btn-primary btn-sm m-2"-->
-<!--                                               *ngIf=" service.verified === true"-->
-<!--                                               [ngClass]="service.verified === true ? 'inactive' : ''"-->
-<!--                                               title="Verified" [routerLink]="['editServiceStaffAllocation/' + service.id]">-->
-<!--                                                <i class="fa fa-check-circle fa-2x" aria-hidden="true"></i>-->
-<!--                                            </a>-->
                                             <a type="button" class=" waves-effect btn btn-sm btn-success m-2"
                                                *ngIf="service.verified === false"
                                                title="Verify Trip" (click)="verifyTrip(service.id, service)">Verify
@@ -243,159 +136,9 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!--<ng-template #addStaffModal class="viewExpensePop" let-c="close" let-d="dismiss">-->
-<!--    <div class="modal-header" style="width: 100%;">-->
-<!--        {{ staffId ? 'Edit Staff' : 'Add Staff' }}-->
-<!--    </div>-->
-<!--    <div class="modal-body">-->
-<!--        <div class="row">-->
-<!--            <div class="col-sm-4 form-group">-->
-<!--                <label class="control-label">Trip Date<span class="mandatory-field">*</span></label>-->
-<!--                <div class="input-group">-->
-<!--                    <input name="startDate" class="form-control"-->
-<!--                           [(ngModel)]="query.journeyDate"-->
-<!--                           placeholder="Enter Date"-->
-<!--                           readonly type="text"-->
-<!--                           [ngClass]=" staffId ? 'inactive' : ''"-->
-<!--                           #date1="bsDatepicker"-->
-<!--                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-green', showTodayButton: true, todayPosition: 'center', isAnimated: true }"-->
-<!--                           bsDatepicker/>-->
-<!--                    <div class="input-group-append">-->
-<!--                        <button class="btn btn-light btn-sm" type="button"-->
-<!--                                [ngClass]=" staffId ? 'inactive' : ''"-->
-<!--                                style="border: 1px solid #ced4da;"-->
-<!--                                (click)="date1.show()"-->
-<!--                                [attr.aria-expanded]="date1.isOpen">-->
-<!--                            <i class="fa fa-calendar"></i>-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-sm-4 form-group" >-->
-<!--                <label class="control-label">Select Vehicle <span class="mandatory-field">*</span></label>-->
-<!--                <ng-select [(ngModel)]="query.vehicleRegNumber"-->
-<!--                           [ngModelOptions]="{standalone: true}"-->
-<!--                           bindValue="vehicle"-->
-<!--                           bindLabel="vehicleId"-->
-<!--                           [ngClass]=" staffId ? 'inactive' : ''"-->
-<!--                           [clearable]="false">-->
-<!--                    <ng-option value="" selected>Select Option</ng-option>-->
-<!--                    <ng-option *ngFor="let vehicle of allVehicles"-->
-<!--                               [value]="vehicle.regNo">{{vehicle.regNo}}</ng-option>-->
-<!--                </ng-select>-->
-<!--            </div>-->
-<!--            <div class="col-sm-4 form-group" >-->
-<!--                <label class="control-label">Supplier</label>-->
-<!--                <ng-select [(ngModel)]="query.supplierId"-->
-<!--                           [ngModelOptions]="{standalone: true}"-->
-<!--                           bindValue="id"-->
-<!--                           bindLabel="name"-->
-<!--                           [ngClass]=" staffId ? 'inactive' : ''"-->
-<!--                           [clearable]="false">-->
-<!--                    <ng-option value="" selected>Select Option</ng-option>-->
-<!--                    <ng-option *ngFor="let supplier of suppliersList"-->
-<!--                               [value]="supplier.id">{{supplier.name}}</ng-option>-->
-<!--                </ng-select>-->
-<!--            </div>-->
-<!--            <div class="col-sm-5 form-group" >-->
-<!--                <label class="control-label">Driver One <span class="mandatory-field">*</span></label>-->
-<!--                <ng-select [(ngModel)]="query.driver1Id"-->
-<!--                           [ngModelOptions]="{standalone: true}"-->
-<!--                           bindValue="id"-->
-<!--                           bindLabel="name"-->
-<!--                           (ngModelChange)="removedDriverFun(query.driver1Id, 1)"-->
-<!--                           [clearable]="false">-->
-<!--                    <ng-option value="" selected>Select Option</ng-option>-->
-<!--                    <ng-option *ngFor="let staff of driverOne"-->
-<!--                               [value]="staff.id">{{staff.name}}</ng-option>-->
-<!--                </ng-select>-->
-<!--            </div>-->
-<!--            <div class="col-sm-5 form-group" >-->
-<!--                <label class="control-label">Driver Two</label>-->
-<!--                <ng-select [(ngModel)]="query.driver2Id"-->
-<!--                           [ngModelOptions]="{standalone: true}"-->
-<!--                           bindValue="id"-->
-<!--                           bindLabel="name"-->
-<!--                           (ngModelChange)="removedDriverFun(query.driver2Id, 2)"-->
-<!--                           [clearable]="false">-->
-<!--                    <ng-option value="" selected>Select Option</ng-option>-->
-<!--                    <ng-option *ngFor="let staff of driverTwo"-->
-<!--                               [value]="staff.id">{{staff.name}}</ng-option>-->
-<!--                </ng-select>-->
-<!--            </div>-->
-<!--            <div class="col-sm-5 form-group" >-->
-<!--                <label class="control-label">Conductor</label>-->
-<!--                <ng-select [(ngModel)]="query.conductorId"-->
-<!--                           [ngModelOptions]="{standalone: true}"-->
-<!--                           bindValue="id"-->
-<!--                           bindLabel="name"-->
-<!--                           [clearable]="false">-->
-<!--                    <ng-option value="" selected>Select Option</ng-option>-->
-<!--                    <ng-option *ngFor="let con of conductor"-->
-<!--                               [value]="con.id">{{con.name}}</ng-option>-->
-<!--                </ng-select>-->
-<!--            </div>-->
-<!--            <div class="col-sm-5 form-group" >-->
-<!--                <label class="control-label">Cleaner</label>-->
-<!--                <ng-select [(ngModel)]="query.cleanerId"-->
-<!--                           [ngModelOptions]="{standalone: true}"-->
-<!--                           bindValue="id"-->
-<!--                           bindLabel="name"-->
-<!--                           [clearable]="false">-->
-<!--                    <ng-option value="" selected>Select Option</ng-option>-->
-<!--                    <ng-option *ngFor="let cln of cleaner"-->
-<!--                               [value]="cln.id">{{cln.name}}</ng-option>-->
-<!--                </ng-select>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <div class="col-sm-4 form-group">-->
-<!--                <label class="control-label">Fuel Quantity</label>-->
-<!--                <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.fuelQuantity" [ngModelOptions]="{standalone: true}" placeholder="Enter fuel quantity" />-->
-<!--            </div>-->
-<!--            <div class="col-sm-4 form-group">-->
-<!--                <label class="control-label">Fuel Cost</label>-->
-<!--                <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.fuelCost" [ngModelOptions]="{standalone: true}" placeholder="Enter fuel cost" />-->
-<!--            </div>-->
-<!--            <div class="col-sm-4 form-group">-->
-<!--                <label class="control-label">Cash Collection</label>-->
-<!--                <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.cashCollection" [ngModelOptions]="{standalone: true}" placeholder="Enter Cash" />-->
-<!--            </div>-->
-<!--            <div class="col-sm-2 form-group mb-0">-->
-<!--                <div class="animated-checkbox">-->
-<!--                    <label class="text-uppercase text-600 font-weight-semi-bold">-->
-<!--                        <input type="checkbox" [(ngModel)]="query.verified" value="false"-->
-<!--                               [ngModelOptions]="{standalone:true}">-->
-<!--                        <span class="label-text ls">Verify</span>-->
-<!--                    </label>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--            <div class="col-md-12">-->
-<!--                <div class="alert alert-danger col-md-12" role="alert" *ngIf="allError.length">-->
-<!--                    <ul>-->
-<!--                        <li *ngFor="let error of allError">{{error}}</li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="modal-footer">-->
-<!--        <button type="button" class="btn btn-success btn-sm btn-all-shadow waves-effect waves-light"-->
-<!--                (click)="save()">{{ staffId ? 'Update' : 'Save'}}-->
-<!--        </button>-->
-<!--        <button type="button" class="btn btn-secondary btn-sm btn-all-shadow waves-effect waves-light"-->
-<!--                (click)="close()">-->
-<!--            Close-->
-<!--        </button>-->
-<!--    </div>-->
-<!--</ng-template>-->
