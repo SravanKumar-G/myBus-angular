@@ -53,10 +53,10 @@ export class AddEditServiceStaffAllocationsComponent implements OnInit {
       this.editStaff();
     }else {
       this.staffTitle = 'Add Staff';
-      this.getStaffList(null, null);
     }
     this.getVehicles();
     this.getSuppliers();
+    this.getStaffList();
   }
 
   getVehicles(): void {
@@ -73,18 +73,18 @@ export class AddEditServiceStaffAllocationsComponent implements OnInit {
       }
     });
   }
-  getStaffList(item1: any, item2: any ): void {
+  getStaffList(): void {
     this.apiService.getAll(this.apiUrls.getStaffList, {}).subscribe((res: any) => {
       if (res) {
         this.listOfStaff = res.content;
         for (const item of this.listOfStaff){
           if (!(item.type === null) && item.type.toUpperCase() === 'DRIVER'){
-            if (item2 === null || !(item2.id === item.id) ){
+            // if (item2 === null || !(item2.id === item.id) ){
                 this.driverOne.push(item);
-            }
-            if (item1 === null || !(item1.id === item.id)){
+            // }
+            // if (item1 === null || !(item1.id === item.id)){
                 this.driverTwo.push(item);
-            }
+            // }
           }else if (!(item.type === null) && item.type.toUpperCase() === 'CLEANER'){
             this.cleaner.push(item);
           }else if (!(item.type === null) && item.type.toUpperCase() === 'CONDUCTOR'){
@@ -163,19 +163,19 @@ export class AddEditServiceStaffAllocationsComponent implements OnInit {
     this.apiService.get(this.apiUrls.getServiceStaff + this.staffId ).subscribe((res: any) => {
       if (res) {
         this.query = res;
-        if (res.driver1Id && res.driver2Id){
-          this.driverTwoSelection = res.driver2;
-          this.driverOneSelection = res.driver1;
-          this.getStaffList(res.driver1, res.driver2);
-        }
-        else if (res.driver1Id){
-          this.driverOneSelection = res.driver1;
-          this.getStaffList(res.driver1, null);
-        }
-        else if (res.driver2Id){
-          this.driverTwoSelection = res.driver2;
-          this.getStaffList(res.driver2, null);
-        }
+        // if (res.driver1Id && res.driver2Id){
+        //   this.driverTwoSelection = res.driver2;
+        //   this.driverOneSelection = res.driver1;
+        //   this.getStaffList(res.driver1, res.driver2);
+        // }
+        // else if (res.driver1Id){
+        //   this.driverOneSelection = res.driver1;
+        //   this.getStaffList(res.driver1, null);
+        // }
+        // else if (res.driver2Id){
+        //   this.driverTwoSelection = res.driver2;
+        //   this.getStaffList(res.driver2, null);
+        // }
         this.query.journeyDate = new Date(res.journeyDate);
       }
     });

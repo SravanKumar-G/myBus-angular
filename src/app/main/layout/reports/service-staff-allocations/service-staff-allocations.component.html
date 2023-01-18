@@ -100,6 +100,10 @@
                                             <span> {{ service.attrs.conductor != null ? service.attrs.conductor : 'NA'}} </span>
                                         </div>
                                         <div class="service-card">
+                                            <label>Supplier:</label>
+                                            <span> {{ service.supplier.name != null ? service.supplier.name : 'NA'}} </span>
+                                        </div>
+                                        <div class="service-card">
                                             <label>Fuel Quantity:</label>
                                             <span> {{service.fuelQuantity ||  'NA'}} </span>
                                         </div>
