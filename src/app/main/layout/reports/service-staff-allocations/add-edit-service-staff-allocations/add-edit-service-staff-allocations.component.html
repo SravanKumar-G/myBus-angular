@@ -58,6 +58,19 @@
                         </div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-1"></div>
+<!--                        <div class="col-sm-5 form-group" >-->
+<!--                            <label class="control-label">Supplier</label>-->
+<!--                            <ng-select [(ngModel)]="query.supplierId"-->
+<!--                                       [ngModelOptions]="{standalone: true}"-->
+<!--                                       bindValue="id"-->
+<!--                                       bindLabel="name"-->
+<!--                                       [ngClass]=" staffId ? 'inactive' : ''"-->
+<!--                                       [clearable]="false">-->
+<!--                                <ng-option value="" selected>Select Option</ng-option>-->
+<!--                                <ng-option *ngFor="let supplier of suppliersList"-->
+<!--                                           [value]="supplier.id">{{supplier.name}}</ng-option>-->
+<!--                            </ng-select>-->
+<!--                        </div>-->
                         <div class="col-sm-5 form-group" >
                             <label class="control-label">Supplier</label>
                             <ng-select [(ngModel)]="query.supplierId"
@@ -77,13 +90,38 @@
                                        [ngModelOptions]="{standalone: true}"
                                        bindValue="id"
                                        bindLabel="name"
-                                       (change)="removedDriverFun(query.driver1Id, 1)"
                                        [clearable]="false">
                                 <ng-option value="" selected>Select Option</ng-option>
                                 <ng-option *ngFor="let staff of driverOne"
                                            [value]="staff.id">{{staff.name}}</ng-option>
                             </ng-select>
                         </div>
+<!--                        <div class="col-sm-5 form-group" >-->
+<!--                            <label class="control-label">Driver One <span class="mandatory-field">*</span></label>-->
+<!--                            <ng-select [(ngModel)]="query.driver1Id"-->
+<!--                                       [ngModelOptions]="{standalone: true}"-->
+<!--                                       bindValue="id"-->
+<!--                                       bindLabel="name"-->
+<!--                                       (change)="removedDriverFun(query.driver1Id, 1)"-->
+<!--                                       [clearable]="false">-->
+<!--                                <ng-option value="" selected>Select Option</ng-option>-->
+<!--                                <ng-option *ngFor="let staff of driverOne"-->
+<!--                                           [value]="staff.id">{{staff.name}}</ng-option>-->
+<!--                            </ng-select>-->
+<!--                        </div>-->
+<!--                        <div class="col-sm-5 form-group" >-->
+<!--                            <label class="control-label">Driver Two</label>-->
+<!--                            <ng-select [(ngModel)]="query.driver2Id"-->
+<!--                                       [ngModelOptions]="{standalone: true}"-->
+<!--                                       bindValue="id"-->
+<!--                                       bindLabel="name"-->
+<!--                                       (change)="removedDriverFun(query.driver2Id, 2)"-->
+<!--                                       [clearable]="false">-->
+<!--                                <ng-option value="" selected>Select Option</ng-option>-->
+<!--                                <ng-option *ngFor="let staff of driverTwo"-->
+<!--                                           [value]="staff.id">{{staff.name}}</ng-option>-->
+<!--                            </ng-select>-->
+<!--                        </div>-->
                         <div class="col-sm-1"></div>
                         <div class="col-sm-1"></div>
                         <div class="col-sm-5 form-group" >
@@ -92,7 +130,6 @@
                                        [ngModelOptions]="{standalone: true}"
                                        bindValue="id"
                                        bindLabel="name"
-                                       (change)="removedDriverFun(query.driver2Id, 2)"
                                        [clearable]="false">
                                 <ng-option value="" selected>Select Option</ng-option>
                                 <ng-option *ngFor="let staff of driverTwo"
