@@ -12,16 +12,15 @@
         </ul>
     </div>
     <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8 col-sm-12">
+        <div class="col-lg-12 col-sm-12">
             <div class="tile">
-                <h3 class="tile-title form-head-line-style">{{staffTitle}}
+                <h3 class="tile-title form-head-line-style">Service Staff
                 </h3>
                 <hr>
                 <div class="tile-body">
                     <div class="row">
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-5 form-group">
+
+                        <div class="col-sm-2 form-group">
                             <label class="control-label">Trip Date<span class="mandatory-field">*</span></label>
                             <div class="input-group">
                                 <input name="startDate" class="form-control"
@@ -43,7 +42,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-5 form-group" >
+                        <div class="col-sm-2 form-group" >
                             <label class="control-label">Select Vehicle <span class="mandatory-field">*</span></label>
                             <ng-select [(ngModel)]="query.vehicleRegNumber"
                                        [ngModelOptions]="{standalone: true}"
@@ -56,35 +55,20 @@
                                            [value]="vehicle.regNo">{{vehicle.regNo}}</ng-option>
                             </ng-select>
                         </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-1"></div>
-<!--                        <div class="col-sm-5 form-group" >-->
-<!--                            <label class="control-label">Supplier</label>-->
-<!--                            <ng-select [(ngModel)]="query.supplierId"-->
-<!--                                       [ngModelOptions]="{standalone: true}"-->
-<!--                                       bindValue="id"-->
-<!--                                       bindLabel="name"-->
-<!--                                       [ngClass]=" staffId ? 'inactive' : ''"-->
-<!--                                       [clearable]="false">-->
-<!--                                <ng-option value="" selected>Select Option</ng-option>-->
-<!--                                <ng-option *ngFor="let supplier of suppliersList"-->
-<!--                                           [value]="supplier.id">{{supplier.name}}</ng-option>-->
-<!--                            </ng-select>-->
-<!--                        </div>-->
-                        <div class="col-sm-5 form-group" >
+
+                        <div class="col-sm-2 form-group" >
                             <label class="control-label">Supplier</label>
                             <ng-select [(ngModel)]="query.supplierId"
                                        [ngModelOptions]="{standalone: true}"
                                        bindValue="id"
                                        bindLabel="name"
-                                       [ngClass]=" staffId ? 'inactive' : ''"
                                        [clearable]="false">
                                 <ng-option value="" selected>Select Option</ng-option>
                                 <ng-option *ngFor="let supplier of suppliersList"
                                            [value]="supplier.id">{{supplier.name}}</ng-option>
                             </ng-select>
                         </div>
-                        <div class="col-sm-5 form-group" >
+                        <div class="col-sm-2 form-group" >
                             <label class="control-label">Driver One <span class="mandatory-field">*</span></label>
                             <ng-select [(ngModel)]="query.driver1Id"
                                        [ngModelOptions]="{standalone: true}"
@@ -92,39 +76,12 @@
                                        bindLabel="name"
                                        [clearable]="false">
                                 <ng-option value="" selected>Select Option</ng-option>
-                                <ng-option *ngFor="let staff of driverOne"
+                                <ng-option *ngFor="let staff of drivers"
                                            [value]="staff.id">{{staff.name}}</ng-option>
                             </ng-select>
                         </div>
-<!--                        <div class="col-sm-5 form-group" >-->
-<!--                            <label class="control-label">Driver One <span class="mandatory-field">*</span></label>-->
-<!--                            <ng-select [(ngModel)]="query.driver1Id"-->
-<!--                                       [ngModelOptions]="{standalone: true}"-->
-<!--                                       bindValue="id"-->
-<!--                                       bindLabel="name"-->
-<!--                                       (change)="removedDriverFun(query.driver1Id, 1)"-->
-<!--                                       [clearable]="false">-->
-<!--                                <ng-option value="" selected>Select Option</ng-option>-->
-<!--                                <ng-option *ngFor="let staff of driverOne"-->
-<!--                                           [value]="staff.id">{{staff.name}}</ng-option>-->
-<!--                            </ng-select>-->
-<!--                        </div>-->
-<!--                        <div class="col-sm-5 form-group" >-->
-<!--                            <label class="control-label">Driver Two</label>-->
-<!--                            <ng-select [(ngModel)]="query.driver2Id"-->
-<!--                                       [ngModelOptions]="{standalone: true}"-->
-<!--                                       bindValue="id"-->
-<!--                                       bindLabel="name"-->
-<!--                                       (change)="removedDriverFun(query.driver2Id, 2)"-->
-<!--                                       [clearable]="false">-->
-<!--                                <ng-option value="" selected>Select Option</ng-option>-->
-<!--                                <ng-option *ngFor="let staff of driverTwo"-->
-<!--                                           [value]="staff.id">{{staff.name}}</ng-option>-->
-<!--                            </ng-select>-->
-<!--                        </div>-->
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-5 form-group" >
+
+                        <div class="col-sm-2 form-group" >
                             <label class="control-label">Driver Two</label>
                             <ng-select [(ngModel)]="query.driver2Id"
                                        [ngModelOptions]="{standalone: true}"
@@ -132,11 +89,11 @@
                                        bindLabel="name"
                                        [clearable]="false">
                                 <ng-option value="" selected>Select Option</ng-option>
-                                <ng-option *ngFor="let staff of driverTwo"
+                                <ng-option *ngFor="let staff of drivers"
                                            [value]="staff.id">{{staff.name}}</ng-option>
                             </ng-select>
                         </div>
-                        <div class="col-sm-5 form-group" >
+                        <div class="col-sm-2 form-group" >
                             <label class="control-label">Conductor</label>
                             <ng-select [(ngModel)]="query.conductorId"
                                        [ngModelOptions]="{standalone: true}"
@@ -148,9 +105,7 @@
                                            [value]="con.id">{{con.name}}</ng-option>
                             </ng-select>
                         </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-5 form-group" >
+                        <div class="col-sm-2 form-group" >
                             <label class="control-label">Cleaner</label>
                             <ng-select [(ngModel)]="query.cleanerId"
                                        [ngModelOptions]="{standalone: true}"
@@ -162,23 +117,21 @@
                                            [value]="cln.id">{{cln.name}}</ng-option>
                             </ng-select>
                         </div>
-                        <div class="col-sm-5 form-group">
+                        <div class="col-sm-1 form-group">
                             <label class="control-label">Fuel Quantity</label>
                             <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.fuelQuantity" [ngModelOptions]="{standalone: true}" placeholder="Enter fuel quantity" />
                         </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-5 form-group">
+
+                        <div class="col-sm-1 form-group">
                             <label class="control-label">Fuel Cost</label>
                             <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.fuelCost" [ngModelOptions]="{standalone: true}" placeholder="Enter fuel cost" />
                         </div>
-                        <div class="col-sm-5 form-group">
+                        <div class="col-sm-1 form-group">
                             <label class="control-label">Cash Collection</label>
                             <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.cashCollection" [ngModelOptions]="{standalone: true}" placeholder="Enter Cash" />
                         </div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-5 form-group mb-0">
+
+                        <div class="col-sm-1 form-group mb-0">
                             <div class="animated-checkbox">
                                 <label class="text-uppercase text-600 font-weight-semi-bold">
                                     <input type="checkbox" [(ngModel)]="query.verified" value="false"

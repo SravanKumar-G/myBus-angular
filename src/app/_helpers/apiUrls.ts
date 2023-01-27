@@ -208,6 +208,8 @@ export class ApiUrls {
     updateAgentBranch = 'api/v1/agent/updateBranchOffice';
     // Staff API's
     getStaffList = 'api/v1/staff';
+    getStaffNames = 'api/v1/staffNamesOnly';
+
     getStaffCount = 'api/v1/staff/count';
     getStaffDetails = 'api/v1/staff/';
     addNewStaff = 'api/v1/staff/create';

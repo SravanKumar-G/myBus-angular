@@ -15,7 +15,7 @@ export class AddEditServiceStaffAllocationsComponent implements OnInit {
   public allVehicles: Array <any> = [];
   public suppliersList: Array<any> = [];
   public listOfStaff: Array<any> = [];
-  public driverOne: Array<any> = [];
+  public drivers: Array<any> = [];
   public  driverOneSelection: any;
   public driverTwo: Array<any> = [];
   public  driverTwoSelection: any;
@@ -74,17 +74,13 @@ export class AddEditServiceStaffAllocationsComponent implements OnInit {
     });
   }
   getStaffList(): void {
-    this.apiService.getAll(this.apiUrls.getStaffList, {}).subscribe((res: any) => {
+    this.apiService.getAll(this.apiUrls.getStaffNames, {}).subscribe((res: any) => {
       if (res) {
-        this.listOfStaff = res.content;
+        this.listOfStaff = res;
         for (const item of this.listOfStaff){
           if (!(item.type === null) && item.type.toUpperCase() === 'DRIVER'){
-            // if (item2 === null || !(item2.id === item.id) ){
-                this.driverOne.push(item);
-            // }
-            // if (item1 === null || !(item1.id === item.id)){
-                this.driverTwo.push(item);
-            // }
+            this.drivers.push(item);
+            this.driverTwo.push(item);
           }else if (!(item.type === null) && item.type.toUpperCase() === 'CLEANER'){
             this.cleaner.push(item);
           }else if (!(item.type === null) && item.type.toUpperCase() === 'CONDUCTOR'){
@@ -102,8 +98,7 @@ export class AddEditServiceStaffAllocationsComponent implements OnInit {
     if (this.staffId){
       this.apiService.update(this.apiUrls.updateServiceStaff, this.query).subscribe((res: any) => {
         if (res){
-          this.driverOne = [];
-          this.driverTwo = [];
+          this.drivers = [];
           this.cleaner = [];
           this.conductor = [];
           Swal.fire('Success', 'Staff Updated Successfully', 'success');
@@ -115,7 +110,6 @@ export class AddEditServiceStaffAllocationsComponent implements OnInit {
     }else {
       this.apiService.getAll(this.apiUrls.addServiceStaff, this.query).subscribe((res: any) => {
         if (res){
-          this.driverOne = [];
           this.driverTwo = [];
           this.cleaner = [];
           this.conductor = [];
@@ -132,7 +126,7 @@ export class AddEditServiceStaffAllocationsComponent implements OnInit {
   removedDriverFun(item: any, i: any): void {
     if (i === 1){
       let item2Object;
-      for (const a of this.driverOne){
+      for (const a of this.drivers){
         if (a.id === item){
           item2Object = a;
         }
@@ -150,10 +144,10 @@ export class AddEditServiceStaffAllocationsComponent implements OnInit {
             item2Object = a;
         }
       }
-      const data = this.driverOne.indexOf(item2Object);
-      this.driverOne.splice(data, 1);
+      const data = this.drivers.indexOf(item2Object);
+      this.drivers.splice(data, 1);
       if (!(this.driverTwoSelection === undefined) && !(item2Object.id === this.driverTwoSelection.id)){
-        this.driverOne.push(this.driverTwoSelection);
+        this.drivers.push(this.driverTwoSelection);
       }
       this.driverTwoSelection = item2Object;
     }

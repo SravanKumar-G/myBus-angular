@@ -59,29 +59,21 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="card" *ngFor="let service of staffAllocationList; let i =index;" style="margin: 15px 0;">
-                                <div class="card-header" style="align-items: center;padding: 8px 15px !important;">
+                            <div class="card" *ngFor="let service of staffAllocationList; let i =index;">
+                                <div class="card-header" style="align-items: center;padding: 0 !important;">
                                     <div class="flex-container">
                                         <div class="service-card">{{ i + 1}}</div>
                                         <div class="service-card">
-                                            <label>Service Name:</label><b>{{service.from || 'NA'}} - {{service.to || 'NA' }} : {{service.type || 'NA'}}</b>
-                                        </div>
-                                        <div class="service-card">
-                                            <label>Service Number:</label><b>{{service.serviceNumber || 'NA'}}</b>
+                                            <label>Service:</label><b>{{service.serviceNumber || 'NA'}} {{service.from || 'NA'}} - {{service.to || 'NA' }} : {{service.type || 'NA'}}</b>
                                         </div>
                                         <div class="service-card">
                                             <label>Vehicle Number:</label><b>{{service.vehicleRegNumber}}</b>
                                         </div>
-                                        <div class="service-card">
-                                            <label>Status:</label><b>{{service.status || 'NA'}}</b>
-                                        </div>
-                                        <div class="service-card">
-                                            <label>Journey Date:</label><b>{{service.journeyDate | date: 'yyyy-MM-dd'}}</b>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="card-body" style="padding: 12px !important;">
-                                    <div class="flex-container">
+                                    <div class="row">
                                         <div class="service-card">
                                             <label>Driver One:</label>
                                             <span> {{ service.attrs.driver1 != null ? service.attrs.driver1 : 'NA'}}</span>
@@ -99,6 +91,9 @@
                                             <label>Conductor:</label>
                                             <span> {{ service.attrs.conductor != null ? service.attrs.conductor : 'NA'}} </span>
                                         </div>
+
+                                    </div>
+                                    <div class="row">
                                         <div class="service-card">
                                             <label>Supplier:</label>
                                             <span> {{ service.supplier.name != null ? service.supplier.name : 'NA'}} </span>
@@ -115,10 +110,6 @@
                                             <label>Cash Collection:</label>
                                             <span> {{service.cashCollection||  'NA'}} </span>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer text-right border-0 pt-0" style="background-color: white">
-                                    <div class="">
                                         <div class="service-card" style="font-size: 12px !important;">
                                             <a class="btn btn-primary btn-sm"
                                                *ngIf=" service.verified === false"
@@ -130,13 +121,14 @@
                                                title="Verify Trip" (click)="verifyTrip(service.id, service)">Verify
                                             </a>
                                             <button type="button" class="waves-effect btn btn-danger btn-sm m-2"
-                                               *ngIf="service.verified === true"
-                                               [ngClass]="service.verified === true ? 'inactive' : ''"
-                                               title="Verify Trip" >Verified
+                                                    *ngIf="service.verified === true"
+                                                    [ngClass]="service.verified === true ? 'inactive' : ''"
+                                                    title="Verify Trip" >Verified
                                             </button>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
