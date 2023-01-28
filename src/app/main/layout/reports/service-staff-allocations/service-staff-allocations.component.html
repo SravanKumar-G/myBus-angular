@@ -59,6 +59,11 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
+                            Total Fuel Cost: {{totalFuelCost}} &nbsp; Total Cash Collection: {{totalCashCollection}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
                             <div class="card" *ngFor="let service of staffAllocationList; let i =index;">
                                 <div class="card-header" style="align-items: center;padding: 0 !important;">
                                     <div class="flex-container">
@@ -96,7 +101,7 @@
                                     <div class="row">
                                         <div class="service-card">
                                             <label>Supplier:</label>
-                                            <span> {{ service.supplier.name != null ? service.supplier.name : 'NA'}} </span>
+                                            <span> {{ service.attrs.supplier != null ? service.attrs.supplier : 'NA'}} </span>
                                         </div>
                                         <div class="service-card">
                                             <label>Fuel Quantity:</label>

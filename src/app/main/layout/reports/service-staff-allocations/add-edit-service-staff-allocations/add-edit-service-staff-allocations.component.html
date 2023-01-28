@@ -57,18 +57,6 @@
                         </div>
 
                         <div class="col-sm-2 form-group" >
-                            <label class="control-label">Supplier</label>
-                            <ng-select [(ngModel)]="query.supplierId"
-                                       [ngModelOptions]="{standalone: true}"
-                                       bindValue="id"
-                                       bindLabel="name"
-                                       [clearable]="false">
-                                <ng-option value="" selected>Select Option</ng-option>
-                                <ng-option *ngFor="let supplier of suppliersList"
-                                           [value]="supplier.id">{{supplier.name}}</ng-option>
-                            </ng-select>
-                        </div>
-                        <div class="col-sm-2 form-group" >
                             <label class="control-label">Driver One <span class="mandatory-field">*</span></label>
                             <ng-select [(ngModel)]="query.driver1Id"
                                        [ngModelOptions]="{standalone: true}"
@@ -115,6 +103,18 @@
                                 <ng-option value="" selected>Select Option</ng-option>
                                 <ng-option *ngFor="let cln of cleaner"
                                            [value]="cln.id">{{cln.name}}</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-2 form-group" >
+                            <label class="control-label">Supplier</label>
+                            <ng-select [(ngModel)]="query.supplierId"
+                                       [ngModelOptions]="{standalone: true}"
+                                       bindValue="id"
+                                       bindLabel="name"
+                                       [clearable]="false">
+                                <ng-option value="" selected>Select Option</ng-option>
+                                <ng-option *ngFor="let supplier of suppliersList"
+                                           [value]="supplier.id">{{supplier.name}}</ng-option>
                             </ng-select>
                         </div>
                         <div class="col-sm-1 form-group">

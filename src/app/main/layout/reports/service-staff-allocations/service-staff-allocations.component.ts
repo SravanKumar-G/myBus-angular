@@ -44,6 +44,8 @@ export class ServiceStaffAllocationsComponent implements OnInit {
     verified: false
   };
   public vehicleNumber: '' | undefined;
+  public totalFuelCost: 0;
+  public totalCashCollection: 0;
   public allError = [];
   @ViewChild('addStaffModal') addStaffModal: any;
   public staffId: any;
@@ -60,7 +62,9 @@ export class ServiceStaffAllocationsComponent implements OnInit {
     this.currentDate = new Date();
     this.currentDate.setDate(this.currentDate.getDate() - 1);
     this.staffId = this.actRoute.snapshot.paramMap.get('id') || '';
-    console.log(this.actRoute);
+    this.totalFuelCost = 0;
+    this.totalCashCollection = 0;
+
   }
 
   ngOnInit(): void {
@@ -72,37 +76,10 @@ export class ServiceStaffAllocationsComponent implements OnInit {
     this.apiService.get(this.apiUrls.staffAllocation + '?travelDate=' + Date + '&vehicleNumber=' + vehicleNum).subscribe((res: any) => {
       if (res) {
         this.staffAllocationList = res;
-        // for (let a of this.staffAllocationList){
-        //   let itemsOfstaffDetails: any = {
-        //     driver1: '',
-        //     driver1Mobile: '',
-        //     driver2: '',
-        //     driver2Mobile: '',
-        //     cleaner: '',
-        //     cleanerMobile: '',
-        //     conductor: '',
-        //     conductorMobile: ''
-        //   };
-        //   for (let items of a.staffDetails){
-        //     // console.log(items);
-        //     if (items.type.toUpperCase() === 'DRIVER'){
-        //       if (itemsOfstaffDetails.driver1 === ''){
-        //         itemsOfstaffDetails.driver1 = items.name;
-        //         itemsOfstaffDetails.driver1Mobile = items.contactNumber;
-        //       }else if (itemsOfstaffDetails.driver2 === ''){
-        //         itemsOfstaffDetails.driver2 = items.name;
-        //         itemsOfstaffDetails.driver2Mobile = items.contactNumber;
-        //       }
-        //     }else if (items.type.toUpperCase() === 'CLEANER'){
-        //       itemsOfstaffDetails.cleaner = items.name;
-        //       itemsOfstaffDetails.cleanerMobile = items.contactNumber;
-        //     }else if (items.type.toUpperCase() === 'CONDUCTOR'){
-        //       itemsOfstaffDetails.conductor = items.name;
-        //       itemsOfstaffDetails.conductorMobile = items.contactNumber;
-        //     }
-        //   }
-        //   a.staffDetails = itemsOfstaffDetails;
-        // }
+        for (let a of this.staffAllocationList){
+          this.totalFuelCost += a.fuelCost;
+          this.totalCashCollection += a.cashCollection;
+        }
       }
     });
   }
