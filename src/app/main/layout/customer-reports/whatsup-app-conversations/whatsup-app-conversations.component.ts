@@ -97,7 +97,7 @@ export class WhatsupAppConversationsComponent implements OnInit, OnDestroy {
   replyMessage(): void{
     if(this.data.message.trim().length > 0) {
       this.apiService.getAll(this.apiUrls.replyOneMessge, {
-        phoneNumber: '91' + this.phoneNumber,
+        phoneNumber: this.phoneNumber,
         message: this.data.message
       }).subscribe((res: any) => {
         // if (res){

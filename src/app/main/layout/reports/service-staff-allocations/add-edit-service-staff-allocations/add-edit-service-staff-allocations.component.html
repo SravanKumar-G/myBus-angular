@@ -6,7 +6,6 @@
                 Service Staff Allocations
             </h1>
         </div>
-
         <ul class="">
             <xng-breadcrumb></xng-breadcrumb>
         </ul>
@@ -105,6 +104,10 @@
                                            [value]="cln.id">{{cln.name}}</ng-option>
                             </ng-select>
                         </div>
+                        <div class="col-sm-1 form-group">
+                            <label class="control-label">Cash Collection</label>
+                            <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.cashCollection" [ngModelOptions]="{standalone: true}" placeholder="Enter Cash" />
+                        </div>
                         <div class="col-sm-2 form-group" >
                             <label class="control-label">Supplier</label>
                             <ng-select [(ngModel)]="query.supplierId"
@@ -126,10 +129,7 @@
                             <label class="control-label">Fuel Cost</label>
                             <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.fuelCost" [ngModelOptions]="{standalone: true}" placeholder="Enter fuel cost" />
                         </div>
-                        <div class="col-sm-1 form-group">
-                            <label class="control-label">Cash Collection</label>
-                            <input type="number" class=" form-control form-control-sm" [(ngModel)]="query.cashCollection" [ngModelOptions]="{standalone: true}" placeholder="Enter Cash" />
-                        </div>
+
 
                         <div class="col-sm-1 form-group mb-0">
                             <div class="animated-checkbox">
