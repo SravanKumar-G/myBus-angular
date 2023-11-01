@@ -67,13 +67,15 @@ export class ViewCargoBookingComponent implements OnInit {
         // @ts-ignore
         WindowPrt.document.close();*/
         console.log('getting PDF');
-        this.apiService.get(this.apiUrls.printCargoBooking + lrNumber)
-            .subscribe((response: any) => {
-                console.log('got PDF');
-                const file = new Blob([response], {type: 'application/pdf'});
-                const fileURL = URL.createObjectURL(file);
-                window.open(fileURL);
-                console.log('printed');
+        this.apiService.getBlob(this.apiUrls.printCargoBooking + lrNumber)
+            .subscribe((response: Blob) => {
+                if (response){
+                    console.log('got PDF');
+                    const file = new Blob([response], {type: 'application/pdf'});
+                    const fileURL = URL.createObjectURL(file);
+                    window.open(fileURL);
+                    console.log('printed');
+                }
             }, (error) => {
                 Swal.showValidationMessage(
                     `Enter comment :` + error
