@@ -82,6 +82,9 @@ export class ApiServiceService {
     public get = (subUrl: any) => {
         return this.http.get(this.Apiurls.mainUrl + subUrl);
     }
+    public getBlob = (subUrl: any) => {
+        return this.http.get(this.Apiurls.mainUrl + subUrl, {responseType: 'blob'});
+    }
 
     public update = (subUrl: any, data: any) => {
         return this.http.put(this.Apiurls.mainUrl + subUrl, data);
