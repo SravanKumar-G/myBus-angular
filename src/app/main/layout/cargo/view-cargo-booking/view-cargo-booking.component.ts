@@ -59,13 +59,26 @@ export class ViewCargoBookingComponent implements OnInit {
         });
     }
 
-    printCargo(): void {
-        const printContent = document.getElementById('report_left_inner');
+    printCargo(lrNumber: string): void {
+        /*const printContent = document.getElementById('report_left_inner');
         const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
         // @ts-ignore
         WindowPrt.document.write('<html><body onload="window.print()">' + printContent.innerHTML + '</body></html>');
         // @ts-ignore
-        WindowPrt.document.close();
+        WindowPrt.document.close();*/
+        console.log('getting PDF');
+        this.apiService.get(this.apiUrls.printCargoBooking + lrNumber)
+            .subscribe((response: any) => {
+                console.log('got PDF');
+                const file = new Blob([response], {type: 'application/pdf'});
+                const fileURL = URL.createObjectURL(file);
+                window.open(fileURL);
+                console.log('printed');
+            }, (error) => {
+                Swal.showValidationMessage(
+                    `Enter comment :` + error
+                );
+            });
     }
 
     initiateDeliverCargoBooking(bookingId: any): void {

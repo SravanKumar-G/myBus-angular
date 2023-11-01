@@ -113,6 +113,7 @@ export class ApiUrls {
     sendSMSForCargoBooking = 'api/v1/shipment/sendSMS/';
     getCargoBooking = 'api/v1/shipment/';
     saveCommentCargoBooking = 'api/v1/shipment/addCommentToBooking/';
+    printCargoBooking = 'api/v1/shipment/printLR/';
 
     // Suppliers
     getAllSuppliers = 'api/v1/suppliers/';
