@@ -85,10 +85,10 @@
                                                         title="Edit Jobs"  [routerLink]="['editJobs/' + job.id]">
                                                         <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
                                                 </button>
-                                                <button *ngIf="!job.jobCompleted" type="button" class="action-icon-style text-danger waves-effect waves-blue edit-user-button"
+                                               <!-- <button *ngIf="!job.jobCompleted" type="button" class="action-icon-style text-danger waves-effect waves-blue edit-user-button"
                                                         title="Delete Jobs" (click)="deleteJob(job.id)">
                                                         <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
-                                                </button>
+                                                </button> -->
                                             </td>
                                         </tr>
                                         <tr *ngIf="!pendingJobs || pendingJobs.length === 0" class="text-center">
@@ -326,7 +326,7 @@
                                     <tbody>
                                         <tr *ngFor="let job of searchResults; let i = index;">
                                             <td>{{(searchpagination.page-1) * searchpagination.size + i + 1}}</td>
-                                            <td>{{job.attrs.inventory }}</td>
+                                            <td>{{job.attrs.inventory }} here</td>
                                             <td>{{job.attrs.type }}</td>
                                             <td>{{job.attrs.RegNo }}</td>
                                             <td>{{job.totalCost}}</td>
@@ -340,10 +340,10 @@
                                                         title="Edit Jobs" [routerLink]="['editJobs/' + job.id]">
                                                         <i class="fa fa-pencil fa-1x" aria-hidden="true"></i>
                                                 </button>
-                                                <button  type="button" class="action-icon-style text-danger waves-effect waves-blue edit-user-button"
+                                               <!-- <button  type="button" class="action-icon-style text-danger waves-effect waves-blue edit-user-button"
                                                         title="Delete Jobs" (click)="deleteJob(job.id)">
                                                         <i class="fa fa-trash fa-1x" aria-hidden="true"></i>
-                                                </button>
+                                                </button> -->
                                             </td>
                                         </tr>
                                         <tr *ngIf="!searchResults || searchResults.length === 0" class="text-center">
