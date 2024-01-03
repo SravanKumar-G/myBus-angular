@@ -12,8 +12,8 @@
             <!--        <button class="app-search__button"><i class="fa fa-search"></i></button>-->
             <!--      </li>-->
             <li class="app-search">
-                <label class="cash-balance">Cash
-                    Balances: {{currentUserDetails.amountToBePaid | numberFormatter}}</label>
+                <label class="cash-balance">Cargo Balance: {{currentUserDetails.cargoBalance | numberFormatter}}</label>
+                <label class="cash-balance">Ticket Dues: {{currentUserDetails.amountToBePaid | numberFormatter}}</label>
             </li>
             <li class="app-search">
                 <label class="cash-balance"><i class="fa fa-calendar"></i> {{currentDate | date}}</label>
