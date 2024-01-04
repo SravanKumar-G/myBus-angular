@@ -223,6 +223,7 @@ export class DeliverySheetComponent implements OnInit {
 
     cancelBookings(id: any): void {
         if (id) {
+            // @ts-ignore
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'Do you want to cancel this booking now?',
@@ -230,10 +231,19 @@ export class DeliverySheetComponent implements OnInit {
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Cancel it!'
+                confirmButtonText: 'Yes, Cancel it!',
+                input: 'text',
+                inputAttributes: {
+                    placeholder: 'Enter your reason here...'
+                },
+                inputValidator: (value) => {
+                    return !value && 'Please enter reason!';
+                }
             }).then((result) => {
+                const cancelReason = result.value;
                 if (result.isConfirmed) {
-                    this.apiService.update(this.apiUrls.cancelCargoBooking + id, {}).subscribe((res: any) => {
+                    this.apiService.update(this.apiUrls.cancelCargoBooking + id,
+                        {reason: cancelReason}).subscribe((res: any) => {
                         if (res) {
                             Swal.fire(
                                 'Cancelled!',

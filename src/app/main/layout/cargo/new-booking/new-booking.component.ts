@@ -37,6 +37,7 @@ export class NewBookingComponent implements OnInit {
     public isDisabled = false;
     public bookingId: any;
     public searchData: any;
+    public branchOfficesName: any;
 
     constructor(
         private router: Router,
@@ -61,6 +62,13 @@ export class NewBookingComponent implements OnInit {
             if (res) {
                 this.branchOffices = res;
                 this.newBooking.fromBranchId = this.currentUser.branchOfficeId;
+                const matchingBranch = this.branchOffices.find(branch => branch.id === this.newBooking.fromBranchId);
+                if (matchingBranch) {
+                    this.branchOfficesName = matchingBranch.name;
+                    this.newBooking.fromBranchId = matchingBranch.id;
+                } else {
+                    this.branchOfficesName = 'No branch found';
+                }
             }
         }, error => {
             this.errorMessage = error.message;
