@@ -21,24 +21,34 @@
                         <div class="col-md-6 col-lg-4 col-sm-6 col-12 form-group">
                             <label class="control-label">From Branch Office <span
                                     class="mandatory-field">*</span></label>
-                            <select class="form-control form-control-sm"
-                                    [(ngModel)]="newBooking.fromBranchId"
-                                    [ngModelOptions]="{standalone: true}" *ngIf="currentUser.admin">
-                                <option value="" selected>--Select Branch Office--</option>
-                                <option *ngFor="let fromBranch of branchOffices" value="{{fromBranch.id}}">
-                                    {{fromBranch.name}}
-                                </option>
-                            </select>
+<!--                            <select class="form-control form-control-sm"-->
+<!--                                    [(ngModel)]="newBooking.fromBranchId"-->
+<!--                                    [disabled]="true"-->
+<!--                                    [ngModelOptions]="{standalone: true}" *ngIf="currentUser.admin">-->
+<!--                                <option value="" selected>&#45;&#45;Select Branch Office&#45;&#45;</option>-->
+<!--                                <option *ngFor="let fromBranch of branchOffices" value="{{fromBranch.id}}">-->
+<!--                                    {{fromBranch.name}}-->
+<!--                                </option>-->
+<!--                            </select>-->
+                            <input type="text" class="form-control form-control-sm" [disabled]="true" *ngIf="currentUser.admin"
+                                   placeholder="Branch Office"
+                                   [(ngModel)]="branchOfficesName"
+                                   [ngModelOptions]="{standalone: true}"/>
 
-                            <select class="form-control form-control-sm"
-                                    [(ngModel)]="newBooking.fromBranchId"
-                                    [ngModelOptions]="{standalone: true}" readonly="true"
-                                    *ngIf="!currentUser.admin">
-                                <option value="" selected>--Select Branch Office--</option>
-                                <option *ngFor="let fromBranch of branchOffices" value="{{fromBranch.id}}">
-                                    {{fromBranch.name}}
-                                </option>
-                            </select>
+<!--                            <select class="form-control form-control-sm"-->
+<!--                                    [(ngModel)]="newBooking.fromBranchId"-->
+<!--                                    [disabled]="true"-->
+<!--                                    [ngModelOptions]="{standalone: true}" readonly="true"-->
+<!--                                    *ngIf="!currentUser.admin">-->
+<!--                                <option value="" selected>&#45;&#45;Select Branch Office&#45;&#45;</option>-->
+<!--                                <option *ngFor="let fromBranch of branchOffices" value="{{fromBranch.id}}">-->
+<!--                                    {{fromBranch.name}}-->
+<!--                                </option>-->
+<!--                            </select>-->
+                            <input type="text" class="form-control form-control-sm" [disabled]="true" *ngIf="!currentUser.admin"
+                                   placeholder="Branch Office"
+                                   [(ngModel)]="branchOfficesName"
+                                   [ngModelOptions]="{standalone: true}"/>
                         </div>
                         <div class="col-md-6 col-lg-4 col-sm-6 col-12 form-group">
                             <label>To Branch Office <span class="mandatory-field">*</span></label>
@@ -84,6 +94,7 @@
                                 <input class="form-control form-control-sm"
                                        placeholder="Dispatch Date"
                                        name="permit"
+                                       disabled
                                        [(ngModel)]="newBooking.dispatchDate"
                                        [ngModelOptions]="{standalone: true}"
                                        bsDatepicker
@@ -91,6 +102,7 @@
                                        [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', isAnimated: true}">
                                 <div class="input-group-append">
                                     <button class="btn btn-light btn-sm" style="border: 1px solid #ced4da;"
+                                            disabled
                                             (click)="permit.show()"
                                             [attr.aria-expanded]="permit.isOpen" type="button">
                                         <i class="fa fa-calendar"></i>
