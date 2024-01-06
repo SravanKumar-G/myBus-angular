@@ -42,6 +42,7 @@
                             <th>Name</th>
                             <th>Contact</th>
                             <th [appFrentendSort]="cashBalanceArray" data-order="desc" data-name="amountToBePaid">Cash Balance <i class="fa fa-sort"></i></th>
+                            <th [appFrentendSort]="cashBalanceArray" data-order="desc" data-name="cargoBalance">Cargo Balance <i class="fa fa-sort"></i></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -51,6 +52,7 @@
                             <td>{{cash.fullName}}</td>
                             <td>{{cash.contact}}</td>
                             <td>{{cash.amountToBePaid | number}}</td>
+                            <td>{{cash.cargoBalance | number}}</td>
                         </tr>
                         <tr *ngIf="cashBalanceArray.length === 0 || !cashBalanceArray">
                             <td colspan="7" style="text-align: center">No Records exist.</td>
