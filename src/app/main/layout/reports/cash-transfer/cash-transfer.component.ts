@@ -123,11 +123,11 @@ export class CashTransferComponent implements OnInit {
         this.modalService.dismissAll();
     }
 
-    addCashTransfer(addEditSupplierModal: any): void {
+    addCashTransfer(addEditCashTransferModal: any): void {
         this.getUsers();
         this.cashTransferId = '',
         this.titleHeader = 'Add';
-        this.modalService.open(addEditSupplierModal, {
+        this.modalService.open(addEditCashTransferModal, {
             backdrop: 'static', keyboard: false, backdropClass: 'backdropClass', size: 'md'});
     }
 
@@ -235,8 +235,10 @@ export class CashTransferComponent implements OnInit {
     exportExcel(): void {
     }
 
-    save(cashTransfer: any): void {
-        if (!cashTransfer.amount) {
+    saveCashTransfer(cashTransfer: any): void {
+        if (!cashTransfer.balanceType) {
+            this.errorMessage = 'Please select the balance type';
+        } else if (!cashTransfer.amount) {
             this.errorMessage = 'Please Enter Amount';
         }else {
             if (cashTransfer.id) {
