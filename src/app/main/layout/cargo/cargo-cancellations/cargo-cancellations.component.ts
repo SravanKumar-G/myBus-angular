@@ -42,7 +42,7 @@ export class CargoCancellationsComponent implements OnInit {
 
     ngOnInit(): void {
         this.currentUser = JSON.parse(localStorage.getItem('currentUserDetails') as string);
-        this.changeInvoiceTab(1);
+        this.getAllCancelledCount();
     }
 
     changeInvoiceTab(tabKey: number): void {

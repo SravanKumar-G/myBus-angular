@@ -313,7 +313,7 @@ export class CashTransferComponent implements OnInit {
         } else {
             cashTransfer.status = 'Rejected';
         }
-        this.save(cashTransfer);
+        this.saveCashTransfer(cashTransfer);
     }
 
     date(): void{
