@@ -60,27 +60,28 @@ export class ViewCargoBookingComponent implements OnInit {
     }
 
     printCargo(lrNumber: string): void {
-        /*const printContent = document.getElementById('report_left_inner');
+        console.log(lrNumber);
+        const printContent = document.getElementById('report_left_inner');
         const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
         // @ts-ignore
         WindowPrt.document.write('<html><body onload="window.print()">' + printContent.innerHTML + '</body></html>');
         // @ts-ignore
-        WindowPrt.document.close();*/
+        WindowPrt.document.close();
         console.log('getting PDF');
-        this.apiService.getBlob(this.apiUrls.printCargoBooking + lrNumber)
-            .subscribe((response: Blob) => {
-                if (response){
-                    console.log('got PDF');
-                    const file = new Blob([response], {type: 'application/pdf'});
-                    const fileURL = URL.createObjectURL(file);
-                    window.open(fileURL);
-                    console.log('printed');
-                }
-            }, (error) => {
-                Swal.showValidationMessage(
-                    `Enter comment :` + error
-                );
-            });
+        // this.apiService.getBlob(this.apiUrls.printCargoBooking + lrNumber)
+        //     .subscribe((response: Blob) => {
+        //         if (response){
+        //             console.log('got PDF');
+        //             const file = new Blob([response], {type: 'application/pdf'});
+        //             const fileURL = URL.createObjectURL(file);
+        //             window.open(fileURL);
+        //             console.log('printed');
+        //         }
+        //     }, (error) => {
+        //         Swal.showValidationMessage(
+        //             `Enter comment :` + error
+        //         );
+        //     });
     }
 
     initiateDeliverCargoBooking(bookingId: any): void {
@@ -122,6 +123,7 @@ export class ViewCargoBookingComponent implements OnInit {
     }
 
     cancelCargoBooking(bookingId: any): void {
+        // @ts-ignore
         Swal.fire({
             title: 'Are you sure?',
             text: 'Do you want to cancel this booking now?',
@@ -129,10 +131,18 @@ export class ViewCargoBookingComponent implements OnInit {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Cancel it!'
+            confirmButtonText: 'Yes, Cancel it!',
+            input: 'text',
+            inputAttributes: {
+                placeholder: 'Enter your reason here...'
+            },
+            inputValidator: (value) => {
+                return !value && 'Please enter reason!';
+            }
         }).then((result) => {
+            const cancelReason = result.value;
             if (result.isConfirmed) {
-                this.apiService.update(this.apiUrls.cancelCargoBooking + bookingId, {}).subscribe((res: any) => {
+                this.apiService.update(this.apiUrls.cancelCargoBooking + bookingId, {reason: cancelReason}).subscribe((res: any) => {
                     if (res) {
                         Swal.fire(
                             'Cancelled!',
