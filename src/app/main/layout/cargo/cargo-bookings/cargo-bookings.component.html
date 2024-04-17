@@ -70,6 +70,7 @@
                                         <option value="CANCELLED">Cancelled</option>
                                         <option value="DELIVERED">Delivered</option>
                                         <option value="ONHOLD">On Hold</option>
+                                        <option value="NOTDELIVERED">Not Delivered</option>
                                     </select>
                                 </div>
                             </div>
@@ -203,11 +204,11 @@
                                 <td> {{cargo.attrs.bookedBy || '--'}}</td>
                                 <td>
                                     <a style="color: #007bff;" class="cus-a"
-                                       *ngIf="!cargo.canceled && cargo.cargoTransitStatus !== 'DELIVERED'"
+                                       *ngIf="!cargo.canceled && cargo.cargoTransitStatus !== 'DELIVERED' && cargo.cargoTransitStatus !== 'CANCELLED'"
                                        (click)="initiateDeliverCargoBooking(cargo.id)">
                                         Deliver
                                     </a>
-                                    <span *ngIf="cargo.canceled"> Cancelled</span>
+                                    <span *ngIf="cargo.canceled || cargo.cargoTransitStatus === 'CANCELLED'"> Cancelled</span>
                                     <span *ngIf="cargo.cargoTransitStatus === 'DELIVERED'">Delivered to - {{cargo.deliveryNotes}}</span>
                                 </td>
                                 <td>
