@@ -39,6 +39,7 @@ export class FuelExpenseReportsComponent implements OnInit {
   public dayTotalBill: any;
   public startDate = new Date();
   public endDate =  new Date();
+  public transactionDate =  new Date();
   public searchList: Array<any> = [];
   public currentUser: any;
   public searchCount: any;
@@ -217,6 +218,22 @@ export class FuelExpenseReportsComponent implements OnInit {
       }
       this.searchQuery.endDate = startYear + '-' + startMonth + '-' + startDay;
     }
+    if (this.transactionDate) {
+      const currentDate = new Date(this.transactionDate);
+      const startYear = currentDate.getFullYear();
+      let startMonth: any = currentDate.getMonth() + 1;
+      let startDay: any = currentDate.getDate();
+      for (let m = 0; m <= day.length; m++) {
+        if (startMonth === (day[m])) {
+          startMonth = '0' + startMonth;
+        }
+        if (startDay === (day[m])) {
+          startDay = '0' + startDay;
+        }
+      }
+      // @ts-ignore
+      this.transactionDate = startYear + '-' + startMonth + '-' + startDay;
+    }
   }
   search(): void {
     if (this.startDate > this.endDate) {
@@ -346,8 +363,15 @@ export class FuelExpenseReportsComponent implements OnInit {
     this.modalRef = this.ngModalService.open(this.myModal, {size: 'md', backdrop: 'static', keyboard: false});
   }
   updatePostDieselPayment(): void{
-    this.apiService.getAll(this.apiUrls.getSuppplierByIdDieselPayment + this.supplierId + '&amount=' +
-        this.amount + '&comment='+ this.comment, {}).subscribe((res: any) => {
+    this.dateFunction();
+    console.log(this.transactionDate)
+    const payload = {
+      transactionDate: this.transactionDate,
+      supplierId: this.supplierId,
+      serviceDetails: this.comment,
+      creditAmount: this.amount
+    }
+    this.apiService.getAll(this.apiUrls.getSuppplierByIdDieselPayment, payload).subscribe((res: any) => {
         Swal.fire('success', 'Successfully Updated', 'success');
         this.ngModalService.dismissAll();
         this.changeFuelExpenseTab(3);

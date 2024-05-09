@@ -36,6 +36,8 @@ export class ServiceReportComponent implements OnInit {
     public indexCount = 0;
     private currentDate: any;
     public statusReports: any;
+    public users: Array<any> = [];
+    // public userId: any;
     constructor(
         private apiService: ApiServiceService,
         private apiUrls: ApiUrls,
@@ -68,6 +70,7 @@ export class ServiceReportComponent implements OnInit {
         this.getSuppliers();
         this.getStaffList();
         this.loadBranchOffices();
+        this.getUsers();
     }
 
         loadReports(): void {
@@ -512,4 +515,15 @@ export class ServiceReportComponent implements OnInit {
         }
     }
 
+    getUsers(): void {
+        this.apiService.get(this.apiUrls.getAllUsers).subscribe((res: any) => {
+            if (res) {
+                this.users = res;
+            }
+        });
+    }
+    assignCollectionStaffFun(booking: any, index: any): void{
+        this.apiService.update(this.apiUrls.assignCollectionStaff + booking.id + '/' + booking.userId, {}).subscribe((res: any) => {
+        });
+    }
 }
