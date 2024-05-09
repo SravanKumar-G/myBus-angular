@@ -472,44 +472,41 @@
                                                    style="margin-top: 0.2rem !important;"
                                                    (ngModelChange)="getSuppplierDataById(item)">
                                             <label class="form-check-label" [for]="'checkbox_' + item.id">
-                                                {{ item.name }} {{item.toBeCollected}}, {{item.toBePaid}}
+                                               <span style="font-size: 'medium'"> {{ item.name }}</span> <u> Due:</u>{{item.toBePaid}}  <span *ngIf="item.toBeCollected > 0">Collection Due: {{item.toBeCollected}} </span>
                                             </label>
                                         </div>
+                                    </div>
+                                    <div class="col-sm-2 offset-11">
+                                        <button type="button" class="btn btn-success btn-sm mr-2" (click)="openAmountpopUp()">Add Payment</button>
                                     </div>
                                 </div>
                             </div>
                     </div>
-                    <div class="row form-group">
-                        <div class="col-sm-1 offset-11">
-                            <button type="button" class="btn btn-success btn-sm mr-2" (click)="openAmountpopUp()">Add Payment</button>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="col-sm-12 table-responsive">
-                            <table class="table table-hover dataTable text-center" id="fuelExpenseReports">
+                            <table class="table table-hover dataTable text-center" id="fuelTrailBalanceReport">
                                 <thead>
                                 <tr class="table-bordered">
                                     <th>S.No</th>
                                     <th>Date</th>
                                     <th>Old Balance</th>
-                                    <th>New Balance</th>
                                     <th>Fuel Charge</th>
                                     <th>Credit Amount</th>
+                                    <th>New Balance</th>
                                     <th>Service Details</th>
-                                    <th>Transaction Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr *ngFor="let fuelData of supplierDetails; let i = index">
+                                <tr *ngFor="let fuelTrailBalance of supplierDetails; let i = index">
 
                                     <td>{{i + 1}}</td>
-                                    <td>{{fuelData.dateStr || 'NA'}}</td>
-                                    <td>{{fuelData.oldBalance || 'NA'}}</td>
-                                    <td>{{fuelData.newBalance || 'NA'}}</td>
-                                    <td>{{fuelData.fuelCharge || 'NA'}}</td>
-                                    <td>{{fuelData.creditAmount || 'NA'}}</td>
-                                    <td>{{fuelData.serviceDetails || 'NA'}}</td>
-                                    <td>{{ fuelData.transactionDate ? (fuelData.transactionDate | date: 'yyyy-MM-dd') : 'NA' }}</td>
+                                    <td>{{fuelTrailBalance.createdAt ? (fuelTrailBalance.createdAt | date: 'yyyy-MM-dd : HH:ss') : 'NA'}}</td>
+                                    <td>{{fuelTrailBalance.oldBalance || 'NA'}}</td>
+                                    <td>{{fuelTrailBalance.fuelCharge || 'NA'}}</td>
+                                    <td>{{fuelTrailBalance.creditAmount || 'NA'}}</td>
+                                    <td>{{fuelTrailBalance.newBalance || 'NA'}}</td>
+                                    <td>{{fuelTrailBalance.attrs.supplierName}} - {{fuelTrailBalance.serviceDetails || 'NA'}} - {{ fuelTrailBalance.transactionDate ? (fuelTrailBalance.transactionDate | date: 'yyyy-MM-dd') : 'NA' }}</td>
                                 </tr>
                                 <tr *ngIf="supplierDetailsCount === 0 || !supplierDetailsCount">
                                     <td colspan="12">No FuelExpenses</td>
@@ -613,6 +610,12 @@
                     <input type="number" class="form-control-sm form-control"
                            [(ngModel)]="amount" [ngModelOptions]="{standalone: true}"
                            placeholder="Enter Amount" />
+            </div>
+            <div class="col-sm-6 form-group">
+                <label>Comment: </label>
+                <input type="text" class="form-control-sm form-control"
+                       [(ngModel)]="comment"
+                       placeholder="Enter comment" />
             </div>
         </div>
     </div>

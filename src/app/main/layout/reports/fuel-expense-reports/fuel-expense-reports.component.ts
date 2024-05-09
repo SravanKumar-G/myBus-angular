@@ -48,6 +48,7 @@ export class FuelExpenseReportsComponent implements OnInit {
   public supplierDetailsCount: any;
   public fuelExpenseData: any;
   public amount: any = 0;
+  public comment: any;
   public supplierId: any;
   public modalRef: any;
   @ViewChild('myModal') myModal: any;
@@ -308,12 +309,10 @@ export class FuelExpenseReportsComponent implements OnInit {
       if (res){
         this.fuelExpenseData = res;
       }
-      console.log(res);
     });
   }
 
   getSuppplierDataById(item: any): void {
-    console.log(item.id);
     this.supplierId = item.id;
     if (item.checked){
       this.apiService.getAll(this.apiUrls.getSuppplierDataById + item.id, this.fuelTrailbalanceQuery).subscribe((res: any) => {
@@ -337,13 +336,11 @@ export class FuelExpenseReportsComponent implements OnInit {
     this.modalRef = this.ngModalService.open(this.myModal, {size: 'md', backdrop: 'static', keyboard: false});
   }
   updatePostDieselPayment(): void{
-    console.log(this.amount,this.supplierId);
-    this.apiService.getAll(this.apiUrls.getSuppplierByIdDieselPayment + this.supplierId + '&amount=' + this.amount, {}).subscribe((res: any) => {
-      // if (res){
+    this.apiService.getAll(this.apiUrls.getSuppplierByIdDieselPayment + this.supplierId + '&amount=' +
+        this.amount + '&comment='+ this.comment, {}).subscribe((res: any) => {
         Swal.fire('success', 'Successfully Updated', 'success');
-      this.ngModalService.dismissAll();
+        this.ngModalService.dismissAll();
         this.changeFuelExpenseTab(3);
-      // }
     });
   }
   closeModal(): void {
