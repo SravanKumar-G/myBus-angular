@@ -280,6 +280,16 @@ export class FuelExpenseReportsComponent implements OnInit {
     this.searchQuery.page = 1;
     this.searchData();
   }
+ changeFuelExpensePage(event: number): void {
+    this.fuelTrailbalanceQuery.page = event;
+    this.changeFuelExpenseTab(3);
+  }
+
+  handleFuelExpensePageSizeChange(size: any): void {
+    this.fuelTrailbalanceQuery.size = size;
+    this.fuelTrailbalanceQuery.page = 1;
+    this.changeFuelExpenseTab(3);
+  }
 
   clickSearchSorting(event: MouseEvent): void {
     OnlynumberDirective.clickSorting(event, this.searchQuery);
