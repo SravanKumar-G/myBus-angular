@@ -533,13 +533,13 @@
                                                     [pageSize]="fuelTrailbalanceQuery.size"
                                                     [collectionSize]="supplierDetailsCount"
                                                     [boundaryLinks]="true"
-                                                    (pageChange)="changeSearchPage($event)"
+                                                    (pageChange)="changeFuelExpensePage($event)"
                                                     [maxSize]="5">
                                     </ngb-pagination>
                                     <ul class="pagination pull-right" style="margin-top: -37px !important;"
                                         *ngIf="supplierDetailsCount || supplierDetailsCount !== 0">
                                         <li class="page-item" [ngClass]="size == fuelTrailbalanceQuery.size ? 'active' : ''"
-                                            *ngFor="let size of fuelTrailbalanceQuery.pageSizes" (click)="handleSearchPageSizeChange(size)">
+                                            *ngFor="let size of fuelTrailbalanceQuery.pageSizes" (click)="handleFuelExpensePageSizeChange(size)">
                                             <button class="page-link"> {{ size }}
                                                 <span class="sr-only">(current)</span>
                                             </button>

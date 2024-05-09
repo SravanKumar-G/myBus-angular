@@ -279,6 +279,16 @@ export class FuelExpenseReportsComponent implements OnInit {
     this.searchQuery.page = 1;
     this.searchData();
   }
+ changeFuelExpensePage(event: number): void {
+    this.fuelTrailbalanceQuery.page = event;
+    this.changeFuelExpenseTab(3);
+  }
+
+  handleFuelExpensePageSizeChange(size: any): void {
+    this.fuelTrailbalanceQuery.size = size;
+    this.fuelTrailbalanceQuery.page = 1;
+    this.changeFuelExpenseTab(3);
+  }
 
   clickSearchSorting(event: MouseEvent): void {
     OnlynumberDirective.clickSorting(event, this.searchQuery);
@@ -308,12 +318,10 @@ export class FuelExpenseReportsComponent implements OnInit {
       if (res){
         this.fuelExpenseData = res;
       }
-      console.log(res);
     });
   }
 
   getSuppplierDataById(item: any): void {
-    console.log(item.id);
     this.supplierId = item.id;
     if (item.checked){
       this.apiService.getAll(this.apiUrls.getSuppplierDataById + item.id, this.fuelTrailbalanceQuery).subscribe((res: any) => {
@@ -337,7 +345,6 @@ export class FuelExpenseReportsComponent implements OnInit {
     this.modalRef = this.ngModalService.open(this.myModal, {size: 'md', backdrop: 'static', keyboard: false});
   }
   updatePostDieselPayment(): void{
-    console.log(this.amount,this.supplierId);
     this.apiService.getAll(this.apiUrls.getSuppplierByIdDieselPayment + this.supplierId + '&amount=' + this.amount, {}).subscribe((res: any) => {
       // if (res){
         Swal.fire('success', 'Successfully Updated', 'success');
