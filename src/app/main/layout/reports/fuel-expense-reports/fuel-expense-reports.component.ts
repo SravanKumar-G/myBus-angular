@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {OnlynumberDirective} from '../../../../customDirectives/directives/onlynumber.directive';
 import Swal from 'sweetalert2';
 import {Location} from '@angular/common';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-fuel-expense-reports',
@@ -19,6 +20,11 @@ export class FuelExpenseReportsComponent implements OnInit {
     pageSizes: [],
   };
   public searchQuery: any = {
+    page: 1,
+    size: 50,
+    pageSizes: [],
+  };
+  public fuelTrailbalanceQuery: any = {
     page: 1,
     size: 50,
     pageSizes: [],
@@ -38,12 +44,19 @@ export class FuelExpenseReportsComponent implements OnInit {
   public searchCount: any;
   public allReports: Array<any> = [];
   public  vehicleNumber: any;
-
+  public supplierDetails: any;
+  public supplierDetailsCount: any;
+  public fuelExpenseData: any;
+  public amount: any = 0;
+  public supplierId: any;
+  public modalRef: any;
+  @ViewChild('myModal') myModal: any;
   constructor(private router: Router,
               public apiService: ApiServiceService,
               private apiUrls: ApiUrls,
               private actRoute: ActivatedRoute,
-              private location: Location) { }
+              private location: Location,
+              private ngModalService: NgbModal) { }
 
   ngOnInit(): void {
     this.currentDate = this.actRoute.snapshot.params.date || '';
@@ -84,6 +97,11 @@ export class FuelExpenseReportsComponent implements OnInit {
         this.getAllVehicles();
         this.getSuppliers();
         break;
+        case 3:
+          this.searchFuelData();
+          this.getSuppplierDataById('');
+          this.getSuppliers();
+          break;
     }
   }
 
@@ -284,5 +302,53 @@ export class FuelExpenseReportsComponent implements OnInit {
   downloadExcel(): void {
     this.apiService.exportExcel('fuelExpenseData',
         this.currentUser.userName + '_FuelExpenseReports' + '-' + this.currentDate, '', '');
+  }
+  searchFuelData(): void{
+    this.apiService.get(this.apiUrls.getSupplierPendingAmounts).subscribe((res: any) => {
+      if (res){
+        this.fuelExpenseData = res;
+      }
+      console.log(res);
+    });
+  }
+
+  getSuppplierDataById(item: any): void {
+    console.log(item.id);
+    this.supplierId = item.id;
+    if (item.checked){
+      this.apiService.getAll(this.apiUrls.getSuppplierDataById + item.id, this.fuelTrailbalanceQuery).subscribe((res: any) => {
+        if (res){
+          this.supplierDetails = res.content;
+          OnlynumberDirective.pagination(res.totalElements, this.fuelTrailbalanceQuery);
+          this.supplierDetailsCount = res.totalElements;
+        }
+      });
+    }else {
+      this.apiService.getAll(this.apiUrls.getSuppplierDataOnFirstLoad, this.fuelTrailbalanceQuery).subscribe((res: any) => {
+        if (res){
+          this.supplierDetails = res.content;
+          OnlynumberDirective.pagination(res.totalElements, this.fuelTrailbalanceQuery);
+          this.supplierDetailsCount = res.totalElements;
+        }
+      })
+    }
+  }
+  openAmountpopUp(): void{
+    this.modalRef = this.ngModalService.open(this.myModal, {size: 'md', backdrop: 'static', keyboard: false});
+  }
+  updatePostDieselPayment(): void{
+    console.log(this.amount,this.supplierId);
+    this.apiService.getAll(this.apiUrls.getSuppplierByIdDieselPayment + this.supplierId + '&amount=' + this.amount, {}).subscribe((res: any) => {
+      // if (res){
+        Swal.fire('success', 'Successfully Updated', 'success');
+      this.ngModalService.dismissAll();
+        this.changeFuelExpenseTab(3);
+      // }
+    });
+  }
+  closeModal(): void {
+    this.ngModalService.dismissAll();
+    this.supplierId = '';
+    this.amount = 0;
   }
 }

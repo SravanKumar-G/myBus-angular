@@ -338,6 +338,10 @@ export class ApiUrls {
     getFuelExpense = 'api/v1/FuelExpense/getFuelExpense/';
     deleteFuelExpense = 'api/v1/FuelExpense/deleteFuelExpense/';
     updateServiceName = 'api/v1/FuelExpense/updateServiceName?';
+    getSupplierPendingAmounts = 'api/v1/suppliers/getSupplierPendingAmounts';
+    getSuppplierDataById = 'api/v1/fuelTrailbalance/search?suppplierId=';
+    getSuppplierDataOnFirstLoad = 'api/v1/fuelTrailbalance/search';
+    getSuppplierByIdDieselPayment = 'api/v1/fuelTrailbalance/postDieselPayment?suppplierId=';
 
     // Pending Reports
     pendingReports = 'api/v1/serviceReport/pending';
