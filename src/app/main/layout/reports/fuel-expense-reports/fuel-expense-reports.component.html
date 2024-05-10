@@ -530,13 +530,13 @@
                                                     [pageSize]="fuelTrailbalanceQuery.size"
                                                     [collectionSize]="supplierDetailsCount"
                                                     [boundaryLinks]="true"
-                                                    (pageChange)="changeSearchPage($event)"
+                                                    (pageChange)="changeFuelExpensePage($event)"
                                                     [maxSize]="5">
                                     </ngb-pagination>
                                     <ul class="pagination pull-right" style="margin-top: -37px !important;"
                                         *ngIf="supplierDetailsCount || supplierDetailsCount !== 0">
                                         <li class="page-item" [ngClass]="size == fuelTrailbalanceQuery.size ? 'active' : ''"
-                                            *ngFor="let size of fuelTrailbalanceQuery.pageSizes" (click)="handleSearchPageSizeChange(size)">
+                                            *ngFor="let size of fuelTrailbalanceQuery.pageSizes" (click)="handleFuelExpensePageSizeChange(size)">
                                             <button class="page-link"> {{ size }}
                                                 <span class="sr-only">(current)</span>
                                             </button>
@@ -616,6 +616,26 @@
                 <input type="text" class="form-control-sm form-control"
                        [(ngModel)]="comment"
                        placeholder="Enter comment" />
+            </div>
+            <div class="col-sm-6">
+                <label class="control-label">Transaction Date</label>
+                <div class="input-group">
+                    <input name="startDate" class="form-control form-control-sm"
+                           [(ngModel)]="transactionDate"
+                           placeholder="Enter Date"
+                           readonly type="text"
+                           #date3="bsDatepicker"
+                           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-red', showTodayButton: true, todayPosition: 'center', isAnimated: true }"
+                           bsDatepicker/>
+                    <div class="input-group-append">
+                        <button class="btn btn-light btn-sm" type="button"
+                                style="border: 1px solid #ced4da;"
+                                (click)="date3.show()"
+                                [attr.aria-expanded]="date3.isOpen">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

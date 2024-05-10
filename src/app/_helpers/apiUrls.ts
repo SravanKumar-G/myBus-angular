@@ -193,6 +193,7 @@ export class ApiUrls {
 
     // Service Form API's
     getDetailsByFormId = 'api/v1/serviceForm/';
+    assignCollectionStaff = 'api/v1/ticketBooking/assignCollectionStaff/';
 
 
     // Service Report API's
