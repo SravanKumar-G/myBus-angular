@@ -364,7 +364,6 @@ export class FuelExpenseReportsComponent implements OnInit {
   }
   updatePostDieselPayment(): void{
     this.dateFunction();
-    console.log(this.transactionDate)
     const payload = {
       transactionDate: this.transactionDate,
       supplierId: this.supplierId,
