@@ -109,9 +109,9 @@
                                      <td>{{searchPayments.createdAt | date}}</td>
                                      <td>{{searchPayments.description || 'NA'}}</td>
                                      <td>{{searchPayments.attrs.userName || 'NA'}}</td>
-                                     <td>{{searchPayments.amount || 'NA'}}</td>
-                                     <td>{{searchPayments.oldBalance || 'NA'}}</td>
-                                     <td>{{searchPayments.newBalance || 'NA'}}</td>
+                                     <td>{{searchPayments.amount | number }}</td>
+                                     <td>{{searchPayments.oldBalance | number }}</td>
+                                     <td>{{searchPayments.newBalance | number }}</td>
                                  </tr>
                                  <tr *ngIf="!searchTransactionsList || searchTransactionsList.length === 0">
                                      <td colspan="7">No Transactions</td>
