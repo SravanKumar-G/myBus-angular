@@ -20,6 +20,9 @@
         <li class="nav-item disabled-tab-nav" (click)="changeDueReportsTab(3)">
             <a class="nav-link" [ngClass]="{active:tab === 3}">CashCollection Reports</a>
         </li>
+        <li class="nav-item disabled-tab-nav" (click)="changeDueReportsTab(4)">
+            <a class="nav-link" [ngClass]="{active:tab === 4}">Staff Collection Report</a>
+        </li>
     </ul>
     <div class="row">
         <div class="col-lg-12 col-md-12" *ngIf="tab === 1">
@@ -142,6 +145,40 @@
                                     <tr *ngIf="!cashCollectionList || cashCollectionList.length === 0">
                                         <td colspan="3">No reports exist. </td>
                                     </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12" *ngIf="tab === 4">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="col-sm-12 mb-2 mt-2">
+                        <div class="row form-group">
+                            <div class="col-sm-12 table-responsive">
+                                <table class="table table-bordered table-hover text-center" id="staffCollectionSummary">
+                                    <thead>
+                                        <tr>
+                                            <th>S No</th>
+                                            <th scope="col" [appFrentendSort]="dueByDateList"
+                                                data-order="desc" data-name="bookingTotal">Staff Name<i class="fa fa-sort"></i></th>
+                                            <th scope="col" [appFrentendSort]="dueByDateList"
+                                                data-order="desc" data-name="_id">Total Due<i class="fa fa-sort"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let staffCollection of staffCollectionSummary; let i = index;">
+                                            <td>{{i + 1}}</td>
+                                            <td><a class="cus-a" (click)="dueReportsBDateView(staffCollection.staffId)"> Staff Name</a></td>
+                                            <td>{{ staffCollection.pendingDue }}</td>
+                                        </tr>
+                                        <tr *ngIf="!staffCollectionSummary || staffCollectionSummary.length === 0">
+                                            <td colspan="3">No reports exist. </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

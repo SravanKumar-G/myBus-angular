@@ -23,7 +23,10 @@ export class DueReportsComponent implements OnInit {
     public cashCollectionList: Array<any> = [];
     public array: number[] = [0, 1];
     public size: number | undefined;
-  public selectedTotal: any = 0;
+
+    public staffCollectionSummary: any;
+
+    public selectedTotal: any = 0;
 
     constructor(
         private apiService: ApiServiceService,
@@ -77,6 +80,9 @@ export class DueReportsComponent implements OnInit {
             case 3:
                 this.getCashCollectionByDate(this.array[0]);
                 break;
+            case 4:
+                this.getStaffCollectionSummary();
+                break;
         }
     }
 
@@ -129,6 +135,14 @@ export class DueReportsComponent implements OnInit {
            if (res){
                this.cashCollectionList = res;
            }
+        });
+    }
+
+    getStaffCollectionSummary(): void{
+        this.apiService.get(this.apiUrls.getStaffCollectionSummary).subscribe((res: any) => {
+            if (res){
+                this.staffCollectionSummary = res;
+            }
         });
     }
 }

@@ -275,6 +275,7 @@ export class ApiUrls {
     getAllDuesByDate = 'api/v1/dueReport/getAllDuesByDate';
     getCashCollectionByDate = 'api/v1/dueReport/getCashCollectionByDate/';
     getCashBookingForADate = 'api/v1/dueReport/getCashBookingForADate/';
+    getStaffCollectionSummary = 'api/v1/dueReport/getStaffCollectionSummary/';
 
     // Update Password
     updatePassword = 'api/v1/user/updatePassword';
