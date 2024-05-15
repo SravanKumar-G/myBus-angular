@@ -47,7 +47,7 @@
                                     [(ngModel)]="branchOffice.managerId"
                                     [ngModelOptions]="{standalone: true}">
                                 <option value="" selected>--Select User--</option>
-                                <option *ngFor="let user of users" value="{{user.id}}">{{user.name}}</option>
+                                <option *ngFor="let user of users" value="{{user.id}}">{{user.fullName}}</option>
                                 <option value="" *ngIf="users.length === 0">Users data not found</option>
                             </select>
                             <a class="cus-a pl-2" [routerLinkActive]="['active']"

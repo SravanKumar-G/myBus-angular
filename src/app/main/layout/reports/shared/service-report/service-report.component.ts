@@ -54,6 +54,7 @@ export class ServiceReportComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getUsers();
         if (this.actRoute.snapshot.params.date) {
             this.currentDate = this.actRoute.snapshot.params.date;
             this.loadReports();
@@ -70,9 +71,15 @@ export class ServiceReportComponent implements OnInit {
         this.getSuppliers();
         this.getStaffList();
         this.loadBranchOffices();
-        this.getUsers();
     }
 
+    getUsers(): void {
+        this.apiService.get(this.apiUrls.getAllUsers).subscribe((res: any) => {
+            if (res) {
+                this.users = res;
+            }
+        });
+    }
         loadReports(): void {
             const dateObj = this.apiService.getYYYYMMDD(this.currentDate);
             this.apiService.get(this.apiUrls.loadServiceReports + dateObj).subscribe((res: any) => {
@@ -96,6 +103,13 @@ export class ServiceReportComponent implements OnInit {
                     }
                 }
                 this.serviceReportDetails = res;
+                for (const item of this.users){
+                    for (const booking of this.serviceReportDetails.bookings) {
+                        if (booking.collectionStaffId === item.id) {
+                            booking.userId = item.id;
+                        }
+                    }
+                }
                 this.countSeats();
             }
         }, error => {
@@ -515,13 +529,7 @@ export class ServiceReportComponent implements OnInit {
         }
     }
 
-    getUsers(): void {
-        this.apiService.get(this.apiUrls.getAllUsers).subscribe((res: any) => {
-            if (res) {
-                this.users = res;
-            }
-        });
-    }
+
     assignCollectionStaffFun(booking: any, index: any): void{
         this.apiService.update(this.apiUrls.assignCollectionStaff + booking.id + '/' + booking.userId, {}).subscribe((res: any) => {
         });
