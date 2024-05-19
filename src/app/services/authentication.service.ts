@@ -38,9 +38,7 @@ export class AuthenticationService {
         Swal.fire('Success', 'Login Success', 'success');
         localStorage.setItem('currentUser', JSON.stringify(response));
         this.currentUserSubject.next(response);
-        console.log(response);
         this.http.get(this.apiUrls.mainUrl + 'api/v1/user/me', {headers: {Authorization: `Bearer ${response.accessTokenaccessToken}`}}).subscribe((res: any) => {
-          console.log('res', res);
           // this.currentUserDetails = res;
           this.service.setCurrentUser(res);
         });

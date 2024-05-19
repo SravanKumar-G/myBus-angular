@@ -50,7 +50,6 @@ export class ServiceReportComponent implements OnInit {
         this.serviceId = this.actRoute.snapshot.params.id || '';
         this.indexCount = this.actRoute.snapshot.params.index || 0;
         this.statusReports = this.actRoute.snapshot.params.reportsToBeReviewedStatus;
-        console.log('df', this.statusReports);
     }
 
     ngOnInit(): void {
@@ -183,7 +182,7 @@ export class ServiceReportComponent implements OnInit {
         }
     }
     editBookingName(bookingId: any): void {
-        console.log("editing bookingId "+ bookingId) ;
+
     }
 
     countSeats(): void {
@@ -406,17 +405,13 @@ export class ServiceReportComponent implements OnInit {
         //     this.serviceReportDetails.invalid = false;
         //     return true;
         // }
-        console.log("status " + this.serviceReportDetails.status);
         if (this.serviceReportDetails.status === 'REQUIRE_VERIFICATION') {
             if (this.currentUser.canVerifyRates) {
-                console.log("383");
                 canSubm = true;
             }
         } else if (!this.serviceReportDetails.requiresVerification) {
-            console.log("387 " + this.serviceReportDetails.invalid +"  " + this.serviceReportDetails.status);
             canSubm =  (!this.serviceReportDetails.invalid && !this.serviceReportDetails.status);
         }
-        console.log("can submit " + canSubm);
         return canSubm;
     }
 
@@ -425,7 +420,6 @@ export class ServiceReportComponent implements OnInit {
     }
 
     submitReport(status: any, index: string): void {
-        // console.log(this.serviceReportDetails);
         if (!this.serviceReportDetails.vehicleRegNumber) {
             Swal.fire('Error', 'Please select Vehicle', 'error');
             return;
@@ -529,9 +523,9 @@ export class ServiceReportComponent implements OnInit {
         }
     }
 
-
-    assignCollectionStaffFun(booking: any, index: any): void{
+    /*
+    assignCollectionStaff(booking: any, index: any): void{
         this.apiService.update(this.apiUrls.assignCollectionStaff + booking.id + '/' + booking.userId, {}).subscribe((res: any) => {
         });
-    }
+    }*/
 }

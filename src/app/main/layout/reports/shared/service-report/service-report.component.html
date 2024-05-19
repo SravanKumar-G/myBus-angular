@@ -220,20 +220,19 @@
                                                          [(ngModel)]="booking.bookedBy">
                                                 </ng-select>
                                             </span>
-                                            <div style="width: 100px" *ngIf="isCashBooking(booking)">
+                                            <!--<div style="width: 100px" *ngIf="booking.collectionStaffId">
                                                 <ng-select
                                                         [(ngModel)]="booking.userId"
                                                         [ngModelOptions]="{standalone: true}"
                                                         bindValue="id"
                                                         bindLabel="name"
                                                         placeholder="Enter User Name"
-                                                        [clearable]="false"
-                                                        (ngModelChange)="assignCollectionStaffFun(booking, i)">
+                                                        [clearable]="false">
                                                     <ng-option value="">Select User</ng-option>
                                                     <ng-option *ngFor="let us of users"
                                                                [value]="us.id">{{us.fullName}}</ng-option>
                                                 </ng-select>
-                                            </div>
+                                            </div> -->
                                         </td>
                                         <td>
                                             <span *ngIf="booking.id != null" title="{{booking.name}}">
