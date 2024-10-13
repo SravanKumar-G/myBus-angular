@@ -220,7 +220,7 @@
                                                          [(ngModel)]="booking.bookedBy">
                                                 </ng-select>
                                             </span>
-                                            <!--<div style="width: 100px" *ngIf="booking.collectionStaffId">
+                                            <div style="width: 100px" *ngIf="booking.collectionStaffId">
                                                 <ng-select
                                                         [(ngModel)]="booking.userId"
                                                         [ngModelOptions]="{standalone: true}"
@@ -232,7 +232,7 @@
                                                     <ng-option *ngFor="let us of users"
                                                                [value]="us.id">{{us.fullName}}</ng-option>
                                                 </ng-select>
-                                            </div> -->
+                                            </div>
                                         </td>
                                         <td>
                                             <span *ngIf="booking.id != null" title="{{booking.name}}">

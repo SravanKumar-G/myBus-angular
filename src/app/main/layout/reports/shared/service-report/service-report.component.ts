@@ -79,16 +79,16 @@ export class ServiceReportComponent implements OnInit {
             }
         });
     }
-        loadReports(): void {
-            const dateObj = this.apiService.getYYYYMMDD(this.currentDate);
-            this.apiService.get(this.apiUrls.loadServiceReports + dateObj).subscribe((res: any) => {
-                if (res) {
-                    this.serviceReports = res;
-                }
-            }, error => {
-                Swal.fire('Oops...', error.message, 'error');
-            });
-        }
+    loadReports(): void {
+        const dateObj = this.apiService.getYYYYMMDD(this.currentDate);
+        this.apiService.get(this.apiUrls.loadServiceReports + dateObj).subscribe((res: any) => {
+            if (res) {
+                this.serviceReports = res;
+            }
+        }, error => {
+            Swal.fire('Oops...', error.message, 'error');
+        });
+    }
 
     getServiceReport(service: any): void {
         if (service) {
@@ -523,9 +523,8 @@ export class ServiceReportComponent implements OnInit {
         }
     }
 
-    /*
-    assignCollectionStaff(booking: any, index: any): void{
+    assignCollectionStaffFun(booking: any, index: any): void{
         this.apiService.update(this.apiUrls.assignCollectionStaff + booking.id + '/' + booking.userId, {}).subscribe((res: any) => {
         });
-    }*/
+    }
 }

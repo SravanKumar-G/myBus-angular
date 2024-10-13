@@ -11,6 +11,7 @@ import {DatePipe, Location} from '@angular/common';
     styleUrls: ['./service-reports.component.css']
 })
 export class ServiceReportsComponent implements OnInit {
+    public tab = 1 ;
     public currentDate: any;
     public allReports: Array<any> = [];
     public submitted = 0;
@@ -76,6 +77,7 @@ export class ServiceReportsComponent implements OnInit {
         });
     }
 
+
     loadReportsByDate(): void {
         if (new Date(this.currentDate) > new Date()) {
             Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
@@ -103,6 +105,7 @@ export class ServiceReportsComponent implements OnInit {
         return year + '-' + month + '-' + day;
     }
 
+
     goToServiceReport(service: any): void {
         if (service.attrs.formId) {
             this.router.navigate(['serviceReports/' + this.currentDate + '/serviceForm/' + service.attrs.formId + '/reportsData']);
@@ -123,23 +126,15 @@ export class ServiceReportsComponent implements OnInit {
             Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
         }
     }
-    // nextDate(): void {
-    //     const currentDate = new Date(this.currentDate);
-    //     const date = currentDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000);
-    //     // console.log(new Date(date));
-    //     if (new Date(date) <= new Date()) {
-    //         this.currentDate = this.getDate(new Date(date));
-    //         this.location.replaceState('/serviceReports/' + this.currentDate);
-    //     } else {
-    //         Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');
-    //     }
-    // }
 
     previousDate(): void {
         const currentDate = new Date(this.currentDate);
         const date = currentDate.setTime(currentDate.getTime() - 24 * 60 * 60 * 1000);
         this.location.replaceState('/serviceReports/' + this.currentDate);
         this.currentDate = this.getDate(new Date(date));
+    }
+    showServiceReports(tabKey: number): void {
+        this.tab = tabKey ? tabKey : 1;
     }
 
     exportToExcel(): void {
