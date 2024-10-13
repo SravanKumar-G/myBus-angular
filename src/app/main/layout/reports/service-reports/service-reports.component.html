@@ -116,7 +116,7 @@
                                     <td>{{ service.netCashIncome | number }}</td>
                                     <td>{{ service.netIncome | number}}</td>
                                     <td>{{ service.status || '--'}}</td>
-                                    <td>{{service.attrs.submittedBy || '--'}}</td>
+                                    <td>{{service.submittedBy || '--'}}</td>
                                 </tr>
                                 <tr *ngIf="!allReports || allReports.length === 0">
                                     <td colspan="14">No reports exist. </td>
@@ -196,7 +196,7 @@
                                     <td><span *ngIf="service.status">{{ service.initialCashIncome - service.netCashIncome | number}} </span> </td>
                                     <td><span *ngIf="service.status">{{service.netCashIncome}}</span></td>
                                     <td>{{ service.status || '--'}}</td>
-                                    <td>{{service.attrs.submittedBy || '--'}}</td>
+                                    <td>{{service.submittedBy || '--'}}</td>
                                 </tr>
                                 <tr *ngIf="!allReports || allReports.length === 0">
                                     <td colspan="14">No reports exist. </td>
