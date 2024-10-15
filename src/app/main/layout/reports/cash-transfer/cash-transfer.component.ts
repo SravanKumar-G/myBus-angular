@@ -236,9 +236,7 @@ export class CashTransferComponent implements OnInit {
     }
 
     saveCashTransfer(cashTransfer: any): void {
-        if (!cashTransfer.balanceType) {
-            this.errorMessage = 'Please select the balance type';
-        } else if (!cashTransfer.amount) {
+        if (!cashTransfer.amount) {
             this.errorMessage = 'Please Enter Amount';
         }else {
             if (cashTransfer.id) {
