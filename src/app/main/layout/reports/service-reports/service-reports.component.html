@@ -173,12 +173,10 @@
                                 <tr>
                                     <th>S No</th>
                                     <th>Service#</th>
-                                    <th>Type</th>
-                                    <th scope="col" [appFrentendSort]="allReports"
-                                        data-order="desc" data-name="source">From - To<i class="fa fa-sort"></i></th>
                                     <th>Vehicle</th>
                                     <th>CashIncome</th>
                                     <th>Discount</th>
+                                    <th>Due</th>
                                     <th>Final Collection</th>
                                     <th scope="col" [appFrentendSort]="allReports"
                                         data-order="desc" data-name="status">Status<i class="fa fa-sort"></i></th>
@@ -188,15 +186,22 @@
                                 <tbody>
                                 <tr *ngFor="let service of allReports; let i =index;">
                                     <td>{{i + 1}}</td>
-                                    <td><a class="cus-a" (click)="goToServiceReport(service)">{{ service.serviceNumber }}</a></td>
-                                    <td><a class="cus-a" (click)="goToServiceReport(service)">{{ service.busType }}</a></td>
-                                    <td>{{ service.source }} - {{ service.destination }}</td>
+                                    <td><a class="cus-a" (click)="goToServiceReport(service)">{{ service.serviceNumber }} - {{ service.busType }} - {{ service.source }} - {{ service.destination }}</a></td>
                                     <td><a class="cus-a" (click)="goToServiceReport(service)">{{ service.vehicleRegNumber }}</a></td>
-                                    <td>{{ service.initialCashIncome | number }}</td>
-                                    <td><span *ngIf="service.status">{{ service.initialCashIncome - service.netCashIncome | number}} </span> </td>
+                                    <td><span *ngIf="service.status">{{ service.initialCashIncome | number }}</span></td>
+                                    <td><span *ngIf="service.status">{{ service.discount| number}} </span> </td>
+                                    <td><span *ngIf="service.status">{{ service.due| number}} </span> </td>
                                     <td><span *ngIf="service.status">{{service.netCashIncome}}</span></td>
                                     <td>{{ service.status || '--'}}</td>
                                     <td>{{service.submittedBy || '--'}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td>CashIncome :{{totalSubmittedCash}}</td>
+                                    <td>Discount: {{totalDiscount}}</td>
+                                    <td>Due: {{totalDue}}</td>
+                                    <td>Cash:{{totalCashCollected}}</td>
+                                    <td colspan="2"></td>
                                 </tr>
                                 <tr *ngIf="!allReports || allReports.length === 0">
                                     <td colspan="14">No reports exist. </td>

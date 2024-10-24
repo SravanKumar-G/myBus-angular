@@ -23,6 +23,11 @@ export class ServiceReportsComponent implements OnInit {
     public downloadedOn: any;
     public totalCashIncome = 0;
     public totalNetIncome = 0;
+    public totalDiscount = 0;
+    public totalDue = 0;
+
+    public totalSubmittedCash = 0;
+    public totalCashCollected = 0;
 
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
@@ -64,13 +69,15 @@ export class ServiceReportsComponent implements OnInit {
                     for (const data of this.allReports) {
                         if (data.status === 'SUBMITTED') {
                             this.submitted = this.submitted +  1;
+                            this.totalDiscount += data.discount;
+                            this.totalDue += data.due;
+                            this.totalCashCollected += data.netCashIncome;
+                            this.totalSubmittedCash += data.cashIncome;
                         }
+                        this.totalCashIncome += data.cashIncome;
+                        this.totalNetIncome += data.netIncome;
                     }
                 }
-                this.allReports.forEach((item) => {
-                  this.totalCashIncome = this.totalCashIncome + item.cashIncome;
-                  this.totalNetIncome = this.totalNetIncome + item.netIncome;
-                });
             }
         }, error => {
             Swal.fire('Oops...', error.message, 'error');
