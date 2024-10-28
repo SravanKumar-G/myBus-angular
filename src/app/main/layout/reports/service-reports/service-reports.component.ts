@@ -4,6 +4,7 @@ import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {ActivatedRoute, Router} from '@angular/router';
 import Swal from 'sweetalert2';
 import {DatePipe, Location} from '@angular/common';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-service-reports',
@@ -14,6 +15,7 @@ export class ServiceReportsComponent implements OnInit {
     public tab = 1 ;
     public currentDate: any;
     public allReports: Array<any> = [];
+    public submissionSummary: Array<any> = [];
     public submitted = 0;
     public verified = 0;
     newDate: any = new Date();
@@ -34,7 +36,8 @@ export class ServiceReportsComponent implements OnInit {
                 private router: Router,
                 private actRoute: ActivatedRoute,
                 private location: Location,
-                private  datePipe: DatePipe) {
+                private  datePipe: DatePipe,
+                private modalService: NgbModal) {
         this.currentDate = this.actRoute.snapshot.params.date || '';
         this.currentDate = new Date();
         console.log(this.currentDate);
@@ -58,14 +61,18 @@ export class ServiceReportsComponent implements OnInit {
         // let date: any = new Date(this.currentDate);
         // date.setDate(date - 1);
         const date = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
-        // this.loadReports();
         this.location.replaceState('/serviceReports/' + date);
-        // return year + '-' + month + '-' + day;
         this.submitted = 0;
         this.apiService.get(this.apiUrls.loadServiceReports + date).subscribe((res: any) => {
             if (res) {
                 this.allReports = res;
                 if (this.submitted === 0) {
+                    this.totalDiscount = 0;
+                    this.totalCashIncome = 0;
+                    this.totalDue = 0;
+                    this.totalCashCollected = 0;
+                    this.totalSubmittedCash = 0;
+                    this.totalNetIncome = 0;
                     for (const data of this.allReports) {
                         if (data.status === 'SUBMITTED') {
                             this.submitted = this.submitted +  1;
@@ -84,7 +91,21 @@ export class ServiceReportsComponent implements OnInit {
         });
     }
 
-
+    closeModal(): void {
+        this.modalService.dismissAll();
+    }
+    showSubmisionSummary(templateName: any): void {
+        const date = this.datePipe.transform(this.currentDate, 'yyyy-MM-dd');
+        this.apiService.get(this.apiUrls.getSubmissionSummary + date).subscribe((res: any) => {
+            if (res) {
+                this.submissionSummary = res;
+                this.modalService.open(templateName, {
+                    backdrop: 'static', keyboard: false, backdropClass: 'backdropClass', size: 'md'});
+            }
+        }, error => {
+            Swal.fire('Oops...', error.message, 'error');
+        });
+    }
     loadReportsByDate(): void {
         if (new Date(this.currentDate) > new Date()) {
             Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');

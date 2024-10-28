@@ -188,19 +188,19 @@
                                     <td>{{i + 1}}</td>
                                     <td><a class="cus-a" (click)="goToServiceReport(service)">{{ service.serviceNumber }} - {{ service.busType }} - {{ service.source }} - {{ service.destination }}</a></td>
                                     <td><a class="cus-a" (click)="goToServiceReport(service)">{{ service.vehicleRegNumber }}</a></td>
-                                    <td><span *ngIf="service.status">{{ service.initialCashIncome | number }}</span></td>
-                                    <td><span *ngIf="service.status">{{ service.discount| number}} </span> </td>
-                                    <td><span *ngIf="service.status">{{ service.due| number}} </span> </td>
-                                    <td><span *ngIf="service.status">{{service.netCashIncome}}</span></td>
+                                    <td><span *ngIf="service.status === 'SUBMITTED'">{{ service.initialCashIncome | number }}</span></td>
+                                    <td><span *ngIf="service.status === 'SUBMITTED'">{{ service.discount| number}} </span> </td>
+                                    <td><span *ngIf="service.status === 'SUBMITTED'">{{ service.due| number}} </span> </td>
+                                    <td><span *ngIf="service.status === 'SUBMITTED'">{{service.netCashIncome | number}}</span></td>
                                     <td>{{ service.status || '--'}}</td>
                                     <td>{{service.submittedBy || '--'}}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="3"></td>
-                                    <td>CashIncome :{{totalSubmittedCash}}</td>
-                                    <td>Discount: {{totalDiscount}}</td>
-                                    <td>Due: {{totalDue}}</td>
-                                    <td>Cash:{{totalCashCollected}}</td>
+                                    <td><a class="cus-a" (click)="showSubmisionSummary(SubmisionSummaryTable)"> CashIncome :{{totalSubmittedCash | number}}</a></td>
+                                    <td>Discount: {{totalDiscount | number}}</td>
+                                    <td>Due: {{totalDue | number}}</td>
+                                    <td>Cash:{{totalCashCollected | number}}</td>
                                     <td colspan="2"></td>
                                 </tr>
                                 <tr *ngIf="!allReports || allReports.length === 0">
@@ -215,3 +215,42 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #SubmisionSummaryTable>
+    <div class="modal-header">
+        <h4 class="modal-title form-head-line-style">Submission Summary</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form name="fillingStationForm" class="form-horizontal" role="form">
+            <div class="col-sm-12 col-12 form-group">
+                <div class="row">
+                    <table class="table table-bordered table-hover text-center" id="serviceReports">
+                        <thead>
+                        <tr>
+                            <th><b>Submmitted By</b></th>
+                            <th><b>Cash Collection</b></th>
+                            <th><b>Discount</b></th>
+                            <th><b>Due</b></th>
+                            <th><b>Net Collection</b></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let service of submissionSummary; let i =index;">
+                            <td>{{service._id || '--'}}</td>
+                            <td>{{service.cashIncome | number}}</td>
+                            <td>{{service.discount | number}}</td>
+                            <td>{{service.totalDue | number}}</td>
+                            <td>{{service.netCashIncome | number}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</ng-template>
