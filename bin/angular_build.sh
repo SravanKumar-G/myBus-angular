@@ -11,7 +11,7 @@ set -ex
 # to retain all backups, set this value to a non-positive integer
 s3_bucket=mybus-angular-builds
 
-ng build --prod
+ng build -c production
 cd ..
 
 output_dir=`date +%Y%m%d-%H%M`
