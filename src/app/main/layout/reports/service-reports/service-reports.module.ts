@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 import {LayoutModule} from "../../layout.module";
 
 

@@ -6,7 +6,7 @@ import {LoadingSheetComponent} from './loading-sheet.component';
 import {LayoutModule} from '../../layout.module';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 @NgModule({
   declarations: [LoadingSheetComponent],

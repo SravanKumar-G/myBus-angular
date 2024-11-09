@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import {PaymentsComponent} from './payments.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

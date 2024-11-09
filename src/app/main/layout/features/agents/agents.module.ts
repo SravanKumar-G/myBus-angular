@@ -3,12 +3,13 @@ import {CommonModule} from '@angular/common';
 
 import {AgentsRoutingModule} from './agents-routing.module';
 import {AgentsComponent} from './agents.component';
-import {LayoutModule} from '../../layout.module';
+
 import {FormsModule} from '@angular/forms';
 import { AddEditAgentComponent } from './add-edit-agent/add-edit-agent.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { LayoutModule } from '../../layout.module';
 
 
 @NgModule({

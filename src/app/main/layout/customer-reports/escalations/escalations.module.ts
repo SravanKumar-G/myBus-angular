@@ -6,7 +6,7 @@ import {EscalationsComponent} from './escalations.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FormsModule} from '@angular/forms';
 import {NgbPaginationModule, NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

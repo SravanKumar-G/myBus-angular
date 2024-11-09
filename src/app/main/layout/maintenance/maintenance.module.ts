@@ -17,7 +17,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AddEditTyreActivityComponent } from './tyres/add-edit-tyre-activity/add-edit-tyre-activity.component';
 import { AddEditJobsComponent } from './jobs/add-edit-jobs/add-edit-jobs.component';
 import { JobRemindersComponent } from './job-reminders/job-reminders.component';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

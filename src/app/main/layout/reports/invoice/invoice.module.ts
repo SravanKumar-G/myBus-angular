@@ -5,7 +5,7 @@ import { InvoiceRoutingModule } from './invoice-routing.module';
 import {InvoiceComponent} from './invoice.component';
 import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

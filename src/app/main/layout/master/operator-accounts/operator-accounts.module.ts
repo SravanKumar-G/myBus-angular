@@ -6,7 +6,7 @@ import {OperatorAccountsComponent} from './operator-accounts.component';
 import { AddEditOperatorAccountsComponent } from './add-edit-operator-accounts/add-edit-operator-accounts.component';
 import {FormsModule} from '@angular/forms';
 import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import {ApiServiceService} from '../../../../services/api-service.service';
 import {ApiUrls} from '../../../../_helpers/apiUrls';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-update-password',
@@ -13,12 +13,12 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class UpdatePasswordComponent implements OnInit {
   public currentUser: any = {};
   public user: any = {};
-  public updatePasswordForm: any = FormGroup;
+  public updatePasswordForm: any = UntypedFormGroup;
   public submitted = false;
   constructor(private apiService: ApiServiceService,
               private apiUrls: ApiUrls,
               private actRoute: ActivatedRoute,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               ) { }
 
   ngOnInit(): void {

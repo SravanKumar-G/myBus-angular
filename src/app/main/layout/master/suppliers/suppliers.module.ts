@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SuppliersRoutingModule } from './suppliers-routing.module';
 import {SuppliersComponent} from './suppliers.component';
 import {FormsModule} from '@angular/forms';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

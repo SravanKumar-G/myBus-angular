@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {ApiServiceService} from '../../../services/api-service.service';
 import {ApiUrls} from '../../../_helpers/apiUrls';
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   public currentUserDetails: any;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   title: 'Login' | undefined;
-  public loginForm: any = FormGroup;
+  public loginForm: any = UntypedFormGroup;
   loading = false;
   submitted = false;
   returnUrl: string | undefined;

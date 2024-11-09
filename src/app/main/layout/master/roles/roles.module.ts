@@ -5,7 +5,7 @@ import { RolesRoutingModule } from './roles-routing.module';
 import {RolesComponent} from './roles.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

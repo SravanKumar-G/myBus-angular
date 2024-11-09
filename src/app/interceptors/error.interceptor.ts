@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {Router} from '@angular/router';
 import {catchError} from 'rxjs/operators';
@@ -20,7 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         // auto logout if 401 response returned from api
         localStorage.clear();
         this.router.navigate(['/login']);
-        location.reload(true);
+        location.reload();
       } else if (err.status === 403 || err.status === 404){
         if (err.error.error === 'Forbidden') {
           localStorage.clear();

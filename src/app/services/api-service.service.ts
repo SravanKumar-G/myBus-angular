@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {ApiUrls} from '../_helpers/apiUrls';
 import {AuthenticationService} from './authentication.service';
 import {map} from 'rxjs/operators';

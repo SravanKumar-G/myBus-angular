@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ApiServiceService} from '../../../../../services/api-service.service';
 import {ApiUrls} from '../../../../../_helpers/apiUrls';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,13 +19,13 @@ export class AddEditUserComponent implements OnInit {
     public userId: any;
     public headerTitle: any = 'Add a User';
     public confirmPassword: any;
-    public addUserForm: any = FormGroup;
+    public addUserForm: any = UntypedFormGroup;
     public submitted = false;
 
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
                 private actRoute: ActivatedRoute,
-                private fb: FormBuilder,
+                private fb: UntypedFormBuilder,
                 private router: Router) {
         this.userId = this.actRoute.snapshot.params.id || '';
     }

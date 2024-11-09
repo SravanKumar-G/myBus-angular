@@ -6,7 +6,7 @@ import {CargoCancellationsComponent} from './cargo-cancellations.component';
 import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
 import {LayoutModule} from '../../layout.module';
 import {FormsModule} from '@angular/forms';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

@@ -7,7 +7,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {LayoutModule} from '../../layout.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {UpdatePasswordComponent} from './update-password.component';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

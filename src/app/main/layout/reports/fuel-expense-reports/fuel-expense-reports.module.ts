@@ -10,7 +10,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import { AddEditFuelExpenseReportsComponent } from './add-edit-fuel-expense-reports/add-edit-fuel-expense-reports.component';
 import {LayoutModule} from '../../layout.module';
 import {SearchFilterPipe} from '../../../../customDirectives/pipes/search-filter.pipe';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

@@ -9,7 +9,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {NgbPaginationModule, NgbPopoverModule} from '@ng-bootstrap/ng-bootstrap';
 import {LayoutModule} from '../../layout.module';
 import { ViewReviewComponent } from './view-review/view-review.component';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

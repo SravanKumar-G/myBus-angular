@@ -106,6 +106,8 @@ export class ServiceReportsComponent implements OnInit {
             Swal.fire('Oops...', error.message, 'error');
         });
     }
+
+
     loadReportsByDate(): void {
         if (new Date(this.currentDate) > new Date()) {
             Swal.fire('Oops...', 'U\'ve checked for future date, Check Later', 'error');

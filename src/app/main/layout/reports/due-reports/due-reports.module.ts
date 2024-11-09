@@ -12,7 +12,7 @@ import { OfficeDueReportByDateComponent } from './office-due-report-by-date/offi
 import { OfficeDueReportByServiceComponent } from './office-due-report-by-service/office-due-report-by-service.component';
 import { OfficeDueReportByAgentComponent } from './office-due-report-by-agent/office-due-report-by-agent.component';
 import { ShowDuePaymentSummaryComponent } from './show-due-payment-summary/show-due-payment-summary.component';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule} from 'primeng/breadcrumb';
 
 
 @NgModule({

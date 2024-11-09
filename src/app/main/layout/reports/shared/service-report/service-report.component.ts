@@ -8,6 +8,7 @@ import * as _ from 'underscore';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Location} from '@angular/common';
 import {ChangeDetectorRef} from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-service-report',

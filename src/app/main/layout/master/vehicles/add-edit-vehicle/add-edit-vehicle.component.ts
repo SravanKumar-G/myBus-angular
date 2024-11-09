@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {UntypedFormBuilder, FormGroup} from '@angular/forms';
 import {ApiServiceService} from '../../../../../services/api-service.service';
 import {ApiUrls} from '../../../../../_helpers/apiUrls';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -31,7 +31,7 @@ export class AddEditVehicleComponent implements OnInit {
     constructor(private apiService: ApiServiceService,
                 private apiUrls: ApiUrls,
                 private actRoute: ActivatedRoute,
-                private fb: FormBuilder,
+                private fb: UntypedFormBuilder,
                 private router: Router) {
         this.vehicleId = this.actRoute.snapshot.params.id || '';
     }

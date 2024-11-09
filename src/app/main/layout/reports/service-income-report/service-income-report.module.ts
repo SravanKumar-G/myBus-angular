@@ -6,7 +6,7 @@ import {ServiceIncomeReportComponent} from './service-income-report.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 import {ServiceIncomeReportByServiceComponent} from './service-income-report-by-service/service-income-report-by-service.component';
 import {LayoutModule} from '../../layout.module';
 import {ServiceReportComponent} from '../shared/service-report/service-report.component';
@@ -18,16 +18,17 @@ import {ServiceFormComponent} from '../shared/service-form/service-form.componen
         ServiceIncomeReportComponent,
         ServiceIncomeReportByServiceComponent,
         ServiceReportComponent,
-        ServiceFormComponent
+        ServiceFormComponent,
     ],
     imports: [
-        CommonModule,
+       CommonModule,
+        LayoutModule,
         ServiceIncomeReportRoutingModule,
         NgSelectModule,
         FormsModule,
         BsDatepickerModule,
         BreadcrumbModule,
-        LayoutModule
+        
     ]
 })
 export class ServiceIncomeReportModule {

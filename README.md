@@ -22,6 +22,12 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Diable Angular cache. This is needed with Angular 18 upgrade. https://stackoverflow.com/questions/70069852/whats-the-angular-directory-in-the-project-root-about
+
+ng config cli.cache.enabled false
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+

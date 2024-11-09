@@ -5,7 +5,7 @@ import { ExpenseIncomeReportsRoutingModule } from './expense-income-reports-rout
 import {ExpenseIncomeReportsComponent} from './expense-income-reports.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {FormsModule} from '@angular/forms';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

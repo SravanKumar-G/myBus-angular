@@ -8,9 +8,9 @@ import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {NgSelectModule} from '@ng-select/ng-select';
 import { AddEditOfficeExpenseComponent } from './add-edit-office-expense/add-edit-office-expense.component';
-import {AngularFileUploaderModule} from 'angular-file-uploader';
+import { FileUploadModule } from 'ng2-file-upload';
 import {LayoutModule} from '../../layout.module';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import {BreadcrumbModule} from 'xng-breadcrumb';
         FormsModule,
         BsDatepickerModule,
         NgSelectModule,
-        AngularFileUploaderModule,
+        FileUploadModule,
         LayoutModule,
         BreadcrumbModule
     ],

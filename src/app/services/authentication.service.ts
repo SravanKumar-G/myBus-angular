@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import {map} from 'rxjs/operators';
 import {ApiUrls} from '../_helpers/apiUrls';

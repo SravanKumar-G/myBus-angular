@@ -7,7 +7,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AddEditBranchOfficeComponent } from './add-edit-branch-office/add-edit-branch-office.component';
 import {FormsModule} from '@angular/forms';
 import {LayoutModule} from '../../layout.module';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({
@@ -15,13 +15,16 @@ import {BreadcrumbModule} from 'xng-breadcrumb';
       BranchOfficesComponent,
       AddEditBranchOfficeComponent
   ],
-    imports: [
-        CommonModule,
+    imports: [CommonModule,
         BranchOfficesRoutingModule,
         NgbModule,
         FormsModule,
         LayoutModule,
         BreadcrumbModule
-    ]
+       
+    ],
 })
 export class BranchOfficesModule { }
+
+
+

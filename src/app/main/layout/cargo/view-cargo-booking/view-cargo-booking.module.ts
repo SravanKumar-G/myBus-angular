@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ViewCargoBookingRoutingModule } from './view-cargo-booking-routing.module';
 import {ViewCargoBookingComponent} from './view-cargo-booking.component';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({

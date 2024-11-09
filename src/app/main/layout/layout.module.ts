@@ -1,8 +1,8 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {CommonModule, HashLocationStrategy, LocationStrategy,} from '@angular/common';
 import {LayoutRoutingModule} from './layout-routing.module';
-import {FormsModule} from '@angular/forms';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {ErrorInterceptor} from '../../interceptors/error.interceptor';
 import {LayoutComponent} from './layout.component';
 import {NumberFormatterPipe} from '../../customDirectives/pipes/number-formatter.pipe';
@@ -17,7 +17,6 @@ import { FileUploadComponent } from './shared/file-upload/file-upload.component'
 import { CashTransferComponent } from './reports/cash-transfer/cash-transfer.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {BreadcrumbModule} from 'xng-breadcrumb';
 import { HaltReportsComponent } from './Check-List/halt-reports/halt-reports.component';
 import { EmployeeComponent } from './employee/employee.component';
 
@@ -44,7 +43,6 @@ import { EmployeeComponent } from './employee/employee.component';
         NgbModule,
         BsDatepickerModule,
         NgSelectModule,
-        BreadcrumbModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],

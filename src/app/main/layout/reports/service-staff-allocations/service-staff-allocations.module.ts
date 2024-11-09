@@ -5,7 +5,7 @@ import { ServiceStaffAllocationsRoutingModule } from './service-staff-allocation
 import {ServiceStaffAllocationsComponent} from './service-staff-allocations.component';
 import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 import {NgSelectModule} from '@ng-select/ng-select';
 import { AddEditServiceStaffAllocationsComponent } from './add-edit-service-staff-allocations/add-edit-service-staff-allocations.component';
 

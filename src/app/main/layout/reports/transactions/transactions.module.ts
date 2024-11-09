@@ -7,7 +7,7 @@ import {TransactionsComponent} from './transactions.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
-import {BreadcrumbModule} from 'xng-breadcrumb';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @NgModule({
@@ -20,6 +20,7 @@ import {BreadcrumbModule} from 'xng-breadcrumb';
     FormsModule,
     NgbPaginationModule,
     BreadcrumbModule
+    
   ]
 })
 export class TransactionsModule { }
