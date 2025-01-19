@@ -502,10 +502,10 @@
 
                                     <td>{{i + 1}}</td>
                                     <td>{{fuelTrailBalance.createdAt ? (fuelTrailBalance.createdAt | date: 'yyyy-MM-dd : HH:ss') : 'NA'}}</td>
-                                    <td>{{fuelTrailBalance.oldBalance || 'NA'}}</td>
-                                    <td>{{fuelTrailBalance.fuelCharge || 'NA'}}</td>
-                                    <td>{{fuelTrailBalance.creditAmount || 'NA'}}</td>
-                                    <td>{{fuelTrailBalance.newBalance || 'NA'}}</td>
+                                    <td>{{fuelTrailBalance.oldBalance | number : '.2-2'}}</td>
+                                    <td>{{fuelTrailBalance.fuelCharge | number : '.2-2'}}</td>
+                                    <td>{{fuelTrailBalance.creditAmount | number : '.2-2'}}</td>
+                                    <td>{{fuelTrailBalance.newBalance | number : '.2-2'}}</td>
                                     <td>{{fuelTrailBalance.attrs.supplierName}} - {{fuelTrailBalance.serviceDetails || 'NA'}} - {{ fuelTrailBalance.transactionDate ? (fuelTrailBalance.transactionDate | date: 'yyyy-MM-dd') : 'NA' }}</td>
                                 </tr>
                                 <tr *ngIf="supplierDetailsCount === 0 || !supplierDetailsCount">
